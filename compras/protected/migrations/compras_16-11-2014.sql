@@ -2,6 +2,10 @@
 -- PostgreSQL database dump
 --
 
+-- Dumped from database version 9.3.2
+-- Dumped by pg_dump version 9.3.2
+-- Started on 2014-11-17 19:30:29 VET
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -10,24 +14,27 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: compras; Type: SCHEMA; Schema: -; Owner: rnc
+-- TOC entry 7 (class 2615 OID 26434)
+-- Name: compras; Type: SCHEMA; Schema: -; Owner: postgres
 --
 
 CREATE SCHEMA compras;
 
 
-ALTER SCHEMA compras OWNER TO rnc;
+ALTER SCHEMA compras OWNER TO postgres;
 
 --
--- Name: rnc; Type: SCHEMA; Schema: -; Owner: rnc
+-- TOC entry 6 (class 2615 OID 26433)
+-- Name: rnc; Type: SCHEMA; Schema: -; Owner: postgres
 --
 
 CREATE SCHEMA rnc;
 
 
-ALTER SCHEMA rnc OWNER TO rnc;
+ALTER SCHEMA rnc OWNER TO postgres;
 
 --
+-- TOC entry 192 (class 3079 OID 11833)
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -35,6 +42,8 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
+-- TOC entry 2154 (class 0 OID 0)
+-- Dependencies: 192
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
@@ -43,16 +52,32 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 SET search_path = compras, pg_catalog;
 
+--
+-- TOC entry 182 (class 1259 OID 26893)
+-- Name: codigo_ncm_id_seq; Type: SEQUENCE; Schema: compras; Owner: postgres
+--
+
+CREATE SEQUENCE codigo_ncm_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE compras.codigo_ncm_id_seq OWNER TO postgres;
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
 
 --
--- Name: codigos_ncm; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 172 (class 1259 OID 26483)
+-- Name: codigos_ncm; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE codigos_ncm (
-    codigo_ncm_id bigint DEFAULT 0 NOT NULL,
+    codigo_ncm_id bigint DEFAULT nextval('codigo_ncm_id_seq'::regclass) NOT NULL,
     codigo_ncm_nivel_1 character varying(5) DEFAULT 0 NOT NULL,
     codigo_ncm_nivel_2 character varying(5) DEFAULT 0 NOT NULL,
     codigo_ncm_nivel_3 character varying(5) DEFAULT 0 NOT NULL,
@@ -65,77 +90,111 @@ CREATE TABLE codigos_ncm (
 );
 
 
-ALTER TABLE compras.codigos_ncm OWNER TO rnc;
+ALTER TABLE compras.codigos_ncm OWNER TO postgres;
 
 --
--- Name: TABLE codigos_ncm; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2155 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: TABLE codigos_ncm; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON TABLE codigos_ncm IS 'Tbala que contiene los codigos arancelarios ';
 
 
 --
--- Name: COLUMN codigos_ncm.codigo_ncm_id; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2156 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: COLUMN codigos_ncm.codigo_ncm_id; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN codigos_ncm.codigo_ncm_id IS 'identificador unico del codigo arancelario';
 
 
 --
--- Name: COLUMN codigos_ncm.codigo_ncm_nivel_1; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2157 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: COLUMN codigos_ncm.codigo_ncm_nivel_1; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN codigos_ncm.codigo_ncm_nivel_1 IS 'partida';
 
 
 --
--- Name: COLUMN codigos_ncm.codigo_ncm_nivel_2; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2158 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: COLUMN codigos_ncm.codigo_ncm_nivel_2; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN codigos_ncm.codigo_ncm_nivel_2 IS 'subpartida';
 
 
 --
--- Name: COLUMN codigos_ncm.codigo_ncm_nivel_3; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2159 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: COLUMN codigos_ncm.codigo_ncm_nivel_3; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN codigos_ncm.codigo_ncm_nivel_3 IS 'codigo ncm';
 
 
 --
--- Name: COLUMN codigos_ncm.codigo_ncm_nivel_4; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2160 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: COLUMN codigos_ncm.codigo_ncm_nivel_4; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN codigos_ncm.codigo_ncm_nivel_4 IS 'especificacion propia del pais';
 
 
 --
--- Name: COLUMN codigos_ncm.version; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2161 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: COLUMN codigos_ncm.version; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN codigos_ncm.version IS 'campo de versionamiento';
 
 
 --
--- Name: COLUMN codigos_ncm.fecha_desde; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2162 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: COLUMN codigos_ncm.fecha_desde; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN codigos_ncm.fecha_desde IS 'fechas desde la cual es valido el codigo arancelario';
 
 
 --
--- Name: COLUMN codigos_ncm.fecha_hasta; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2163 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: COLUMN codigos_ncm.fecha_hasta; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN codigos_ncm.fecha_hasta IS 'fecha hasta la cual es valido el codigo arancalario';
 
 
 --
--- Name: entes_organos; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 183 (class 1259 OID 26895)
+-- Name: ente_id_seq; Type: SEQUENCE; Schema: compras; Owner: postgres
+--
+
+CREATE SEQUENCE ente_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE compras.ente_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 173 (class 1259 OID 26488)
+-- Name: entes_organos; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE entes_organos (
-    ente_id bigint NOT NULL,
+    ente_id bigint DEFAULT nextval('ente_id_seq'::regclass) NOT NULL,
     codigo_onapre character varying(20) NOT NULL,
     nombre character varying(255) NOT NULL,
     tipo character varying(50) NOT NULL,
@@ -143,38 +202,62 @@ CREATE TABLE entes_organos (
 );
 
 
-ALTER TABLE compras.entes_organos OWNER TO rnc;
+ALTER TABLE compras.entes_organos OWNER TO postgres;
 
 --
--- Name: TABLE entes_organos; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2164 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: TABLE entes_organos; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON TABLE entes_organos IS 'se encuentran registrados todos los entes y organos';
 
 
 --
--- Name: COLUMN entes_organos.ente_id; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2165 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: COLUMN entes_organos.ente_id; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN entes_organos.ente_id IS 'identificador unico de la tabla';
 
 
 --
--- Name: COLUMN entes_organos.nombre; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2166 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: COLUMN entes_organos.nombre; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN entes_organos.nombre IS 'nombre del organo o ente';
 
 
 --
--- Name: COLUMN entes_organos.tipo; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2167 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: COLUMN entes_organos.tipo; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN entes_organos.tipo IS 'existen dos tipos, organos y entes';
 
 
 --
--- Name: partida_productos; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 184 (class 1259 OID 26897)
+-- Name: partida_id_seq; Type: SEQUENCE; Schema: compras; Owner: postgres
+--
+
+CREATE SEQUENCE partida_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE compras.partida_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 174 (class 1259 OID 26493)
+-- Name: partida_productos; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE partida_productos (
@@ -183,35 +266,42 @@ CREATE TABLE partida_productos (
 );
 
 
-ALTER TABLE compras.partida_productos OWNER TO rnc;
+ALTER TABLE compras.partida_productos OWNER TO postgres;
 
 --
--- Name: TABLE partida_productos; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2168 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: TABLE partida_productos; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON TABLE partida_productos IS 'tabla que contiene los productos que pueden ser asociados a cada partida';
 
 
 --
--- Name: COLUMN partida_productos.partida_id; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2169 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: COLUMN partida_productos.partida_id; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN partida_productos.partida_id IS 'clave foranea que referencia a una partida';
 
 
 --
--- Name: COLUMN partida_productos.producto_id; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2170 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: COLUMN partida_productos.producto_id; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN partida_productos.producto_id IS 'clave foranea que referencia a un producto';
 
 
 --
--- Name: partidas; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 179 (class 1259 OID 26856)
+-- Name: partidas; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE partidas (
-    partida_id bigint NOT NULL,
+    partida_id bigint DEFAULT nextval('partida_id_seq'::regclass) NOT NULL,
     p1 numeric(4,0) NOT NULL,
     p2 numeric(4,0) NOT NULL,
     p3 numeric(4,0) NOT NULL,
@@ -220,63 +310,93 @@ CREATE TABLE partidas (
 );
 
 
-ALTER TABLE compras.partidas OWNER TO rnc;
+ALTER TABLE compras.partidas OWNER TO postgres;
 
 --
--- Name: TABLE partidas; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2171 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: TABLE partidas; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON TABLE partidas IS 'partidas presupuestarias disponibles';
 
 
 --
--- Name: COLUMN partidas.partida_id; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2172 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: COLUMN partidas.partida_id; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN partidas.partida_id IS 'identificador unico de la partida';
 
 
 --
--- Name: COLUMN partidas.p1; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2173 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: COLUMN partidas.p1; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN partidas.p1 IS 'partida';
 
 
 --
--- Name: COLUMN partidas.p2; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2174 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: COLUMN partidas.p2; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN partidas.p2 IS 'partida generica';
 
 
 --
--- Name: COLUMN partidas.p3; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2175 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: COLUMN partidas.p3; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN partidas.p3 IS 'partida especifica';
 
 
 --
--- Name: COLUMN partidas.p4; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2176 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: COLUMN partidas.p4; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN partidas.p4 IS 'partida sub especifica';
 
 
 --
--- Name: COLUMN partidas.nombre; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2177 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: COLUMN partidas.nombre; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN partidas.nombre IS 'nombre de la partida';
 
 
 --
--- Name: presupuesto; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 185 (class 1259 OID 26899)
+-- Name: presupuesto_id_seq; Type: SEQUENCE; Schema: compras; Owner: postgres
+--
+
+CREATE SEQUENCE presupuesto_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE compras.presupuesto_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 188 (class 1259 OID 26927)
+-- Name: presupuesto; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE presupuesto (
-    presupuesto_id bigint NOT NULL,
+    presupuesto_id bigint DEFAULT nextval('presupuesto_id_seq'::regclass) NOT NULL,
     partida_id bigint NOT NULL,
     producto_id bigint NOT NULL,
     unidad_id bigint NOT NULL,
@@ -288,73 +408,92 @@ CREATE TABLE presupuesto (
 );
 
 
-ALTER TABLE compras.presupuesto OWNER TO rnc;
+ALTER TABLE compras.presupuesto OWNER TO postgres;
 
 --
--- Name: TABLE presupuesto; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2178 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: TABLE presupuesto; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON TABLE presupuesto IS 'La tabla contiene la informacion de los productos presupuestados';
 
 
 --
--- Name: COLUMN presupuesto.presupuesto_id; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2179 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: COLUMN presupuesto.presupuesto_id; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto.presupuesto_id IS 'identificador unico de un productos de una partida presupuestado';
 
 
 --
--- Name: COLUMN presupuesto.partida_id; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2180 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: COLUMN presupuesto.partida_id; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto.partida_id IS 'clave foranea que referencia a una partida  que esta siendo presupuestada';
 
 
 --
--- Name: COLUMN presupuesto.producto_id; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2181 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: COLUMN presupuesto.producto_id; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto.producto_id IS 'clave foranea que referencia a un producto';
 
 
 --
--- Name: COLUMN presupuesto.unidad_id; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2182 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: COLUMN presupuesto.unidad_id; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto.unidad_id IS 'clave foranea que referencia a una unidad';
 
 
 --
--- Name: COLUMN presupuesto.costo_unidad; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2183 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: COLUMN presupuesto.costo_unidad; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto.costo_unidad IS 'costo en bolibares de la unidad de un producto';
 
 
 --
--- Name: COLUMN presupuesto.cantidad; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2184 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: COLUMN presupuesto.cantidad; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto.cantidad IS 'cantidad de productos presupuestados';
 
 
 --
--- Name: COLUMN presupuesto.monto_presupuesto; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2185 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: COLUMN presupuesto.monto_presupuesto; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto.monto_presupuesto IS 'monto total de un producto por n veces las unidades expresado en bolivares';
 
 
 --
--- Name: COLUMN presupuesto.tipo; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2186 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: COLUMN presupuesto.tipo; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto.tipo IS 'los bienes pueden ser comprados nacionalmente o internacionalmente';
 
 
 --
--- Name: presupuesto_importacion; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 176 (class 1259 OID 26514)
+-- Name: presupuesto_importacion; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE presupuesto_importacion (
@@ -368,56 +507,84 @@ CREATE TABLE presupuesto_importacion (
 );
 
 
-ALTER TABLE compras.presupuesto_importacion OWNER TO rnc;
+ALTER TABLE compras.presupuesto_importacion OWNER TO postgres;
 
 --
--- Name: TABLE presupuesto_importacion; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2187 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: TABLE presupuesto_importacion; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON TABLE presupuesto_importacion IS 'Tabla que contiene la informacion de los productos presuepuestados que seran importados';
 
 
 --
--- Name: COLUMN presupuesto_importacion.codigo_ncm_id; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2188 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: COLUMN presupuesto_importacion.codigo_ncm_id; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto_importacion.codigo_ncm_id IS 'clave foranea que referencia el codigo arancelario ';
 
 
 --
--- Name: COLUMN presupuesto_importacion.presupuesto_id; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2189 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: COLUMN presupuesto_importacion.presupuesto_id; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto_importacion.presupuesto_id IS 'clave foranea que referencia a un presupuesto de un producto determinado';
 
 
 --
--- Name: COLUMN presupuesto_importacion.cantidad; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2190 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: COLUMN presupuesto_importacion.cantidad; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto_importacion.cantidad IS 'cantidad del producto que se importara';
 
 
 --
--- Name: COLUMN presupuesto_importacion.monto_presupuesto; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2191 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: COLUMN presupuesto_importacion.monto_presupuesto; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto_importacion.monto_presupuesto IS 'monto expresado en dolares del producto que se importara';
 
 
 --
--- Name: COLUMN presupuesto_importacion.tipo; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2192 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: COLUMN presupuesto_importacion.tipo; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto_importacion.tipo IS 'copovex o licitacion internacional';
 
 
 --
--- Name: productos; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 190 (class 1259 OID 26961)
+-- Name: producto_id_seq; Type: SEQUENCE; Schema: compras; Owner: postgres
+--
+
+CREATE SEQUENCE producto_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE compras.producto_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 175 (class 1259 OID 26496)
+-- Name: productos; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE productos (
-    producto_id bigint NOT NULL,
+    producto_id bigint DEFAULT nextval('producto_id_seq'::regclass) NOT NULL,
     cod_segmento bigint NOT NULL,
     cod_familia bigint NOT NULL,
     cod_clase bigint NOT NULL,
@@ -426,98 +593,150 @@ CREATE TABLE productos (
 );
 
 
-ALTER TABLE compras.productos OWNER TO rnc;
+ALTER TABLE compras.productos OWNER TO postgres;
 
 --
--- Name: TABLE productos; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2193 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: TABLE productos; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON TABLE productos IS 'productos segun la convencion de las naciones unidas';
 
 
 --
--- Name: COLUMN productos.producto_id; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2194 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: COLUMN productos.producto_id; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN productos.producto_id IS 'identificador unico del producto';
 
 
 --
--- Name: COLUMN productos.cod_segmento; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2195 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: COLUMN productos.cod_segmento; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN productos.cod_segmento IS 'segmento del codigo de las naciones unidas';
 
 
 --
--- Name: COLUMN productos.cod_familia; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2196 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: COLUMN productos.cod_familia; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN productos.cod_familia IS 'familia del codigo de las naciones unidas';
 
 
 --
--- Name: COLUMN productos.cod_clase; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2197 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: COLUMN productos.cod_clase; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN productos.cod_clase IS 'clase del codigo de las naciones unidas';
 
 
 --
--- Name: COLUMN productos.cod_producto; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2198 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: COLUMN productos.cod_producto; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN productos.cod_producto IS 'codigo del producto de las naciones unidas';
 
 
 --
--- Name: proyecto_partidas; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 186 (class 1259 OID 26903)
+-- Name: proyecto_id_seq; Type: SEQUENCE; Schema: compras; Owner: postgres
+--
+
+CREATE SEQUENCE proyecto_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE compras.proyecto_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 187 (class 1259 OID 26905)
+-- Name: proyecto_partida_id_seq; Type: SEQUENCE; Schema: compras; Owner: postgres
+--
+
+CREATE SEQUENCE proyecto_partida_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE compras.proyecto_partida_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 177 (class 1259 OID 26519)
+-- Name: proyecto_partidas; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE proyecto_partidas (
-    proyecto_partida_id bigint NOT NULL,
+    proyecto_partida_id bigint DEFAULT nextval('proyecto_partida_id_seq'::regclass) NOT NULL,
     proyecto_id bigint NOT NULL,
     partida_id bigint NOT NULL,
     monto_presupuestado numeric(38,6) NOT NULL
 );
 
 
-ALTER TABLE compras.proyecto_partidas OWNER TO rnc;
+ALTER TABLE compras.proyecto_partidas OWNER TO postgres;
 
 --
--- Name: COLUMN proyecto_partidas.proyecto_partida_id; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2199 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: COLUMN proyecto_partidas.proyecto_partida_id; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN proyecto_partidas.proyecto_partida_id IS 'identificador unico ';
 
 
 --
--- Name: COLUMN proyecto_partidas.proyecto_id; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2200 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: COLUMN proyecto_partidas.proyecto_id; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN proyecto_partidas.proyecto_id IS 'clave foranea que hace referencia a un proyecto o accion centralizada';
 
 
 --
--- Name: COLUMN proyecto_partidas.partida_id; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2201 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: COLUMN proyecto_partidas.partida_id; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN proyecto_partidas.partida_id IS 'clave foranea que hace referencia a una partida';
 
 
 --
--- Name: COLUMN proyecto_partidas.monto_presupuestado; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2202 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: COLUMN proyecto_partidas.monto_presupuestado; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN proyecto_partidas.monto_presupuestado IS 'monto presupuestado para un la partida de un proyecto particular';
 
 
 --
--- Name: proyectos_acciones; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 178 (class 1259 OID 26532)
+-- Name: proyectos_acciones; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE proyectos_acciones (
-    proyecto_id bigint NOT NULL,
+    proyecto_id bigint DEFAULT nextval('proyecto_id_seq'::regclass) NOT NULL,
     nombre character varying(255) NOT NULL,
     monto numeric(38,6) NOT NULL,
     codigo character varying(20) NOT NULL,
@@ -526,57 +745,102 @@ CREATE TABLE proyectos_acciones (
 );
 
 
-ALTER TABLE compras.proyectos_acciones OWNER TO rnc;
+ALTER TABLE compras.proyectos_acciones OWNER TO postgres;
 
 --
--- Name: COLUMN proyectos_acciones.proyecto_id; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2203 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: COLUMN proyectos_acciones.proyecto_id; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN proyectos_acciones.proyecto_id IS 'identificador unico del proyecto';
 
 
 --
--- Name: COLUMN proyectos_acciones.nombre; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2204 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: COLUMN proyectos_acciones.nombre; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN proyectos_acciones.nombre IS 'nombre del proyecto o accion centralizada';
 
 
 --
--- Name: COLUMN proyectos_acciones.monto; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2205 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: COLUMN proyectos_acciones.monto; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN proyectos_acciones.monto IS 'monto del proyecto a accion centralizada';
 
 
 --
--- Name: COLUMN proyectos_acciones.codigo; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2206 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: COLUMN proyectos_acciones.codigo; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN proyectos_acciones.codigo IS 'codigo del proyecto o accion centralizada segun especificacion de onapre';
 
 
 --
--- Name: COLUMN proyectos_acciones.tipo; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2207 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: COLUMN proyectos_acciones.tipo; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN proyectos_acciones.tipo IS 'puede tomar los valores de "proyecto" y "accion centralizada"';
 
 
 --
--- Name: unidades; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 191 (class 1259 OID 26964)
+-- Name: unidad_id_seq; Type: SEQUENCE; Schema: compras; Owner: postgres
+--
+
+CREATE SEQUENCE unidad_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE compras.unidad_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 189 (class 1259 OID 26932)
+-- Name: unidades; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE unidades (
-    unidad_id bigint NOT NULL,
+    unidad_id bigint DEFAULT nextval('unidad_id_seq'::regclass) NOT NULL,
     nombre character varying NOT NULL
 );
 
 
-ALTER TABLE compras.unidades OWNER TO rnc;
+ALTER TABLE compras.unidades OWNER TO postgres;
 
 --
--- Name: usuarios; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 2208 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: COLUMN unidades.unidad_id; Type: COMMENT; Schema: compras; Owner: postgres
+--
+
+COMMENT ON COLUMN unidades.unidad_id IS 'identificador unico de la tabla';
+
+
+--
+-- TOC entry 2209 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: COLUMN unidades.nombre; Type: COMMENT; Schema: compras; Owner: postgres
+--
+
+COMMENT ON COLUMN unidades.nombre IS 'descripcion de la unidad';
+
+
+--
+-- TOC entry 180 (class 1259 OID 26874)
+-- Name: usuarios; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE usuarios (
@@ -590,59 +854,74 @@ CREATE TABLE usuarios (
 );
 
 
-ALTER TABLE compras.usuarios OWNER TO rnc;
+ALTER TABLE compras.usuarios OWNER TO postgres;
 
 --
--- Name: TABLE usuarios; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2210 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: TABLE usuarios; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON TABLE usuarios IS 'Tabla de usuarios';
 
 
 --
--- Name: COLUMN usuarios.codigo_onapre; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2211 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: COLUMN usuarios.codigo_onapre; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN usuarios.codigo_onapre IS 'Clave foranea del codigo_onapre en la tabla entes_organos';
 
 
 --
--- Name: COLUMN usuarios.usuario; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2212 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: COLUMN usuarios.usuario; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN usuarios.usuario IS 'Nombre de usuario del ente u organismo';
 
 
 --
--- Name: COLUMN usuarios.contrasena; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2213 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: COLUMN usuarios.contrasena; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN usuarios.contrasena IS 'Contraseña del usuario';
 
 
 --
--- Name: COLUMN usuarios.correo; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2214 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: COLUMN usuarios.correo; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN usuarios.correo IS 'Correo del usuario';
 
 
 --
--- Name: COLUMN usuarios.creado_el; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2215 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: COLUMN usuarios.creado_el; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN usuarios.creado_el IS 'Fecha de creación de la cuenta';
 
 
 --
--- Name: COLUMN usuarios.actualizado_el; Type: COMMENT; Schema: compras; Owner: rnc
+-- TOC entry 2216 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: COLUMN usuarios.actualizado_el; Type: COMMENT; Schema: compras; Owner: postgres
 --
 
 COMMENT ON COLUMN usuarios.actualizado_el IS 'Fecha de actualización de la cuenta';
 
 
 --
--- Name: usuarios_usuario_id_seq; Type: SEQUENCE; Schema: compras; Owner: rnc
+-- TOC entry 181 (class 1259 OID 26877)
+-- Name: usuarios_usuario_id_seq; Type: SEQUENCE; Schema: compras; Owner: postgres
 --
 
 CREATE SEQUENCE usuarios_usuario_id_seq
@@ -653,24 +932,38 @@ CREATE SEQUENCE usuarios_usuario_id_seq
     CACHE 1;
 
 
-ALTER TABLE compras.usuarios_usuario_id_seq OWNER TO rnc;
+ALTER TABLE compras.usuarios_usuario_id_seq OWNER TO postgres;
 
 --
--- Name: usuarios_usuario_id_seq; Type: SEQUENCE OWNED BY; Schema: compras; Owner: rnc
+-- TOC entry 2217 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: usuarios_usuario_id_seq; Type: SEQUENCE OWNED BY; Schema: compras; Owner: postgres
 --
 
 ALTER SEQUENCE usuarios_usuario_id_seq OWNED BY usuarios.usuario_id;
 
 
 --
--- Name: usuario_id; Type: DEFAULT; Schema: compras; Owner: rnc
+-- TOC entry 1978 (class 2604 OID 26879)
+-- Name: usuario_id; Type: DEFAULT; Schema: compras; Owner: postgres
 --
 
 ALTER TABLE ONLY usuarios ALTER COLUMN usuario_id SET DEFAULT nextval('usuarios_usuario_id_seq'::regclass);
 
 
 --
--- Data for Name: codigos_ncm; Type: TABLE DATA; Schema: compras; Owner: rnc
+-- TOC entry 2218 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: codigo_ncm_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: postgres
+--
+
+SELECT pg_catalog.setval('codigo_ncm_id_seq', 1, false);
+
+
+--
+-- TOC entry 2127 (class 0 OID 26483)
+-- Dependencies: 172
+-- Data for Name: codigos_ncm; Type: TABLE DATA; Schema: compras; Owner: postgres
 --
 
 COPY codigos_ncm (codigo_ncm_id, codigo_ncm_nivel_1, codigo_ncm_nivel_2, codigo_ncm_nivel_3, codigo_ncm_nivel_4, descripcion_ncm, version, fecha_desde, fecha_hasta, unidad) FROM stdin;
@@ -12617,7 +12910,18 @@ COPY codigos_ncm (codigo_ncm_id, codigo_ncm_nivel_1, codigo_ncm_nivel_2, codigo_
 
 
 --
--- Data for Name: entes_organos; Type: TABLE DATA; Schema: compras; Owner: rnc
+-- TOC entry 2219 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: ente_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: postgres
+--
+
+SELECT pg_catalog.setval('ente_id_seq', 1, false);
+
+
+--
+-- TOC entry 2128 (class 0 OID 26488)
+-- Dependencies: 173
+-- Data for Name: entes_organos; Type: TABLE DATA; Schema: compras; Owner: postgres
 --
 
 COPY entes_organos (ente_id, codigo_onapre, nombre, tipo, ente_adscrito) FROM stdin;
@@ -12625,7 +12929,18 @@ COPY entes_organos (ente_id, codigo_onapre, nombre, tipo, ente_adscrito) FROM st
 
 
 --
--- Data for Name: partida_productos; Type: TABLE DATA; Schema: compras; Owner: rnc
+-- TOC entry 2220 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: partida_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: postgres
+--
+
+SELECT pg_catalog.setval('partida_id_seq', 1, false);
+
+
+--
+-- TOC entry 2129 (class 0 OID 26493)
+-- Dependencies: 174
+-- Data for Name: partida_productos; Type: TABLE DATA; Schema: compras; Owner: postgres
 --
 
 COPY partida_productos (partida_id, producto_id) FROM stdin;
@@ -12633,7 +12948,9 @@ COPY partida_productos (partida_id, producto_id) FROM stdin;
 
 
 --
--- Data for Name: partidas; Type: TABLE DATA; Schema: compras; Owner: rnc
+-- TOC entry 2134 (class 0 OID 26856)
+-- Dependencies: 179
+-- Data for Name: partidas; Type: TABLE DATA; Schema: compras; Owner: postgres
 --
 
 COPY partidas (partida_id, p1, p2, p3, p4, nombre) FROM stdin;
@@ -12641,7 +12958,9 @@ COPY partidas (partida_id, p1, p2, p3, p4, nombre) FROM stdin;
 
 
 --
--- Data for Name: presupuesto; Type: TABLE DATA; Schema: compras; Owner: rnc
+-- TOC entry 2143 (class 0 OID 26927)
+-- Dependencies: 188
+-- Data for Name: presupuesto; Type: TABLE DATA; Schema: compras; Owner: postgres
 --
 
 COPY presupuesto (presupuesto_id, partida_id, producto_id, unidad_id, costo_unidad, cantidad, monto_presupuesto, tipo, monto_ejecutado) FROM stdin;
@@ -12649,7 +12968,18 @@ COPY presupuesto (presupuesto_id, partida_id, producto_id, unidad_id, costo_unid
 
 
 --
--- Data for Name: presupuesto_importacion; Type: TABLE DATA; Schema: compras; Owner: rnc
+-- TOC entry 2221 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: presupuesto_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: postgres
+--
+
+SELECT pg_catalog.setval('presupuesto_id_seq', 1, false);
+
+
+--
+-- TOC entry 2131 (class 0 OID 26514)
+-- Dependencies: 176
+-- Data for Name: presupuesto_importacion; Type: TABLE DATA; Schema: compras; Owner: postgres
 --
 
 COPY presupuesto_importacion (codigo_ncm_id, presupuesto_id, cantidad, fecha_llegada, monto_presupuesto, tipo, monto_ejecutado) FROM stdin;
@@ -12657,7 +12987,18 @@ COPY presupuesto_importacion (codigo_ncm_id, presupuesto_id, cantidad, fecha_lle
 
 
 --
--- Data for Name: productos; Type: TABLE DATA; Schema: compras; Owner: rnc
+-- TOC entry 2222 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: producto_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: postgres
+--
+
+SELECT pg_catalog.setval('producto_id_seq', 1, false);
+
+
+--
+-- TOC entry 2130 (class 0 OID 26496)
+-- Dependencies: 175
+-- Data for Name: productos; Type: TABLE DATA; Schema: compras; Owner: postgres
 --
 
 COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto, nombre) FROM stdin;
@@ -13741,7 +14082,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 1376	42	21	19	0	AYUDA DE PREPARACION DE COMIDA Y BEBIDA Y ALIMENTOS PARA PERSONAS CON DESAFIOS FISICOS
 1377	42	21	20	0	CUIDADO DE LA CASA Y AYUDA PARA EL CUIDADO DE LA CASA PARA PERSONAS CON DESAFIOS FISICOS
 1378	42	21	21	0	APARATOS DE TIEMPO LIBRE Y RECREO PARA PERSONAS CON DESAFIOS FISICOS
-1509	43	22	30	0	EQUIPO DE TELETIPO
 1379	42	21	22	0	AUXILIO DE MANEJO DE MEDICAMENTOS PARA PERSONAS CON DESAFIOS FISICOS
 1380	42	21	23	0	AYUDA PARA LLEGAR O AGARRAR PARA PERSONAS CON DESAFIOS FISICOS
 1381	42	22	15	0	ACCESORIOS, CATETERES, CANULAS INTRAVENOSAS Y ARTERIALES
@@ -13872,6 +14212,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 1506	43	22	27	0	EQUIPO TELEGRAFICO
 1507	43	22	28	0	EQUIPO DE TELEFONIA
 1508	43	22	29	0	ACCESORIOS DE EQUIPO DE TELEFONIA
+1509	43	22	30	0	EQUIPO DE TELETIPO
 1510	43	22	31	0	COMPONENTES Y EQUIPO DE INFRAESTRUCTURA DE REDES MOVILES Y DIGITALES
 1511	43	22	32	0	PLATAFORMAS DE MENSAJERIA POR MOVIL
 1512	43	23	15	0	SOFTWARE, PROGRAMAS DE FUNCIONES DE GESTION
@@ -14026,7 +14367,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 1661	49	20	15	0	EQUIPO DE ENTRENAMIENTO PARA AEROBIC
 1662	49	20	16	0	EQUIPO DE ENTRENAMIENTO DE PESAS Y RESISTENCIA
 1663	49	21	16	0	EQUIPO DE GOLF
-1746	51	10	15	0	ANTIBIOTICOS
 1664	49	21	17	0	EQUIPO DE BOLOS Y ACCESORIOS Y SUMINISTROS
 1665	49	21	18	0	EQUIPO DE CLASE DE EDUCACION FISICA
 1666	49	21	19	0	EQUIPOS DE ESGRIMA
@@ -14109,6 +14449,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 1743	50	22	11	0	CEREALES
 1744	50	22	12	0	CEREALES PROCESADOS
 1745	50	23	15	0	PRODUCTOS DE LA CANASTA NAVIDE�A
+1746	51	10	15	0	ANTIBIOTICOS
 1747	51	10	16	0	AMEBICIDAS, TRICOMONACIDAS Y ANTIPROTOZOARIOS
 1748	51	10	17	0	ANTIHELMINTICOS Y OTROS ANTIPARASITARIOS
 1749	51	10	18	0	DROGAS ANTIHONGOS
@@ -14343,7 +14684,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 1978	60	10	48	0	MATERIALES DE FISICA DEL SONIDO Y LAS ONDAS
 1979	60	10	49	0	MATERIALES DE FISICA DE ELECTRICIDAD
 1980	60	10	50	0	MATERIALES DE FISICA NUCLEAR
-2056	70	10	19	0	ACUICULTURA
 1981	60	10	51	0	COHETES, MATERIALES DE VUELO Y SUMINISTROS
 1982	60	10	52	0	MATERIALES EDUCATIVOS DE RECURSOS DE APTITUDES DE VIDA
 1983	60	10	53	0	MATERIALES EDUCATIVOS DE EDUCACION DE CARRERA
@@ -14419,6 +14759,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 2053	70	10	16	0	VIGILANCIA PESQUERA
 2054	70	10	17	0	INDUSTRIA Y TECNOLOGIA PESQUERA
 2055	70	10	18	0	RECURSOS PESQUEROS
+2056	70	10	19	0	ACUICULTURA
 2057	70	11	15	0	PLANTAS Y ARBOLES ORNAMENTALES
 2058	70	11	16	0	PLANTAS DE FLOR
 2059	70	11	17	0	PARQUES, JARDINES Y HUERTOS
@@ -14496,7 +14837,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 2131	71	16	14	0	SERVICIOS DE GESTION DE CONSTRUCCION DEL POZO
 2132	71	16	15	0	SERVICIOS DE OPERACION DEL LUGAR DE LA PERFORACION
 2133	72	10	15	0	SERVICIOS DE APOYO PARA LA CONSTRUCCION
-2292	81	10	23	0	INGENIERIA AERONAUTICA
 2134	72	10	16	0	REVESTIMIENTOS DE TECHOS, PAREDES O METALISTERIA
 2135	72	10	17	0	TRABAJO EN HORMIGON
 2136	72	10	18	0	LIMPIEZA EXTERIOR
@@ -14655,6 +14995,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 2289	81	10	20	0	INGENIERIA DE MINAS
 2290	81	10	21	0	INGENIERIA OCEANICA
 2291	81	10	22	0	INGENIERIA DE TRANSPORTES
+2292	81	10	23	0	INGENIERIA AERONAUTICA
 2293	81	10	24	0	INGENIERIA DE TRANSMISION DE PODER ELECTRICA
 2294	81	11	15	0	INGENIERIA DE SOFTWARE O DE HARDWARE
 2295	81	11	16	0	PROGRAMADORES INFORMATICOS
@@ -16185,7 +16526,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 3820	20	10	23	7	Piezas de repuestos de veh�culo de servicio de miner�a subterr�nea o accesorios
 3821	20	11	15	4	Equipo de perforaci�n de pozos de agua
 3822	20	11	15	5	Equipo de prospecci�n de uranio
-3899	20	12	13	2	Flotadores
 3823	20	11	16	1	Maquinaria de perforaci�n o excavaci�
 3824	20	11	16	2	Maquinaria de montaje para el fondo de la perforaci�
 3825	20	11	16	3	Perforadoras de martillo
@@ -16262,6 +16602,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 3896	20	12	12	12	Tapadores de servicio de fracturar
 3897	20	12	12	13	Instalaciones de bombeo de estimulaci�
 3898	20	12	13	1	Tap�n obturador
+3899	20	12	13	2	Flotadores
 3900	20	12	13	3	Sistema Frac de empacar
 3901	20	12	13	4	Sistemas de empacar grava
 3902	20	12	13	5	Zapatas gu�
@@ -16571,7 +16912,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 4206	20	13	10	10	Agentes de lastrar el lodo
 4207	20	13	11	1	Proppants cer�micos
 4208	20	13	11	2	Arenas de fracturar
-4283	21	10	16	2	Transplantadoras
 4209	20	13	11	3	Proppants cer�micos cubiertos de resina
 4210	20	13	11	4	Arenas de fracturar cubiertas de resina
 4211	20	13	11	5	Bauxitas sinterizadas cubierta de resina
@@ -16646,6 +16986,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 4280	21	10	15	14	Arados de subsuelo
 4281	21	10	15	16	Plantadores
 4282	21	10	16	1	Plantadoras
+4283	21	10	16	2	Transplantadoras
 4284	21	10	16	3	Sembradoras de grano
 4285	21	10	16	4	Sembradoras de semillas
 4286	21	10	16	5	Equipo para tratamiento de semillas
@@ -17785,7 +18126,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 5420	25	17	27	2	Sistemas de control  medioambiental espacial
 5421	25	17	27	3	Sistemas de control  medioambiental mar�timo
 5422	25	17	27	4	Sistema control temperatura  veh�culo
-5504	25	18	17	1	Remolques para contenedores
 5423	25	17	28	2	Sistemas hidr�ulicos para  automotores
 5424	25	17	28	3	Sistemas hidr�ulicos mar�timos
 5425	25	17	29	1	Iluminaci�n exterior para  autom�viles
@@ -17867,6 +18207,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 5501	25	18	16	1	Chasis para autom�viles
 5502	25	18	16	2	Chasis para camiones
 5503	25	18	16	3	Cuadros, marcos para motocicletas
+5504	25	18	17	1	Remolques para contenedores
 5505	25	18	17	2	Remolques de plataforma
 5506	25	18	17	3	Remolques para ganado
 5507	25	18	17	4	Remolques cisterna sin temperatura  controlada
@@ -18586,7 +18927,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 6221	27	11	28	13	Vara de extensi�
 6222	27	11	28	14	Brocas de destornillador
 6223	27	11	28	15	Broca de copa
-6390	30	10	19	12	Bobina de zinc
 6224	27	11	28	18	Sombreretes o revestimientos de mordazas de prensa
 6225	27	11	28	19	Cuchillas de corte de cuchilla de encuadernador
 6226	27	11	28	20	Troqueles de herramienta engarzadora de leng�
@@ -18667,7 +19007,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 6301	27	13	17	4	V�stagos de pist�n de cilindro neum�tico
 6302	27	13	17	5	Cuerpo de cilindro neum�tico
 6303	27	13	17	6	Capacetes de cilindro neum�tico
-6391	30	10	19	13	Bobina de esta�
 6304	27	13	17	7	Juegos (kits) de reparaci�n de cilindro neum�tico o sus componentes
 6305	27	13	17	8	Soportes de montaje para cilindros neum�ticos
 6306	27	13	17	9	Anillos amortiguadores de cilindro neum�tico
@@ -18754,6 +19093,8 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 6387	30	10	19	9	Bobina de cobre
 6388	30	10	19	10	Bobina de lat�
 6389	30	10	19	11	Bobina de bronce
+6390	30	10	19	12	Bobina de zinc
+6391	30	10	19	13	Bobina de esta�
 6392	30	10	19	14	Bobina de plomo
 6393	30	10	19	15	Bobina de pl�stico
 6394	30	10	19	16	Bobina de metales preciosos
@@ -19560,7 +19901,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 7195	31	12	11	17	PIEZAS FUNDIDAS MECANIZADAS A TROQUEL COMPUESTO
 7196	31	12	11	18	PIEZAS FUNDIDAS MECANIZADAS A TROQUEL DE ALEACI�N DE N�QUEL
 7197	31	12	11	19	PIEZAS FUNDIDAS MECANIZADAS A TROQUEL NO MET�LICO
-7469	31	15	19	4	Correa de pl�stico
 7198	31	12	12	1	Piezas mecanizadas de aleaci�n no ferrosa fundidas en arena
 7199	31	12	12	2	Piezas mecanizadas de aleaci�n ferrosa fundidas en arena
 7200	31	12	12	3	Piezas mecanizadas de acero fundidas en arena
@@ -19624,7 +19964,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 7258	31	12	15	4	Piezas fundidas mecanizadas de  molde de casco de acero inoxidable
 7259	31	12	15	5	Piezas fundidas mecanizadas de  molde de casco de hierro
 7260	31	12	15	6	Piezas fundidas mecanizadas de  molde de casco de aluminio
-7470	31	15	19	5	Correas de caucho
 7261	31	12	15	7	Piezas fundidas mecanizadas de  molde de casco de magnesio
 7262	31	12	15	8	Piezas fundidas mecanizadas de  molde de casco de titanio
 7263	31	12	15	9	Piezas fundidas mecanizadas de  molde de casco de berilio
@@ -19833,6 +20172,8 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 7466	31	15	19	1	Correas met�licas
 7467	31	15	19	2	Correas de cuero
 7468	31	15	19	3	Correas de fibra
+7469	31	15	19	4	Correa de pl�stico
+7470	31	15	19	5	Correas de caucho
 7471	31	15	19	6	Correas con rach para carga
 7472	31	15	20	1	CUCHILLA DE NAVAJA
 7473	31	15	20	2	Alambre de espinas
@@ -20487,7 +20828,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 8122	31	28	22	13	Componentes no met�licos  formados con rodillo
 8123	31	28	22	14	Componentes de metal precioso  formados con rodillo
 8124	31	28	22	15	Componentes de acero inoxidable  formados con rodillo
-8994	39	11	15	7	Artefactos de escritorio
 8125	31	28	22	16	Componentes de acero formados  rodillo
 8126	31	28	22	17	Componentes de esta�o formados  rodillo
 8127	31	28	22	18	Componentes de titanio formados  rodillo
@@ -20805,7 +21145,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 8439	31	32	13	1	Conjuntos remachados de aluminio en barras
 8440	31	32	13	2	Conjuntos remachados de acero al carbono en barras
 8441	31	32	13	3	Conjuntos remachados de aleaci�n Hast X en barras
-8995	39	11	15	8	Alumbrado de pista
 8442	31	32	13	4	Conjuntos remachados de Inconel en barras
 8443	31	32	13	5	Conjuntos remachados de aleaci�n baja de acero en barras
 8444	31	32	13	6	Conjuntos remachados de material no met�lico en barras
@@ -21060,7 +21399,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 8693	31	35	15	2	Conjuntos de tuber�a empernados  de acero al carbono
 8694	31	35	15	3	Conjuntos de tuber�a empernados  de aleaci�n Hast X
 8695	31	35	15	4	Conjuntos de tuber�a empernados  de aleaci�n baja de acero
-8996	39	11	15	9	L�mparas de pie
 8696	31	35	15	5	Conjuntos de tuber�a empernados  de aleaci�n baja de acero
 8697	31	35	15	6	Conjuntos de tuber�a empernados  no met�lica
 8698	31	35	15	9	Conjuntos de tuber�a empernados  de acero inoxidable
@@ -21196,7 +21534,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 8828	31	38	10	5	Imanes de samario cobalto
 8829	32	10	15	2	CONJUNTOS DE CIRCUITOS IMPRESOS (PCA)
 8830	32	10	15	3	Conjuntos de circuitos mixtos
-8997	39	11	15	10	L�mparas de mesa
 8831	32	10	15	4	Ensamblajes de circuitos montados en superficie
 8832	32	10	15	5	Ensamblajes de circuitos electro plateados
 8833	32	10	15	6	Tarjetas de circuito de doble cara
@@ -21360,6 +21697,10 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 8991	39	11	15	4	Sistemas de iluminaci�n de escenario o estudio
 8992	39	11	15	5	Iluminaci�n empotrada
 8993	39	11	15	6	Ara�as de luces
+8994	39	11	15	7	Artefactos de escritorio
+8995	39	11	15	8	Alumbrado de pista
+8996	39	11	15	9	L�mparas de pie
+8997	39	11	15	10	L�mparas de mesa
 8998	39	11	15	12	Luces de banco de laboratorio
 8999	39	11	15	13	Iluminaci�n solar interior
 9000	39	11	15	14	Luces de �rboles
@@ -22445,7 +22786,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 10080	41	10	63	8	Iniciadores de reacci�n en cadena de la polimerasa (PCR) o reacci�n en cadena de transcriptasa inversa de la polimerasa (RT PCR)
 10081	41	10	63	9	�cido desoxirribonucleico complementario (ADNc) prefabricado
 10082	41	10	63	10	�cidos desoxirribonucleicos (ADN) purificados
-10318	41	11	28	2	Tac�metros
 10083	41	10	63	11	�cidos ribonucleicos (ARN) purificados
 10084	41	10	63	12	Productos tecnol�gicos aceleradores o complementarios de extremos (RACE) de cadenas de �cido desoxirribonucleico
 10085	41	10	63	13	Juegos, Kits de reaccion en cadena de transcriptasa inversa de la polimerasa (RT PCR)
@@ -22681,6 +23021,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 10315	41	11	27	2	Contadores de semillas
 10316	41	11	27	4	Analizadores de alimentaci�
 10317	41	11	28	1	Veloc�metros
+10318	41	11	28	2	Tac�metros
 10319	41	11	28	3	Discos de tac�metro
 10320	41	11	29	1	Brujulas
 10321	41	11	29	2	Instrumentos de navegaci�n por  radio
@@ -22760,7 +23101,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 10395	41	11	36	3	Puentes de laboratorio
 10396	41	11	36	4	Capacit�metros
 10397	41	11	36	5	Derivat�graficos de termo an�lisis
-10477	41	11	41	3	M�dulos de alarma s�smica
 10398	41	11	36	6	Indicadores de alerta de  congelaci�
 10399	41	11	36	7	Monitores de fatiga calor�fica
 10400	41	11	36	8	Contadores de coincidencia o  anticoincidencia
@@ -22840,6 +23180,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 10474	41	11	39	10	Equipo para comprobaci�n del suelo
 10475	41	11	40	1	Clin�metros
 10476	41	11	41	2	Simuladores de terremotos
+10477	41	11	41	3	M�dulos de alarma s�smica
 10478	41	11	41	4	Amplificadores s�smicos
 10479	41	11	41	5	Aparatos s�smicos port�tiles
 10480	41	11	41	6	Registradores s�smicos o sism�grafos
@@ -23212,7 +23553,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 10847	42	12	15	8	Sets de frascos veterinarios
 10848	42	12	15	9	Term�metros cl�nicos veterinarios
 10849	42	12	15	10	Estuches para instrumentos o  accesorios veterinarios
-10923	42	14	17	4	Colchones sobrepuestos
 10850	42	12	15	11	Estuches enrollables para  instrumentos o accesorios  veterinarios
 10851	42	12	15	12	Esp�culos veterinarios
 10852	42	12	15	13	Instrumental de castraci�n  veterinaria
@@ -23286,6 +23626,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 10920	42	14	17	1	Sistemas de presi�n alternativa
 10921	42	14	17	2	Marcos de mantas o elevadores
 10922	42	14	17	3	Extremidades de cunas
+10923	42	14	17	4	Colchones sobrepuestos
 10924	42	14	17	5	Almohadillas, cojines o almohadas para posicionar el enfermo
 10925	42	14	18	1	Unidades de combinaci�n de electroterapia
 10926	42	14	18	2	ELECTRODOS DE ELECTROTERAPIA
@@ -23653,7 +23994,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 11288	42	15	24	24	Cementos dentales a base de agua
 11289	42	15	24	25	Resinas de base para dentaduras
 11290	42	15	24	26	Resinas para revestimiento tempor�neo de la base de la dentadura
-11362	42	15	27	7	Tubos bucales ortod�nticos
 11291	42	15	24	27	Resinas de reparaci�n para curaci�n en fr�o de la dentadura
 11292	42	15	24	28	Resinas de relleno directo
 11293	42	15	24	29	Materiales elastom�ricos para impresi�n dental
@@ -23725,6 +24065,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 11359	42	15	27	4	Retenedores dentales
 11360	42	15	27	5	Corchetes de aparatos ortod�nticos
 11361	42	15	27	6	SOPORTES (BRACKETS) ORTOD�NTICOS
+11362	42	15	27	7	Tubos bucales ortod�nticos
 11363	42	15	27	8	Resortes espirales ortod�nticos
 11364	42	15	27	9	El�sticos ortod�nticos
 11365	42	15	27	10	Elastom�ricos ortod�nticos
@@ -23793,7 +24134,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 11428	42	16	17	2	Sacos de colecci�n de hemofiltrato
 11429	42	16	17	3	Puertos de infusi�n de hemofiltraci�
 11430	42	16	17	4	Puertos de muestras de hemofiltraci�
-11492	42	17	20	11	Kits para t�cnicos m�dicos de urgencias (EMT)
 11431	42	16	18	1	Unidades de hemodi�lisis arteriovenosa continua (CAVHD) o productos relacionados
 11432	42	16	18	2	UNIDADES DE HEMOFILTRACI�N ARTERIOVENOSO CONTINUO (CAVH) O PRODUCTOS RELACIONADOS
 11433	42	16	18	3	Unidades de hemofiltraci�n venovenosa continua o productos relacionados
@@ -23855,6 +24195,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 11489	42	17	20	8	Equipos de rappel de servicios m�dicos de urgencia
 11490	42	17	20	9	EQUIPOS DE RESCATE E INVESTIGACI�N DE SERVICIOS M�DICOS DE URGENCIA
 11491	42	17	20	10	Equipos de trauma de servicios m�dicos de urgencia
+11492	42	17	20	11	Kits para t�cnicos m�dicos de urgencias (EMT)
 11493	42	17	20	12	Kits de ventriculostom�a para los servicios m�dicos de urgencias
 11494	42	17	20	13	Kits de evacuaci�n para los servicios m�dicos de urgencias
 11495	42	17	20	14	Kits de transporte de pacientes para los servicios m�dicos de urgencias o accesorios
@@ -23918,7 +24259,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 11553	42	18	18	5	Accesorios para unidades de ox�metros de impulsos
 11554	42	18	19	1	Monitores, unidades de monitoreo maternal o fetal y de cuidado intensivo fetal y maternal o accesorios
 11555	42	18	19	2	Unidades de monitorizaci�n de presi�n intracraneal (ICP) o accesorios
-11704	42	18	30	45	Sistemas de electrorretinograma
 11556	42	18	19	3	Unidades de control de rendimiento cardiaco (CO) o accesorios
 11557	42	18	19	4	Unidades de transporte o dese�ales vitales m�viles de multipar�metro o accesorios
 11558	42	18	19	5	Cables de control de transductor m�dico
@@ -24067,6 +24407,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 11701	42	18	30	42	Aparatos de percepci�n de profundidad
 11702	42	18	30	43	Bombillas para oftalm�metros
 11703	42	18	30	44	Pantallas de Bjerrum
+11704	42	18	30	45	Sistemas de electrorretinograma
 11705	42	18	30	46	Sets de pruebas de visi�n binocular o accesorios
 11706	42	18	30	47	Expositores para pruebas de agudeza visual
 11707	42	18	30	48	BARRAS DE FIJACI�N OFTALMOL�GICAS PARA NI�OS
@@ -24137,7 +24478,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 11772	42	19	22	8	Accesorios de sillas de ruedas
 11773	42	19	22	9	Rampas para sillas de ruedas
 11774	42	19	22	10	Sillas de ruedas
-12723	42	29	45	17	Enganches �pticos
 11775	42	19	22	11	Tablas para el movimiento de pacientes o accesorios
 11776	42	19	22	12	Alfombrillas de transferencia de pacientes
 11777	42	19	22	13	SISTEMA  DE SUJECI�N O EVACUACI�N DEL PACIENTE A LA UNIDAD DE CALEFACCI�N O ACCESORIOS
@@ -24198,7 +24538,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 11832	42	20	17	13	Componentes tridimensional de eco o doppler o ultrasonido medico
 11833	42	20	17	14	TENSIOMETROS
 11834	42	20	17	15	Ultrasonido vaginal o sondas de eco
-12991	42	31	15	14	Vendajes germicidas
 11835	42	20	17	16	Unidades de ultrasonido vascular
 11836	42	20	17	17	Almohadillas ecogr�ficas m�dicas de transmisi�n de ultrasonidos
 11837	42	20	17	18	Ec�grafos oftalmol�gicos
@@ -24325,7 +24664,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 11958	42	20	40	1	Estantes m�dicos para delantales de resguardo radiol�gico
 11959	42	20	40	2	Cortinas o m�scaras o delantales m�dicos de resguardo radiol�gico
 11960	42	20	40	3	Contenedores port�tiles m�dicos de resguardo radiol�gico para materiales radioactivos
-12992	42	31	15	15	Vendajes hidrocoloides
 11961	42	20	40	4	Tapones m�dicos de o�dos de resguardo radiol�gico
 11962	42	20	40	5	Guantes m�dicos de resguardo radiol�gico
 11963	42	20	40	6	Pantallas m�dicas port�tiles o independientes de resguardo radiol�gico
@@ -24518,7 +24856,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 12150	42	23	17	4	Tubos nasoent�ricos no clasificados en otra parte
 12151	42	23	17	5	Filtros nasog�stricos
 12152	42	23	18	1	F�rmulas suplementarias de adulto para uso general
-12993	42	31	15	16	Vendajes intravenosos
 12153	42	23	18	2	F�rmulas suplementarias pedi�tricas
 12154	42	23	18	3	F�rmulas suplementarias para enfermedades espec�ficas de adulto
 12155	42	23	18	4	F�rmulas suplementarias para enfermedad pedi�trica espec�fica
@@ -24727,7 +25064,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 12359	42	27	17	10	Cat�teres o kits de cateterizaci�n nasal m�dica
 12360	42	27	17	11	GORRAS, CAPUCHAS M�DICAS DE CABEZA
 12361	42	27	17	12	Tiendas de campa�a m�dicas aerosol
-13145	43	20	15	45	Tarjetas de fax
 12362	42	27	17	13	C�maras m�dicas hiperb�ricas
 12363	42	27	17	14	Incubadoras m�dicas
 12364	42	27	17	15	Conectores o tubos de ox�geno m�dico
@@ -25089,6 +25425,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 12720	42	29	45	14	SONDAS HEMOST�TICAS DE BORRADOR
 12721	42	29	45	15	Pulidores de lentes oftalmol�gicas
 12722	42	29	45	16	Soportes oculares o accesorios
+12723	42	29	45	17	Enganches �pticos
 12724	42	29	45	18	Sets de colocaci�n de enganches �pticos
 12725	42	29	45	19	Cucharas o legras oftalmol�gicas
 12726	42	29	45	20	Soportes para lentes oftalmol�gicas o accesorios
@@ -25158,7 +25495,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 12790	42	29	49	21	Impulsores de nudo o sistemas de entrega endoscopicos
 12791	42	29	49	22	Ligatores endoscopicos
 12792	42	29	49	23	Manipuladores endoscopicos
-12857	42	29	51	17	Manta quir�rgica o armarios para calentar soluciones o accesorios
 12793	42	29	49	24	Instrumentos endoscopicos manuales bipolares o monopolares o accesorios y productos relacionados
 12794	42	29	49	25	Punzones o agujas endoscopicos
 12795	42	29	49	26	Sobretubos endoscopicos
@@ -25223,6 +25559,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 12854	42	29	51	14	Equipo de facoemulsificaci�n o de extrusi�n o accesorios para cirug�a oft�lmica
 12855	42	29	51	15	Taburetes rodantes de cirujano o accesorios
 12856	42	29	51	16	Taburetes de escalones para uso quir�rgico o accesorios
+12857	42	29	51	17	Manta quir�rgica o armarios para calentar soluciones o accesorios
 12858	42	29	51	18	Equipo de bomba de irrigaci�n quir�rgico o lavado pulsado o accesorios con o sin succi�
 12859	42	29	51	19	L�sers quir�rgicos o accesorios
 12860	42	29	51	20	Litotripteres quir�rgicos o accesorios
@@ -25356,6 +25693,9 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 12988	42	31	15	11	Vendas de gasa
 12989	42	31	15	12	Esponjas de gasa
 12990	42	31	15	13	Vendaje de gel
+12991	42	31	15	14	Vendajes germicidas
+12992	42	31	15	15	Vendajes hidrocoloides
+12993	42	31	15	16	Vendajes intravenosos
 12994	42	31	15	17	Liquido adhesivo para vendas o vendajes
 12995	42	31	15	18	Almohadillas o parches m�dicos para los ojos
 12996	42	31	15	19	Correas, precintas medicas no-adherentes
@@ -25507,6 +25847,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 13142	43	20	15	42	Unidad de control
 13143	43	20	15	43	Unidad central de instalaci�n de conector
 13144	43	20	15	44	Controlador o convertidor de interfaz bus
+13145	43	20	15	45	Tarjetas de fax
 13146	43	20	15	46	Tarjetas de audioconferencia
 13147	43	20	15	47	Tarjetas de voz
 13148	43	20	15	49	Conmutadores de interfaz bus
@@ -25869,7 +26210,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 13505	43	23	30	2	SOFTWARE, PROGRAMAS DE SISTEMA OPERATIVO DE REDES
 13506	43	23	30	4	SOFTWARE, PROGRAMAS DE SISTEMA OPERATIVO
 13507	43	23	32	1	SOFTWARE, PROGRAMAS DE SERVIDOR DE AUTENTICACI�
-13582	44	10	19	2	M�quinas para extender cheques
 13508	43	23	32	3	SOFTWARE, PROGRAMAS DE ADMINISTRACI�N DE RED  PRIVADA VIRTUAL (VPN) O DE SEGURIDAD DE RED
 13509	43	23	32	4	SOFTWARE, PROGRAMAS DE EQUIPOS DE RED PRIVADA VIRTUAL (VPN) O DE SEGURIDAD DE RED
 13510	43	23	32	5	SOFTWARE, PROGRAMAS DE PROTECCI�N ANTIVIRUS Y DE SEGURIDAD DE TRANSACCIONES
@@ -25944,6 +26284,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 13579	44	10	18	5	Cintas de calculadora
 13580	44	10	18	6	Cintas de caja registradora
 13581	44	10	19	1	M�quinas para endosar cheques
+13582	44	10	19	2	M�quinas para extender cheques
 13583	44	10	19	3	Maquina troqueladora de cheques
 13584	44	10	20	1	L�mina para plastificar
 13585	44	10	20	2	Sobres o bolsas de laminar
@@ -29612,7 +29953,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 17248	52	15	16	26	Cortador multiusos de uso dom�stico
 17249	52	15	16	27	Prensador de ajos de uso dom�stico
 17250	52	15	16	28	Cortador de huevos de uso dom�stico
-17410	53	10	18	5	Abrigos y chaquetas para beb�
 17251	52	15	16	29	Separador de claras y yemas de uso dom�stico
 17252	52	15	16	30	Cortador de queso de uso dom�stico
 17253	52	15	16	31	Pasapur�s de uso dom�stico
@@ -29772,6 +30112,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 17407	53	10	18	2	Abrigos y chaquetas para hombre
 17408	53	10	18	3	Abrigos y chaquetas para ni�
 17409	53	10	18	4	Abrigos y chaquetas para mujer
+17410	53	10	18	5	Abrigos y chaquetas para beb�
 17411	53	10	18	6	Ruanas
 17412	53	10	19	1	Trajes de ni�
 17413	53	10	19	2	Trajes de hombre
@@ -30349,7 +30690,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 17985	56	12	17	1	Unidades o Modulos de almacenamiento general
 17986	56	12	17	2	Unidades o Modulos de almacenamiento de libros
 17987	56	12	17	3	Unidades o Modulos de compartimientos
-18067	60	10	17	2	Calendarios o recortables
 17988	56	12	17	4	Armarios de almacenamiento institucionales
 17989	56	12	18	1	Armarios de almacenamiento de herramientas o armarios de herramientas de educaci�n t�cnica
 17990	56	12	18	2	Armarios de almacenamiento de herramientas o armarios de herramientas generales de taller
@@ -30429,6 +30769,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 18064	60	10	16	9	Certificados espec�ficos de nivel
 18065	60	10	16	10	Certificados espec�ficos de asignatura
 18066	60	10	17	1	Libros de recursos de evaluaci�
+18067	60	10	17	2	Calendarios o recortables
 18068	60	10	17	3	Materiales de recursos educativos del car�cter
 18069	60	10	17	4	Libros de actividades de clase
 18070	60	10	17	5	Materiales de recursos de pensamiento anal�tico
@@ -30807,7 +31148,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 18443	60	10	54	8	Materiales educativos de compra de un autom�vil
 18444	60	10	54	9	Materiales educativos de publicidad y marketing de marca
 18445	60	10	54	10	Materiales educativos de aptitudes para la vida en familia o la creaci�n de relaciones
-18507	60	10	58	7	Materiales educativos de las fibras o la ciencia de los tejidos
 18446	60	10	54	11	Materiales educativos de desarrollo de la autoestima y el concepto del yo
 18447	60	10	54	12	Materiales educativos de prevenci�n de la violencia o educaci�n de elusi�n de la violencia
 18448	60	10	54	13	Materiales educativos de capacitaci�n para resolver la c�lera
@@ -30869,7 +31209,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 18504	60	10	58	4	Materiales educativos de moda y dise�o de ropa
 18505	60	10	58	5	Materiales educativos de an�lisis de colores personales
 18506	60	10	58	6	Materiales educativos de los conceptos b�sicos de la comercializaci�n de la moda o la venta al por menor
-18655	60	12	11	44	Papeles de borrador
+18507	60	10	58	7	Materiales educativos de las fibras o la ciencia de los tejidos
 18508	60	10	58	8	Materiales educativos de lavado, mantenimiento o cuidado de la ropa
 18509	60	10	58	9	Materiales para la ense�anza del arte del dise�o de color sobre la tela
 18510	60	10	58	10	Materiales educativos de tintes y pinturas textiles
@@ -31017,6 +31357,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 18652	60	12	11	41	Cartel de montaje de n�cleo de espuma
 18653	60	12	11	42	Cartel grueso o cartel de dos caras
 18654	60	12	11	43	Cartel de presentaci�
+18655	60	12	11	44	Papeles de borrador
 18656	60	12	11	45	Carteles de borrador
 18657	60	12	11	46	Accesorios de borrador
 18658	60	12	11	47	Papel brillante
@@ -31663,7 +32004,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 19299	70	16	15	2	servicio veterinario
 19300	70	16	16	1	Protecci�n de la flora
 19301	70	16	17	1	Servicios de ecodesarrollo
-19918	72	15	16	21	Puerto deportivo
 19302	70	16	17	2	Servicios de gesti�n del ecosistema marino
 19303	70	16	17	3	Servicios de gesti�n del ecosistema terrestre
 19304	70	16	17	4	Servicios de protecci�n de ecosistemas
@@ -31931,7 +32271,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 19566	71	12	21	8	Servicios de ensayo de dise�o pre frac de fracturar
 19567	71	12	21	9	Servicios generales de control de arena
 19568	71	12	21	10	Servicios de control de arena de fluido transportador de grava
-19919	72	15	16	22	Rompeolas
 19569	71	12	21	11	Servicios de ensayos de laboratorio de control de arena
 19570	71	12	21	12	Servicios de control de arena multizona
 19571	71	12	21	13	Servicios de monitor de control de arena
@@ -32199,7 +32538,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 19833	72	10	26	3	Tapiceria
 19834	72	10	26	4	Ebanisteria
 19835	72	10	27	1	Entarimado, instalaci�n o acabado de suelos
-19920	72	15	16	23	Malec�
 19836	72	10	27	2	Revestimiento, instalaci�n o mantenimiento de suelos
 19837	72	10	27	3	Servicios de limpieza de suelos
 19838	72	10	27	4	INSTALACION, MANTENIMIENTO DE ALFOMBRA
@@ -32282,6 +32620,9 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 19915	72	15	16	18	Zona de acople con pasillos m�viles
 19916	72	15	16	19	Embarcadero
 19917	72	15	16	20	Marina
+19918	72	15	16	21	Puerto deportivo
+19919	72	15	16	22	Rompeolas
+19920	72	15	16	23	Malec�
 19921	72	15	16	24	Edificio de la terminal del ferry
 19922	72	15	16	25	Terminal de carga rodante
 19923	72	15	16	26	Faro
@@ -32442,7 +32783,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 20078	73	12	15	9	Servicios de refinado de metales
 20079	73	12	16	1	Servicios de corte de metales
 20080	73	12	16	2	Servicios de herrer�
-20149	73	15	15	1	Servicios de cadena de montaje
 20081	73	12	16	3	Servicios de calentamiento de metales
 20082	73	12	16	6	Servicios de forja de metales
 20083	73	12	16	7	Servicios de dibujado de metales
@@ -32511,6 +32851,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 20146	73	14	17	13	Servicios de tejidos no tejido
 20147	73	14	17	14	Servicios de hilo trenzado o tejido
 20148	73	14	17	15	Servicios de costura industrial
+20149	73	15	15	1	Servicios de cadena de montaje
 20150	73	15	15	2	Servicios de sellado de uniones o empalmes
 20151	73	15	16	1	Servicios de plantas de envasado
 20152	73	15	16	2	Servicios de envasado de derivados agr�colas
@@ -32579,7 +32920,6 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 20215	73	16	15	3	Servicios de fabricaci�n de m�quinas herramienta, labrado de metales o madera
 20216	73	16	15	4	Servicios de fabricaci�n de plantas industriales o maquinaria especiales
 20217	73	16	15	5	Servicios de fabricaci�n de maquinaria o equipos para construcci�
-20497	78	14	18	1	Servicios de estiba
 20218	73	16	15	6	Servicios de fabricaci�n de maquinaria o equipos para miner�
 20219	73	16	15	7	Servicios de fabricaci�n de maquinaria o equipo para productos alimenticios
 20220	73	16	15	8	Servicios de fabricaci�n de maquinaria o equipos para impresi�n de papel
@@ -32859,6 +33199,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 20494	78	14	17	1	Servicios de remolcador
 20495	78	14	17	2	Operaciones de puentes levadizos
 20496	78	14	17	3	Servicios marinos de comunicaciones o de navegaci�
+20497	78	14	18	1	Servicios de estiba
 20498	78	14	18	2	Servicios de amarre de buques
 20499	78	14	18	3	Servicios de tiendas de buques
 20500	78	18	1	1	Servicios de reparar o pintar la carrocer�a de veh�culos
@@ -34672,7 +35013,27 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 
 
 --
--- Data for Name: proyecto_partidas; Type: TABLE DATA; Schema: compras; Owner: rnc
+-- TOC entry 2223 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: proyecto_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: postgres
+--
+
+SELECT pg_catalog.setval('proyecto_id_seq', 1, false);
+
+
+--
+-- TOC entry 2224 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: proyecto_partida_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: postgres
+--
+
+SELECT pg_catalog.setval('proyecto_partida_id_seq', 1, false);
+
+
+--
+-- TOC entry 2132 (class 0 OID 26519)
+-- Dependencies: 177
+-- Data for Name: proyecto_partidas; Type: TABLE DATA; Schema: compras; Owner: postgres
 --
 
 COPY proyecto_partidas (proyecto_partida_id, proyecto_id, partida_id, monto_presupuestado) FROM stdin;
@@ -34680,7 +35041,9 @@ COPY proyecto_partidas (proyecto_partida_id, proyecto_id, partida_id, monto_pres
 
 
 --
--- Data for Name: proyectos_acciones; Type: TABLE DATA; Schema: compras; Owner: rnc
+-- TOC entry 2133 (class 0 OID 26532)
+-- Dependencies: 178
+-- Data for Name: proyectos_acciones; Type: TABLE DATA; Schema: compras; Owner: postgres
 --
 
 COPY proyectos_acciones (proyecto_id, nombre, monto, codigo, ente_id, tipo) FROM stdin;
@@ -34688,7 +35051,18 @@ COPY proyectos_acciones (proyecto_id, nombre, monto, codigo, ente_id, tipo) FROM
 
 
 --
--- Data for Name: unidades; Type: TABLE DATA; Schema: compras; Owner: rnc
+-- TOC entry 2225 (class 0 OID 0)
+-- Dependencies: 191
+-- Name: unidad_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: postgres
+--
+
+SELECT pg_catalog.setval('unidad_id_seq', 1, false);
+
+
+--
+-- TOC entry 2144 (class 0 OID 26932)
+-- Dependencies: 189
+-- Data for Name: unidades; Type: TABLE DATA; Schema: compras; Owner: postgres
 --
 
 COPY unidades (unidad_id, nombre) FROM stdin;
@@ -34696,7 +35070,9 @@ COPY unidades (unidad_id, nombre) FROM stdin;
 
 
 --
--- Data for Name: usuarios; Type: TABLE DATA; Schema: compras; Owner: rnc
+-- TOC entry 2135 (class 0 OID 26874)
+-- Dependencies: 180
+-- Data for Name: usuarios; Type: TABLE DATA; Schema: compras; Owner: postgres
 --
 
 COPY usuarios (usuario_id, codigo_onapre, usuario, contrasena, correo, creado_el, actualizado_el) FROM stdin;
@@ -34704,14 +35080,17 @@ COPY usuarios (usuario_id, codigo_onapre, usuario, contrasena, correo, creado_el
 
 
 --
--- Name: usuarios_usuario_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: rnc
+-- TOC entry 2226 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: usuarios_usuario_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: postgres
 --
 
 SELECT pg_catalog.setval('usuarios_usuario_id_seq', 1, false);
 
 
 --
--- Name: codigo_onapre_unique; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 1984 (class 2606 OID 26881)
+-- Name: codigo_onapre_unique; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY entes_organos
@@ -34719,7 +35098,8 @@ ALTER TABLE ONLY entes_organos
 
 
 --
--- Name: pkcodigos_ncm; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 1982 (class 2606 OID 26487)
+-- Name: pkcodigos_ncm; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY codigos_ncm
@@ -34727,7 +35107,8 @@ ALTER TABLE ONLY codigos_ncm
 
 
 --
--- Name: pkentes_organos; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 1986 (class 2606 OID 26492)
+-- Name: pkentes_organos; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY entes_organos
@@ -34735,7 +35116,8 @@ ALTER TABLE ONLY entes_organos
 
 
 --
--- Name: pkpartida_productos; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 1988 (class 2606 OID 26558)
+-- Name: pkpartida_productos; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY partida_productos
@@ -34743,7 +35125,8 @@ ALTER TABLE ONLY partida_productos
 
 
 --
--- Name: pkpartidas; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 1998 (class 2606 OID 26863)
+-- Name: pkpartidas; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY partidas
@@ -34751,7 +35134,8 @@ ALTER TABLE ONLY partidas
 
 
 --
--- Name: pkpresupuesto; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 2006 (class 2606 OID 26931)
+-- Name: pkpresupuesto; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY presupuesto
@@ -34759,7 +35143,8 @@ ALTER TABLE ONLY presupuesto
 
 
 --
--- Name: pkpresupuesto_importacion; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 1992 (class 2606 OID 26518)
+-- Name: pkpresupuesto_importacion; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY presupuesto_importacion
@@ -34767,7 +35152,8 @@ ALTER TABLE ONLY presupuesto_importacion
 
 
 --
--- Name: pkproductos; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 1990 (class 2606 OID 26500)
+-- Name: pkproductos; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY productos
@@ -34775,7 +35161,8 @@ ALTER TABLE ONLY productos
 
 
 --
--- Name: pkproyecto_partidas; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 1994 (class 2606 OID 26523)
+-- Name: pkproyecto_partidas; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY proyecto_partidas
@@ -34783,7 +35170,8 @@ ALTER TABLE ONLY proyecto_partidas
 
 
 --
--- Name: pkproyectos_acciones; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 1996 (class 2606 OID 26536)
+-- Name: pkproyectos_acciones; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY proyectos_acciones
@@ -34791,7 +35179,8 @@ ALTER TABLE ONLY proyectos_acciones
 
 
 --
--- Name: pkunidades; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 2008 (class 2606 OID 26939)
+-- Name: pkunidades; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY unidades
@@ -34799,7 +35188,8 @@ ALTER TABLE ONLY unidades
 
 
 --
--- Name: usuarios_correo_key; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 2000 (class 2606 OID 26883)
+-- Name: usuarios_correo_key; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY usuarios
@@ -34807,7 +35197,8 @@ ALTER TABLE ONLY usuarios
 
 
 --
--- Name: usuarios_pk; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 2002 (class 2606 OID 26885)
+-- Name: usuarios_pk; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY usuarios
@@ -34815,7 +35206,8 @@ ALTER TABLE ONLY usuarios
 
 
 --
--- Name: usuarios_usuario_key; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
+-- TOC entry 2004 (class 2606 OID 26887)
+-- Name: usuarios_usuario_key; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY usuarios
@@ -34823,7 +35215,8 @@ ALTER TABLE ONLY usuarios
 
 
 --
--- Name: entes_organos_usuarios_fk; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
+-- TOC entry 2017 (class 2606 OID 26888)
+-- Name: entes_organos_usuarios_fk; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
 --
 
 ALTER TABLE ONLY usuarios
@@ -34831,7 +35224,8 @@ ALTER TABLE ONLY usuarios
 
 
 --
--- Name: fk_entes_organos_entes_organos; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
+-- TOC entry 2009 (class 2606 OID 26633)
+-- Name: fk_entes_organos_entes_organos; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
 --
 
 ALTER TABLE ONLY entes_organos
@@ -34839,7 +35233,8 @@ ALTER TABLE ONLY entes_organos
 
 
 --
--- Name: fk_partida_productos_partidas; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
+-- TOC entry 2011 (class 2606 OID 26864)
+-- Name: fk_partida_productos_partidas; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
 --
 
 ALTER TABLE ONLY partida_productos
@@ -34847,7 +35242,8 @@ ALTER TABLE ONLY partida_productos
 
 
 --
--- Name: fk_partida_productos_productos; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
+-- TOC entry 2010 (class 2606 OID 26509)
+-- Name: fk_partida_productos_productos; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
 --
 
 ALTER TABLE ONLY partida_productos
@@ -34855,7 +35251,8 @@ ALTER TABLE ONLY partida_productos
 
 
 --
--- Name: fk_presupuesto_importacion_codigos_ncm; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
+-- TOC entry 2012 (class 2606 OID 26524)
+-- Name: fk_presupuesto_importacion_codigos_ncm; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
 --
 
 ALTER TABLE ONLY presupuesto_importacion
@@ -34863,7 +35260,8 @@ ALTER TABLE ONLY presupuesto_importacion
 
 
 --
--- Name: fk_presupuesto_importacion_presupuesto; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
+-- TOC entry 2013 (class 2606 OID 26950)
+-- Name: fk_presupuesto_importacion_presupuesto; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
 --
 
 ALTER TABLE ONLY presupuesto_importacion
@@ -34871,7 +35269,8 @@ ALTER TABLE ONLY presupuesto_importacion
 
 
 --
--- Name: fk_presupuesto_productos; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
+-- TOC entry 2018 (class 2606 OID 26940)
+-- Name: fk_presupuesto_productos; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
 --
 
 ALTER TABLE ONLY presupuesto
@@ -34879,7 +35278,8 @@ ALTER TABLE ONLY presupuesto
 
 
 --
--- Name: fk_presupuesto_unidades; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
+-- TOC entry 2019 (class 2606 OID 26945)
+-- Name: fk_presupuesto_unidades; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
 --
 
 ALTER TABLE ONLY presupuesto
@@ -34887,7 +35287,8 @@ ALTER TABLE ONLY presupuesto
 
 
 --
--- Name: fk_proyecto_partidas_partidas; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
+-- TOC entry 2015 (class 2606 OID 26869)
+-- Name: fk_proyecto_partidas_partidas; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
 --
 
 ALTER TABLE ONLY proyecto_partidas
@@ -34895,7 +35296,8 @@ ALTER TABLE ONLY proyecto_partidas
 
 
 --
--- Name: fk_proyecto_partidas_proyectos_acciones; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
+-- TOC entry 2014 (class 2606 OID 26547)
+-- Name: fk_proyecto_partidas_proyectos_acciones; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
 --
 
 ALTER TABLE ONLY proyecto_partidas
@@ -34903,7 +35305,8 @@ ALTER TABLE ONLY proyecto_partidas
 
 
 --
--- Name: fk_proyectos_acciones_entes_organos; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
+-- TOC entry 2016 (class 2606 OID 26552)
+-- Name: fk_proyectos_acciones_entes_organos; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
 --
 
 ALTER TABLE ONLY proyectos_acciones
@@ -34911,14 +35314,18 @@ ALTER TABLE ONLY proyectos_acciones
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: rnc
+-- TOC entry 2153 (class 0 OID 0)
+-- Dependencies: 8
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM rnc;
-GRANT ALL ON SCHEMA public TO rnc;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
+
+-- Completed on 2014-11-17 19:30:29 VET
 
 --
 -- PostgreSQL database dump complete
