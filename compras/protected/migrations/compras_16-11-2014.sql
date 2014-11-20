@@ -15,23 +15,23 @@ SET client_min_messages = warning;
 
 --
 -- TOC entry 7 (class 2615 OID 26434)
--- Name: compras; Type: SCHEMA; Schema: -; Owner: postgres
+-- Name: compras; Type: SCHEMA; Schema: -; Owner: rnc
 --
 
 CREATE SCHEMA compras;
 
 
-ALTER SCHEMA compras OWNER TO postgres;
+ALTER SCHEMA compras OWNER TO rnc;
 
 --
 -- TOC entry 6 (class 2615 OID 26433)
--- Name: rnc; Type: SCHEMA; Schema: -; Owner: postgres
+-- Name: rnc; Type: SCHEMA; Schema: -; Owner: rnc
 --
 
 CREATE SCHEMA rnc;
 
 
-ALTER SCHEMA rnc OWNER TO postgres;
+ALTER SCHEMA rnc OWNER TO rnc;
 
 --
 -- TOC entry 192 (class 3079 OID 11833)
@@ -54,7 +54,7 @@ SET search_path = compras, pg_catalog;
 
 --
 -- TOC entry 180 (class 1259 OID 26893)
--- Name: codigo_ncm_id_seq; Type: SEQUENCE; Schema: compras; Owner: postgres
+-- Name: codigo_ncm_id_seq; Type: SEQUENCE; Schema: compras; Owner: rnc
 --
 
 CREATE SEQUENCE codigo_ncm_id_seq
@@ -65,7 +65,7 @@ CREATE SEQUENCE codigo_ncm_id_seq
     CACHE 1;
 
 
-ALTER TABLE compras.codigo_ncm_id_seq OWNER TO postgres;
+ALTER TABLE compras.codigo_ncm_id_seq OWNER TO rnc;
 
 SET default_tablespace = '';
 
@@ -73,7 +73,7 @@ SET default_with_oids = false;
 
 --
 -- TOC entry 172 (class 1259 OID 26483)
--- Name: codigos_ncm; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: codigos_ncm; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 CREATE TABLE codigos_ncm (
@@ -91,12 +91,12 @@ CREATE TABLE codigos_ncm (
 );
 
 
-ALTER TABLE compras.codigos_ncm OWNER TO postgres;
+ALTER TABLE compras.codigos_ncm OWNER TO rnc;
 
 --
 -- TOC entry 2157 (class 0 OID 0)
 -- Dependencies: 172
--- Name: TABLE codigos_ncm; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: TABLE codigos_ncm; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON TABLE codigos_ncm IS 'Tbala que contiene los codigos arancelarios ';
@@ -105,7 +105,7 @@ COMMENT ON TABLE codigos_ncm IS 'Tbala que contiene los codigos arancelarios ';
 --
 -- TOC entry 2158 (class 0 OID 0)
 -- Dependencies: 172
--- Name: COLUMN codigos_ncm.codigo_ncm_id; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN codigos_ncm.codigo_ncm_id; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN codigos_ncm.codigo_ncm_id IS 'identificador unico del codigo arancelario';
@@ -114,7 +114,7 @@ COMMENT ON COLUMN codigos_ncm.codigo_ncm_id IS 'identificador unico del codigo a
 --
 -- TOC entry 2159 (class 0 OID 0)
 -- Dependencies: 172
--- Name: COLUMN codigos_ncm.codigo_ncm_nivel_1; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN codigos_ncm.codigo_ncm_nivel_1; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN codigos_ncm.codigo_ncm_nivel_1 IS 'partida';
@@ -123,7 +123,7 @@ COMMENT ON COLUMN codigos_ncm.codigo_ncm_nivel_1 IS 'partida';
 --
 -- TOC entry 2160 (class 0 OID 0)
 -- Dependencies: 172
--- Name: COLUMN codigos_ncm.codigo_ncm_nivel_2; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN codigos_ncm.codigo_ncm_nivel_2; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN codigos_ncm.codigo_ncm_nivel_2 IS 'subpartida';
@@ -132,7 +132,7 @@ COMMENT ON COLUMN codigos_ncm.codigo_ncm_nivel_2 IS 'subpartida';
 --
 -- TOC entry 2161 (class 0 OID 0)
 -- Dependencies: 172
--- Name: COLUMN codigos_ncm.codigo_ncm_nivel_3; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN codigos_ncm.codigo_ncm_nivel_3; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN codigos_ncm.codigo_ncm_nivel_3 IS 'codigo ncm';
@@ -141,7 +141,7 @@ COMMENT ON COLUMN codigos_ncm.codigo_ncm_nivel_3 IS 'codigo ncm';
 --
 -- TOC entry 2162 (class 0 OID 0)
 -- Dependencies: 172
--- Name: COLUMN codigos_ncm.codigo_ncm_nivel_4; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN codigos_ncm.codigo_ncm_nivel_4; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN codigos_ncm.codigo_ncm_nivel_4 IS 'especificacion propia del pais';
@@ -150,7 +150,7 @@ COMMENT ON COLUMN codigos_ncm.codigo_ncm_nivel_4 IS 'especificacion propia del p
 --
 -- TOC entry 2163 (class 0 OID 0)
 -- Dependencies: 172
--- Name: COLUMN codigos_ncm.version; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN codigos_ncm.version; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN codigos_ncm.version IS 'campo de versionamiento';
@@ -159,7 +159,7 @@ COMMENT ON COLUMN codigos_ncm.version IS 'campo de versionamiento';
 --
 -- TOC entry 2164 (class 0 OID 0)
 -- Dependencies: 172
--- Name: COLUMN codigos_ncm.fecha_desde; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN codigos_ncm.fecha_desde; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN codigos_ncm.fecha_desde IS 'fechas desde la cual es valido el codigo arancelario';
@@ -168,7 +168,7 @@ COMMENT ON COLUMN codigos_ncm.fecha_desde IS 'fechas desde la cual es valido el 
 --
 -- TOC entry 2165 (class 0 OID 0)
 -- Dependencies: 172
--- Name: COLUMN codigos_ncm.fecha_hasta; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN codigos_ncm.fecha_hasta; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN codigos_ncm.fecha_hasta IS 'fecha hasta la cual es valido el codigo arancalario';
@@ -177,7 +177,7 @@ COMMENT ON COLUMN codigos_ncm.fecha_hasta IS 'fecha hasta la cual es valido el c
 --
 -- TOC entry 2166 (class 0 OID 0)
 -- Dependencies: 172
--- Name: COLUMN codigos_ncm.enmienda; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN codigos_ncm.enmienda; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN codigos_ncm.enmienda IS 'este campo indica el numero de la enmienda';
@@ -185,7 +185,7 @@ COMMENT ON COLUMN codigos_ncm.enmienda IS 'este campo indica el numero de la enm
 
 --
 -- TOC entry 181 (class 1259 OID 26895)
--- Name: ente_id_seq; Type: SEQUENCE; Schema: compras; Owner: postgres
+-- Name: ente_id_seq; Type: SEQUENCE; Schema: compras; Owner: rnc
 --
 
 CREATE SEQUENCE ente_id_seq
@@ -196,11 +196,11 @@ CREATE SEQUENCE ente_id_seq
     CACHE 1;
 
 
-ALTER TABLE compras.ente_id_seq OWNER TO postgres;
+ALTER TABLE compras.ente_id_seq OWNER TO rnc;
 
 --
 -- TOC entry 173 (class 1259 OID 26488)
--- Name: entes_organos; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: entes_organos; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 CREATE TABLE entes_organos (
@@ -212,12 +212,12 @@ CREATE TABLE entes_organos (
 );
 
 
-ALTER TABLE compras.entes_organos OWNER TO postgres;
+ALTER TABLE compras.entes_organos OWNER TO rnc;
 
 --
 -- TOC entry 2167 (class 0 OID 0)
 -- Dependencies: 173
--- Name: TABLE entes_organos; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: TABLE entes_organos; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON TABLE entes_organos IS 'se encuentran registrados todos los entes y organos';
@@ -226,7 +226,7 @@ COMMENT ON TABLE entes_organos IS 'se encuentran registrados todos los entes y o
 --
 -- TOC entry 2168 (class 0 OID 0)
 -- Dependencies: 173
--- Name: COLUMN entes_organos.ente_id; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN entes_organos.ente_id; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN entes_organos.ente_id IS 'identificador unico de la tabla';
@@ -235,7 +235,7 @@ COMMENT ON COLUMN entes_organos.ente_id IS 'identificador unico de la tabla';
 --
 -- TOC entry 2169 (class 0 OID 0)
 -- Dependencies: 173
--- Name: COLUMN entes_organos.nombre; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN entes_organos.nombre; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN entes_organos.nombre IS 'nombre del organo o ente';
@@ -244,7 +244,7 @@ COMMENT ON COLUMN entes_organos.nombre IS 'nombre del organo o ente';
 --
 -- TOC entry 2170 (class 0 OID 0)
 -- Dependencies: 173
--- Name: COLUMN entes_organos.tipo; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN entes_organos.tipo; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN entes_organos.tipo IS 'existen dos tipos, organos y entes';
@@ -252,7 +252,7 @@ COMMENT ON COLUMN entes_organos.tipo IS 'existen dos tipos, organos y entes';
 
 --
 -- TOC entry 182 (class 1259 OID 26897)
--- Name: partida_id_seq; Type: SEQUENCE; Schema: compras; Owner: postgres
+-- Name: partida_id_seq; Type: SEQUENCE; Schema: compras; Owner: rnc
 --
 
 CREATE SEQUENCE partida_id_seq
@@ -263,11 +263,11 @@ CREATE SEQUENCE partida_id_seq
     CACHE 1;
 
 
-ALTER TABLE compras.partida_id_seq OWNER TO postgres;
+ALTER TABLE compras.partida_id_seq OWNER TO rnc;
 
 --
 -- TOC entry 174 (class 1259 OID 26493)
--- Name: partida_productos; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: partida_productos; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 CREATE TABLE partida_productos (
@@ -277,12 +277,12 @@ CREATE TABLE partida_productos (
 );
 
 
-ALTER TABLE compras.partida_productos OWNER TO postgres;
+ALTER TABLE compras.partida_productos OWNER TO rnc;
 
 --
 -- TOC entry 2171 (class 0 OID 0)
 -- Dependencies: 174
--- Name: TABLE partida_productos; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: TABLE partida_productos; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON TABLE partida_productos IS 'tabla que contiene los productos que pueden ser asociados a cada partida';
@@ -291,7 +291,7 @@ COMMENT ON TABLE partida_productos IS 'tabla que contiene los productos que pued
 --
 -- TOC entry 2172 (class 0 OID 0)
 -- Dependencies: 174
--- Name: COLUMN partida_productos.partida_id; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN partida_productos.partida_id; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN partida_productos.partida_id IS 'clave foranea que referencia a una partida';
@@ -300,7 +300,7 @@ COMMENT ON COLUMN partida_productos.partida_id IS 'clave foranea que referencia 
 --
 -- TOC entry 2173 (class 0 OID 0)
 -- Dependencies: 174
--- Name: COLUMN partida_productos.producto_id; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN partida_productos.producto_id; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN partida_productos.producto_id IS 'clave foranea que referencia a un producto';
@@ -309,7 +309,7 @@ COMMENT ON COLUMN partida_productos.producto_id IS 'clave foranea que referencia
 --
 -- TOC entry 2174 (class 0 OID 0)
 -- Dependencies: 174
--- Name: COLUMN partida_productos.tipo_operacion; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN partida_productos.tipo_operacion; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN partida_productos.tipo_operacion IS 'este campo indica si se realiza una compra o una venta, puede tomar los valores C= compras y V = venta';
@@ -317,7 +317,7 @@ COMMENT ON COLUMN partida_productos.tipo_operacion IS 'este campo indica si se r
 
 --
 -- TOC entry 179 (class 1259 OID 26856)
--- Name: partidas; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: partidas; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 CREATE TABLE partidas (
@@ -330,12 +330,12 @@ CREATE TABLE partidas (
 );
 
 
-ALTER TABLE compras.partidas OWNER TO postgres;
+ALTER TABLE compras.partidas OWNER TO rnc;
 
 --
 -- TOC entry 2175 (class 0 OID 0)
 -- Dependencies: 179
--- Name: TABLE partidas; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: TABLE partidas; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON TABLE partidas IS 'partidas presupuestarias disponibles';
@@ -344,7 +344,7 @@ COMMENT ON TABLE partidas IS 'partidas presupuestarias disponibles';
 --
 -- TOC entry 2176 (class 0 OID 0)
 -- Dependencies: 179
--- Name: COLUMN partidas.partida_id; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN partidas.partida_id; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN partidas.partida_id IS 'identificador unico de la partida';
@@ -353,7 +353,7 @@ COMMENT ON COLUMN partidas.partida_id IS 'identificador unico de la partida';
 --
 -- TOC entry 2177 (class 0 OID 0)
 -- Dependencies: 179
--- Name: COLUMN partidas.p1; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN partidas.p1; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN partidas.p1 IS 'partida';
@@ -362,7 +362,7 @@ COMMENT ON COLUMN partidas.p1 IS 'partida';
 --
 -- TOC entry 2178 (class 0 OID 0)
 -- Dependencies: 179
--- Name: COLUMN partidas.p2; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN partidas.p2; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN partidas.p2 IS 'partida generica';
@@ -371,7 +371,7 @@ COMMENT ON COLUMN partidas.p2 IS 'partida generica';
 --
 -- TOC entry 2179 (class 0 OID 0)
 -- Dependencies: 179
--- Name: COLUMN partidas.p3; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN partidas.p3; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN partidas.p3 IS 'partida especifica';
@@ -380,7 +380,7 @@ COMMENT ON COLUMN partidas.p3 IS 'partida especifica';
 --
 -- TOC entry 2180 (class 0 OID 0)
 -- Dependencies: 179
--- Name: COLUMN partidas.p4; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN partidas.p4; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN partidas.p4 IS 'partida sub especifica';
@@ -389,7 +389,7 @@ COMMENT ON COLUMN partidas.p4 IS 'partida sub especifica';
 --
 -- TOC entry 2181 (class 0 OID 0)
 -- Dependencies: 179
--- Name: COLUMN partidas.nombre; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN partidas.nombre; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN partidas.nombre IS 'nombre de la partida';
@@ -397,7 +397,7 @@ COMMENT ON COLUMN partidas.nombre IS 'nombre de la partida';
 
 --
 -- TOC entry 183 (class 1259 OID 26899)
--- Name: presupuesto_id_seq; Type: SEQUENCE; Schema: compras; Owner: postgres
+-- Name: presupuesto_id_seq; Type: SEQUENCE; Schema: compras; Owner: rnc
 --
 
 CREATE SEQUENCE presupuesto_id_seq
@@ -408,11 +408,11 @@ CREATE SEQUENCE presupuesto_id_seq
     CACHE 1;
 
 
-ALTER TABLE compras.presupuesto_id_seq OWNER TO postgres;
+ALTER TABLE compras.presupuesto_id_seq OWNER TO rnc;
 
 --
 -- TOC entry 186 (class 1259 OID 26927)
--- Name: presupuesto; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: presupuesto; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 CREATE TABLE presupuesto (
@@ -428,12 +428,12 @@ CREATE TABLE presupuesto (
 );
 
 
-ALTER TABLE compras.presupuesto OWNER TO postgres;
+ALTER TABLE compras.presupuesto OWNER TO rnc;
 
 --
 -- TOC entry 2182 (class 0 OID 0)
 -- Dependencies: 186
--- Name: TABLE presupuesto; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: TABLE presupuesto; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON TABLE presupuesto IS 'La tabla contiene la informacion de los productos presupuestados';
@@ -442,7 +442,7 @@ COMMENT ON TABLE presupuesto IS 'La tabla contiene la informacion de los product
 --
 -- TOC entry 2183 (class 0 OID 0)
 -- Dependencies: 186
--- Name: COLUMN presupuesto.presupuesto_id; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN presupuesto.presupuesto_id; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN presupuesto.presupuesto_id IS 'identificador unico de un productos de una partida presupuestado';
@@ -451,7 +451,7 @@ COMMENT ON COLUMN presupuesto.presupuesto_id IS 'identificador unico de un produ
 --
 -- TOC entry 2184 (class 0 OID 0)
 -- Dependencies: 186
--- Name: COLUMN presupuesto.producto_id; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN presupuesto.producto_id; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN presupuesto.producto_id IS 'clave foranea que referencia a un producto';
@@ -460,7 +460,7 @@ COMMENT ON COLUMN presupuesto.producto_id IS 'clave foranea que referencia a un 
 --
 -- TOC entry 2185 (class 0 OID 0)
 -- Dependencies: 186
--- Name: COLUMN presupuesto.unidad_id; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN presupuesto.unidad_id; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN presupuesto.unidad_id IS 'clave foranea que referencia a una unidad';
@@ -469,7 +469,7 @@ COMMENT ON COLUMN presupuesto.unidad_id IS 'clave foranea que referencia a una u
 --
 -- TOC entry 2186 (class 0 OID 0)
 -- Dependencies: 186
--- Name: COLUMN presupuesto.costo_unidad; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN presupuesto.costo_unidad; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN presupuesto.costo_unidad IS 'costo en bolibares de la unidad de un producto';
@@ -478,7 +478,7 @@ COMMENT ON COLUMN presupuesto.costo_unidad IS 'costo en bolibares de la unidad d
 --
 -- TOC entry 2187 (class 0 OID 0)
 -- Dependencies: 186
--- Name: COLUMN presupuesto.cantidad; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN presupuesto.cantidad; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN presupuesto.cantidad IS 'cantidad de productos presupuestados';
@@ -487,7 +487,7 @@ COMMENT ON COLUMN presupuesto.cantidad IS 'cantidad de productos presupuestados'
 --
 -- TOC entry 2188 (class 0 OID 0)
 -- Dependencies: 186
--- Name: COLUMN presupuesto.monto_presupuesto; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN presupuesto.monto_presupuesto; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN presupuesto.monto_presupuesto IS 'monto total de un producto por n veces las unidades expresado en bolivares';
@@ -496,7 +496,7 @@ COMMENT ON COLUMN presupuesto.monto_presupuesto IS 'monto total de un producto p
 --
 -- TOC entry 2189 (class 0 OID 0)
 -- Dependencies: 186
--- Name: COLUMN presupuesto.tipo; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN presupuesto.tipo; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN presupuesto.tipo IS 'los bienes pueden ser comprados nacionalmente o internacionalmente';
@@ -504,7 +504,7 @@ COMMENT ON COLUMN presupuesto.tipo IS 'los bienes pueden ser comprados nacionalm
 
 --
 -- TOC entry 176 (class 1259 OID 26514)
--- Name: presupuesto_importacion; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: presupuesto_importacion; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 CREATE TABLE presupuesto_importacion (
@@ -518,12 +518,12 @@ CREATE TABLE presupuesto_importacion (
 );
 
 
-ALTER TABLE compras.presupuesto_importacion OWNER TO postgres;
+ALTER TABLE compras.presupuesto_importacion OWNER TO rnc;
 
 --
 -- TOC entry 2190 (class 0 OID 0)
 -- Dependencies: 176
--- Name: TABLE presupuesto_importacion; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: TABLE presupuesto_importacion; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON TABLE presupuesto_importacion IS 'Tabla que contiene la informacion de los productos presuepuestados que seran importados';
@@ -532,7 +532,7 @@ COMMENT ON TABLE presupuesto_importacion IS 'Tabla que contiene la informacion d
 --
 -- TOC entry 2191 (class 0 OID 0)
 -- Dependencies: 176
--- Name: COLUMN presupuesto_importacion.codigo_ncm_id; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN presupuesto_importacion.codigo_ncm_id; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN presupuesto_importacion.codigo_ncm_id IS 'clave foranea que referencia el codigo arancelario ';
@@ -541,7 +541,7 @@ COMMENT ON COLUMN presupuesto_importacion.codigo_ncm_id IS 'clave foranea que re
 --
 -- TOC entry 2192 (class 0 OID 0)
 -- Dependencies: 176
--- Name: COLUMN presupuesto_importacion.presupuesto_id; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN presupuesto_importacion.presupuesto_id; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN presupuesto_importacion.presupuesto_id IS 'clave foranea que referencia a un presupuesto de un producto determinado';
@@ -550,7 +550,7 @@ COMMENT ON COLUMN presupuesto_importacion.presupuesto_id IS 'clave foranea que r
 --
 -- TOC entry 2193 (class 0 OID 0)
 -- Dependencies: 176
--- Name: COLUMN presupuesto_importacion.cantidad; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN presupuesto_importacion.cantidad; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN presupuesto_importacion.cantidad IS 'cantidad del producto que se importara';
@@ -559,7 +559,7 @@ COMMENT ON COLUMN presupuesto_importacion.cantidad IS 'cantidad del producto que
 --
 -- TOC entry 2194 (class 0 OID 0)
 -- Dependencies: 176
--- Name: COLUMN presupuesto_importacion.monto_presupuesto; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN presupuesto_importacion.monto_presupuesto; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN presupuesto_importacion.monto_presupuesto IS 'monto expresado en dolares del producto que se importara';
@@ -568,7 +568,7 @@ COMMENT ON COLUMN presupuesto_importacion.monto_presupuesto IS 'monto expresado 
 --
 -- TOC entry 2195 (class 0 OID 0)
 -- Dependencies: 176
--- Name: COLUMN presupuesto_importacion.tipo; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN presupuesto_importacion.tipo; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN presupuesto_importacion.tipo IS 'copovex o licitacion internacional';
@@ -576,7 +576,7 @@ COMMENT ON COLUMN presupuesto_importacion.tipo IS 'copovex o licitacion internac
 
 --
 -- TOC entry 187 (class 1259 OID 26961)
--- Name: producto_id_seq; Type: SEQUENCE; Schema: compras; Owner: postgres
+-- Name: producto_id_seq; Type: SEQUENCE; Schema: compras; Owner: rnc
 --
 
 CREATE SEQUENCE producto_id_seq
@@ -587,11 +587,11 @@ CREATE SEQUENCE producto_id_seq
     CACHE 1;
 
 
-ALTER TABLE compras.producto_id_seq OWNER TO postgres;
+ALTER TABLE compras.producto_id_seq OWNER TO rnc;
 
 --
 -- TOC entry 175 (class 1259 OID 26496)
--- Name: productos; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: productos; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 CREATE TABLE productos (
@@ -604,12 +604,12 @@ CREATE TABLE productos (
 );
 
 
-ALTER TABLE compras.productos OWNER TO postgres;
+ALTER TABLE compras.productos OWNER TO rnc;
 
 --
 -- TOC entry 2196 (class 0 OID 0)
 -- Dependencies: 175
--- Name: TABLE productos; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: TABLE productos; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON TABLE productos IS 'productos segun la convencion de las naciones unidas';
@@ -618,7 +618,7 @@ COMMENT ON TABLE productos IS 'productos segun la convencion de las naciones uni
 --
 -- TOC entry 2197 (class 0 OID 0)
 -- Dependencies: 175
--- Name: COLUMN productos.producto_id; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN productos.producto_id; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN productos.producto_id IS 'identificador unico del producto';
@@ -627,7 +627,7 @@ COMMENT ON COLUMN productos.producto_id IS 'identificador unico del producto';
 --
 -- TOC entry 2198 (class 0 OID 0)
 -- Dependencies: 175
--- Name: COLUMN productos.cod_segmento; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN productos.cod_segmento; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN productos.cod_segmento IS 'segmento del codigo de las naciones unidas';
@@ -636,7 +636,7 @@ COMMENT ON COLUMN productos.cod_segmento IS 'segmento del codigo de las naciones
 --
 -- TOC entry 2199 (class 0 OID 0)
 -- Dependencies: 175
--- Name: COLUMN productos.cod_familia; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN productos.cod_familia; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN productos.cod_familia IS 'familia del codigo de las naciones unidas';
@@ -645,7 +645,7 @@ COMMENT ON COLUMN productos.cod_familia IS 'familia del codigo de las naciones u
 --
 -- TOC entry 2200 (class 0 OID 0)
 -- Dependencies: 175
--- Name: COLUMN productos.cod_clase; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN productos.cod_clase; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN productos.cod_clase IS 'clase del codigo de las naciones unidas';
@@ -654,7 +654,7 @@ COMMENT ON COLUMN productos.cod_clase IS 'clase del codigo de las naciones unida
 --
 -- TOC entry 2201 (class 0 OID 0)
 -- Dependencies: 175
--- Name: COLUMN productos.cod_producto; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN productos.cod_producto; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN productos.cod_producto IS 'codigo del producto de las naciones unidas';
@@ -662,7 +662,7 @@ COMMENT ON COLUMN productos.cod_producto IS 'codigo del producto de las naciones
 
 --
 -- TOC entry 184 (class 1259 OID 26903)
--- Name: proyecto_id_seq; Type: SEQUENCE; Schema: compras; Owner: postgres
+-- Name: proyecto_id_seq; Type: SEQUENCE; Schema: compras; Owner: rnc
 --
 
 CREATE SEQUENCE proyecto_id_seq
@@ -673,11 +673,11 @@ CREATE SEQUENCE proyecto_id_seq
     CACHE 1;
 
 
-ALTER TABLE compras.proyecto_id_seq OWNER TO postgres;
+ALTER TABLE compras.proyecto_id_seq OWNER TO rnc;
 
 --
 -- TOC entry 185 (class 1259 OID 26905)
--- Name: proyecto_partida_id_seq; Type: SEQUENCE; Schema: compras; Owner: postgres
+-- Name: proyecto_partida_id_seq; Type: SEQUENCE; Schema: compras; Owner: rnc
 --
 
 CREATE SEQUENCE proyecto_partida_id_seq
@@ -688,11 +688,11 @@ CREATE SEQUENCE proyecto_partida_id_seq
     CACHE 1;
 
 
-ALTER TABLE compras.proyecto_partida_id_seq OWNER TO postgres;
+ALTER TABLE compras.proyecto_partida_id_seq OWNER TO rnc;
 
 --
 -- TOC entry 177 (class 1259 OID 26519)
--- Name: proyecto_partidas; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: proyecto_partidas; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 CREATE TABLE proyecto_partidas (
@@ -703,12 +703,12 @@ CREATE TABLE proyecto_partidas (
 );
 
 
-ALTER TABLE compras.proyecto_partidas OWNER TO postgres;
+ALTER TABLE compras.proyecto_partidas OWNER TO rnc;
 
 --
 -- TOC entry 2202 (class 0 OID 0)
 -- Dependencies: 177
--- Name: COLUMN proyecto_partidas.proyecto_partida_id; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN proyecto_partidas.proyecto_partida_id; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN proyecto_partidas.proyecto_partida_id IS 'identificador unico ';
@@ -717,7 +717,7 @@ COMMENT ON COLUMN proyecto_partidas.proyecto_partida_id IS 'identificador unico 
 --
 -- TOC entry 2203 (class 0 OID 0)
 -- Dependencies: 177
--- Name: COLUMN proyecto_partidas.proyecto_id; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN proyecto_partidas.proyecto_id; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN proyecto_partidas.proyecto_id IS 'clave foranea que hace referencia a un proyecto o accion centralizada';
@@ -726,7 +726,7 @@ COMMENT ON COLUMN proyecto_partidas.proyecto_id IS 'clave foranea que hace refer
 --
 -- TOC entry 2204 (class 0 OID 0)
 -- Dependencies: 177
--- Name: COLUMN proyecto_partidas.partida_id; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN proyecto_partidas.partida_id; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN proyecto_partidas.partida_id IS 'clave foranea que hace referencia a una partida';
@@ -735,7 +735,7 @@ COMMENT ON COLUMN proyecto_partidas.partida_id IS 'clave foranea que hace refere
 --
 -- TOC entry 2205 (class 0 OID 0)
 -- Dependencies: 177
--- Name: COLUMN proyecto_partidas.monto_presupuestado; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN proyecto_partidas.monto_presupuestado; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN proyecto_partidas.monto_presupuestado IS 'monto presupuestado para un la partida de un proyecto particular';
@@ -743,7 +743,7 @@ COMMENT ON COLUMN proyecto_partidas.monto_presupuestado IS 'monto presupuestado 
 
 --
 -- TOC entry 178 (class 1259 OID 26532)
--- Name: proyectos_acciones; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: proyectos_acciones; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 CREATE TABLE proyectos_acciones (
@@ -757,12 +757,12 @@ CREATE TABLE proyectos_acciones (
 );
 
 
-ALTER TABLE compras.proyectos_acciones OWNER TO postgres;
+ALTER TABLE compras.proyectos_acciones OWNER TO rnc;
 
 --
 -- TOC entry 2206 (class 0 OID 0)
 -- Dependencies: 178
--- Name: TABLE proyectos_acciones; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: TABLE proyectos_acciones; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON TABLE proyectos_acciones IS 'proyectos o acciones centralizadas';
@@ -771,7 +771,7 @@ COMMENT ON TABLE proyectos_acciones IS 'proyectos o acciones centralizadas';
 --
 -- TOC entry 2207 (class 0 OID 0)
 -- Dependencies: 178
--- Name: COLUMN proyectos_acciones.proyecto_id; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN proyectos_acciones.proyecto_id; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN proyectos_acciones.proyecto_id IS 'identificador unico del proyecto';
@@ -780,7 +780,7 @@ COMMENT ON COLUMN proyectos_acciones.proyecto_id IS 'identificador unico del pro
 --
 -- TOC entry 2208 (class 0 OID 0)
 -- Dependencies: 178
--- Name: COLUMN proyectos_acciones.nombre; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN proyectos_acciones.nombre; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN proyectos_acciones.nombre IS 'nombre del proyecto o accion centralizada';
@@ -789,7 +789,7 @@ COMMENT ON COLUMN proyectos_acciones.nombre IS 'nombre del proyecto o accion cen
 --
 -- TOC entry 2209 (class 0 OID 0)
 -- Dependencies: 178
--- Name: COLUMN proyectos_acciones.monto; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN proyectos_acciones.monto; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN proyectos_acciones.monto IS 'monto del proyecto a accion centralizada';
@@ -798,7 +798,7 @@ COMMENT ON COLUMN proyectos_acciones.monto IS 'monto del proyecto a accion centr
 --
 -- TOC entry 2210 (class 0 OID 0)
 -- Dependencies: 178
--- Name: COLUMN proyectos_acciones.codigo; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN proyectos_acciones.codigo; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN proyectos_acciones.codigo IS 'codigo del proyecto o accion centralizada segun especificacion de onapre';
@@ -807,7 +807,7 @@ COMMENT ON COLUMN proyectos_acciones.codigo IS 'codigo del proyecto o accion cen
 --
 -- TOC entry 2211 (class 0 OID 0)
 -- Dependencies: 178
--- Name: COLUMN proyectos_acciones.tipo; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN proyectos_acciones.tipo; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN proyectos_acciones.tipo IS 'puede tomar los valores de "proyecto" y "accion centralizada"';
@@ -816,7 +816,7 @@ COMMENT ON COLUMN proyectos_acciones.tipo IS 'puede tomar los valores de "proyec
 --
 -- TOC entry 2212 (class 0 OID 0)
 -- Dependencies: 178
--- Name: COLUMN proyectos_acciones.fecha; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN proyectos_acciones.fecha; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN proyectos_acciones.fecha IS 'fecha de comienzo del proyecto';
@@ -824,7 +824,7 @@ COMMENT ON COLUMN proyectos_acciones.fecha IS 'fecha de comienzo del proyecto';
 
 --
 -- TOC entry 188 (class 1259 OID 26964)
--- Name: unidad_id_seq; Type: SEQUENCE; Schema: compras; Owner: postgres
+-- Name: unidad_id_seq; Type: SEQUENCE; Schema: compras; Owner: rnc
 --
 
 CREATE SEQUENCE unidad_id_seq
@@ -835,11 +835,11 @@ CREATE SEQUENCE unidad_id_seq
     CACHE 1;
 
 
-ALTER TABLE compras.unidad_id_seq OWNER TO postgres;
+ALTER TABLE compras.unidad_id_seq OWNER TO rnc;
 
 --
 -- TOC entry 189 (class 1259 OID 26982)
--- Name: unidades; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: unidades; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 CREATE TABLE unidades (
@@ -848,12 +848,12 @@ CREATE TABLE unidades (
 );
 
 
-ALTER TABLE compras.unidades OWNER TO postgres;
+ALTER TABLE compras.unidades OWNER TO rnc;
 
 --
 -- TOC entry 2213 (class 0 OID 0)
 -- Dependencies: 189
--- Name: COLUMN unidades.unidad_id; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN unidades.unidad_id; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN unidades.unidad_id IS 'identificador unico de la tabla';
@@ -862,7 +862,7 @@ COMMENT ON COLUMN unidades.unidad_id IS 'identificador unico de la tabla';
 --
 -- TOC entry 2214 (class 0 OID 0)
 -- Dependencies: 189
--- Name: COLUMN unidades.nombre; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN unidades.nombre; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN unidades.nombre IS 'descripcion de la unidad';
@@ -870,7 +870,7 @@ COMMENT ON COLUMN unidades.nombre IS 'descripcion de la unidad';
 
 --
 -- TOC entry 190 (class 1259 OID 26996)
--- Name: usuarios_usuario_id_seq; Type: SEQUENCE; Schema: compras; Owner: postgres
+-- Name: usuarios_usuario_id_seq; Type: SEQUENCE; Schema: compras; Owner: rnc
 --
 
 CREATE SEQUENCE usuarios_usuario_id_seq
@@ -881,11 +881,11 @@ CREATE SEQUENCE usuarios_usuario_id_seq
     CACHE 1;
 
 
-ALTER TABLE compras.usuarios_usuario_id_seq OWNER TO postgres;
+ALTER TABLE compras.usuarios_usuario_id_seq OWNER TO rnc;
 
 --
 -- TOC entry 191 (class 1259 OID 26998)
--- Name: usuarios; Type: TABLE; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: usuarios; Type: TABLE; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 CREATE TABLE usuarios (
@@ -899,12 +899,12 @@ CREATE TABLE usuarios (
 );
 
 
-ALTER TABLE compras.usuarios OWNER TO postgres;
+ALTER TABLE compras.usuarios OWNER TO rnc;
 
 --
 -- TOC entry 2215 (class 0 OID 0)
 -- Dependencies: 191
--- Name: TABLE usuarios; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: TABLE usuarios; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON TABLE usuarios IS 'Tabla de usuarios';
@@ -913,7 +913,7 @@ COMMENT ON TABLE usuarios IS 'Tabla de usuarios';
 --
 -- TOC entry 2216 (class 0 OID 0)
 -- Dependencies: 191
--- Name: COLUMN usuarios.codigo_onapre; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN usuarios.codigo_onapre; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN usuarios.codigo_onapre IS 'Clave foranea del codigo_onapre en la tabla entes_organos';
@@ -922,7 +922,7 @@ COMMENT ON COLUMN usuarios.codigo_onapre IS 'Clave foranea del codigo_onapre en 
 --
 -- TOC entry 2217 (class 0 OID 0)
 -- Dependencies: 191
--- Name: COLUMN usuarios.usuario; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN usuarios.usuario; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN usuarios.usuario IS 'Nombre de usuario del ente u organismo';
@@ -931,7 +931,7 @@ COMMENT ON COLUMN usuarios.usuario IS 'Nombre de usuario del ente u organismo';
 --
 -- TOC entry 2218 (class 0 OID 0)
 -- Dependencies: 191
--- Name: COLUMN usuarios.contrasena; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN usuarios.contrasena; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN usuarios.contrasena IS 'Contraseña del usuario';
@@ -940,7 +940,7 @@ COMMENT ON COLUMN usuarios.contrasena IS 'Contraseña del usuario';
 --
 -- TOC entry 2219 (class 0 OID 0)
 -- Dependencies: 191
--- Name: COLUMN usuarios.correo; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN usuarios.correo; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN usuarios.correo IS 'Correo del usuario';
@@ -949,7 +949,7 @@ COMMENT ON COLUMN usuarios.correo IS 'Correo del usuario';
 --
 -- TOC entry 2220 (class 0 OID 0)
 -- Dependencies: 191
--- Name: COLUMN usuarios.creado_el; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN usuarios.creado_el; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN usuarios.creado_el IS 'Fecha de creación de la cuenta';
@@ -958,7 +958,7 @@ COMMENT ON COLUMN usuarios.creado_el IS 'Fecha de creación de la cuenta';
 --
 -- TOC entry 2221 (class 0 OID 0)
 -- Dependencies: 191
--- Name: COLUMN usuarios.actualizado_el; Type: COMMENT; Schema: compras; Owner: postgres
+-- Name: COLUMN usuarios.actualizado_el; Type: COMMENT; Schema: compras; Owner: rnc
 --
 
 COMMENT ON COLUMN usuarios.actualizado_el IS 'Fecha de actualización de la cuenta';
@@ -967,7 +967,7 @@ COMMENT ON COLUMN usuarios.actualizado_el IS 'Fecha de actualización de la cuen
 --
 -- TOC entry 2222 (class 0 OID 0)
 -- Dependencies: 180
--- Name: codigo_ncm_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: postgres
+-- Name: codigo_ncm_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: rnc
 --
 
 SELECT pg_catalog.setval('codigo_ncm_id_seq', 1, false);
@@ -976,7 +976,7 @@ SELECT pg_catalog.setval('codigo_ncm_id_seq', 1, false);
 --
 -- TOC entry 2129 (class 0 OID 26483)
 -- Dependencies: 172
--- Data for Name: codigos_ncm; Type: TABLE DATA; Schema: compras; Owner: postgres
+-- Data for Name: codigos_ncm; Type: TABLE DATA; Schema: compras; Owner: rnc
 --
 
 COPY codigos_ncm (codigo_ncm_id, codigo_ncm_nivel_1, codigo_ncm_nivel_2, codigo_ncm_nivel_3, codigo_ncm_nivel_4, descripcion_ncm, version, fecha_desde, fecha_hasta, unidad, enmienda) FROM stdin;
@@ -12925,7 +12925,7 @@ COPY codigos_ncm (codigo_ncm_id, codigo_ncm_nivel_1, codigo_ncm_nivel_2, codigo_
 --
 -- TOC entry 2223 (class 0 OID 0)
 -- Dependencies: 181
--- Name: ente_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: postgres
+-- Name: ente_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: rnc
 --
 
 SELECT pg_catalog.setval('ente_id_seq', 1, false);
@@ -12934,7 +12934,7 @@ SELECT pg_catalog.setval('ente_id_seq', 1, false);
 --
 -- TOC entry 2130 (class 0 OID 26488)
 -- Dependencies: 173
--- Data for Name: entes_organos; Type: TABLE DATA; Schema: compras; Owner: postgres
+-- Data for Name: entes_organos; Type: TABLE DATA; Schema: compras; Owner: rnc
 --
 
 COPY entes_organos (ente_id, codigo_onapre, nombre, tipo, ente_adscrito) FROM stdin;
@@ -12944,7 +12944,7 @@ COPY entes_organos (ente_id, codigo_onapre, nombre, tipo, ente_adscrito) FROM st
 --
 -- TOC entry 2224 (class 0 OID 0)
 -- Dependencies: 182
--- Name: partida_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: postgres
+-- Name: partida_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: rnc
 --
 
 SELECT pg_catalog.setval('partida_id_seq', 314, true);
@@ -12953,7 +12953,7 @@ SELECT pg_catalog.setval('partida_id_seq', 314, true);
 --
 -- TOC entry 2131 (class 0 OID 26493)
 -- Dependencies: 174
--- Data for Name: partida_productos; Type: TABLE DATA; Schema: compras; Owner: postgres
+-- Data for Name: partida_productos; Type: TABLE DATA; Schema: compras; Owner: rnc
 --
 
 COPY partida_productos (partida_id, producto_id, tipo_operacion) FROM stdin;
@@ -12963,7 +12963,7 @@ COPY partida_productos (partida_id, producto_id, tipo_operacion) FROM stdin;
 --
 -- TOC entry 2136 (class 0 OID 26856)
 -- Dependencies: 179
--- Data for Name: partidas; Type: TABLE DATA; Schema: compras; Owner: postgres
+-- Data for Name: partidas; Type: TABLE DATA; Schema: compras; Owner: rnc
 --
 
 COPY partidas (partida_id, p1, p2, p3, p4, nombre) FROM stdin;
@@ -13286,7 +13286,7 @@ COPY partidas (partida_id, p1, p2, p3, p4, nombre) FROM stdin;
 --
 -- TOC entry 2143 (class 0 OID 26927)
 -- Dependencies: 186
--- Data for Name: presupuesto; Type: TABLE DATA; Schema: compras; Owner: postgres
+-- Data for Name: presupuesto; Type: TABLE DATA; Schema: compras; Owner: rnc
 --
 
 COPY presupuesto (presupuesto_id, producto_id, unidad_id, costo_unidad, cantidad, monto_presupuesto, tipo, monto_ejecutado, proyecto_partida_id) FROM stdin;
@@ -13296,7 +13296,7 @@ COPY presupuesto (presupuesto_id, producto_id, unidad_id, costo_unidad, cantidad
 --
 -- TOC entry 2225 (class 0 OID 0)
 -- Dependencies: 183
--- Name: presupuesto_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: postgres
+-- Name: presupuesto_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: rnc
 --
 
 SELECT pg_catalog.setval('presupuesto_id_seq', 1, false);
@@ -13305,7 +13305,7 @@ SELECT pg_catalog.setval('presupuesto_id_seq', 1, false);
 --
 -- TOC entry 2133 (class 0 OID 26514)
 -- Dependencies: 176
--- Data for Name: presupuesto_importacion; Type: TABLE DATA; Schema: compras; Owner: postgres
+-- Data for Name: presupuesto_importacion; Type: TABLE DATA; Schema: compras; Owner: rnc
 --
 
 COPY presupuesto_importacion (codigo_ncm_id, presupuesto_id, cantidad, fecha_llegada, monto_presupuesto, tipo, monto_ejecutado) FROM stdin;
@@ -13315,7 +13315,7 @@ COPY presupuesto_importacion (codigo_ncm_id, presupuesto_id, cantidad, fecha_lle
 --
 -- TOC entry 2226 (class 0 OID 0)
 -- Dependencies: 187
--- Name: producto_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: postgres
+-- Name: producto_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: rnc
 --
 
 SELECT pg_catalog.setval('producto_id_seq', 1, false);
@@ -13324,7 +13324,7 @@ SELECT pg_catalog.setval('producto_id_seq', 1, false);
 --
 -- TOC entry 2132 (class 0 OID 26496)
 -- Dependencies: 175
--- Data for Name: productos; Type: TABLE DATA; Schema: compras; Owner: postgres
+-- Data for Name: productos; Type: TABLE DATA; Schema: compras; Owner: rnc
 --
 
 COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto, nombre) FROM stdin;
@@ -35341,7 +35341,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 --
 -- TOC entry 2227 (class 0 OID 0)
 -- Dependencies: 184
--- Name: proyecto_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: postgres
+-- Name: proyecto_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: rnc
 --
 
 SELECT pg_catalog.setval('proyecto_id_seq', 1, false);
@@ -35350,7 +35350,7 @@ SELECT pg_catalog.setval('proyecto_id_seq', 1, false);
 --
 -- TOC entry 2228 (class 0 OID 0)
 -- Dependencies: 185
--- Name: proyecto_partida_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: postgres
+-- Name: proyecto_partida_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: rnc
 --
 
 SELECT pg_catalog.setval('proyecto_partida_id_seq', 1, false);
@@ -35359,7 +35359,7 @@ SELECT pg_catalog.setval('proyecto_partida_id_seq', 1, false);
 --
 -- TOC entry 2134 (class 0 OID 26519)
 -- Dependencies: 177
--- Data for Name: proyecto_partidas; Type: TABLE DATA; Schema: compras; Owner: postgres
+-- Data for Name: proyecto_partidas; Type: TABLE DATA; Schema: compras; Owner: rnc
 --
 
 COPY proyecto_partidas (proyecto_partida_id, proyecto_id, partida_id, monto_presupuestado) FROM stdin;
@@ -35369,7 +35369,7 @@ COPY proyecto_partidas (proyecto_partida_id, proyecto_id, partida_id, monto_pres
 --
 -- TOC entry 2135 (class 0 OID 26532)
 -- Dependencies: 178
--- Data for Name: proyectos_acciones; Type: TABLE DATA; Schema: compras; Owner: postgres
+-- Data for Name: proyectos_acciones; Type: TABLE DATA; Schema: compras; Owner: rnc
 --
 
 COPY proyectos_acciones (proyecto_id, nombre, monto, codigo, ente_id, tipo, fecha) FROM stdin;
@@ -35379,7 +35379,7 @@ COPY proyectos_acciones (proyecto_id, nombre, monto, codigo, ente_id, tipo, fech
 --
 -- TOC entry 2229 (class 0 OID 0)
 -- Dependencies: 188
--- Name: unidad_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: postgres
+-- Name: unidad_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: rnc
 --
 
 SELECT pg_catalog.setval('unidad_id_seq', 1, false);
@@ -35388,7 +35388,7 @@ SELECT pg_catalog.setval('unidad_id_seq', 1, false);
 --
 -- TOC entry 2146 (class 0 OID 26982)
 -- Dependencies: 189
--- Data for Name: unidades; Type: TABLE DATA; Schema: compras; Owner: postgres
+-- Data for Name: unidades; Type: TABLE DATA; Schema: compras; Owner: rnc
 --
 
 COPY unidades (unidad_id, nombre) FROM stdin;
@@ -35398,7 +35398,7 @@ COPY unidades (unidad_id, nombre) FROM stdin;
 --
 -- TOC entry 2148 (class 0 OID 26998)
 -- Dependencies: 191
--- Data for Name: usuarios; Type: TABLE DATA; Schema: compras; Owner: postgres
+-- Data for Name: usuarios; Type: TABLE DATA; Schema: compras; Owner: rnc
 --
 
 COPY usuarios (usuario_id, codigo_onapre, usuario, contrasena, correo, creado_el, actualizado_el) FROM stdin;
@@ -35408,7 +35408,7 @@ COPY usuarios (usuario_id, codigo_onapre, usuario, contrasena, correo, creado_el
 --
 -- TOC entry 2230 (class 0 OID 0)
 -- Dependencies: 190
--- Name: usuarios_usuario_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: postgres
+-- Name: usuarios_usuario_id_seq; Type: SEQUENCE SET; Schema: compras; Owner: rnc
 --
 
 SELECT pg_catalog.setval('usuarios_usuario_id_seq', 1, false);
@@ -35416,7 +35416,7 @@ SELECT pg_catalog.setval('usuarios_usuario_id_seq', 1, false);
 
 --
 -- TOC entry 1984 (class 2606 OID 26881)
--- Name: codigo_onapre_unique; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: codigo_onapre_unique; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 ALTER TABLE ONLY entes_organos
@@ -35425,7 +35425,7 @@ ALTER TABLE ONLY entes_organos
 
 --
 -- TOC entry 1982 (class 2606 OID 26487)
--- Name: pkcodigos_ncm; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: pkcodigos_ncm; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 ALTER TABLE ONLY codigos_ncm
@@ -35434,7 +35434,7 @@ ALTER TABLE ONLY codigos_ncm
 
 --
 -- TOC entry 1987 (class 2606 OID 26492)
--- Name: pkentes_organos; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: pkentes_organos; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 ALTER TABLE ONLY entes_organos
@@ -35443,7 +35443,7 @@ ALTER TABLE ONLY entes_organos
 
 --
 -- TOC entry 1989 (class 2606 OID 26976)
--- Name: pkpartida_productos; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: pkpartida_productos; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 ALTER TABLE ONLY partida_productos
@@ -35452,7 +35452,7 @@ ALTER TABLE ONLY partida_productos
 
 --
 -- TOC entry 1999 (class 2606 OID 26863)
--- Name: pkpartidas; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: pkpartidas; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 ALTER TABLE ONLY partidas
@@ -35461,7 +35461,7 @@ ALTER TABLE ONLY partidas
 
 --
 -- TOC entry 2001 (class 2606 OID 26931)
--- Name: pkpresupuesto; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: pkpresupuesto; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 ALTER TABLE ONLY presupuesto
@@ -35470,7 +35470,7 @@ ALTER TABLE ONLY presupuesto
 
 --
 -- TOC entry 1993 (class 2606 OID 26518)
--- Name: pkpresupuesto_importacion; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: pkpresupuesto_importacion; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 ALTER TABLE ONLY presupuesto_importacion
@@ -35479,7 +35479,7 @@ ALTER TABLE ONLY presupuesto_importacion
 
 --
 -- TOC entry 1991 (class 2606 OID 26500)
--- Name: pkproductos; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: pkproductos; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 ALTER TABLE ONLY productos
@@ -35488,7 +35488,7 @@ ALTER TABLE ONLY productos
 
 --
 -- TOC entry 1995 (class 2606 OID 26523)
--- Name: pkproyecto_partidas; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: pkproyecto_partidas; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 ALTER TABLE ONLY proyecto_partidas
@@ -35497,7 +35497,7 @@ ALTER TABLE ONLY proyecto_partidas
 
 --
 -- TOC entry 1997 (class 2606 OID 26536)
--- Name: pkproyectos_acciones; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: pkproyectos_acciones; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 ALTER TABLE ONLY proyectos_acciones
@@ -35506,7 +35506,7 @@ ALTER TABLE ONLY proyectos_acciones
 
 --
 -- TOC entry 2003 (class 2606 OID 26987)
--- Name: pkunidades; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: pkunidades; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 ALTER TABLE ONLY unidades
@@ -35515,7 +35515,7 @@ ALTER TABLE ONLY unidades
 
 --
 -- TOC entry 2005 (class 2606 OID 27005)
--- Name: usuarios_correo_key; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: usuarios_correo_key; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 ALTER TABLE ONLY usuarios
@@ -35524,7 +35524,7 @@ ALTER TABLE ONLY usuarios
 
 --
 -- TOC entry 2007 (class 2606 OID 27003)
--- Name: usuarios_pk; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: usuarios_pk; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 ALTER TABLE ONLY usuarios
@@ -35533,7 +35533,7 @@ ALTER TABLE ONLY usuarios
 
 --
 -- TOC entry 2009 (class 2606 OID 27007)
--- Name: usuarios_usuario_key; Type: CONSTRAINT; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: usuarios_usuario_key; Type: CONSTRAINT; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 ALTER TABLE ONLY usuarios
@@ -35542,7 +35542,7 @@ ALTER TABLE ONLY usuarios
 
 --
 -- TOC entry 1985 (class 1259 OID 26969)
--- Name: entes_organos_ente_adscrito_Idx; Type: INDEX; Schema: compras; Owner: postgres; Tablespace: 
+-- Name: entes_organos_ente_adscrito_Idx; Type: INDEX; Schema: compras; Owner: rnc; Tablespace: 
 --
 
 CREATE UNIQUE INDEX "entes_organos_ente_adscrito_Idx" ON entes_organos USING btree (ente_adscrito);
@@ -35550,7 +35550,7 @@ CREATE UNIQUE INDEX "entes_organos_ente_adscrito_Idx" ON entes_organos USING btr
 
 --
 -- TOC entry 2021 (class 2606 OID 27008)
--- Name: entes_organos_usuarios_fk; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
+-- Name: entes_organos_usuarios_fk; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
 --
 
 ALTER TABLE ONLY usuarios
@@ -35559,7 +35559,7 @@ ALTER TABLE ONLY usuarios
 
 --
 -- TOC entry 2010 (class 2606 OID 26633)
--- Name: fk_entes_organos_entes_organos; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
+-- Name: fk_entes_organos_entes_organos; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
 --
 
 ALTER TABLE ONLY entes_organos
@@ -35568,7 +35568,7 @@ ALTER TABLE ONLY entes_organos
 
 --
 -- TOC entry 2012 (class 2606 OID 26864)
--- Name: fk_partida_productos_partidas; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
+-- Name: fk_partida_productos_partidas; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
 --
 
 ALTER TABLE ONLY partida_productos
@@ -35577,7 +35577,7 @@ ALTER TABLE ONLY partida_productos
 
 --
 -- TOC entry 2011 (class 2606 OID 26509)
--- Name: fk_partida_productos_productos; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
+-- Name: fk_partida_productos_productos; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
 --
 
 ALTER TABLE ONLY partida_productos
@@ -35586,7 +35586,7 @@ ALTER TABLE ONLY partida_productos
 
 --
 -- TOC entry 2013 (class 2606 OID 26524)
--- Name: fk_presupuesto_importacion_codigos_ncm; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
+-- Name: fk_presupuesto_importacion_codigos_ncm; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
 --
 
 ALTER TABLE ONLY presupuesto_importacion
@@ -35595,7 +35595,7 @@ ALTER TABLE ONLY presupuesto_importacion
 
 --
 -- TOC entry 2014 (class 2606 OID 26950)
--- Name: fk_presupuesto_importacion_presupuesto; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
+-- Name: fk_presupuesto_importacion_presupuesto; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
 --
 
 ALTER TABLE ONLY presupuesto_importacion
@@ -35604,7 +35604,7 @@ ALTER TABLE ONLY presupuesto_importacion
 
 --
 -- TOC entry 2018 (class 2606 OID 26940)
--- Name: fk_presupuesto_productos; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
+-- Name: fk_presupuesto_productos; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
 --
 
 ALTER TABLE ONLY presupuesto
@@ -35613,7 +35613,7 @@ ALTER TABLE ONLY presupuesto
 
 --
 -- TOC entry 2019 (class 2606 OID 26977)
--- Name: fk_presupuesto_proyecto_partidas; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
+-- Name: fk_presupuesto_proyecto_partidas; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
 --
 
 ALTER TABLE ONLY presupuesto
@@ -35622,7 +35622,7 @@ ALTER TABLE ONLY presupuesto
 
 --
 -- TOC entry 2020 (class 2606 OID 26988)
--- Name: fk_presupuesto_unidades; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
+-- Name: fk_presupuesto_unidades; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
 --
 
 ALTER TABLE ONLY presupuesto
@@ -35631,7 +35631,7 @@ ALTER TABLE ONLY presupuesto
 
 --
 -- TOC entry 2016 (class 2606 OID 26869)
--- Name: fk_proyecto_partidas_partidas; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
+-- Name: fk_proyecto_partidas_partidas; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
 --
 
 ALTER TABLE ONLY proyecto_partidas
@@ -35640,7 +35640,7 @@ ALTER TABLE ONLY proyecto_partidas
 
 --
 -- TOC entry 2015 (class 2606 OID 26547)
--- Name: fk_proyecto_partidas_proyectos_acciones; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
+-- Name: fk_proyecto_partidas_proyectos_acciones; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
 --
 
 ALTER TABLE ONLY proyecto_partidas
@@ -35649,7 +35649,7 @@ ALTER TABLE ONLY proyecto_partidas
 
 --
 -- TOC entry 2017 (class 2606 OID 26552)
--- Name: fk_proyectos_acciones_entes_organos; Type: FK CONSTRAINT; Schema: compras; Owner: postgres
+-- Name: fk_proyectos_acciones_entes_organos; Type: FK CONSTRAINT; Schema: compras; Owner: rnc
 --
 
 ALTER TABLE ONLY proyectos_acciones
@@ -35659,12 +35659,12 @@ ALTER TABLE ONLY proyectos_acciones
 --
 -- TOC entry 2155 (class 0 OID 0)
 -- Dependencies: 8
--- Name: public; Type: ACL; Schema: -; Owner: postgres
+-- Name: public; Type: ACL; Schema: -; Owner: rnc
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
+REVOKE ALL ON SCHEMA public FROM rnc;
+GRANT ALL ON SCHEMA public TO rnc;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 

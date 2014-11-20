@@ -7,7 +7,7 @@ Yii::import('usr.components.*');
  * It contains the authentication method that checks if the provided
  * data can identity the user.
  */
-abstract class UserIdentity extends CUserIdentity
+abstract class ExampleUserIdentity extends CUserIdentity
 	implements IPasswordHistoryIdentity,
 	IActivatedIdentity,
 	IEditableIdentity,
@@ -29,14 +29,14 @@ abstract class UserIdentity extends CUserIdentity
 	private $_id = null;
 	private $_activeRecord = null;
 
-	protected static function createFromUser(Usuarios $user)
+	protected static function createFromUser(User $user)
 	{
 		$identity = new UserIdentity($user->username, null);
 		$identity->initFromUser($user);
 		return $identity;
 	}
 
-	protected function initFromUser(Usuarios $user)
+	protected function initFromUser(User $user)
 	{
 		$this->_activeRecord = $user;
 		$this->id = $user->getPrimaryKey();
@@ -49,7 +49,7 @@ abstract class UserIdentity extends CUserIdentity
 	protected function getActiveRecord()
 	{
 		if ($this->_activeRecord === null && $this->_id !== null) {
-			$this->_activeRecord = Usuarios::model()->findByPk($this->_id);
+			$this->_activeRecord = User::model()->findByPk($this->_id);
 		}
 		return $this->_activeRecord;
 	}
@@ -61,7 +61,7 @@ abstract class UserIdentity extends CUserIdentity
      */
     public function authenticate()
     {
-        $record = Usuarios::model()->findByAttributes(array('username'=>$this->username));
+        $record = User::model()->findByAttributes(array('username'=>$this->username));
         $authenticated = $record !== null && $record->verifyPassword($this->password);
 
         $attempt = new UserLoginAttempt;
@@ -142,7 +142,7 @@ abstract class UserIdentity extends CUserIdentity
 		if (($record=$this->getActiveRecord())===null) {
 			return false;
 		}
-		$hashedPassword = Usuarios::hashPassword($password);
+		$hashedPassword = User::hashPassword($password);
 		$usedPassword = new UserUsedPassword;
 		$usedPassword->setAttributes(array(
 			'user_id'=>$this->_id,
@@ -169,7 +169,7 @@ abstract class UserIdentity extends CUserIdentity
 	public function save($requireVerifiedEmail=false)
 	{
 		if ($this->_id === null) {
-			$record = new Usuarios;
+			$record = new User;
 			$record->password = 'x';
 			$record->is_active = $requireVerifiedEmail ? 0 : 1;
 		} else {
@@ -233,7 +233,7 @@ abstract class UserIdentity extends CUserIdentity
      */
 	public static function find(array $attributes)
 	{
-		$records = Usuarios::model()->findAllByAttributes($attributes);
+		$records = User::model()->findAllByAttributes($attributes);
         if (count($records)!==1) {
             return null;
         }
@@ -426,7 +426,7 @@ abstract class UserIdentity extends CUserIdentity
 		$criteria->with['userRemoteIdentities'] = array('alias'=>'ur');
 		$criteria->compare('ur.provider',$provider);
 		$criteria->compare('ur.identifier',$identifier);
-		$record = Usuarios::model()->find($criteria);
+		$record = User::model()->find($criteria);
 		return $record === null ? null : self::createFromUser($record);
 	}
 
@@ -664,7 +664,7 @@ abstract class UserIdentity extends CUserIdentity
 		$criteria->compare('email_verified', $searchForm->emailVerified);
 		$criteria->compare('is_active', $searchForm->isActive);
 		$criteria->compare('is_disabled', $searchForm->isDisabled);
-		$dataProvider = new CActiveDataProvider('Usuarios', array('criteria'=>$criteria, 'keyAttribute'=>'id'));
+		$dataProvider = new CActiveDataProvider('User', array('criteria'=>$criteria, 'keyAttribute'=>'id'));
 		$identities = array();
 		foreach($dataProvider->getData() as $row) {
 			$identities[] = self::createFromUser($row);
