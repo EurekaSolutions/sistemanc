@@ -9,6 +9,10 @@ return array(
 	// preloading 'log' component
 	'preload'=>array('log'),
 
+	'import'=>array(
+		'application.components.*',
+	),
+
 	// application components
 	'components'=>array(
 		/*
@@ -21,8 +25,8 @@ return array(
 		'db'=>array(
 			'connectionString' => 'pgsql:host=localhost;dbname=sistemanc',
 			'emulatePrepare' => true,
-			'username' => 'rnc',
-			'password' => 'rnc',
+			'username' => 'compras',
+			'password' => 'compras',
 			'charset' => 'utf8',
 		),
 		

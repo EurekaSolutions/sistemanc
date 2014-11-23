@@ -3,14 +3,17 @@
 /**
  * LoginForm class.
  * LoginForm is the data structure for keeping
- * user login form data. It is used by the 'login' action of 'SiteController'.
+ * user login form data. It is used by the 'login' action of 'DefaultController'.
  */
-class LoginForm extends CFormModel
+class LoginForm extends BasePasswordForm
 {
 	public $username;
 	public $password;
 	public $rememberMe;
 
+	/**
+	 * @var IdentityInterface cached object returned by @see getIdentity()
+	 */
 	private $_identity;
 
 	/**
@@ -20,14 +23,14 @@ class LoginForm extends CFormModel
 	 */
 	public function rules()
 	{
-		return array(
-			// username and password are required
+		$rules = array_merge(array(
+			array('username, password', 'filter', 'filter'=>'trim'),
 			array('username, password', 'required'),
-			// rememberMe needs to be a boolean
 			array('rememberMe', 'boolean'),
-			// password needs to be authenticated
 			array('password', 'authenticate'),
-		);
+		), $this->rulesAddScenario(parent::rules(), 'reset'), $this->getBehaviorRules());
+
+		return $rules;
 	}
 
 	/**
@@ -35,43 +38,104 @@ class LoginForm extends CFormModel
 	 */
 	public function attributeLabels()
 	{
-		return array(
-			'rememberMe'=>'Remember me next time',
-		);
+		return array_merge($this->getBehaviorLabels(), parent::attributeLabels(), array(
+			'username'		=> Yii::t('UsrModule.usr','Usuario'),
+			'password'		=> Yii::t('UsrModule.usr','Contraseña'),
+			'rememberMe'	=> Yii::t('UsrModule.usr','Recordarme.'),
+		));
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getIdentity()
+	{
+		if($this->_identity===null) {
+			$userIdentityClass = $this->userIdentityClass;
+			$this->_identity=new UserIdentity($this->username,$this->password);
+			$this->_identity->authenticate();
+		}
+		return $this->_identity;
 	}
 
 	/**
 	 * Authenticates the password.
 	 * This is the 'authenticate' validator as declared in rules().
+	 * @param string $attribute
+	 * @param array $params
+	 * @return boolean
 	 */
 	public function authenticate($attribute,$params)
 	{
-		if(!$this->hasErrors())
-		{
-			$this->_identity=new UserIdentity($this->username,$this->password);
-			if(!$this->_identity->authenticate())
-				$this->addError('password','Incorrect username or password.');
+		if($this->hasErrors()) {
+			return;
 		}
+		$identity = $this->getIdentity();
+		if (!$identity->getIsAuthenticated()) {
+            $this->addError('password', !empty($identity->errorMessage) ? $identity->errorMessage : Yii::t('UsrModule.usr','Usuario o contraseña invalida.'));
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * A wrapper for the passwordHasNotExpired method from ExpiredPasswordBehavior.
+	 * @param $attribute string
+	 * @param $params array
+	 */
+	public function passwordHasNotExpired($attribute, $params)
+	{
+		if (($behavior=$this->asa('expiredPasswordBehavior')) !== null) {
+			return $behavior->passwordHasNotExpired($attribute, $params);
+		}
+		return true;
+	}
+
+	/**
+	 * A wrapper for the validOneTimePassword method from OneTimePasswordBehavior.
+	 * @param $attribute string
+	 * @param $params array
+	 */
+	public function validOneTimePassword($attribute, $params)
+	{
+		if (($behavior=$this->asa('oneTimePasswordBehavior')) !== null) {
+			return $behavior->validOneTimePassword($attribute, $params);
+		}
+		return true;
+	}
+
+	/**
+	 * Resets user password using the new one given in the model.
+	 * @return boolean whether password reset was successful
+	 */
+	public function resetPassword()
+	{
+		if($this->hasErrors()) {
+			return;
+		}
+		$identity = $this->getIdentity();
+		if (!$identity->resetPassword($this->newPassword)) {
+			$this->addError('newPassword',Yii::t('UsrModule.usr','Fallo al reiniciar la contraseña.'));
+			return false;
+		}
+		return true;
 	}
 
 	/**
 	 * Logs in the user using the given username and password in the model.
+	 * @param integer $duration For how long the user will be logged in without any activity, in seconds.
 	 * @return boolean whether login is successful
 	 */
-	public function login()
+	public function login($duration = 0)
 	{
-		if($this->_identity===null)
-		{
-			$this->_identity=new UserIdentity($this->username,$this->password);
-			$this->_identity->authenticate();
+		$identity = $this->getIdentity();
+		if ($this->scenario === 'reset') {
+			$identity->password = $this->newPassword;
+			$identity->authenticate();
 		}
-		if($this->_identity->errorCode===UserIdentity::ERROR_NONE)
-		{
-			$duration=$this->rememberMe ? 3600*24*30 : 0; // 30 days
-			Yii::app()->user->login($this->_identity,$duration);
-			return true;
+		if($identity->getIsAuthenticated()) {
+			return Yii::app()->user->login($identity, $this->rememberMe ? $duration : 0);
 		}
-		else
-			return false;
+		return false;
 	}
 }

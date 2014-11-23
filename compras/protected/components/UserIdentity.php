@@ -7,7 +7,7 @@ Yii::import('usr.components.*');
  * It contains the authentication method that checks if the provided
  * data can identity the user.
  */
-abstract class UserIdentity extends CUserIdentity
+class UserIdentity extends CUserIdentity
 	implements IPasswordHistoryIdentity,
 	IActivatedIdentity,
 	IEditableIdentity,
@@ -25,7 +25,7 @@ abstract class UserIdentity extends CUserIdentity
 
 	public $email = null;
 	public $firstName = null;
-	public $lastName = null;
+	public $codigo_onapre = null;
 	private $_id = null;
 	private $_activeRecord = null;
 
@@ -39,11 +39,11 @@ abstract class UserIdentity extends CUserIdentity
 	protected function initFromUser(Usuarios $user)
 	{
 		$this->_activeRecord = $user;
-		$this->id = $user->getPrimaryKey();
-		$this->username = $user->username;
-		$this->email = $user->email;
-		$this->firstName = $user->firstname;
-		$this->lastName = $user->lastname;
+		$this->_id = $user->getPrimaryKey();
+		$this->username = $user->usuario;
+		$this->email = $user->correo;
+		//$this->firstName = $user->firstname;
+		$this->codigo_onapre = $user->codigo_onapre;
 	}
 
 	protected function getActiveRecord()
@@ -61,12 +61,12 @@ abstract class UserIdentity extends CUserIdentity
      */
     public function authenticate()
     {
-        $record = Usuarios::model()->findByAttributes(array('username'=>$this->username));
-        $authenticated = $record !== null && $record->verifyPassword($this->password);
+        $record = Usuarios::model()->findByAttributes(array('usuario'=>$this->username));
+        $authenticated = $record !== null && $record->verificarContrasena($this->password);
 
-        $attempt = new UserLoginAttempt;
+       /* $attempt = new UserLoginAttempt;
         $attempt->username = $this->username;
-        $attempt->user_id = $record->id;
+        $attempt->user_id = $record->usuaruio_id;
         $attempt->is_successful = $authenticated;
         $attempt->save();
 
@@ -74,20 +74,20 @@ abstract class UserIdentity extends CUserIdentity
             // this is the first check not to reveal if the specified user account exists or not
             $this->errorCode=self::ERROR_USER_LOCKED;
             $this->errorMessage=Yii::t('UsrModule.usr','User account has been locked due to too many failed login attempts. Try again later.');
-        } elseif (!$authenticated) {
+        } else*/if (!$authenticated) {
             $this->errorCode=self::ERROR_USERNAME_INVALID;
-            $this->errorMessage=Yii::t('UsrModule.usr','Invalid username or password.');
-        } elseif ($record->is_disabled) {
+            $this->errorMessage=Yii::t('UsrModule.usr','Usuario o contraseña invalido.');
+        } elseif ($record->esta_deshabilitado) {
             $this->errorCode=self::ERROR_USER_DISABLED;
-            $this->errorMessage=Yii::t('UsrModule.usr','User account has been disabled.');
-        } else if (!$record->is_active) {
+            $this->errorMessage=Yii::t('UsrModule.usr','Esta cuenta de usuario ha sido deshabilitada.');
+        } else if (!$record->esta_activo) {
             $this->errorCode=self::ERROR_USER_INACTIVE;
-            $this->errorMessage=Yii::t('UsrModule.usr','User account has not been activated yet.');
+            $this->errorMessage=Yii::t('UsrModule.usr','Esta cuenta de usuario aún no ha sido verificada, por favor revisa tu correo.');
         } else {
             $this->errorCode=self::ERROR_NONE;
             $this->errorMessage='';
             $this->initFromUser($record);
-            $record->saveAttributes(array('last_visit_on'=>date('Y-m-d H:i:s')));
+            //$record->saveAttributes(array('last_visit_on'=>date('Y-m-d H:i:s')));
         }
         return $this->getIsAuthenticated();
     }

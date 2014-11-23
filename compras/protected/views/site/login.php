@@ -3,13 +3,13 @@
 /* @var $model LoginForm */
 /* @var $form CActiveForm  */
 
-$this->pageTitle=Yii::app()->name . ' - Login';
+$this->pageTitle=Yii::app()->name . ' - Inciar sesión';
 $this->breadcrumbs=array(
 	'Login',
 );
 ?>
 
-<h1>Login</h1>
+<h1>Iniciar Sesión</h1>
 
 <p>Please fill out the following form with your login credentials:</p>
 
@@ -39,14 +39,14 @@ $this->breadcrumbs=array(
 		</p>
 	</div>
 
-	<div class="row rememberMe">
-		<?php echo $form->checkBox($model,'rememberMe'); ?>
-		<?php echo $form->label($model,'rememberMe'); ?>
-		<?php echo $form->error($model,'rememberMe'); ?>
-	</div>
+<!-- 	<div class="row rememberMe">
+	<?php /*echo $form->checkBox($model,'rememberMe'); ?>
+	<?php echo $form->label($model,'rememberMe'); ?>
+	<?php echo $form->error($model,'rememberMe'); */?>
+</div> -->
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton('Login'); ?>
+		<?php echo CHtml::submitButton('Ingresar'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

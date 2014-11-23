@@ -8,14 +8,24 @@
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'My Web Application',
+	'language'=>'es',
+	'sourceLanguage'=>'es',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
+
+	// path aliases
+    'aliases' => array(
+        'bootstrap' => realpath(__DIR__ . '/../extensions/bootstrap'), // change this if necessary
+    ),
 
 	// autoloading model and component classes
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+		'bootstrap.helpers.*',
+		'bootstrap.widgets.*',
+		'bootstrap.behaviors.TbWidget',
 	),
 
 	'modules'=>array(
@@ -26,9 +36,20 @@ return array(
 			'password'=>'rnc',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
+			'generatorPaths' => array('bootstrap.gii'),
 		),	
-		'usuario'=>array(
-               'userIdentityClass' => 'UserIdentity',
+		'usr'=>array(
+            'userIdentityClass' => 'UserIdentity',
+			'layout' => '//layouts/centered',
+			'formClass'=>'bootstrap.widgets.TbActiveForm',
+			'detailViewClass'=>'bootstrap.widgets.TbDetailView',
+			'formCssClass'=>'form well',
+			'alertCssClassPrefix'=>'alert alert-',
+			'submitButtonCssClass'=>'btn btn-primary',
+			'htmlCss' => array(
+				'errorSummaryCss' => 'alert alert-error',
+				'errorMessageCss' => 'text-error',
+			),
         ),
 	),
 
@@ -38,6 +59,10 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
+
+ 		'bootstrap' => array(
+            'class' => 'bootstrap.components.TbApi',   
+        ),
 		// uncomment the following to enable URLs in path-format
 		/*
 		'urlManager'=>array(
@@ -49,19 +74,19 @@ return array(
 			),
 		),
 		*/
-		'db'=>array(
+		/*'db'=>array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		),
+		),*/
 		// uncomment the following to use a MySQL database
-		/*
+		
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=testdrive',
+			'connectionString' => 'pgsql:host=localhost;dbname=sistemanc',
 			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
+			'username' => 'compras',
+			'password' => 'compras',
 			'charset' => 'utf8',
 		),
-		*/
+		
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',
