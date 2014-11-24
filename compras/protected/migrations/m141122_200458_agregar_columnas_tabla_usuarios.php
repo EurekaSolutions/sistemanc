@@ -4,7 +4,7 @@ class m141122_200458_agregar_columnas_tabla_usuarios extends CDbMigration
 {
 	public function safeUp()
 	{
-		$this->addColumn('usuarios','esta_activo', 'boolean DEFAULT false');
+		$this->addColumn('usuarios','esta_activo', 'boolean DEFAULT true');
 		$this->addColumn('usuarios','esta_deshabilitado', 'boolean DEFAULT false');
 	}
 
