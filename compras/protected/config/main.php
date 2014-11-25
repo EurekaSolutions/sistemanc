@@ -26,6 +26,7 @@ return array(
 		'bootstrap.helpers.*',
 		'bootstrap.widgets.*',
 		'bootstrap.behaviors.TbWidget',
+		'application.behaviors.ActiveRecordLogableBehavior', 
 	),
 
 	'modules'=>array(
