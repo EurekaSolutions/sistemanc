@@ -26,7 +26,7 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 SET search_path = public, pg_catalog;
 
 --
--- Name: codigo_ncm_id_seq; Type: SEQUENCE; Schema: public; Owner: compras
+-- Name: codigo_ncm_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE codigo_ncm_id_seq
@@ -37,14 +37,14 @@ CREATE SEQUENCE codigo_ncm_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.codigo_ncm_id_seq OWNER TO compras;
+ALTER TABLE public.codigo_ncm_id_seq OWNER TO postgres;
 
 SET default_tablespace = '';
 
 SET default_with_oids = false;
 
 --
--- Name: codigos_ncm; Type: TABLE; Schema: public; Owner: compras; Tablespace: 
+-- Name: codigos_ncm; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE codigos_ncm (
@@ -62,80 +62,80 @@ CREATE TABLE codigos_ncm (
 );
 
 
-ALTER TABLE public.codigos_ncm OWNER TO compras;
+ALTER TABLE public.codigos_ncm OWNER TO postgres;
 
 --
--- Name: TABLE codigos_ncm; Type: COMMENT; Schema: public; Owner: compras
+-- Name: TABLE codigos_ncm; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON TABLE codigos_ncm IS 'Tbala que contiene los codigos arancelarios ';
 
 
 --
--- Name: COLUMN codigos_ncm.codigo_ncm_id; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN codigos_ncm.codigo_ncm_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN codigos_ncm.codigo_ncm_id IS 'identificador unico del codigo arancelario';
 
 
 --
--- Name: COLUMN codigos_ncm.codigo_ncm_nivel_1; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN codigos_ncm.codigo_ncm_nivel_1; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN codigos_ncm.codigo_ncm_nivel_1 IS 'partida';
 
 
 --
--- Name: COLUMN codigos_ncm.codigo_ncm_nivel_2; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN codigos_ncm.codigo_ncm_nivel_2; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN codigos_ncm.codigo_ncm_nivel_2 IS 'subpartida';
 
 
 --
--- Name: COLUMN codigos_ncm.codigo_ncm_nivel_3; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN codigos_ncm.codigo_ncm_nivel_3; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN codigos_ncm.codigo_ncm_nivel_3 IS 'codigo ncm';
 
 
 --
--- Name: COLUMN codigos_ncm.codigo_ncm_nivel_4; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN codigos_ncm.codigo_ncm_nivel_4; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN codigos_ncm.codigo_ncm_nivel_4 IS 'especificacion propia del pais';
 
 
 --
--- Name: COLUMN codigos_ncm.version; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN codigos_ncm.version; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN codigos_ncm.version IS 'campo de versionamiento';
 
 
 --
--- Name: COLUMN codigos_ncm.fecha_desde; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN codigos_ncm.fecha_desde; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN codigos_ncm.fecha_desde IS 'fechas desde la cual es valido el codigo arancelario';
 
 
 --
--- Name: COLUMN codigos_ncm.fecha_hasta; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN codigos_ncm.fecha_hasta; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN codigos_ncm.fecha_hasta IS 'fecha hasta la cual es valido el codigo arancalario';
 
 
 --
--- Name: COLUMN codigos_ncm.enmienda; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN codigos_ncm.enmienda; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN codigos_ncm.enmienda IS 'este campo indica el numero de la enmienda';
 
 
 --
--- Name: ente_id_seq; Type: SEQUENCE; Schema: public; Owner: compras
+-- Name: ente_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE ente_id_seq
@@ -146,10 +146,10 @@ CREATE SEQUENCE ente_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.ente_id_seq OWNER TO compras;
+ALTER TABLE public.ente_id_seq OWNER TO postgres;
 
 --
--- Name: entes_organos; Type: TABLE; Schema: public; Owner: compras; Tablespace: 
+-- Name: entes_organos; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE entes_organos (
@@ -161,38 +161,38 @@ CREATE TABLE entes_organos (
 );
 
 
-ALTER TABLE public.entes_organos OWNER TO compras;
+ALTER TABLE public.entes_organos OWNER TO postgres;
 
 --
--- Name: TABLE entes_organos; Type: COMMENT; Schema: public; Owner: compras
+-- Name: TABLE entes_organos; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON TABLE entes_organos IS 'se encuentran registrados todos los entes y organos';
 
 
 --
--- Name: COLUMN entes_organos.ente_id; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN entes_organos.ente_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN entes_organos.ente_id IS 'identificador unico de la tabla';
 
 
 --
--- Name: COLUMN entes_organos.nombre; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN entes_organos.nombre; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN entes_organos.nombre IS 'nombre del organo o ente';
 
 
 --
--- Name: COLUMN entes_organos.tipo; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN entes_organos.tipo; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN entes_organos.tipo IS 'existen dos tipos, organos y entes';
 
 
 --
--- Name: partida_id_seq; Type: SEQUENCE; Schema: public; Owner: compras
+-- Name: partida_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE partida_id_seq
@@ -203,10 +203,10 @@ CREATE SEQUENCE partida_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.partida_id_seq OWNER TO compras;
+ALTER TABLE public.partida_id_seq OWNER TO postgres;
 
 --
--- Name: partida_productos; Type: TABLE; Schema: public; Owner: compras; Tablespace: 
+-- Name: partida_productos; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE partida_productos (
@@ -216,38 +216,38 @@ CREATE TABLE partida_productos (
 );
 
 
-ALTER TABLE public.partida_productos OWNER TO compras;
+ALTER TABLE public.partida_productos OWNER TO postgres;
 
 --
--- Name: TABLE partida_productos; Type: COMMENT; Schema: public; Owner: compras
+-- Name: TABLE partida_productos; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON TABLE partida_productos IS 'tabla que contiene los productos que pueden ser asociados a cada partida';
 
 
 --
--- Name: COLUMN partida_productos.partida_id; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN partida_productos.partida_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN partida_productos.partida_id IS 'clave foranea que referencia a una partida';
 
 
 --
--- Name: COLUMN partida_productos.producto_id; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN partida_productos.producto_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN partida_productos.producto_id IS 'clave foranea que referencia a un producto';
 
 
 --
--- Name: COLUMN partida_productos.tipo_operacion; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN partida_productos.tipo_operacion; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN partida_productos.tipo_operacion IS 'este campo indica si se realiza una compra o una venta, puede tomar los valores C= compras y V = venta';
+COMMENT ON COLUMN partida_productos.tipo_operacion IS 'este campo indica si se realiza una compra o una venta, puede tomar los valores C= postgres y V = venta';
 
 
 --
--- Name: partidas; Type: TABLE; Schema: public; Owner: compras; Tablespace: 
+-- Name: partidas; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE partidas (
@@ -260,59 +260,59 @@ CREATE TABLE partidas (
 );
 
 
-ALTER TABLE public.partidas OWNER TO compras;
+ALTER TABLE public.partidas OWNER TO postgres;
 
 --
--- Name: TABLE partidas; Type: COMMENT; Schema: public; Owner: compras
+-- Name: TABLE partidas; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON TABLE partidas IS 'partidas presupuestarias disponibles';
 
 
 --
--- Name: COLUMN partidas.partida_id; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN partidas.partida_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN partidas.partida_id IS 'identificador unico de la partida';
 
 
 --
--- Name: COLUMN partidas.p1; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN partidas.p1; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN partidas.p1 IS 'partida';
 
 
 --
--- Name: COLUMN partidas.p2; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN partidas.p2; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN partidas.p2 IS 'partida generica';
 
 
 --
--- Name: COLUMN partidas.p3; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN partidas.p3; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN partidas.p3 IS 'partida especifica';
 
 
 --
--- Name: COLUMN partidas.p4; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN partidas.p4; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN partidas.p4 IS 'partida sub especifica';
 
 
 --
--- Name: COLUMN partidas.nombre; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN partidas.nombre; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN partidas.nombre IS 'nombre de la partida';
 
 
 --
--- Name: presupuesto_id_seq; Type: SEQUENCE; Schema: public; Owner: compras
+-- Name: presupuesto_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE presupuesto_id_seq
@@ -323,10 +323,10 @@ CREATE SEQUENCE presupuesto_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.presupuesto_id_seq OWNER TO compras;
+ALTER TABLE public.presupuesto_id_seq OWNER TO postgres;
 
 --
--- Name: presupuesto; Type: TABLE; Schema: public; Owner: compras; Tablespace: 
+-- Name: presupuesto; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE presupuesto (
@@ -342,66 +342,66 @@ CREATE TABLE presupuesto (
 );
 
 
-ALTER TABLE public.presupuesto OWNER TO compras;
+ALTER TABLE public.presupuesto OWNER TO postgres;
 
 --
--- Name: TABLE presupuesto; Type: COMMENT; Schema: public; Owner: compras
+-- Name: TABLE presupuesto; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON TABLE presupuesto IS 'La tabla contiene la informacion de los productos presupuestados';
 
 
 --
--- Name: COLUMN presupuesto.presupuesto_id; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN presupuesto.presupuesto_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto.presupuesto_id IS 'identificador unico de un productos de una partida presupuestado';
 
 
 --
--- Name: COLUMN presupuesto.producto_id; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN presupuesto.producto_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto.producto_id IS 'clave foranea que referencia a un producto';
 
 
 --
--- Name: COLUMN presupuesto.unidad_id; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN presupuesto.unidad_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto.unidad_id IS 'clave foranea que referencia a una unidad';
 
 
 --
--- Name: COLUMN presupuesto.costo_unidad; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN presupuesto.costo_unidad; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto.costo_unidad IS 'costo en bolibares de la unidad de un producto';
 
 
 --
--- Name: COLUMN presupuesto.cantidad; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN presupuesto.cantidad; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto.cantidad IS 'cantidad de productos presupuestados';
 
 
 --
--- Name: COLUMN presupuesto.monto_presupuesto; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN presupuesto.monto_presupuesto; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto.monto_presupuesto IS 'monto total de un producto por n veces las unidades expresado en bolivares';
 
 
 --
--- Name: COLUMN presupuesto.tipo; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN presupuesto.tipo; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto.tipo IS 'los bienes pueden ser comprados nacionalmente o internacionalmente';
 
 
 --
--- Name: presupuesto_importacion; Type: TABLE; Schema: public; Owner: compras; Tablespace: 
+-- Name: presupuesto_importacion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE presupuesto_importacion (
@@ -415,52 +415,52 @@ CREATE TABLE presupuesto_importacion (
 );
 
 
-ALTER TABLE public.presupuesto_importacion OWNER TO compras;
+ALTER TABLE public.presupuesto_importacion OWNER TO postgres;
 
 --
--- Name: TABLE presupuesto_importacion; Type: COMMENT; Schema: public; Owner: compras
+-- Name: TABLE presupuesto_importacion; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON TABLE presupuesto_importacion IS 'Tabla que contiene la informacion de los productos presuepuestados que seran importados';
 
 
 --
--- Name: COLUMN presupuesto_importacion.codigo_ncm_id; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN presupuesto_importacion.codigo_ncm_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto_importacion.codigo_ncm_id IS 'clave foranea que referencia el codigo arancelario ';
 
 
 --
--- Name: COLUMN presupuesto_importacion.presupuesto_id; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN presupuesto_importacion.presupuesto_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto_importacion.presupuesto_id IS 'clave foranea que referencia a un presupuesto de un producto determinado';
 
 
 --
--- Name: COLUMN presupuesto_importacion.cantidad; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN presupuesto_importacion.cantidad; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto_importacion.cantidad IS 'cantidad del producto que se importara';
 
 
 --
--- Name: COLUMN presupuesto_importacion.monto_presupuesto; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN presupuesto_importacion.monto_presupuesto; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto_importacion.monto_presupuesto IS 'monto expresado en dolares del producto que se importara';
 
 
 --
--- Name: COLUMN presupuesto_importacion.tipo; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN presupuesto_importacion.tipo; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN presupuesto_importacion.tipo IS 'copovex o licitacion internacional';
 
 
 --
--- Name: producto_id_seq; Type: SEQUENCE; Schema: public; Owner: compras
+-- Name: producto_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE producto_id_seq
@@ -471,10 +471,10 @@ CREATE SEQUENCE producto_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.producto_id_seq OWNER TO compras;
+ALTER TABLE public.producto_id_seq OWNER TO postgres;
 
 --
--- Name: productos; Type: TABLE; Schema: public; Owner: compras; Tablespace: 
+-- Name: productos; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE productos (
@@ -487,52 +487,52 @@ CREATE TABLE productos (
 );
 
 
-ALTER TABLE public.productos OWNER TO compras;
+ALTER TABLE public.productos OWNER TO postgres;
 
 --
--- Name: TABLE productos; Type: COMMENT; Schema: public; Owner: compras
+-- Name: TABLE productos; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON TABLE productos IS 'productos segun la convencion de las naciones unidas';
 
 
 --
--- Name: COLUMN productos.producto_id; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN productos.producto_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN productos.producto_id IS 'identificador unico del producto';
 
 
 --
--- Name: COLUMN productos.cod_segmento; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN productos.cod_segmento; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN productos.cod_segmento IS 'segmento del codigo de las naciones unidas';
 
 
 --
--- Name: COLUMN productos.cod_familia; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN productos.cod_familia; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN productos.cod_familia IS 'familia del codigo de las naciones unidas';
 
 
 --
--- Name: COLUMN productos.cod_clase; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN productos.cod_clase; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN productos.cod_clase IS 'clase del codigo de las naciones unidas';
 
 
 --
--- Name: COLUMN productos.cod_producto; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN productos.cod_producto; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN productos.cod_producto IS 'codigo del producto de las naciones unidas';
 
 
 --
--- Name: proyecto_id_seq; Type: SEQUENCE; Schema: public; Owner: compras
+-- Name: proyecto_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE proyecto_id_seq
@@ -543,10 +543,10 @@ CREATE SEQUENCE proyecto_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.proyecto_id_seq OWNER TO compras;
+ALTER TABLE public.proyecto_id_seq OWNER TO postgres;
 
 --
--- Name: proyecto_partida_id_seq; Type: SEQUENCE; Schema: public; Owner: compras
+-- Name: proyecto_partida_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE proyecto_partida_id_seq
@@ -557,10 +557,10 @@ CREATE SEQUENCE proyecto_partida_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.proyecto_partida_id_seq OWNER TO compras;
+ALTER TABLE public.proyecto_partida_id_seq OWNER TO postgres;
 
 --
--- Name: proyecto_partidas; Type: TABLE; Schema: public; Owner: compras; Tablespace: 
+-- Name: proyecto_partidas; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE proyecto_partidas (
@@ -571,38 +571,38 @@ CREATE TABLE proyecto_partidas (
 );
 
 
-ALTER TABLE public.proyecto_partidas OWNER TO compras;
+ALTER TABLE public.proyecto_partidas OWNER TO postgres;
 
 --
--- Name: COLUMN proyecto_partidas.proyecto_partida_id; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN proyecto_partidas.proyecto_partida_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN proyecto_partidas.proyecto_partida_id IS 'identificador unico ';
 
 
 --
--- Name: COLUMN proyecto_partidas.proyecto_id; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN proyecto_partidas.proyecto_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN proyecto_partidas.proyecto_id IS 'clave foranea que hace referencia a un proyecto o accion centralizada';
 
 
 --
--- Name: COLUMN proyecto_partidas.partida_id; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN proyecto_partidas.partida_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN proyecto_partidas.partida_id IS 'clave foranea que hace referencia a una partida';
 
 
 --
--- Name: COLUMN proyecto_partidas.monto_presupuestado; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN proyecto_partidas.monto_presupuestado; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN proyecto_partidas.monto_presupuestado IS 'monto presupuestado para un la partida de un proyecto particular';
 
 
 --
--- Name: proyectos_acciones; Type: TABLE; Schema: public; Owner: compras; Tablespace: 
+-- Name: proyectos_acciones; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE proyectos_acciones (
@@ -616,59 +616,59 @@ CREATE TABLE proyectos_acciones (
 );
 
 
-ALTER TABLE public.proyectos_acciones OWNER TO compras;
+ALTER TABLE public.proyectos_acciones OWNER TO postgres;
 
 --
--- Name: TABLE proyectos_acciones; Type: COMMENT; Schema: public; Owner: compras
+-- Name: TABLE proyectos_acciones; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON TABLE proyectos_acciones IS 'proyectos o acciones centralizadas';
 
 
 --
--- Name: COLUMN proyectos_acciones.proyecto_id; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN proyectos_acciones.proyecto_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN proyectos_acciones.proyecto_id IS 'identificador unico del proyecto';
 
 
 --
--- Name: COLUMN proyectos_acciones.nombre; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN proyectos_acciones.nombre; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN proyectos_acciones.nombre IS 'nombre del proyecto o accion centralizada';
 
 
 --
--- Name: COLUMN proyectos_acciones.monto; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN proyectos_acciones.monto; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN proyectos_acciones.monto IS 'monto del proyecto a accion centralizada';
 
 
 --
--- Name: COLUMN proyectos_acciones.codigo; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN proyectos_acciones.codigo; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN proyectos_acciones.codigo IS 'codigo del proyecto o accion centralizada segun especificacion de onapre';
 
 
 --
--- Name: COLUMN proyectos_acciones.tipo; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN proyectos_acciones.tipo; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN proyectos_acciones.tipo IS 'puede tomar los valores de "proyecto" y "accion centralizada"';
 
 
 --
--- Name: COLUMN proyectos_acciones.fecha; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN proyectos_acciones.fecha; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN proyectos_acciones.fecha IS 'fecha de comienzo del proyecto';
 
 
 --
--- Name: tbl_migration; Type: TABLE; Schema: public; Owner: compras; Tablespace: 
+-- Name: tbl_migration; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE tbl_migration (
@@ -677,10 +677,10 @@ CREATE TABLE tbl_migration (
 );
 
 
-ALTER TABLE public.tbl_migration OWNER TO compras;
+ALTER TABLE public.tbl_migration OWNER TO postgres;
 
 --
--- Name: unidad_id_seq; Type: SEQUENCE; Schema: public; Owner: compras
+-- Name: unidad_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE unidad_id_seq
@@ -691,10 +691,10 @@ CREATE SEQUENCE unidad_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.unidad_id_seq OWNER TO compras;
+ALTER TABLE public.unidad_id_seq OWNER TO postgres;
 
 --
--- Name: unidades; Type: TABLE; Schema: public; Owner: compras; Tablespace: 
+-- Name: unidades; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE unidades (
@@ -703,24 +703,24 @@ CREATE TABLE unidades (
 );
 
 
-ALTER TABLE public.unidades OWNER TO compras;
+ALTER TABLE public.unidades OWNER TO postgres;
 
 --
--- Name: COLUMN unidades.unidad_id; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN unidades.unidad_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN unidades.unidad_id IS 'identificador unico de la tabla';
 
 
 --
--- Name: COLUMN unidades.nombre; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN unidades.nombre; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN unidades.nombre IS 'descripcion de la unidad';
 
 
 --
--- Name: user_login_attempts; Type: TABLE; Schema: public; Owner: compras; Tablespace: 
+-- Name: user_login_attempts; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE user_login_attempts (
@@ -735,10 +735,10 @@ CREATE TABLE user_login_attempts (
 );
 
 
-ALTER TABLE public.user_login_attempts OWNER TO compras;
+ALTER TABLE public.user_login_attempts OWNER TO postgres;
 
 --
--- Name: user_login_attempts_id_seq; Type: SEQUENCE; Schema: public; Owner: compras
+-- Name: user_login_attempts_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE user_login_attempts_id_seq
@@ -749,17 +749,17 @@ CREATE SEQUENCE user_login_attempts_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.user_login_attempts_id_seq OWNER TO compras;
+ALTER TABLE public.user_login_attempts_id_seq OWNER TO postgres;
 
 --
--- Name: user_login_attempts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: compras
+-- Name: user_login_attempts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE user_login_attempts_id_seq OWNED BY user_login_attempts.id;
 
 
 --
--- Name: usuarios_usuario_id_seq; Type: SEQUENCE; Schema: public; Owner: compras
+-- Name: usuarios_usuario_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE usuarios_usuario_id_seq
@@ -770,10 +770,10 @@ CREATE SEQUENCE usuarios_usuario_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.usuarios_usuario_id_seq OWNER TO compras;
+ALTER TABLE public.usuarios_usuario_id_seq OWNER TO postgres;
 
 --
--- Name: usuarios; Type: TABLE; Schema: public; Owner: compras; Tablespace: 
+-- Name: usuarios; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE usuarios (
@@ -789,73 +789,73 @@ CREATE TABLE usuarios (
 );
 
 
-ALTER TABLE public.usuarios OWNER TO compras;
+ALTER TABLE public.usuarios OWNER TO postgres;
 
 --
--- Name: TABLE usuarios; Type: COMMENT; Schema: public; Owner: compras
+-- Name: TABLE usuarios; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON TABLE usuarios IS 'Tabla de usuarios';
 
 
 --
--- Name: COLUMN usuarios.codigo_onapre; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN usuarios.codigo_onapre; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN usuarios.codigo_onapre IS 'Clave foranea del codigo_onapre en la tabla entes_organos';
 
 
 --
--- Name: COLUMN usuarios.usuario; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN usuarios.usuario; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN usuarios.usuario IS 'Nombre de usuario del ente u organismo';
 
 
 --
--- Name: COLUMN usuarios.contrasena; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN usuarios.contrasena; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN usuarios.contrasena IS 'Contraseña del usuario';
 
 
 --
--- Name: COLUMN usuarios.correo; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN usuarios.correo; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN usuarios.correo IS 'Correo del usuario';
 
 
 --
--- Name: COLUMN usuarios.creado_el; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN usuarios.creado_el; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN usuarios.creado_el IS 'Fecha de creación de la cuenta';
 
 
 --
--- Name: COLUMN usuarios.actualizado_el; Type: COMMENT; Schema: public; Owner: compras
+-- Name: COLUMN usuarios.actualizado_el; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN usuarios.actualizado_el IS 'Fecha de actualización de la cuenta';
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: compras
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY user_login_attempts ALTER COLUMN id SET DEFAULT nextval('user_login_attempts_id_seq'::regclass);
 
 
 --
--- Name: codigo_ncm_id_seq; Type: SEQUENCE SET; Schema: public; Owner: compras
+-- Name: codigo_ncm_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('codigo_ncm_id_seq', 1, false);
 
 
 --
--- Data for Name: codigos_ncm; Type: TABLE DATA; Schema: public; Owner: compras
+-- Data for Name: codigos_ncm; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY codigos_ncm (codigo_ncm_id, codigo_ncm_nivel_1, codigo_ncm_nivel_2, codigo_ncm_nivel_3, codigo_ncm_nivel_4, descripcion_ncm, version, fecha_desde, fecha_hasta, unidad, enmienda) FROM stdin;
@@ -12802,14 +12802,14 @@ COPY codigos_ncm (codigo_ncm_id, codigo_ncm_nivel_1, codigo_ncm_nivel_2, codigo_
 
 
 --
--- Name: ente_id_seq; Type: SEQUENCE SET; Schema: public; Owner: compras
+-- Name: ente_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('ente_id_seq', 1, true);
 
 
 --
--- Data for Name: entes_organos; Type: TABLE DATA; Schema: public; Owner: compras
+-- Data for Name: entes_organos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY entes_organos (ente_id, codigo_onapre, nombre, tipo, ente_adscrito) FROM stdin;
@@ -12818,14 +12818,14 @@ COPY entes_organos (ente_id, codigo_onapre, nombre, tipo, ente_adscrito) FROM st
 
 
 --
--- Name: partida_id_seq; Type: SEQUENCE SET; Schema: public; Owner: compras
+-- Name: partida_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('partida_id_seq', 314, true);
 
 
 --
--- Data for Name: partida_productos; Type: TABLE DATA; Schema: public; Owner: compras
+-- Data for Name: partida_productos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY partida_productos (partida_id, producto_id, tipo_operacion) FROM stdin;
@@ -12833,7 +12833,7 @@ COPY partida_productos (partida_id, producto_id, tipo_operacion) FROM stdin;
 
 
 --
--- Data for Name: partidas; Type: TABLE DATA; Schema: public; Owner: compras
+-- Data for Name: partidas; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY partidas (partida_id, p1, p2, p3, p4, nombre) FROM stdin;
@@ -13154,7 +13154,7 @@ COPY partidas (partida_id, p1, p2, p3, p4, nombre) FROM stdin;
 
 
 --
--- Data for Name: presupuesto; Type: TABLE DATA; Schema: public; Owner: compras
+-- Data for Name: presupuesto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY presupuesto (presupuesto_id, producto_id, unidad_id, costo_unidad, cantidad, monto_presupuesto, tipo, monto_ejecutado, proyecto_partida_id) FROM stdin;
@@ -13162,14 +13162,14 @@ COPY presupuesto (presupuesto_id, producto_id, unidad_id, costo_unidad, cantidad
 
 
 --
--- Name: presupuesto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: compras
+-- Name: presupuesto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('presupuesto_id_seq', 1, false);
 
 
 --
--- Data for Name: presupuesto_importacion; Type: TABLE DATA; Schema: public; Owner: compras
+-- Data for Name: presupuesto_importacion; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY presupuesto_importacion (codigo_ncm_id, presupuesto_id, cantidad, fecha_llegada, monto_presupuesto, tipo, monto_ejecutado) FROM stdin;
@@ -13177,14 +13177,14 @@ COPY presupuesto_importacion (codigo_ncm_id, presupuesto_id, cantidad, fecha_lle
 
 
 --
--- Name: producto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: compras
+-- Name: producto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('producto_id_seq', 1, false);
 
 
 --
--- Data for Name: productos; Type: TABLE DATA; Schema: public; Owner: compras
+-- Data for Name: productos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto, nombre) FROM stdin;
@@ -15347,7 +15347,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 2455	91	10	21	0	CUIDADO DEL CALZADO
 2456	91	11	15	0	SERVICIOS DE LAVADO
 2457	91	11	16	0	ASISTENCIA Y CUIDADO DOMESTICO
-2458	91	11	17	0	SERVICIOS DE COMPRAS O TRUEQUES PARA CONSUMO
+2458	91	11	17	0	SERVICIOS DE postgres O TRUEQUES PARA CONSUMO
 2459	91	11	18	0	CUIDADO Y ALMACENAJE DE ARTICULOS PERSONALES
 2460	91	11	19	0	SERVICIOS DE CUIDADO PERSONAL
 2461	92	10	15	0	SERVICIOS DE POLICIA
@@ -33429,7 +33429,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 20538	80	10	17	3	Servicios de estandarizaci�n de la especificaci�
 20539	80	10	17	4	An�lisis de la cadena de suministro o servicios de reingenier�
 20540	80	10	17	5	Servicios de cooperativa o consorcio
-20541	80	10	17	6	Servicios profesionales de compras o adquisiciones
+20541	80	10	17	6	Servicios profesionales de postgres o adquisiciones
 20542	80	10	17	7	Servicios de cabildeo
 20543	80	11	15	1	Desarrollo de la gesti�
 20544	80	11	15	2	Planificaci�n de compensaciones o beneficios
@@ -33773,7 +33773,7 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 20882	82	10	15	4	Publicidad en peri�dicos
 20883	82	10	15	5	Publicidad en octavillas o cupones
 20884	82	10	15	6	Publicidad en transportes p�blicos
-20885	82	10	15	7	Boletines de compras, servicios de publicidad o distribuci�
+20885	82	10	15	7	Boletines de postgres, servicios de publicidad o distribuci�
 20886	82	10	15	8	Publicidad en las p�ginas amarillas o en un directorio comercial o de servicios
 20887	82	10	16	1	Publicidad en radio
 20888	82	10	16	2	Publicidad en televisi�
@@ -35199,21 +35199,21 @@ COPY productos (producto_id, cod_segmento, cod_familia, cod_clase, cod_producto,
 
 
 --
--- Name: proyecto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: compras
+-- Name: proyecto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('proyecto_id_seq', 1, false);
 
 
 --
--- Name: proyecto_partida_id_seq; Type: SEQUENCE SET; Schema: public; Owner: compras
+-- Name: proyecto_partida_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('proyecto_partida_id_seq', 1, false);
 
 
 --
--- Data for Name: proyecto_partidas; Type: TABLE DATA; Schema: public; Owner: compras
+-- Data for Name: proyecto_partidas; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY proyecto_partidas (proyecto_partida_id, proyecto_id, partida_id, monto_presupuestado) FROM stdin;
@@ -35221,7 +35221,7 @@ COPY proyecto_partidas (proyecto_partida_id, proyecto_id, partida_id, monto_pres
 
 
 --
--- Data for Name: proyectos_acciones; Type: TABLE DATA; Schema: public; Owner: compras
+-- Data for Name: proyectos_acciones; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY proyectos_acciones (proyecto_id, nombre, monto, codigo, ente_id, tipo, fecha) FROM stdin;
@@ -35229,7 +35229,7 @@ COPY proyectos_acciones (proyecto_id, nombre, monto, codigo, ente_id, tipo, fech
 
 
 --
--- Data for Name: tbl_migration; Type: TABLE DATA; Schema: public; Owner: compras
+-- Data for Name: tbl_migration; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY tbl_migration (version, apply_time) FROM stdin;
@@ -35240,14 +35240,14 @@ m141122_220151_crear_tabla_user_login_attempts	1416700078
 
 
 --
--- Name: unidad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: compras
+-- Name: unidad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('unidad_id_seq', 1, false);
 
 
 --
--- Data for Name: unidades; Type: TABLE DATA; Schema: public; Owner: compras
+-- Data for Name: unidades; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY unidades (unidad_id, nombre) FROM stdin;
@@ -35255,7 +35255,7 @@ COPY unidades (unidad_id, nombre) FROM stdin;
 
 
 --
--- Data for Name: user_login_attempts; Type: TABLE DATA; Schema: public; Owner: compras
+-- Data for Name: user_login_attempts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY user_login_attempts (id, username, user_id, performed_on, is_successful, session_id, ipv4, user_agent) FROM stdin;
@@ -35263,14 +35263,14 @@ COPY user_login_attempts (id, username, user_id, performed_on, is_successful, se
 
 
 --
--- Name: user_login_attempts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: compras
+-- Name: user_login_attempts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('user_login_attempts_id_seq', 1, false);
 
 
 --
--- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: compras
+-- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY usuarios (usuario_id, codigo_onapre, usuario, contrasena, correo, creado_el, actualizado_el, esta_activo, esta_deshabilitado) FROM stdin;
@@ -35279,14 +35279,14 @@ COPY usuarios (usuario_id, codigo_onapre, usuario, contrasena, correo, creado_el
 
 
 --
--- Name: usuarios_usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: compras
+-- Name: usuarios_usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('usuarios_usuario_id_seq', 9, true);
 
 
 --
--- Name: codigo_onapre_unique; Type: CONSTRAINT; Schema: public; Owner: compras; Tablespace: 
+-- Name: codigo_onapre_unique; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY entes_organos
@@ -35294,7 +35294,7 @@ ALTER TABLE ONLY entes_organos
 
 
 --
--- Name: pkcodigos_ncm; Type: CONSTRAINT; Schema: public; Owner: compras; Tablespace: 
+-- Name: pkcodigos_ncm; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY codigos_ncm
@@ -35302,7 +35302,7 @@ ALTER TABLE ONLY codigos_ncm
 
 
 --
--- Name: pkentes_organos; Type: CONSTRAINT; Schema: public; Owner: compras; Tablespace: 
+-- Name: pkentes_organos; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY entes_organos
@@ -35310,7 +35310,7 @@ ALTER TABLE ONLY entes_organos
 
 
 --
--- Name: pkpartida_productos; Type: CONSTRAINT; Schema: public; Owner: compras; Tablespace: 
+-- Name: pkpartida_productos; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY partida_productos
@@ -35318,7 +35318,7 @@ ALTER TABLE ONLY partida_productos
 
 
 --
--- Name: pkpartidas; Type: CONSTRAINT; Schema: public; Owner: compras; Tablespace: 
+-- Name: pkpartidas; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY partidas
@@ -35326,7 +35326,7 @@ ALTER TABLE ONLY partidas
 
 
 --
--- Name: pkpresupuesto; Type: CONSTRAINT; Schema: public; Owner: compras; Tablespace: 
+-- Name: pkpresupuesto; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY presupuesto
@@ -35334,7 +35334,7 @@ ALTER TABLE ONLY presupuesto
 
 
 --
--- Name: pkpresupuesto_importacion; Type: CONSTRAINT; Schema: public; Owner: compras; Tablespace: 
+-- Name: pkpresupuesto_importacion; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY presupuesto_importacion
@@ -35342,7 +35342,7 @@ ALTER TABLE ONLY presupuesto_importacion
 
 
 --
--- Name: pkproductos; Type: CONSTRAINT; Schema: public; Owner: compras; Tablespace: 
+-- Name: pkproductos; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY productos
@@ -35350,7 +35350,7 @@ ALTER TABLE ONLY productos
 
 
 --
--- Name: pkproyecto_partidas; Type: CONSTRAINT; Schema: public; Owner: compras; Tablespace: 
+-- Name: pkproyecto_partidas; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY proyecto_partidas
@@ -35358,7 +35358,7 @@ ALTER TABLE ONLY proyecto_partidas
 
 
 --
--- Name: pkproyectos_acciones; Type: CONSTRAINT; Schema: public; Owner: compras; Tablespace: 
+-- Name: pkproyectos_acciones; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY proyectos_acciones
@@ -35366,7 +35366,7 @@ ALTER TABLE ONLY proyectos_acciones
 
 
 --
--- Name: pkunidades; Type: CONSTRAINT; Schema: public; Owner: compras; Tablespace: 
+-- Name: pkunidades; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY unidades
@@ -35374,7 +35374,7 @@ ALTER TABLE ONLY unidades
 
 
 --
--- Name: tbl_migration_pkey; Type: CONSTRAINT; Schema: public; Owner: compras; Tablespace: 
+-- Name: tbl_migration_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY tbl_migration
@@ -35382,7 +35382,7 @@ ALTER TABLE ONLY tbl_migration
 
 
 --
--- Name: user_login_attempts_pkey; Type: CONSTRAINT; Schema: public; Owner: compras; Tablespace: 
+-- Name: user_login_attempts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY user_login_attempts
@@ -35390,7 +35390,7 @@ ALTER TABLE ONLY user_login_attempts
 
 
 --
--- Name: usuarios_correo_key; Type: CONSTRAINT; Schema: public; Owner: compras; Tablespace: 
+-- Name: usuarios_correo_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY usuarios
@@ -35398,7 +35398,7 @@ ALTER TABLE ONLY usuarios
 
 
 --
--- Name: usuarios_pk; Type: CONSTRAINT; Schema: public; Owner: compras; Tablespace: 
+-- Name: usuarios_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY usuarios
@@ -35406,7 +35406,7 @@ ALTER TABLE ONLY usuarios
 
 
 --
--- Name: usuarios_usuario_key; Type: CONSTRAINT; Schema: public; Owner: compras; Tablespace: 
+-- Name: usuarios_usuario_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY usuarios
@@ -35414,21 +35414,21 @@ ALTER TABLE ONLY usuarios
 
 
 --
--- Name: entes_organos_ente_adscrito_Idx; Type: INDEX; Schema: public; Owner: compras; Tablespace: 
+-- Name: entes_organos_ente_adscrito_Idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE UNIQUE INDEX "entes_organos_ente_adscrito_Idx" ON entes_organos USING btree (ente_adscrito);
 
 
 --
--- Name: user_login_attempts_user_id_idx; Type: INDEX; Schema: public; Owner: compras; Tablespace: 
+-- Name: user_login_attempts_user_id_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE INDEX user_login_attempts_user_id_idx ON user_login_attempts USING btree (user_id);
 
 
 --
--- Name: entes_organos_usuarios_fk; Type: FK CONSTRAINT; Schema: public; Owner: compras
+-- Name: entes_organos_usuarios_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY usuarios
@@ -35436,7 +35436,7 @@ ALTER TABLE ONLY usuarios
 
 
 --
--- Name: fk_entes_organos_entes_organos; Type: FK CONSTRAINT; Schema: public; Owner: compras
+-- Name: fk_entes_organos_entes_organos; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY entes_organos
@@ -35444,7 +35444,7 @@ ALTER TABLE ONLY entes_organos
 
 
 --
--- Name: fk_partida_productos_partidas; Type: FK CONSTRAINT; Schema: public; Owner: compras
+-- Name: fk_partida_productos_partidas; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY partida_productos
@@ -35452,7 +35452,7 @@ ALTER TABLE ONLY partida_productos
 
 
 --
--- Name: fk_partida_productos_productos; Type: FK CONSTRAINT; Schema: public; Owner: compras
+-- Name: fk_partida_productos_productos; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY partida_productos
@@ -35460,7 +35460,7 @@ ALTER TABLE ONLY partida_productos
 
 
 --
--- Name: fk_presupuesto_importacion_codigos_ncm; Type: FK CONSTRAINT; Schema: public; Owner: compras
+-- Name: fk_presupuesto_importacion_codigos_ncm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY presupuesto_importacion
@@ -35468,7 +35468,7 @@ ALTER TABLE ONLY presupuesto_importacion
 
 
 --
--- Name: fk_presupuesto_importacion_presupuesto; Type: FK CONSTRAINT; Schema: public; Owner: compras
+-- Name: fk_presupuesto_importacion_presupuesto; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY presupuesto_importacion
@@ -35476,7 +35476,7 @@ ALTER TABLE ONLY presupuesto_importacion
 
 
 --
--- Name: fk_presupuesto_productos; Type: FK CONSTRAINT; Schema: public; Owner: compras
+-- Name: fk_presupuesto_productos; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY presupuesto
@@ -35484,7 +35484,7 @@ ALTER TABLE ONLY presupuesto
 
 
 --
--- Name: fk_presupuesto_proyecto_partidas; Type: FK CONSTRAINT; Schema: public; Owner: compras
+-- Name: fk_presupuesto_proyecto_partidas; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY presupuesto
@@ -35492,7 +35492,7 @@ ALTER TABLE ONLY presupuesto
 
 
 --
--- Name: fk_presupuesto_unidades; Type: FK CONSTRAINT; Schema: public; Owner: compras
+-- Name: fk_presupuesto_unidades; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY presupuesto
@@ -35500,7 +35500,7 @@ ALTER TABLE ONLY presupuesto
 
 
 --
--- Name: fk_proyecto_partidas_partidas; Type: FK CONSTRAINT; Schema: public; Owner: compras
+-- Name: fk_proyecto_partidas_partidas; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY proyecto_partidas
@@ -35508,7 +35508,7 @@ ALTER TABLE ONLY proyecto_partidas
 
 
 --
--- Name: fk_proyecto_partidas_proyectos_acciones; Type: FK CONSTRAINT; Schema: public; Owner: compras
+-- Name: fk_proyecto_partidas_proyectos_acciones; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY proyecto_partidas
@@ -35516,7 +35516,7 @@ ALTER TABLE ONLY proyecto_partidas
 
 
 --
--- Name: fk_proyectos_acciones_entes_organos; Type: FK CONSTRAINT; Schema: public; Owner: compras
+-- Name: fk_proyectos_acciones_entes_organos; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY proyectos_acciones
@@ -35524,7 +35524,7 @@ ALTER TABLE ONLY proyectos_acciones
 
 
 --
--- Name: user_login_attempts_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: compras
+-- Name: user_login_attempts_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY user_login_attempts
