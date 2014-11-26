@@ -2,6 +2,7 @@
 
 abstract class UsrController extends CController
 {
+	public $layout='//layouts/main';
 	/**
 	 * Sends out an email containing instructions and link to the email verification
 	 * or password recovery page, containing an activation key.

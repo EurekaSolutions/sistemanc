@@ -11,9 +11,9 @@ class UserIdentity extends CUserIdentity
 	implements IPasswordHistoryIdentity,
 	IActivatedIdentity,
 	IEditableIdentity,
-	IHybridauthIdentity,
-	IOneTimePasswordIdentity,
-	IPictureIdentity,
+	//IHybridauthIdentity,
+	//IOneTimePasswordIdentity,
+	//IPictureIdentity,
 	IManagedIdentity
 {
 	const ERROR_USER_DISABLED=1000;
@@ -31,7 +31,7 @@ class UserIdentity extends CUserIdentity
 
 	protected static function createFromUser(Usuarios $user)
 	{
-		$identity = new UserIdentity($user->username, null);
+		$identity = new UserIdentity($user->usuario, null);
 		$identity->initFromUser($user);
 		return $identity;
 	}
@@ -64,17 +64,17 @@ class UserIdentity extends CUserIdentity
         $record = Usuarios::model()->findByAttributes(array('usuario'=>$this->username));
         $authenticated = $record !== null && $record->verificarContrasena($this->password);
 
-       /* $attempt = new UserLoginAttempt;
+        $attempt = new UserLoginAttempt;
         $attempt->username = $this->username;
-        $attempt->user_id = $record->usuaruio_id;
+        $attempt->user_id = $record->usuario_id;
         $attempt->is_successful = $authenticated;
         $attempt->save();
 
         if (UserLoginAttempt::hasTooManyFailedAttempts($this->username, self::MAX_FAILED_LOGIN_ATTEMPTS, self::LOGIN_ATTEMPTS_COUNT_SECONDS)) {
             // this is the first check not to reveal if the specified user account exists or not
             $this->errorCode=self::ERROR_USER_LOCKED;
-            $this->errorMessage=Yii::t('UsrModule.usr','User account has been locked due to too many failed login attempts. Try again later.');
-        } else*/if (!$authenticated) {
+            $this->errorMessage=Yii::t('UsrModule.usr','La cuenta de usuario ha sido bloqueada temporalmente debido a demasiados intentos fallidos. Por favor intenta de nuevo más tarde.');
+        } elseif (!$authenticated) {
             $this->errorCode=self::ERROR_USERNAME_INVALID;
             $this->errorMessage=Yii::t('UsrModule.usr','Usuario o contraseña invalido.');
         } elseif ($record->esta_deshabilitado) {
@@ -82,12 +82,12 @@ class UserIdentity extends CUserIdentity
             $this->errorMessage=Yii::t('UsrModule.usr','Esta cuenta de usuario ha sido deshabilitada.');
         } else if (!$record->esta_activo) {
             $this->errorCode=self::ERROR_USER_INACTIVE;
-            $this->errorMessage=Yii::t('UsrModule.usr','Esta cuenta de usuario aún no ha sido verificada, por favor revisa tu correo.');
+            $this->errorMessage=Yii::t('UsrModule.usr','Esta cuenta de usuario se encuentra inactiva.');
         } else {
             $this->errorCode=self::ERROR_NONE;
             $this->errorMessage='';
             $this->initFromUser($record);
-            //$record->saveAttributes(array('last_visit_on'=>date('Y-m-d H:i:s')));
+            $record->saveAttributes(array('ultima_visita_el'=>date('Y-m-d H:i:s')));
         }
         return $this->getIsAuthenticated();
     }
@@ -169,19 +169,22 @@ class UserIdentity extends CUserIdentity
 	public function save($requireVerifiedEmail=false)
 	{
 		if ($this->_id === null) {
-			$record = new Usuarios;
-			$record->password = 'x';
-			$record->is_active = $requireVerifiedEmail ? 0 : 1;
+			$record = new Usuarios();
+			$record->contrasena = 'x';
+			$record->esta_activo = $requireVerifiedEmail ? 0 : 1;
 		} else {
 			$record = $this->getActiveRecord();
+			$record->setScenario('update');
 		}
 		if ($record!==null) {
 			$record->setAttributes(array(
-				'username' => $this->username,
-				'email' => $this->email,
-				'firstname' => $this->firstName,
-				'lastname' => $this->lastName,
+				'usuario' => $this->username,
+				'correo' => $this->email,
+				'cidigo_onapre' => $this->codigo_onapre,
+				//'firstname' => $this->firstName,
+				//'lastname' => $this->lastName,
 			));
+
 			if ($record->save()) {
 				$this->_id = $record->getPrimaryKey();
 				$this->initFromUser($record);
@@ -202,7 +205,7 @@ class UserIdentity extends CUserIdentity
 	 */
 	public function setAttributes(array $attributes)
 	{
-		$allowedAttributes = array('username','email','firstName','lastName');
+		$allowedAttributes = array('username','email','codigo_onapre','lastName');
 		foreach($attributes as $name=>$value) {
 			if (in_array($name, $allowedAttributes))
 				$this->$name = $value;
@@ -217,10 +220,10 @@ class UserIdentity extends CUserIdentity
 	public function getAttributes()
 	{
 		return array(
-			'username' => $this->username,
-			'email' => $this->email,
-			'firstName' => $this->firstName,
-			'lastName' => $this->lastName,
+			'usuario' => $this->username,
+			'correo' => $this->email,
+			//'firstName' => $this->firstName,
+			//'lastName' => $this->lastName,
 		);
 	}
 
@@ -252,7 +255,7 @@ class UserIdentity extends CUserIdentity
 		if (($record=$this->getActiveRecord())===null) {
 			return false;
 		}
-		return (bool)$record->is_active;
+		return (bool)$record->esta_activo;
 	}
 
 	/**
@@ -264,7 +267,7 @@ class UserIdentity extends CUserIdentity
 		if (($record=$this->getActiveRecord())===null) {
 			return false;
 		}
-		return (bool)$record->is_disabled;
+		return (bool)$record->esta_deshabilitado;
 	}
 
 	/**
@@ -276,7 +279,7 @@ class UserIdentity extends CUserIdentity
 		if (($record=$this->getActiveRecord())===null) {
 			return false;
 		}
-		return (bool)$record->email_verified;
+		return (bool)$record->correo_verificado;
 	}
 
 	/**
@@ -293,8 +296,8 @@ class UserIdentity extends CUserIdentity
 		if (($record=$this->getActiveRecord())===null) {
 			return false;
 		}
-		$activationKey = md5(time().mt_rand().$record->username);
-		if (!$record->saveAttributes(array('activation_key' => $activationKey))) {
+		$activationKey = md5(time().mt_rand().$record->usuario);
+		if (!$record->saveAttributes(array('llave_activacion' => $activationKey))) {
 			return false;
 		}
 		return $activationKey;
@@ -310,7 +313,7 @@ class UserIdentity extends CUserIdentity
 		if (($record=$this->getActiveRecord())===null) {
 			return self::ERROR_AKEY_INVALID;
 		}
-		return $record->activation_key === $activationKey ? self::ERROR_AKEY_NONE : self::ERROR_AKEY_INVALID;
+		return $record->llave_activacion === $activationKey ? self::ERROR_AKEY_NONE : self::ERROR_AKEY_INVALID;
 	}
 
 	/**
@@ -329,11 +332,11 @@ class UserIdentity extends CUserIdentity
 		 * saveAttributes will return false, incorrectly suggesting
 		 * failure.
 		 */
-		if (!$record->email_verified) {
-			$attributes = array('email_verified' => 1);
+		if (!$record->correo_verificado) {
+			$attributes = array('correo_verificado' => 1);
 
-			if ($requireVerifiedEmail && !$record->is_active) {
-				$attributes['is_active'] = 1;
+			if ($requireVerifiedEmail && !$record->esta_activo) {
+				$attributes['esta_activo'] = 1;
 			}
 			if (!$record->saveAttributes($attributes)) {
 				return false;
@@ -682,9 +685,9 @@ class UserIdentity extends CUserIdentity
 			return false;
 		}
 		switch($status) {
-		case self::STATUS_EMAIL_VERIFIED: $attributes['email_verified'] = !$record->email_verified; break;
-		case self::STATUS_IS_ACTIVE: $attributes['is_active'] = !$record->is_active; break;
-		case self::STATUS_IS_DISABLED: $attributes['is_disable'] = !$record->is_disabled; break;
+		case self::STATUS_EMAIL_VERIFIED: $attributes['correo_verificado'] = !$record->correo_verificado; break;
+		case self::STATUS_IS_ACTIVE: $attributes['esta_activo'] = !$record->esta_activo; break;
+		case self::STATUS_IS_DISABLED: $attributes['esta_deshabilitado'] = !$record->esta_deshabilitado; break;
 		}
 		return $record->saveAttributes($attributes);
 	}

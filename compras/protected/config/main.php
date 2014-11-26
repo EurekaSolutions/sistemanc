@@ -8,8 +8,8 @@
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'PLAN DE COMPRAS DEL ESTADO',
-	'language'=>'es',
 	'sourceLanguage'=>'es',
+	'language'=>'es',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -51,6 +51,20 @@ return array(
 				'errorSummaryCss' => 'alert alert-error',
 				'errorMessageCss' => 'text-error',
 			),
+			'mailerConfig'=>array(
+				'SetLanguage' => array('es'),
+				'SetFrom' => array('marcospha@gmail.com', 'Administrator'),
+				'AddReplyTo' => array('eurekasolutionsca@gmail.com','Administrator'),
+				'IsMail' => array(),
+				// SMTP options
+				'IsSMTP' => array(),
+				'Host' => 'smtp.gmail.com',
+				'Port' => 465,
+				'Username' => 'eurekasolutionsca@gmail.com',
+				'Password' => 'asd',
+				'FromName' => 'SNC Compras',
+				'CharSet' => 'UTF-8',
+				),
         ),
 	),
 

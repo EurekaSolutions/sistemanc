@@ -50,6 +50,10 @@ class Usuarios extends CActiveRecord
 			array('correo','email'),
 			array('contrasena','ext.validators.EPasswordStrength', 'min'=>$this->min, 'message'=>'La {attribute} es debil. La {attribute} debe contener al menos '.$this->min.' caracteres, al menos una letra minuscula, una mayuscula, y un número.'),
 			array('codigo_onapre', 'validarCodigo'),
+			array('llave_activacion, creado_el, actualizado_el, ultima_visita_el, correo_verificado', 'default', 'setOnEmpty' => true, 'value' => null, 'on' => 'search'),
+			array('creado_el, actualizado_el, ultima_visita_el', 'date', 'format' => array('yyyy-MM-dd', 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm:ss'), 'on' => 'search'),
+			array('activation_key', 'length', 'max'=>128, 'on' => 'search'),
+			array('esta_activo, esta_deshabilitado, correo_verificado', 'boolean'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('usuario_id, codigo_onapre, usuario, contrasena, correo, creado_el, actualizado_el', 'safe', 'on'=>'search'),
@@ -165,6 +169,7 @@ class Usuarios extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'codigoOnapre' => array(self::BELONGS_TO, 'EntesOrganos', 'codigo_onapre'),
+			'userLoginAttempts' => array(self::HAS_MANY, 'UserLoginAttempt', 'user_id', 'order'=>'performed_on DESC'),
 		);
 	}
 
@@ -182,8 +187,11 @@ class Usuarios extends CActiveRecord
 			'correo' => 'Correo',
 			'creado_el' => 'Creado El',
 			'actualizado_el' => 'Actualizado El',
-			'esta_deshabilitado' => 'Cuenta bloqueada',
-			'esta_activo' => 'Cuenta verificada',
+			'esta_deshabilitado' => 'Cuenta deshabilitada',
+			'esta_activo' => 'Cuenta activa',
+			'ultima_visita_el' => 'Ultima visita el',
+			'llave_activacion' => 'Llave de activación',
+			'correo_verificado' => 'Correo Verificado',
 		);
 	}
 
@@ -214,6 +222,9 @@ class Usuarios extends CActiveRecord
 		$criteria->compare('actualizado_el',$this->actualizado_el,true);
 		$criteria->compare('esta_deshabilitado',$this->esta_deshabilitado,true);
 		$criteria->compare('esta_activo',$this->esta_activo,true);
+		$criteria->compare('ultima_visita_el',$this->ultima_visita_el,true);
+		$criteria->compare('correo_verificado',$this->correo_verificado,true);
+		$criteria->compare('llave_activacion',$this->llave_activacion,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

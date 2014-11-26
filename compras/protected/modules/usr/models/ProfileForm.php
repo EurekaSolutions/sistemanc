@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('application.extensions.validators.*');
+
 /**
  * ProfileForm class.
  * ProfileForm is the data structure for keeping
@@ -7,13 +9,14 @@
  */
 class ProfileForm extends BaseUsrForm
 {
-	public $username;
-	public $email;
-	public $firstName;
-	public $lastName;
+	public $usuario;
+	public $correo;
+	//public $firstName;
+	//public $lastName;
 	public $picture;
 	public $removePicture;
-	public $password;
+	public $contrasena;
+	public $codigo_onapre;
 
 	/**
 	 * @var IdentityInterface cached object returned by @see getIdentity()
@@ -23,6 +26,8 @@ class ProfileForm extends BaseUsrForm
 	 * @var array Picture upload validation rules.
 	 */
 	private $_pictureUploadRules;
+
+	private $_min = 6;
 
 	/**
 	 * Returns rules for picture upload or an empty array if they are not set.
@@ -53,15 +58,28 @@ class ProfileForm extends BaseUsrForm
 	public function rules()
 	{
 		return array_merge($this->getBehaviorRules(), array(
-			array('username, email, firstName, lastName, removePicture', 'filter', 'filter'=>'trim'),
-			array('username, email, firstName, lastName, removePicture', 'default', 'setOnEmpty'=>true, 'value' => null),
-
-			array('username, email', 'required'),
-			array('username, email', 'uniqueIdentity'),
-			array('email', 'email'),
+			array('usuario, correo, removePicture', 'filter', 'filter'=>'trim'),
+			array('usuario, correo, removePicture', 'default', 'setOnEmpty'=>true, 'value' => null),
+			
+			array('codigo_onapre', 'length', 'max'=>20),
+			array('codigo_onapre', 'validarCodigo'),
+			array('usuario, correo', 'required'),
+			array('codigo_onapre', 'required', 'on'=>'register'),
+			array('usuario, correo', 'uniqueIdentity'),
+			array('correo', 'email'),
 			array('removePicture', 'boolean'),
-			array('password', 'validCurrentPassword', 'except'=>'register'),
+			//array('contrasena', 'validCurrentPassword', 'except'=>'register'),
+			array('contrasena','EPasswordStrength', 'min'=>$this->_min, 'message'=>'La {attribute} es debil. La {attribute} debe contener al menos '.$this->_min.' caracteres, al menos una letra minuscula, una mayuscula, y un número.', 'except'=>'register'),
 		), $this->pictureUploadRules);
+	}
+
+	public function validarCodigo($codigo_onapre){
+		//Como validamos que la institución esta ingresando	 el código que le pertenece?
+		if(empty(EntesOrganos::model()->findByAttributes(array('codigo_onapre'=>$this->$codigo_onapre))))
+				$this->addError($codigo_onapre, 'El codigo onapre introducido no existe.');
+
+		if(!empty(Usuarios::model()->findByAttributes(array('codigo_onapre'=>$this->codigo_onapre))))
+				$this->addError($codigo_onapre, 'Codigo ya utilizado.');
 	}
 
 	/**
@@ -70,13 +88,13 @@ class ProfileForm extends BaseUsrForm
 	public function attributeLabels()
 	{
 		return array_merge($this->getBehaviorLabels(), array(
-			'username'		=> Yii::t('UsrModule.usr','Username'),
-			'email'			=> Yii::t('UsrModule.usr','Email'),
-			'firstName'		=> Yii::t('UsrModule.usr','First name'),
-			'lastName'		=> Yii::t('UsrModule.usr','Last name'),
-			'picture'		=> Yii::t('UsrModule.usr','Profile picture'),
-			'removePicture'	=> Yii::t('UsrModule.usr','Remove picture'),
-			'password'		=> Yii::t('UsrModule.usr','Current password'),
+			'usuario'		=> Yii::t('UsrModule.usr','Usuario'),
+			'correo'			=> Yii::t('UsrModule.usr','Correo'),
+			'codigo_onapre'		=> Yii::t('UsrModule.usr','Codigo Onapre'),
+			//'lastName'		=> Yii::t('UsrModule.usr','Last name'),
+			//'picture'		=> Yii::t('UsrModule.usr','Profile picture'),
+			//'removePicture'	=> Yii::t('UsrModule.usr','Remove picture'),
+			'contrasena'		=> Yii::t('UsrModule.usr','Contraseña'),
 		));
 	}
 
@@ -90,7 +108,7 @@ class ProfileForm extends BaseUsrForm
 			if ($this->scenario == 'register') {
 				$this->_identity = new $userIdentityClass(null, null);
 			} else {
-				$this->_identity = $userIdentityClass::find(array('id'=>Yii::app()->user->getId()));
+				$this->_identity = $userIdentityClass::find(array('usuario_id'=>Yii::app()->user->getId()));
 			}
 			if ($this->_identity !== null && !($this->_identity instanceof IEditableIdentity)) {
 				throw new CException(Yii::t('UsrModule.usr','The {class} class must implement the {interface} interface.',array('{class}'=>get_class($this->_identity),'{interface}'=>'IEditableIdentity')));
@@ -129,7 +147,7 @@ class ProfileForm extends BaseUsrForm
 		if (($identity=$this->getIdentity()) === null) {
 			throw new CException('Current user has not been found in the database.');
 		}
-		if ($identity->getEmail() === $this->email) {
+		if ($identity->getEmail() === $this->correo) {
 			return true;
 		}
 		$identity->password = $this->$attribute;
@@ -141,7 +159,7 @@ class ProfileForm extends BaseUsrForm
 	}
 
 	/**
-	 * Logs in the user using the given username.
+	 * Logs in the user using the given usuario.
 	 * @return boolean whether login is successful
 	 */
 	public function login()

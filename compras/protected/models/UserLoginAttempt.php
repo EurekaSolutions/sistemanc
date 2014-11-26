@@ -16,7 +16,7 @@
  * The followings are the available model relations:
  * @property User $user
  */
-class ExampleUserLoginAttempt extends CActiveRecord
+class UserLoginAttempt extends CActiveRecord
 {
 	/**
 	 * @inheritdoc
@@ -41,7 +41,7 @@ class ExampleUserLoginAttempt extends CActiveRecord
 	public function relations()
 	{
 		return array(
-			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+			'user' => array(self::BELONGS_TO, 'Usuarios', 'user_id'),
 		);
 	}
 
@@ -95,12 +95,10 @@ class ExampleUserLoginAttempt extends CActiveRecord
     {
         $since = new DateTime;
         $since->sub(new DateInterval("PT{$time_limit}S"));
-        return $count_limit >= (int)self::model()->dbConnection->createCommand()
-            ->select('COUNT(!is_successful OR NULL)')
-            ->from($this->tableName())
-            ->where('username = :username AND performed_on > :since', array(':username'=>$username, ':since' => $since->format('Y-m-d H:i:s')))
-            ->order('performed_on DESC')
-            ->limit($count_limit)
+        return $count_limit < (int)self::model()->dbConnection->createCommand()
+            ->select('COUNT(id)')
+            ->from(self::model()->tableName())
+            ->where('username = :username AND performed_on > :since AND is_successful=false', array(':username'=>$username, ':since' => $since->format('Y-m-d H:i:s')))
             ->queryScalar();
     }
 }

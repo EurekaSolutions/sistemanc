@@ -5,41 +5,33 @@
  */
 ?>
 
+	<?php echo $form->textFieldControlGroup($model,'codigo_onapre',array('span'=>3,'maxlength'=>20, 'disabled'=>$model->scenario !== 'register' ? true:false)); ?>
+
 	<div class="control-group">
-		<?php echo $form->labelEx($model,'username'); ?>
-		<?php echo $form->textField($model,'username'); ?>
-		<?php echo $form->error($model,'username'); ?>
+		<?php echo $form->labelEx($model,'usuario'); ?>
+		<?php echo $form->textField($model,'usuario'); ?>
+		<?php echo $form->error($model,'usuario'); ?>
 	</div>
 
 	<div class="control-group">
-		<?php echo $form->labelEx($model,'email'); ?>
-		<?php echo $form->textField($model,'email'); ?>
-		<?php echo $form->error($model,'email'); ?>
+		<?php echo $form->labelEx($model,'correo'); ?>
+		<?php echo $form->textField($model,'correo'); ?>
+		<?php echo $form->error($model,'correo'); ?>
 	</div>
 
 <?php if ($model->scenario !== 'register'): ?>
 	<div class="control-group">
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password', array('autocomplete'=>'off')); ?>
-		<?php echo $form->error($model,'password'); ?>
+		<?php echo $form->labelEx($model,'contrasena'); ?>
+		<?php echo $form->passwordField($model,'contrasena', array('autocomplete'=>'off')); ?>
+		<?php echo $form->error($model,'contrasena'); ?>
 	</div>
 <?php endif; ?>
+
 
 <?php if (isset($passwordForm) && $passwordForm !== null): ?>
 <?php $this->renderPartial('/default/_newpassword', array('form'=>$form, 'model'=>$passwordForm)); ?>
 <?php endif; ?>
 
-	<div class="control-group">
-		<?php echo $form->labelEx($model,'firstName'); ?>
-		<?php echo $form->textField($model,'firstName'); ?>
-		<?php echo $form->error($model,'firstName'); ?>
-	</div>
-
-	<div class="control-group">
-		<?php echo $form->labelEx($model,'lastName'); ?>
-		<?php echo $form->textField($model,'lastName'); ?>
-		<?php echo $form->error($model,'lastName'); ?>
-	</div>
 
 <?php if ($model->getIdentity() instanceof IPictureIdentity && !empty($model->pictureUploadRules)):
 	$picture = $model->getIdentity()->getPictureUrl(80,80);

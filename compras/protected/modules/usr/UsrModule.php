@@ -268,6 +268,7 @@ class UsrModule extends CWebModule
 		$this->setImport(array(
 			'usr.models.*',
 			'usr.components.*',
+			'usr.messages.*'
 		));
 		$this->setComponents(array(
 			'mailer' => array(
