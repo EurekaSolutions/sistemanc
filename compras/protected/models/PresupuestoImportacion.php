@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "public.presupuesto_importacion".
+ * This is the model class for table "presupuesto_importacion".
  *
- * The followings are the available columns in table 'public.presupuesto_importacion':
+ * The followings are the available columns in table 'presupuesto_importacion':
  * @property string $codigo_ncm_id
  * @property string $presupuesto_id
  * @property string $cantidad
@@ -12,6 +12,11 @@
  * @property string $tipo
  * @property string $monto_ejecutado
  * @property string $divisa_id
+ *
+ * The followings are the available model relations:
+ * @property CodigosNcm $codigoNcm
+ * @property Divisas $divisa
+ * @property PresupuestoProductos $presupuesto
  */
 class PresupuestoImportacion extends CActiveRecord
 {
@@ -20,7 +25,7 @@ class PresupuestoImportacion extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'public.presupuesto_importacion';
+		return 'presupuesto_importacion';
 	}
 
 	/**
@@ -48,6 +53,9 @@ class PresupuestoImportacion extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'codigoNcm' => array(self::BELONGS_TO, 'CodigosNcm', 'codigo_ncm_id'),
+			'divisa' => array(self::BELONGS_TO, 'Divisas', 'divisa_id'),
+			'presupuesto' => array(self::BELONGS_TO, 'PresupuestoProductos', 'presupuesto_id'),
 		);
 	}
 
