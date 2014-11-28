@@ -148,7 +148,7 @@
     <commit>10000</commit>
     <update_bypassed>N</update_bypassed>
     <lookup>
-      <schema>compras</schema>
+      <schema>public</schema>
       <table>productos</table>
       <key>
         <name>cod_segmento</name>
@@ -467,7 +467,7 @@
     <sheetfield/>
     <filefield/>
     <limit>0</limit>
-    <encoding/>
+    <encoding>windows-1258</encoding>
     <add_to_result_filenames>Y</add_to_result_filenames>
     <accept_filenames>N</accept_filenames>
     <accept_field/>
