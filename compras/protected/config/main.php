@@ -12,20 +12,18 @@ return array(
 	'language'=>'es',
 
 	// preloading 'log' component
-	'preload'=>array('log'),
+	'preload'=>array('log','booster'),
 
 	// path aliases
     'aliases' => array(
-        'bootstrap' => realpath(__DIR__ . '/../extensions/bootstrap'), // change this if necessary
+        //'bootstrap' => realpath(__DIR__ . '/../extensions/bootstrap'), // change this if necessary
+        'booster' => realpath(__DIR__ . '/../extensions/booster'), // change this if necessary
     ),
 
 	// autoloading model and component classes
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-		'bootstrap.helpers.*',
-		'bootstrap.widgets.*',
-		'bootstrap.behaviors.TbWidget',
 		'application.behaviors.ActiveRecordLogableBehavior', 
 	),
 
@@ -37,14 +35,14 @@ return array(
 			'password'=>'rnc',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
-			'generatorPaths' => array('bootstrap.gii'),
+			//'generatorPaths' => array('bootstrap.gii'),
 		),	
 		'usr'=>array(
 			'registrationEnabled'=>false,
             'userIdentityClass' => 'UserIdentity',
 			'layout' => '//layouts/centered',
-			'formClass'=>'bootstrap.widgets.TbActiveForm',
-			'detailViewClass'=>'bootstrap.widgets.TbDetailView',
+			'formClass'=>'booster.widgets.TbActiveForm',
+			'detailViewClass'=>'booster.widgets.TbDetailView',
 			'formCssClass'=>'form well',
 			'alertCssClassPrefix'=>'alert alert-',
 			'submitButtonCssClass'=>'btn btn-primary',
@@ -77,10 +75,9 @@ return array(
 			'loginUrl' => array('usr/login'),
 
 		),
-
- 		'bootstrap' => array(
-            'class' => 'bootstrap.components.TbApi',   
-        ),
+        'booster' => array(
+		    'class' => 'ext.booster.components.Booster',
+		),
 		// uncomment the following to enable URLs in path-format
 		/*
 		'urlManager'=>array(
