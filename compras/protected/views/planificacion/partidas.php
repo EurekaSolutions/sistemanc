@@ -24,7 +24,7 @@ $this->widget(
 								        'type' => 'tabs', // 'tabs' or 'pills'
 								        'placement'=>'top',
 								        'tabs' => array(
-								            array('label' => '401.06.02','content' => 'Lista de Partidas sub especificas 401.35.04', 'active' => true, ),
+								            array('label' => '401.06.02', 'content' => 'Lista de Partidas sub especificas 401.35.04', 'active' => true, ),
 								            array('label' => '401.35.04', 'content' => 'Lista de Partidas sub especificas 401.35.04',),
 								            array('label' => '401.35.04', 'content' => 'Lista de Partidas sub especificas 401.35.04',),
 								            array('label' => '401.35.04', 'content' => 'Lista de Partidas sub especificas 401.35.04', ),

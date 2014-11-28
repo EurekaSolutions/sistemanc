@@ -67,7 +67,8 @@ class Usuarios extends CActiveRecord
 		if(empty($this->codigoOnapre->codigo_onapre))
 				$this->addError($codigo_onapre, 'El codigo onapre introducido no existe.');
 
-		if(!empty($this->findByAttributes(array('codigo_onapre'=>$this->codigo_onapre))))
+		$codigo = $this->findByAttributes(array('codigo_onapre'=>$this->codigo_onapre));
+		if(!empty($codigo))
 				$this->addError($codigo_onapre, 'Codigo ya utilizado.');
 	}
 
