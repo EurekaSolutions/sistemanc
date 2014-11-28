@@ -6,8 +6,6 @@ $this->breadcrumbs=array(
 	'Partidas',
 );
 ?>
-<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>
-
 <?php
 $tabs = array();
 $this->widget(

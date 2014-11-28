@@ -19,9 +19,7 @@ tr.principaltr th {
 }
 </style>
 <!--<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>-->
-	<h3 style="text-align: center;">PLAN DE COMPRAS DEL ESTADO <span class="label label-default"><?php echo intval(date("Y")+1);?></span></h3>
-		<br>
-	    <div class="row show-grid">
+
 		 <table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
 		    <thead>
 		        <tr class="principaltr">
@@ -105,4 +103,3 @@ tr.principaltr th {
 
 		<BR><BR>
 				<p class="text-right"><STRONG>TOTAL COMPRAS</STRONG>: 213213213213213123213 <STRONG>(Bs.)</STRONG></p>
-		</div>

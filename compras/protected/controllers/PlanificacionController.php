@@ -3,6 +3,9 @@
 class PlanificacionController extends Controller
 {
 
+	public $layout='//layouts/planificacion';
+
+
 	public function filters()
 	{
 		return array(
