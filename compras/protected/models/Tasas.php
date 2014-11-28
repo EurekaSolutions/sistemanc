@@ -1,25 +1,26 @@
 <?php
 
 /**
- * This is the model class for table "public.divisas".
+ * This is the model class for table "public.tasas".
  *
- * The followings are the available columns in table 'public.divisas':
+ * The followings are the available columns in table 'public.tasas':
  * @property string $divisa_id
- * @property string $abreviatura
- * @property string $simbolo
- * @property string $nombre
+ * @property string $fecha_desde
+ * @property string $fechas_hasta
+ * @property string $tasa
+ * @property string $tasa_id
  *
  * The followings are the available model relations:
- * @property Tasas[] $tasases
+ * @property Divisas $divisa
  */
-class Divisas extends CActiveRecord
+class Tasas extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'public.divisas';
+		return 'public.tasas';
 	}
 
 	/**
@@ -30,11 +31,11 @@ class Divisas extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('abreviatura, simbolo, nombre', 'required'),
-			array('abreviatura, simbolo, nombre', 'length', 'max'=>255),
+			array('divisa_id, fecha_desde, fechas_hasta, tasa', 'required'),
+			array('tasa', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('divisa_id, abreviatura, simbolo, nombre', 'safe', 'on'=>'search'),
+			array('divisa_id, fecha_desde, fechas_hasta, tasa, tasa_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,7 +47,7 @@ class Divisas extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tasases' => array(self::HAS_MANY, 'Tasas', 'divisa_id'),
+			'divisa' => array(self::BELONGS_TO, 'Divisas', 'divisa_id'),
 		);
 	}
 
@@ -57,9 +58,10 @@ class Divisas extends CActiveRecord
 	{
 		return array(
 			'divisa_id' => 'Divisa',
-			'abreviatura' => 'Abreviatura',
-			'simbolo' => 'Simbolo',
-			'nombre' => 'Nombre',
+			'fecha_desde' => 'Fecha Desde',
+			'fechas_hasta' => 'Fechas Hasta',
+			'tasa' => 'Tasa',
+			'tasa_id' => 'Tasa',
 		);
 	}
 
@@ -82,9 +84,10 @@ class Divisas extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('divisa_id',$this->divisa_id,true);
-		$criteria->compare('abreviatura',$this->abreviatura,true);
-		$criteria->compare('simbolo',$this->simbolo,true);
-		$criteria->compare('nombre',$this->nombre,true);
+		$criteria->compare('fecha_desde',$this->fecha_desde,true);
+		$criteria->compare('fechas_hasta',$this->fechas_hasta,true);
+		$criteria->compare('tasa',$this->tasa,true);
+		$criteria->compare('tasa_id',$this->tasa_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -95,7 +98,7 @@ class Divisas extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Divisas the static model class
+	 * @return Tasas the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

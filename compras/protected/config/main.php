@@ -16,7 +16,6 @@ return array(
 
 	// path aliases
     'aliases' => array(
-        //'bootstrap' => realpath(__DIR__ . '/../extensions/bootstrap'), // change this if necessary
         'booster' => realpath(__DIR__ . '/../extensions/booster'), // change this if necessary
     ),
 
@@ -24,7 +23,8 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-		'application.behaviors.ActiveRecordLogableBehavior', 
+		//'booster.',
+		'application.behaviors.ActiveRecordLogableBehavior',
 	),
 
 	'modules'=>array(
@@ -35,7 +35,7 @@ return array(
 			'password'=>'rnc',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
-			//'generatorPaths' => array('bootstrap.gii'),
+			'generatorPaths' => array('booster.gii'),
 		),	
 		'usr'=>array(
 			'registrationEnabled'=>false,
@@ -72,8 +72,7 @@ return array(
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
-			'loginUrl' => array('usr/login'),
-
+			'loginUrl' => array('planificacion/index'),
 		),
         'booster' => array(
 		    'class' => 'ext.booster.components.Booster',

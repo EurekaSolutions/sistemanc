@@ -124,7 +124,7 @@ class DefaultController extends UsrController
 	{
 		$returnUrlParts = explode('/',Yii::app()->user->returnUrl);
 		$url = end($returnUrlParts)=='index.php' ? Yii::app()->baseUrl : Yii::app()->user->returnUrl;
-		$this->redirect($url);
+		//$this->redirect($url);
 	}
 
 	/**

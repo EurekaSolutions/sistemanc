@@ -1,34 +1,38 @@
-<?php
-/* @var $this UsuariosController */
-/* @var $model Usuarios */
-/* @var $form CActiveForm */
-?>
-
-<div class="wide form">
-
-    <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+<?php $form=$this->beginWidget('booster.widgets.TbActiveForm',array(
 	'action'=>Yii::app()->createUrl($this->route),
 	'method'=>'get',
 )); ?>
 
-                    <?php echo $form->textFieldControlGroup($model,'usuario_id',array('span'=>5)); ?>
+		<?php echo $form->textFieldGroup($model,'usuario_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
-                    <?php echo $form->textFieldControlGroup($model,'codigo_onapre',array('span'=>5,'maxlength'=>20)); ?>
+		<?php echo $form->textFieldGroup($model,'codigo_onapre',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>20)))); ?>
 
-                    <?php echo $form->textFieldControlGroup($model,'usuario',array('span'=>5,'maxlength'=>50)); ?>
+		<?php echo $form->textFieldGroup($model,'usuario',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>50)))); ?>
 
-                    <?php echo $form->textFieldControlGroup($model,'contrasena',array('span'=>5,'maxlength'=>50)); ?>
+		<?php echo $form->textFieldGroup($model,'contrasena',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>50)))); ?>
 
-                    <?php echo $form->textFieldControlGroup($model,'correo',array('span'=>5,'maxlength'=>255)); ?>
+		<?php echo $form->textFieldGroup($model,'correo',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
 
-                    <?php echo $form->textFieldControlGroup($model,'creado_el',array('span'=>5)); ?>
+		<?php echo $form->textFieldGroup($model,'creado_el',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
-                    <?php echo $form->textFieldControlGroup($model,'actualizado_el',array('span'=>5)); ?>
+		<?php echo $form->textFieldGroup($model,'actualizado_el',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
-        <div class="form-actions">
-        <?php echo TbHtml::submitButton('Search',  array('color' => TbHtml::BUTTON_COLOR_PRIMARY,));?>
-    </div>
+		<?php echo $form->checkBoxGroup($model,'esta_activo'); ?>
 
-    <?php $this->endWidget(); ?>
+		<?php echo $form->checkBoxGroup($model,'esta_deshabilitado'); ?>
 
-</div><!-- search-form -->
+		<?php echo $form->checkBoxGroup($model,'correo_verificado'); ?>
+
+		<?php echo $form->textFieldGroup($model,'llave_activacion',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
+
+		<?php echo $form->textFieldGroup($model,'ultima_visita_el',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
+
+	<div class="form-actions">
+		<?php $this->widget('booster.widgets.TbButton', array(
+			'buttonType' => 'submit',
+			'context'=>'primary',
+			'label'=>'Search',
+		)); ?>
+	</div>
+
+<?php $this->endWidget(); ?>

@@ -9,6 +9,7 @@
  * @property string $tipo_operacion
  * @property string $fecha_desde
  * @property string $fecha_hasta
+ * @property string $partida_producto_id
  *
  * The followings are the available model relations:
  * @property Partidas $partida
@@ -36,7 +37,7 @@ class PartidaProductos extends CActiveRecord
 			array('tipo_operacion', 'length', 'max'=>1),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('partida_id, producto_id, tipo_operacion, fecha_desde, fecha_hasta', 'safe', 'on'=>'search'),
+			array('partida_id, producto_id, tipo_operacion, fecha_desde, fecha_hasta, partida_producto_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -64,6 +65,7 @@ class PartidaProductos extends CActiveRecord
 			'tipo_operacion' => 'Tipo Operacion',
 			'fecha_desde' => 'Fecha Desde',
 			'fecha_hasta' => 'Fecha Hasta',
+			'partida_producto_id' => 'Partida Producto',
 		);
 	}
 
@@ -90,6 +92,7 @@ class PartidaProductos extends CActiveRecord
 		$criteria->compare('tipo_operacion',$this->tipo_operacion,true);
 		$criteria->compare('fecha_desde',$this->fecha_desde,true);
 		$criteria->compare('fecha_hasta',$this->fecha_hasta,true);
+		$criteria->compare('partida_producto_id',$this->partida_producto_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
