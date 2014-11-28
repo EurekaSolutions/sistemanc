@@ -7,9 +7,9 @@
  */
 class RecoveryForm extends BasePasswordForm
 {
-	public $username;
-	public $email;
-	public $activationKey;
+	public $usuario;
+	public $correo;
+	public $llave_activacion;
 
 	/**
 	 * @var IdentityInterface cached object returned by @see getIdentity()
@@ -23,15 +23,15 @@ class RecoveryForm extends BasePasswordForm
 	 */
 	public function rules() {
 		$rules = array_merge($this->getBehaviorRules(), array(
-			array('username, email', 'filter', 'filter'=>'trim'),
-			array('username, email', 'default', 'setOnEmpty'=>true, 'value' => null),
-			array('username, email', 'existingIdentity'),
-			array('email', 'email'),
+			array('usuario, correo', 'filter', 'filter'=>'trim'),
+			array('usuario, correo', 'default', 'setOnEmpty'=>true, 'value' => null),
+			array('usuario, correo', 'existingIdentity'),
+			array('correo', 'email'),
 
-			array('activationKey', 'filter', 'filter'=>'trim', 'on'=>'reset,verify'),
-			array('activationKey', 'default', 'setOnEmpty'=>true, 'value' => null, 'on'=>'reset,verify'),
-			array('activationKey', 'required', 'on'=>'reset,verify'),
-			array('activationKey', 'validActivationKey', 'on'=>'reset,verify'),
+			array('llave_activacion', 'filter', 'filter'=>'trim', 'on'=>'reset,verify'),
+			array('llave_activacion', 'default', 'setOnEmpty'=>true, 'value' => null, 'on'=>'reset,verify'),
+			array('llave_activacion', 'required', 'on'=>'reset,verify'),
+			array('llave_activacion', 'validActivationKey', 'on'=>'reset,verify'),
 		), $this->rulesAddScenario(parent::rules(), 'reset'));
 
 		return $rules;
@@ -42,9 +42,9 @@ class RecoveryForm extends BasePasswordForm
 	 */
 	public function attributeLabels() {
 		return array_merge($this->getBehaviorLabels(), parent::attributeLabels(), array(
-			'username'		=> Yii::t('UsrModule.usr','Username'),
-			'email'			=> Yii::t('UsrModule.usr','Email'),
-			'activationKey'	=> Yii::t('UsrModule.usr','Activation Key'),
+			'usuario'		=> Yii::t('UsrModule.usr','Usuario'),
+			'correo'			=> Yii::t('UsrModule.usr','Correo'),
+			'llave_activacion'	=> Yii::t('UsrModule.usr','Llave de Activación'),
 		));
 	}
 
@@ -60,8 +60,8 @@ class RecoveryForm extends BasePasswordForm
 				throw new CException(Yii::t('UsrModule.usr','The {class} class must implement the {interface} interface.',array('{class}'=>$userIdentityClass, '{interface}'=>'IActivatedIdentity')));
 			}
 			$attributes = array();
-			if ($this->username !== null) $attributes['usuario'] = $this->username;
-			if ($this->email !== null) $attributes['correo'] = $this->email;
+			if ($this->usuario !== null) $attributes['usuario'] = $this->usuario;
+			if ($this->correo !== null) $attributes['correo'] = $this->correo;
 			if (!empty($attributes))
 				$this->_identity=$userIdentityClass::find($attributes);
 		}
@@ -80,16 +80,16 @@ class RecoveryForm extends BasePasswordForm
 		}
 		$identity = $this->getIdentity();
 		if ($identity === null) {
-			if ($this->username !== null) {
-				$this->addError('username',Yii::t('UsrModule.usr','No user found matching this username.'));
-			} elseif ($this->email !== null) {
-				$this->addError('email',Yii::t('UsrModule.usr','No user found matching this email address.'));
+			if ($this->usuario !== null) {
+				$this->addError('usuario',Yii::t('UsrModule.usr','No user found matching this usuario.'));
+			} elseif ($this->correo !== null) {
+				$this->addError('correo',Yii::t('UsrModule.usr','No user found matching this correo address.'));
 			} else {
-				$this->addError('username',Yii::t('UsrModule.usr','Please specify username or email.'));
+				$this->addError('usuario',Yii::t('UsrModule.usr','Please specify usuario or correo.'));
 			}
 			return false;
 		} elseif ($identity->isDisabled()) {
-			$this->addError('username',Yii::t('UsrModule.usr','User account has been disabled.'));
+			$this->addError('usuario',Yii::t('UsrModule.usr','User account has been disabled.'));
 			return false;
 		}
 		return true;
@@ -105,14 +105,14 @@ class RecoveryForm extends BasePasswordForm
 		if (($identity = $this->getIdentity()) === null)
 			return false;
 
-		$errorCode = $identity->verifyActivationKey($this->activationKey);
+		$errorCode = $identity->verifyActivationKey($this->llave_activacion);
 		switch($errorCode) {
 			default:
 			case $identity::ERROR_AKEY_INVALID:
-				$this->addError('activationKey',Yii::t('UsrModule.usr','Activation key is invalid.'));
+				$this->addError('llave_activacion',Yii::t('UsrModule.usr','Llave de activación invalida.'));
 				return false;
 			case $identity::ERROR_AKEY_TOO_OLD:
-				$this->addError('activationKey',Yii::t('UsrModule.usr','Activation key is too old.'));
+				$this->addError('llave_activacion',Yii::t('UsrModule.usr','Llave de activación vencida.'));
 				return false;
 			case $identity::ERROR_AKEY_NONE:
 				return true;

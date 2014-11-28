@@ -18,7 +18,7 @@ $this->pageTitle = Yii::app()->name.' - '.$title;
 	'clientOptions'=>array(
 		'validateOnSubmit'=>true,
 	),
-	'focus'=>array($model,$model->scenario==='reset' ? 'newPassword' : 'username'),
+	'focus'=>array($model,$model->scenario==='reset' ? 'newPassword' : 'usuario'),
 )); ?>
 
 	<p class="note"><?php echo Yii::t('UsrModule.usr', 'Fields marked with <span class="required">*</span> are required.'); ?></p>
@@ -26,22 +26,22 @@ $this->pageTitle = Yii::app()->name.' - '.$title;
 	<?php echo $form->errorSummary($model); ?>
 
 <?php if ($model->scenario === 'reset'): ?>
-	<?php echo $form->hiddenField($model,'username'); ?>
-	<?php echo $form->hiddenField($model,'email'); ?>
-	<?php echo $form->hiddenField($model,'activationKey'); ?>
+	<?php echo $form->hiddenField($model,'usuario'); ?>
+	<?php echo $form->hiddenField($model,'correo'); ?>
+	<?php echo $form->hiddenField($model,'llave_activacion'); ?>
 
 <?php $this->renderPartial('_newpassword', array('form'=>$form, 'model'=>$model)); ?>
 <?php else: ?>
 	<div class="control-group">
-		<?php echo $form->labelEx($model,'username'); ?>
-		<?php echo $form->textField($model,'username'); ?>
-		<?php echo $form->error($model,'username'); ?>
+		<?php echo $form->labelEx($model,'usuario'); ?>
+		<?php echo $form->textField($model,'usuario'); ?>
+		<?php echo $form->error($model,'usuario'); ?>
 	</div>
 
 	<div class="control-group">
-		<?php echo $form->labelEx($model,'email'); ?>
-		<?php echo $form->textField($model,'email'); ?>
-		<?php echo $form->error($model,'email'); ?>
+		<?php echo $form->labelEx($model,'correo'); ?>
+		<?php echo $form->textField($model,'correo'); ?>
+		<?php echo $form->error($model,'correo'); ?>
 	</div>
 
 <?php if($model->asa('captcha') !== null): ?>

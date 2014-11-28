@@ -40,6 +40,7 @@ return array(
 			'generatorPaths' => array('bootstrap.gii'),
 		),	
 		'usr'=>array(
+			'registrationEnabled'=>false,
             'userIdentityClass' => 'UserIdentity',
 			'layout' => '//layouts/centered',
 			'formClass'=>'bootstrap.widgets.TbActiveForm',
@@ -61,7 +62,7 @@ return array(
 				'Host' => 'smtp.gmail.com',
 				'Port' => 465,
 				'Username' => 'eurekasolutionsca@gmail.com',
-				'Password' => 'asd',
+				'Password' => '3ur3k4123',
 				'FromName' => 'SNC Compras',
 				'CharSet' => 'UTF-8',
 				),
@@ -73,6 +74,8 @@ return array(
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
+			'loginUrl' => array('usr/login'),
+
 		),
 
  		'bootstrap' => array(

@@ -26,14 +26,14 @@ $this->pageTitle = Yii::app()->name.' - '.$title;
 
 	<?php echo $form->errorSummary($model); ?>
 
-	<?php echo $form->hiddenField($model,'username'); ?>
-	<?php echo $form->hiddenField($model,'password'); ?>
+	<?php echo $form->hiddenField($model,'usuario'); ?>
+	<?php echo $form->hiddenField($model,'contasena'); ?>
 	<?php echo $form->hiddenField($model,'rememberMe'); ?>
 
 <?php $this->renderPartial('_newpassword', array('form'=>$form, 'model'=>$model)); ?>
 
 	<div class="buttons">
-		<?php echo CHtml::submitButton(Yii::t('UsrModule.usr', 'Change password'), array('class'=>$this->module->submitButtonCssClass)); ?>
+		<?php echo CHtml::submitButton(Yii::t('UsrModule.usr', 'Change contaseña'), array('class'=>$this->module->submitButtonCssClass)); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

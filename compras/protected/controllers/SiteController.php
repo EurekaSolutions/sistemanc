@@ -29,12 +29,8 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-		//$this->actionLogin();
-
-		//$this->redirect('index.php?r=site/login');
-
 		$this->redirect(array('usr/login'));
-
+		$this->render('index');
 	}
 
 	/**

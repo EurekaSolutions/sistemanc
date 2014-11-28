@@ -177,4 +177,17 @@ class PresupuestoImportacionController extends Controller
 			Yii::app()->end();
 		}
 	}
+
+
+	protected function actionPresupuesto()
+	{
+		$model = new PresupuestoImportacion();
+		$
+
+
+		$this->render('partidas',array(
+			'model'=>$model,
+		));
+
+	}
 }
