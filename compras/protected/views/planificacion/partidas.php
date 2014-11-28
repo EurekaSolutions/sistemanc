@@ -15,9 +15,22 @@ $this->widget(
     array(
         'type' => 'pills', // 'tabs' or 'pills'
         'placement'=>'top',
+        'justified'=>'true',
         'tabs' => array(
             array('label' => '401','content' => 'Partida 401', 'active' => true, 'items' => array(
-                    array('label' => '401.06', 'content' => 'Carga de partidas especificas y sub especificas de la partida 401.06'),
+                    array('label' => '401.06', 'content'=>$this->widget(
+								    'booster.widgets.TbTabs',
+								    array(
+								        'type' => 'tabs', // 'tabs' or 'pills'
+								        'placement'=>'top',
+								        'tabs' => array(
+								            array('label' => '401.06.02','content' => 'Lista de Partidas sub especificas 401.35.04', 'active' => true, ),
+								            array('label' => '401.35.04', 'content' => 'Lista de Partidas sub especificas 401.35.04',),
+								            array('label' => '401.35.04', 'content' => 'Lista de Partidas sub especificas 401.35.04',),
+								            array('label' => '401.35.04', 'content' => 'Lista de Partidas sub especificas 401.35.04', ),
+								        ),
+								    ),true
+								), 'view'=>'_especificos'),
                     array('label' => '401.35', 'content' => 'Carga de partidas especificas y sub especificas de la partida 401.35')),
             ),
             array('label' => '402', 'content' => 'Partida 402', 'items' => array(
