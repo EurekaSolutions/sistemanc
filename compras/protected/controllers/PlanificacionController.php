@@ -10,7 +10,7 @@ class PlanificacionController extends Controller
 			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
-	
+
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
@@ -37,27 +37,28 @@ class PlanificacionController extends Controller
 		);
 	}
 
-	public function actionImportacion()
+	public function actionImportacion() /*Aqui esta vista tratara todo lo que tenga relacion con los datos de CENCOEX.*/
 	{
 		$this->render('importacion');
 	}
 
-	public function actionIndex()
+
+	public function actionIndex()   /*Aquí vamos a mostrar la primera vista del excel enviado por Zobeida*/
 	{
 		$this->render('index');
 	}
 
-	public function actionPartidas()
+	public function actionPartidas() /*Aqui van la logica de negocio asociada a cada partida 401, 402, 403, 404 */
 	{
 		$this->render('partidas');
 	}
 
-	public function actionVistaparcial()
+	public function actionVistaparcial()  /*Aquí mostramos la carga del usuario hasta donde la lleva al momento de consultarla.*/
 	{
 		$this->render('vistaparcial');
 	}
 
-	public function actionVistaresumen()
+	public function actionVistaresumen()  /*Aquí mostramos la vista del usuario cuando ya guardo TODOS los datos*/
 	{
 		$this->render('vistaresumen');
 	}
