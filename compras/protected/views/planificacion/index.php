@@ -22,7 +22,7 @@ tr.principaltr th {
 	<h3 style="text-align: center;">PLAN DE COMPRAS DEL ESTADO <span class="label label-default"><?php echo intval(date("Y")+1);?></span></h3>
 		<br>
 	    <div class="row show-grid">
-		 <table data-toggle="table" data-url="data1.json" data-cache="false" data-height="299">
+		 <table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
 		    <thead>
 		        <tr class="principaltr">
 		            <th data-field="conapre">Mi código Onapre</th>
@@ -42,4 +42,67 @@ tr.principaltr th {
 		    	</tr>
 		    </tbody>
 		</table>
-	</div>
+	
+		
+		<h4 style="text-align: center;">ACCIONES CENTRALIZADAS</h4><br>
+
+		<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
+		    <thead>
+		        <tr class="principaltr">
+		            <th data-field="conapre">Código</th>
+		            <th data-field="nombreoue">Denominación</th>
+		            <th data-field="tipo">Bs.</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		    	<tr class="principaltr">
+		    		<td>xx0001000</td>
+		    		<td>Dirección y coordinación de los gastos de los trabajadores y trabajadoras</td>
+		    		<td>0.00</td>
+		    	</tr>
+		    	<tr class="principaltr">
+		    		<td>xx0001000</td>
+		    		<td>Dirección y coordinación de los gastos de los trabajadores y trabajadoras</td>
+		    		<td>0.00</td>
+		    	</tr>
+		    	<tr class="principaltr">
+		    		<td>xx0001000</td>
+		    		<td>Dirección y coordinación de los gastos de los trabajadores y trabajadoras</td>
+		    		<td>0.00</td>
+		    	</tr>
+		    </tbody>
+		</table>	
+
+
+		<h4 style="text-align: center;">PROYECTOS</h4><br>
+
+		<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
+		    <thead>
+		        <tr class="principaltr">
+		            <th data-field="conapre">Código</th>
+		            <th data-field="nombreoue">Denominación</th>
+		            <th data-field="tipo">Bs.</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		    	<tr class="principaltr">
+		    		<td>xx0001000</td>
+		    		<td>Dirección y coordinación de los gastos de los trabajadores y trabajadoras</td>
+		    		<td>0.00</td>
+		    	</tr>
+		    	<tr class="principaltr">
+		    		<td>xx0001000</td>
+		    		<td>Dirección y coordinación de los gastos de los trabajadores y trabajadoras</td>
+		    		<td>0.00</td>
+		    	</tr>
+		    	<tr class="principaltr">
+		    		<td>xx0001000</td>
+		    		<td>Dirección y coordinación de los gastos de los trabajadores y trabajadoras</td>
+		    		<td>0.00</td>
+		    	</tr>
+		    </tbody>
+		</table>	
+
+		<BR><BR>
+				<p class="text-right"><STRONG>TOTAL COMPRAS</STRONG>: 213213213213213123213 <STRONG>(Bs.)</STRONG></p>
+		</div>
