@@ -72,7 +72,7 @@ return array(
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
-			'loginUrl' => array('planificacion/index'),
+			'loginUrl' => array('usr/login'),
 		),
         'booster' => array(
 		    'class' => 'ext.booster.components.Booster',
