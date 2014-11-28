@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.3.2
 -- Dumped by pg_dump version 9.3.2
--- Started on 2014-11-28 00:38:30 VET
+-- Started on 2014-11-28 00:45:50 VET
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,6 +12,45 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+
+DROP DATABASE snc;
+--
+-- TOC entry 2243 (class 1262 OID 26432)
+-- Name: snc; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE snc WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'es_VE.UTF-8' LC_CTYPE = 'es_VE.UTF-8';
+
+
+ALTER DATABASE snc OWNER TO postgres;
+
+\connect snc
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 6 (class 2615 OID 28330)
+-- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA public;
+
+
+ALTER SCHEMA public OWNER TO postgres;
+
+--
+-- TOC entry 2244 (class 0 OID 0)
+-- Dependencies: 6
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON SCHEMA public IS 'standard public schema';
+
 
 --
 -- TOC entry 205 (class 3079 OID 11833)
@@ -2066,7 +2105,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2014-11-28 00:38:30 VET
+-- Completed on 2014-11-28 00:45:50 VET
 
 --
 -- PostgreSQL database dump complete
