@@ -23,25 +23,46 @@
 <div class="container" id="page">
 
 	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
+		<div id="logo"><?php //echo CHtml::encode(Yii::app()->name); ?></div>
 	</div><!-- header -->
 
-	<div id="mainmenu">
-		<?php $this->widget('zii.widgets.CMenu',array(
-			'items'=>array(
-				/*array('label'=>'Home', 'url'=>array('/site/index')),
-				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
-				array('label'=>'Contact', 'url'=>array('/site/contact')),
-				array('label'=>'Login', 'url'=>array('/usr/login'), 'visible'=>Yii::app()->user->isGuest),*/
-				array('label'=>'Inicio ('.Yii::app()->user->name.')', 'url'=>array('planificacion/'), 'visible'=>!Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/usr/logout'), 'visible'=>!Yii::app()->user->isGuest)
-			),
-		)); ?>
-	</div> 
+	<!--<div id="mainmenu">-->
+		<?php 
+
+		if(!Yii::app()->user->isGuest)
+		{
+		    $this->widget(
+    		'booster.widgets.TbNavbar',
+		    array(
+			    'brand' => 'Plan de compras del estado',
+			    'fixed' => false,
+			    'fluid' => true,
+			    'items' => array(
+				    array(
+					    'class' => 'booster.widgets.TbMenu',
+					    'type' => 'navbar',
+					    'items' => array(
+						    //array('label' => 'Home', 'url' => '#', 'active' => true),
+						    array('label'=>'Inicio', 'url'=>array('planificacion/'), 'visible'=>!Yii::app()->user->isGuest),
+							array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/usr/logout'), 'visible'=>!Yii::app()->user->isGuest)
+					    )
+				    )
+			    )
+		    )
+	  	  );
+		}
+	 	?>
+	<!--</div> -->
 	<?php if(isset($this->breadcrumbs)):?>
-		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
-			'links'=>$this->breadcrumbs,
-		)); ?><!-- breadcrumbs -->
+		<?php 	
+			$this->widget(
+				'booster.widgets.TbBreadcrumbs',
+				array(
+					'homeLink' => 'Inicio',
+					'links' => $this->breadcrumbs,
+				)
+			);
+		?><!-- breadcrumbs -->
 	<?php endif?>
 
 	<?php echo $content; ?>
@@ -49,7 +70,7 @@
 	<div class="clear"></div>
 
 	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by SNC.<br/>
+		Copyright &copy; <?php echo date('Y'); ?> Servicio Nacional de Contrataciones.<br/>
 		All Rights Reserved.<br/>
 		<?php //echo Yii::powered(); ?>
 	</div><!-- footer -->
