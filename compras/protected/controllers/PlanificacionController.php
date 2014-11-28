@@ -53,6 +53,15 @@ class PlanificacionController extends Controller
 		$this->render('partidas');
 	}
 
+	function 401()
+	{
+
+	}
+
+	function _guardar($x)
+	{
+	}
+
 	public function actionVistaparcial()  /*Aquí mostramos la carga del usuario hasta donde la lleva al momento de consultarla.*/
 	{
 		$this->render('vistaparcial');
