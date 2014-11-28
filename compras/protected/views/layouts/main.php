@@ -20,7 +20,7 @@
 
 <body>
 
-<div class="container" id="page">
+<div class="container-fluid" id="page">
 
 	<div id="header">
 		<div id="logo"><?php //echo CHtml::encode(Yii::app()->name); ?></div>
@@ -44,6 +44,7 @@
 					    'items' => array(
 						    //array('label' => 'Home', 'url' => '#', 'active' => true),
 						    array('label'=>'Inicio', 'url'=>array('planificacion/'), 'visible'=>!Yii::app()->user->isGuest),
+						    
 							array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/usr/logout'), 'visible'=>!Yii::app()->user->isGuest)
 					    )
 				    )
