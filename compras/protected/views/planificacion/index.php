@@ -17,6 +17,9 @@ tr.principaltr th {
     text-align:center; 
     vertical-align:middle;
 }
+	<?php 
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+	?>
 </style>
 <!--<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>-->
 
@@ -32,11 +35,12 @@ tr.principaltr th {
 		    </thead>
 		    <tbody>
 		    	<tr class="principaltr">
-		    		<td>A0908</td>
-		    		<td>SERVICIO NACIONAL DE CONTRATACIONES</td>
-		    		<td>ENTE</td>
-		    		<td>Vicepresidencia de la República</td>
-		    		<td>33</td>
+
+		    		<td><?php echo $usuario->codigo_onapre;?></td>
+		    		<td><?php echo $usuario->codigoOnapre->nombre;?></td>
+		    		<td><?php echo $usuario->codigoOnapre->tipo;?></td>
+		    		<td><?php echo $usuario->codigoOnapre->enteAdscrito->padre->nombre;?></td>
+		    		<td><?php echo $usuario->codigoOnapre->enteAdscrito->padre->codigo_onapre; ?></td>
 		    	</tr>
 		    </tbody>
 		</table>

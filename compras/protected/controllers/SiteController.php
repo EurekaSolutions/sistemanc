@@ -29,7 +29,7 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-		Yii::app()->user->returnUrl = array('/planificacion/index');
+		Yii::app()->user->returnUrl = Yii::app()->createAbsoluteUrl('planificacion/index');
 		$this->redirect(array('usr/login'));
 		$this->render('index');
 	}
