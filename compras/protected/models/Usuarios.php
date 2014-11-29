@@ -171,6 +171,7 @@ class Usuarios extends CActiveRecord
 		return array(
 			'codigoOnapre' => array(self::BELONGS_TO, 'EntesOrganos', 'codigo_onapre'),
 			'userLoginAttempts' => array(self::HAS_MANY, 'UserLoginAttempt', 'user_id', 'order'=>'performed_on DESC'),
+			'userUsedPasswords' => array(self::HAS_MANY, 'UserUsedPassword', 'user_id'),
 		);
 	}
 

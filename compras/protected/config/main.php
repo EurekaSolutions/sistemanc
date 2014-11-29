@@ -39,6 +39,8 @@ return array(
 		),	
 		'usr'=>array(
 			'registrationEnabled'=>false,
+			'captcha'=>true,
+			'requireVerifiedEmail'=>true,
             'userIdentityClass' => 'UserIdentity',
 			'layout' => '//layouts/centered',
 			'formClass'=>'booster.widgets.TbActiveForm',
@@ -59,10 +61,14 @@ return array(
 				'IsSMTP' => array(),
 				'Host' => 'smtp.gmail.com',
 				'Port' => 465,
+				'SMTPSecure' => 'tls',
+				'SMTPDebug' => 2,
+				'SMTPAuth' => true,
 				'Username' => 'eurekasolutionsca@gmail.com',
 				'Password' => '3ur3k4123',
 				'FromName' => 'SNC Compras',
 				'CharSet' => 'UTF-8',
+				
 				),
         ),
 	),

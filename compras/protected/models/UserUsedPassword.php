@@ -21,7 +21,7 @@ class UserUsedPassword extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return '{{user_used_passwords}}';
+		return 'public.user_used_passwords';
 	}
 
 	/**
@@ -39,7 +39,7 @@ class UserUsedPassword extends CActiveRecord
 	public function relations()
 	{
 		return array(
-			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+			'user' => array(self::BELONGS_TO, 'Usuarios', 'user_id'),
 		);
 	}
 

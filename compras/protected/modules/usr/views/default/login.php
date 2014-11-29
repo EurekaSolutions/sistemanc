@@ -21,21 +21,24 @@ $this->pageTitle = Yii::app()->name.' - '.$title;
 	'focus'=>array($model,'username'),
 )); ?>
 
-	<p class="note"><?php echo Yii::t('UsrModule.usr', 'Fields marked with <span class="required">*</span> are required.'); ?></p>
+	<p class="note"><?php echo Yii::t('UsrModule.usr', 'Campos marcados con <span class="required">*</span> son obligatorios.'); ?></p>
 
 	<?php echo $form->errorSummary($model); ?>
 
-	<div class="control-group">
-		<?php echo $form->labelEx($model,'username'); ?>
-		<?php echo $form->textField($model,'username'); ?>
-		<?php echo $form->error($model,'username'); ?>
-	</div>
+<!-- 	<div class="control-group">
+	<?php /*echo $form->labelEx($model,'username'); ?>
+	<?php echo $form->textField($model,'username'); ?>
+	<?php echo $form->error($model,'username');*/ ?>
+</div> -->
+	<?php echo $form->textFieldGroup($model,'username');?>
 
-	<div class="control-group">
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password'); ?>
-		<?php echo $form->error($model,'password'); ?>
-	</div>
+<!-- 	<div class="control-group">
+	<?php /*echo $form->labelEx($model,'password'); ?>
+	<?php echo $form->passwordField($model,'password'); ?>
+	<?php echo $form->error($model,'password'); */?>
+</div> -->
+
+	<?php echo $form->passwordFieldGroup($model,'password');?>
 
 <?php if ($this->module->rememberMeDuration > 0): ?>
 	<div class="rememberMe control-group">
@@ -49,17 +52,17 @@ $this->pageTitle = Yii::app()->name.' - '.$title;
 	</div>
 <?php if ($this->module->recoveryEnabled): ?>
 	<p>
-		<?php echo Yii::t('UsrModule.usr', 'Don\'t remember username or password?'); ?>
-		<?php echo Yii::t('UsrModule.usr', 'Go to {link}.', array(
-			'{link}'=>CHtml::link(Yii::t('UsrModule.usr', 'password recovery'), array('recovery')),
+		<?php echo Yii::t('UsrModule.usr', '¿No recuerda el nombre de usuario o contraseña?'); ?>
+		<?php echo Yii::t('UsrModule.usr', 'Ir a {link}.', array(
+			'{link}'=>CHtml::link(Yii::t('UsrModule.usr', 'recuperar la contraseña'), array('recovery')),
 		)); ?>
 	</p>
 <?php endif; ?>
 <?php if ($this->module->registrationEnabled): ?>
 	<p>
-		<?php echo Yii::t('UsrModule.usr', 'Don\'t have an account yet?'); ?>
-		<?php echo Yii::t('UsrModule.usr', 'Go to {link}.', array(
-			'{link}'=>CHtml::link(Yii::t('UsrModule.usr', 'registration'), array('register')),
+		<?php echo Yii::t('UsrModule.usr', '¿Aún no tiene una cuenta?'); ?>
+		<?php echo Yii::t('UsrModule.usr', 'Ir a {link}.', array(
+			'{link}'=>CHtml::link(Yii::t('UsrModule.usr', 'registro'), array('register')),
 		)); ?>
 	</p>
 <?php endif; ?>

@@ -61,12 +61,12 @@ class UserIdentity extends CUserIdentity
      */
     public function authenticate()
     {
-        $record = Usuarios::model()->findByAttributes(array('usuario'=>$this->username));
+        $record = Usuarios::model()->findByAttributes(array('usuario'=>$this->username));        	
         $authenticated = $record !== null && $record->verificarContrasena($this->password);
 
         $attempt = new UserLoginAttempt;
         $attempt->username = $this->username;
-        $attempt->user_id = $record->usuario_id;
+        $attempt->user_id = $record === null ? null : $record->usuario_id;
         $attempt->is_successful = $authenticated;
         $attempt->save();
 
@@ -142,16 +142,16 @@ class UserIdentity extends CUserIdentity
 		if (($record=$this->getActiveRecord())===null) {
 			return false;
 		}
-		$hashedPassword = Usuarios::hashPassword($password);
+		$hashedPassword = Usuarios::model()->hashPassword($password);
 		$usedPassword = new UserUsedPassword;
 		$usedPassword->setAttributes(array(
 			'user_id'=>$this->_id,
 			'password'=>$hashedPassword,
-			'set_on'=>date('Y-m-d H:i:s'),
+			'set_on'=>date('d-m-Y H:i:s'),
 		), false);
 		return $usedPassword->save() && $record->saveAttributes(array(
-			'password'=>$hashedPassword,
-			'password_set_on'=>date('Y-m-d H:i:s'),
+			'contrasena'=>$hashedPassword,
+			//'password_set_on'=>date('d-m-Y H:i:s'),
 		));
 	}
 
@@ -174,13 +174,13 @@ class UserIdentity extends CUserIdentity
 			$record->esta_activo = $requireVerifiedEmail ? 0 : 1;
 		} else {
 			$record = $this->getActiveRecord();
-			$record->setScenario('update');
+			$record->setScenario('actualizar');
 		}
 		if ($record!==null) {
 			$record->setAttributes(array(
 				'usuario' => $this->username,
 				'correo' => $this->email,
-				'cidigo_onapre' => $this->codigo_onapre,
+				'codigo_onapre' => $this->codigo_onapre,
 				//'firstname' => $this->firstName,
 				//'lastname' => $this->lastName,
 			));
@@ -205,7 +205,7 @@ class UserIdentity extends CUserIdentity
 	 */
 	public function setAttributes(array $attributes)
 	{
-		$allowedAttributes = array('username','email','codigo_onapre','lastName');
+		$allowedAttributes = array('usuario','correo','codigo_onapre');
 		foreach($attributes as $name=>$value) {
 			if (in_array($name, $allowedAttributes))
 				$this->$name = $value;
@@ -296,7 +296,7 @@ class UserIdentity extends CUserIdentity
 		if (($record=$this->getActiveRecord())===null) {
 			return false;
 		}
-		$activationKey = md5(time().mt_rand().$record->usuario);
+		$activationKey = md5(time().mt_rand().$record->codigo_onapre);
 		if (!$record->saveAttributes(array('llave_activacion' => $activationKey))) {
 			return false;
 		}
@@ -317,7 +317,7 @@ class UserIdentity extends CUserIdentity
 	}
 
 	/**
-	 * Verify users email address, which could also activate his account and allow him to log in.
+	 * Verify users email address, which could also activate his account and allow him toe log in.
 	 * Call only after verifying the activation key.
 	 * @param boolean $requireVerifiedEmail
 	 * @return boolean
@@ -480,10 +480,10 @@ class UserIdentity extends CUserIdentity
     {
 		$email = (isset($remoteProfile->emailVerifier) && $remoteProfile->emailVerifier !== null) ? $remoteProfile->emailVerifier : $remoteProfile->email;
         return array(
-            'username' => $email,
-            'email' => $email,
-            'firstName' => $remoteProfile->firstName,
-            'lastName' => $remoteProfile->lastName,
+            'usuario' => $email,
+            'correo' => $email,
+            //'firstName' => $remoteProfile->firstName,
+            //'lastName' => $remoteProfile->lastName,
         );
     }
 
@@ -593,7 +593,7 @@ class UserIdentity extends CUserIdentity
 		}
 
 		// if no picture has been found, use a Gravatar
-		$hash = md5(strtolower(trim($record->email)));
+		$hash = md5(strtolower(trim($record->correo)));
 		// more at http://gravatar.com/site/implement/images/
 		$options = array(
 			//'forcedefault' => 'y',
@@ -656,18 +656,19 @@ class UserIdentity extends CUserIdentity
 	{
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id', $searchForm->id);
-		$criteria->compare('username', $searchForm->username,true);
-		$criteria->compare('email', $searchForm->email,true);
-		$criteria->compare('firstname', $searchForm->firstName,true);
-		$criteria->compare('lastname', $searchForm->lastName,true);
-		$criteria->compare('created_on', $searchForm->createdOn);
-		$criteria->compare('updated_on', $searchForm->updatedOn);
+		$criteria->compare('usuario_id', $searchForm->id);
+		$criteria->compare('usuario', $searchForm->username,true);
+		$criteria->compare('codigo_onapre', $searchForm->codigo_onapre,true);
+		$criteria->compare('correo', $searchForm->email,true);
+		//$criteria->compare('firstname', $searchForm->firstName,true);
+		//$criteria->compare('lastname', $searchForm->lastName,true);
+		$criteria->compare('creado_el', $searchForm->createdOn);
+		$criteria->compare('actualizado_el', $searchForm->updatedOn);
 		$criteria->compare('last_visit_on', $searchForm->lastVisitOn);
-		$criteria->compare('email_verified', $searchForm->emailVerified);
-		$criteria->compare('is_active', $searchForm->isActive);
-		$criteria->compare('is_disabled', $searchForm->isDisabled);
-		$dataProvider = new CActiveDataProvider('Usuarios', array('criteria'=>$criteria, 'keyAttribute'=>'id'));
+		$criteria->compare('correo_verificado', $searchForm->emailVerified);
+		$criteria->compare('esta_activo', $searchForm->isActive);
+		$criteria->compare('esta_deshabilitado', $searchForm->isDisabled);
+		$dataProvider = new CActiveDataProvider('Usuarios', array('criteria'=>$criteria, 'keyAttribute'=>'usuario_id'));
 		$identities = array();
 		foreach($dataProvider->getData() as $row) {
 			$identities[] = self::createFromUser($row);
@@ -712,10 +713,10 @@ class UserIdentity extends CUserIdentity
 			return false;
 		}
 		$timestamps = array(
-			'createdOn' => $record->created_on,
-			'updatedOn' => $record->updated_on,
-			'lastVisitOn' => $record->last_visit_on,
-			'passwordSetOn' => $record->password_set_on,
+			'createdOn' => $record->creado_el,
+			'updatedOn' => $record->actualizado_el,
+			'lastVisitOn' => $record->ultima_visita_el,
+			//'passwordSetOn' => $record->password_set_on,
 		);
 		// can't use isset, since it returns false for null values
 		return $key === null || !array_key_exists($key, $timestamps) ? $timestamps : $timestamps[$key];

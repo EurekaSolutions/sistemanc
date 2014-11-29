@@ -22,7 +22,7 @@ $this->pageTitle = Yii::app()->name.' - '.$title;
 	'action'=>array('login', 'scenario'=>'verifyOTP'),
 )); ?>
 
-	<p class="note"><?php echo Yii::t('UsrModule.usr', 'Fields marked with <span class="required">*</span> are required.'); ?></p>
+	<p class="note"><?php echo Yii::t('UsrModule.usr', 'Campos marcados con <span class="required">*</span> son obligatorios.'); ?></p>
 
 	<?php echo $form->errorSummary($model); ?>
 

@@ -18,19 +18,19 @@ abstract class UsrController extends CController
 			'siteUrl' => $this->createAbsoluteUrl('/'), 
 		);
 		switch($mode) {
-		default: return false;
-		case 'recovery':
-		case 'verify':
-			$mail->Subject = $mode == 'recovery' ? Yii::t('UsrModule.usr', 'Password recovery') : Yii::t('UsrModule.usr', 'Email address verification');
-			$params['actionUrl'] = $this->createAbsoluteUrl('default/'.$mode, array(
-				'activationKey'=>$model->getIdentity()->getActivationKey(),
-				'username'=>$model->getIdentity()->getName(),
-			));
-			break;
-		case 'oneTimePassword':
-			$mail->Subject = Yii::t('UsrModule.usr', 'One Time Password');
-			$params['code'] = $model->getNewCode();
-			break;
+			default: return false;
+			case 'recovery':
+			case 'verify':
+				$mail->Subject = $mode == 'recovery' ? Yii::t('UsrModule.usr', 'Recuperación de contraseña.') : Yii::t('UsrModule.usr', 'Verificación de correo electronico.');
+				$params['actionUrl'] = $this->createAbsoluteUrl('default/'.$mode, array(
+					'llave_activacion'=>$model->getIdentity()->getActivationKey(),
+					'username'=>$model->getIdentity()->getName(),
+				));
+				break;
+			case 'oneTimePassword':
+				$mail->Subject = Yii::t('UsrModule.usr', 'One Time Password');
+				$params['code'] = $model->getNewCode();
+				break;
 		}
 		$body = $this->renderPartial($mail->getPathViews().'.'.$mode, $params, true);
 		$full = $this->renderPartial($mail->getPathLayouts().'.email', array('content'=>$body), true);

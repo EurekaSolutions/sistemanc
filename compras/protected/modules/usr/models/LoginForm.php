@@ -26,6 +26,7 @@ class LoginForm extends BasePasswordForm
 		$rules = array_merge(array(
 			array('username, password', 'filter', 'filter'=>'trim'),
 			array('username, password', 'required'),
+			//array('username', 'exist', 'allowEmpty'=>false, 'attributeName'=>'usuario','className'=>'Usuarios', 'message'=>Yii::t('UsrModule.usr','Usuario no existe.')),
 			array('rememberMe', 'boolean'),
 			array('password', 'authenticate'),
 		), $this->rulesAddScenario(parent::rules(), 'reset'), $this->getBehaviorRules());
@@ -72,7 +73,7 @@ class LoginForm extends BasePasswordForm
 		}
 		$identity = $this->getIdentity();
 		if (!$identity->getIsAuthenticated()) {
-            $this->addError('password', !empty($identity->errorMessage) ? $identity->errorMessage : Yii::t('UsrModule.usr','Invalid username or password.'));
+            $this->addError('password', !empty($identity->errorMessage) ? $identity->errorMessage : Yii::t('UsrModule.usr','Usuario o contraseña invalido.'));
 			return false;
 		}
 		return true;

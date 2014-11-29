@@ -10,6 +10,7 @@ class RecoveryForm extends BasePasswordForm
 	public $usuario;
 	public $correo;
 	public $llave_activacion;
+	public $codigo_onapre;
 
 	/**
 	 * @var IdentityInterface cached object returned by @see getIdentity()
@@ -23,10 +24,12 @@ class RecoveryForm extends BasePasswordForm
 	 */
 	public function rules() {
 		$rules = array_merge($this->getBehaviorRules(), array(
-			array('usuario, correo', 'filter', 'filter'=>'trim'),
-			array('usuario, correo', 'default', 'setOnEmpty'=>true, 'value' => null),
-			array('usuario, correo', 'existingIdentity'),
+			array('codigo_onapre, usuario, correo', 'filter', 'filter'=>'trim'),
+			array('codigo_onapre, usuario, correo', 'default', 'setOnEmpty'=>true, 'value' => null),
+			array('correo, codigo_onapre', 'configurarUsuario','on'=>'reset', 'message','No se pudo obtener los datos del usuario'),
+			array('codigo_onapre, usuario, correo', 'existingIdentity'),
 			array('correo', 'email'),
+			//array('codigo_onapre', 'exist', 'attributeName'=>'codigo_onapre','className'=>'EntesOrganos', 'message'=>Yii::t('UsrModule.usr','Codigo Onapre no existe.')),
 
 			array('llave_activacion', 'filter', 'filter'=>'trim', 'on'=>'reset,verify'),
 			array('llave_activacion', 'default', 'setOnEmpty'=>true, 'value' => null, 'on'=>'reset,verify'),
@@ -37,6 +40,26 @@ class RecoveryForm extends BasePasswordForm
 		return $rules;
 	}
 
+	/**
+	 * Inline validator that checks if an identity exists matching provided username or password.
+	 * @param string $attribute
+	 * @param array $params
+	 * @return boolean
+	 */
+	public function configurarUsuario($attribute,$params) {
+		if($this->hasErrors()) {
+			return;
+		}
+
+		// Usuario recuperando/reseteando contraseña
+		$usuario = Usuarios::model()->findByAttributes(array('usuario'=>$this->usuario));
+		if(!$usuario)
+			return false;
+		$this->codigo_onapre = $usuario->codigo_onapre;
+		$this->correo = $usuario->correo;
+
+		return true;
+	}
 	/**
 	 * Declares attribute labels.
 	 */
@@ -60,8 +83,9 @@ class RecoveryForm extends BasePasswordForm
 				throw new CException(Yii::t('UsrModule.usr','The {class} class must implement the {interface} interface.',array('{class}'=>$userIdentityClass, '{interface}'=>'IActivatedIdentity')));
 			}
 			$attributes = array();
-			if ($this->usuario !== null) $attributes['usuario'] = $this->usuario;
+			//if ($this->usuario !== null) $attributes['usuario'] = $this->usuario;
 			if ($this->correo !== null) $attributes['correo'] = $this->correo;
+			if ($this->codigo_onapre !== null) $attributes['codigo_onapre'] = $this->codigo_onapre;
 			if (!empty($attributes))
 				$this->_identity=$userIdentityClass::find($attributes);
 		}
@@ -80,16 +104,18 @@ class RecoveryForm extends BasePasswordForm
 		}
 		$identity = $this->getIdentity();
 		if ($identity === null) {
-			if ($this->usuario !== null) {
+			/*if ($this->usuario !== null) {
 				$this->addError('usuario',Yii::t('UsrModule.usr','No user found matching this usuario.'));
+			} else*/if ($this->codigo_onapre !== null) {
+				$this->addError('codigo_onapre',Yii::t('UsrModule.usr','Ningún usuario coincide con el codigo onapre indicado.'));
 			} elseif ($this->correo !== null) {
-				$this->addError('correo',Yii::t('UsrModule.usr','No user found matching this correo address.'));
+				$this->addError('correo',Yii::t('UsrModule.usr','Ningún usuario coincide con esta dirección de correo electrónico.'));
 			} else {
-				$this->addError('usuario',Yii::t('UsrModule.usr','Please specify usuario or correo.'));
+				$this->addError('usuario',Yii::t('UsrModule.usr','Por favor, especifique codigo onapre o correo electrónico.'));
 			}
 			return false;
 		} elseif ($identity->isDisabled()) {
-			$this->addError('usuario',Yii::t('UsrModule.usr','User account has been disabled.'));
+			$this->addError('usuario',Yii::t('UsrModule.usr','La cuenta de usuario ha sido desactivada.'));
 			return false;
 		}
 		return true;

@@ -187,7 +187,7 @@ class DefaultController extends UsrController
 			Yii::app()->end();
 		}
 
-		if (isset($_GET['activationKey'])) {
+		if (isset($_GET['llave_activacion'])) {
 			$model->scenario = 'reset';
 			$model->setAttributes($_GET);
 		}
@@ -196,7 +196,7 @@ class DefaultController extends UsrController
 			/**
 			 * If the activation key is missing that means the user is requesting a recovery email.
 			 */
-			if ($model->activationKey !== null)
+			if ($model->llave_activacion !== null)
 				$model->scenario = 'reset';
 			if ($model->validate()) {
 				if ($model->scenario !== 'reset') {
@@ -205,9 +205,9 @@ class DefaultController extends UsrController
 					 * before password recovery. Also allows re-sending of verification emails.
 					 */
 					if ($this->sendEmail($model, $model->identity->isActive() ? 'recovery' : 'verify')) {
-						Yii::app()->user->setFlash('success', Yii::t('UsrModule.usr', 'An email containing further instructions has been sent to the email address associated with the specified user account.'));
+						Yii::app()->user->setFlash('success', Yii::t('UsrModule.usr', 'Un correo electrónico que contiene instrucciones adicionales ha sido enviado a la dirección de correo electrónico asociada con su cuenta de usuario.'));
 					} else {
-						Yii::app()->user->setFlash('error', Yii::t('UsrModule.usr', 'Failed to send an email.').' '.Yii::t('UsrModule.usr', 'Try again or contact the site administrator.'));
+						Yii::app()->user->setFlash('error', Yii::t('UsrModule.usr', 'Error al enviar el correo electrónico.').' '.Yii::t('UsrModule.usr', 'Inténtelo de nuevo o póngase en contacto con el administrador del sitio.'));
 					}
 				} else {
 					// a valid recovery form means the user confirmed his email address
@@ -217,7 +217,7 @@ class DefaultController extends UsrController
 					if ($model->resetPassword() && $model->login()) {
 						$this->afterLogin();
 					} else {
-						Yii::app()->user->setFlash('error', Yii::t('UsrModule.usr', 'Failed to change password or log in using new password.'));
+						Yii::app()->user->setFlash('error', Yii::t('UsrModule.usr', 'Error al cambiar la contraseña o iniciar sesión con la nueva contraseña.'));
 					}
 				}
 				$this->redirect(array('recovery'));
@@ -238,9 +238,9 @@ class DefaultController extends UsrController
 		if ($model->validate() && $model->getIdentity()->verifyEmail($this->module->requireVerifiedEmail)) {
 			// regenerate the activation key to prevent reply attack
 			$model->getIdentity()->getActivationKey();
-			Yii::app()->user->setFlash('success', Yii::t('UsrModule.usr', 'Your email address has been successfully verified.'));
+			Yii::app()->user->setFlash('success', Yii::t('UsrModule.usr', 'Tu dirección de correo electrónico ha sido verificado con éxito.'));
 		} else {
-			Yii::app()->user->setFlash('error', Yii::t('UsrModule.usr', 'Failed to verify your email address.'));
+			Yii::app()->user->setFlash('error', Yii::t('UsrModule.usr', 'No se pudo verificar su dirección de correo electrónico.'));
 		}
 		$this->redirect(array(Yii::app()->user->isGuest ? 'login' : 'profile'));
 	}

@@ -25,7 +25,7 @@ $this->pageTitle = Yii::app()->name.' - '.$title;
 	'focus'=>array($model,'username'),
 )); ?>
 
-	<p class="note"><?php echo Yii::t('UsrModule.usr', 'Fields marked with <span class="required">*</span> are required.'); ?></p>
+	<p class="note"><?php echo Yii::t('UsrModule.usr', 'Campos marcados con <span class="required">*</span> son obligatorios.'); ?></p>
 
 	<?php echo $form->errorSummary($model); ?>
 
