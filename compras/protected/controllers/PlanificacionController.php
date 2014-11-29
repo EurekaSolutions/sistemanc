@@ -53,7 +53,9 @@ class PlanificacionController extends Controller
 
 	public function actionPartidas() /*Aqui van la logica de negocio asociada a cada partida 401, 402, 403, 404 */
 	{
-		$this->render('partidas');
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+
+		$this->render('partidas', array('usuario'=>$usuario));
 	}
 
 

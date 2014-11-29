@@ -19,8 +19,8 @@ $model = new ProyectosAcciones();
 	        'htmlOptions' => array('class' => 'well'), // for inset effect
 	    )
 	);
-	 
-	 $proyectos = CHtml::listData(ProyectosAcciones::model()->findAll(), 'proyecto_id', 'nombre');
+
+	 $proyectos = CHtml::listData($usuario->codigoOnapre->proyectosAcciones, 'proyecto_id', 'nombre');
 	//echo $form->listBoxGroup($model, 'nombre',$proyectos);
 	//echo $form->dropDownListGroup($model, 'nombre',$proyectos, array('prompt'=>'Seleccionar proyecto','multiple' => 'multiple'));
 	//echo $form->dropDownList($model,'category_id',  array('prompt'=>'Select category','multiple' => 'multiple'));
