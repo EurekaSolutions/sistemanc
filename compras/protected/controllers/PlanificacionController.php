@@ -67,6 +67,21 @@ class PlanificacionController extends Controller
 		$this->render('vistaresumen');
 	}
 
+	public function usuarioProyectos(Usuarios $usuario) /*Retorna todos los proyectos pertenecientes al usuario*/  
+	{
+		
+	}
+
+	public function proyectosPartidas(ProyectosAcciones $proyecto)  /*Retorna todas las partidas pertenecientes a un proyecto*/
+	{
+		
+	}
+
+	public function productosPartidas(Partidas $partida)  /*Retorna todas los productos asociados a una partida*/
+	{
+		
+	}
+
 	// Uncomment the following methods and override them if needed
 	/*
 	public function filters()

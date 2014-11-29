@@ -6,8 +6,51 @@ $this->breadcrumbs=array(
 	'Partidas',
 );
 ?>
+
+
+<?php 
+$model = new ProyectosAcciones();
+
+	/** @var TbActiveForm $form */
+	$form = $this->beginWidget(
+	    'booster.widgets.TbActiveForm',
+	    array(
+	        'id' => 'proyecto-form',
+	        'htmlOptions' => array('class' => 'well'), // for inset effect
+	    )
+	);
+	 
+	 $proyectos = CHtml::listData(ProyectosAcciones::model()->findAll(), 'proyecto_id', 'nombre');
+	//echo $form->listBoxGroup($model, 'nombre',$proyectos);
+	//echo $form->dropDownListGroup($model, 'nombre',$proyectos, array('prompt'=>'Seleccionar proyecto','multiple' => 'multiple'));
+	//echo $form->dropDownList($model,'category_id',  array('prompt'=>'Select category','multiple' => 'multiple'));
+
+	 echo $form->dropDownListGroup(
+			$model,
+			'proyecto_id',
+			array(
+				'wrapperHtmlOptions' => array(
+					'class' => 'col-sm-5',
+				),
+				'widgetOptions' => array(
+					'data' => $proyectos,
+					'htmlOptions' => array(/*'prompt' => 'Seleccionar proyecto',*/'multiple' => false),
+				)
+			)
+		); 
+         
+	//echo $form->checkboxGroup($model, 'checkbox');
+	$this->widget(
+	    'booster.widgets.TbButton',
+	    array('buttonType' => 'submit', 'label' => 'Cargar')
+	);
+	 
+	$this->endWidget();
+	unset($form);
+?>
 <?php
 $tabs = array();
+
 $this->widget(
     'booster.widgets.TbTabs',
     array(

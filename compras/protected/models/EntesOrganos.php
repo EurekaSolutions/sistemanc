@@ -4,7 +4,7 @@
  * This is the model class for table "compras.entes_organos".
  *
  * The followings are the available columns in table 'compras.entes_organos':
- * @property string $ente_id
+ * @property string $ente_organo_id
  * @property string $codigo_onapre
  * @property string $nombre
  * @property string $tipo
@@ -41,7 +41,7 @@ class EntesOrganos extends CActiveRecord
 			array('ente_adscrito', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('ente_id, codigo_onapre, nombre, tipo, ente_adscrito', 'safe', 'on'=>'search'),
+			array('ente_organo_id, codigo_onapre, nombre, tipo, ente_adscrito', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,7 +66,7 @@ class EntesOrganos extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'ente_id' => 'Ente',
+			'ente_organo_id' => 'Ente',
 			'codigo_onapre' => 'Codigo Onapre',
 			'nombre' => 'Nombre',
 			'tipo' => 'Tipo',
@@ -92,7 +92,7 @@ class EntesOrganos extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('ente_id',$this->ente_id,true);
+		$criteria->compare('ente_organo_id',$this->ente_organo_id,true);
 		$criteria->compare('codigo_onapre',$this->codigo_onapre,true);
 		$criteria->compare('nombre',$this->nombre,true);
 		$criteria->compare('tipo',$this->tipo,true);
