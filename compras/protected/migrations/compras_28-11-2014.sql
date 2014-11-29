@@ -13,18 +13,18 @@ SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
-DROP DATABASE IF EXISTS snc;
+DROP DATABASE IF EXISTS sistemanc;
 --
 -- TOC entry 2243 (class 1262 OID 26432)
--- Name: snc; Type: DATABASE; Schema: -; Owner: compras
+-- Name: sistemanc; Type: DATABASE; Schema: -; Owner: compras
 --
 
-CREATE DATABASE snc WITH TEMPLATE = template0 ENCODING = 'UTF8' ;
+CREATE DATABASE sistemanc WITH TEMPLATE = template0 ENCODING = 'UTF8' ;
 
 
-ALTER DATABASE snc OWNER TO compras;
+ALTER DATABASE sistemanc OWNER TO compras;
 
-\connect snc
+\connect sistemanc
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;

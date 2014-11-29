@@ -17,13 +17,29 @@ tr.principaltr th {
     text-align:center; 
     vertical-align:middle;
 }
-	<?php 
-		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
-	?>
 </style>
 <!--<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>-->
+<?php
+	//echo print_r($proyectos);
 
-		 <table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
+
+	foreach ($proyectos as $key => $value) {
+		# code...
+		echo $value->tipo;
+
+
+	}
+
+
+	foreach ($acciones as $key => $value) {
+		# code...
+		echo $value->tipo;
+
+
+	}
+?>
+		
+		<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
 		    <thead>
 		        <tr class="principaltr">
 		            <th data-field="conapre">Mi código Onapre</th>

@@ -57,6 +57,8 @@ class EntesOrganos extends CActiveRecord
 			'enteAdscrito' => array(self::BELONGS_TO, 'EntesAdscritos', 'ente_organo_id'),
 			'entesOrganoses' => array(self::HAS_MANY, 'EntesAdscritos', 'ente_organo_id'),
 			'proyectosAcciones' => array(self::HAS_MANY, 'ProyectosAcciones', 'ente_organo_id'),
+			'proyectos'=>array(self::HAS_MANY, 'ProyectosAcciones', 'ente_organo_id', 'condition'=>'proyectos.tipo=\'p\''),
+			'acciones'=>array(self::HAS_MANY, 'ProyectosAcciones', 'ente_organo_id', 'condition'=>'acciones.tipo=\'a\''),
 		);
 	}
 

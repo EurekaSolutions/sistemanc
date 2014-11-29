@@ -24,15 +24,15 @@ class PlanificacionController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view'),
-				'users'=>array('*'),
+				'users'=>array('@'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update','partidas','vistaparcial'),
-				'users'=>array('*'),
+				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
-				'users'=>array('*'),
+				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -48,7 +48,25 @@ class PlanificacionController extends Controller
 
 	public function actionIndex()   /*Aquí vamos a mostrar la primera vista del excel enviado por Zobeida*/
 	{
-		$this->render('index');
+
+
+		$usuario = new Usuarios();
+
+		$usuario = $usuario->model()->findByPk(Yii::app()->user->getId());
+
+		$proyectos = $usuario->codigoOnapre->proyectos;
+		
+		$acciones = $usuario->codigoOnapre->acciones;
+		
+		
+		$usuario = $usuario->model()->findByPk(Yii::app()->user->getId());
+
+		$this->render('index',array(
+			'usuario'=>$usuario, 'proyectos' => $proyectos,  'acciones' => $acciones
+		));
+
+
+
 	}
 
 	public function actionPartidas() /*Aqui van la logica de negocio asociada a cada partida 401, 402, 403, 404 */

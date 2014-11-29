@@ -55,6 +55,7 @@ class ProyectosAcciones extends CActiveRecord
 		return array(
 			'enteOrgano' => array(self::BELONGS_TO, 'EntesOrganos', 'ente_organo_id'),
 			'proyectoPartidases' => array(self::HAS_MANY, 'ProyectoPartidas', 'proyecto_id'),
+			
 		);
 	}
 
