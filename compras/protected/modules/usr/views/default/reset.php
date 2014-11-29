@@ -33,7 +33,7 @@ $this->pageTitle = Yii::app()->name.' - '.$title;
 <?php $this->renderPartial('_newpassword', array('form'=>$form, 'model'=>$model)); ?>
 
 	<div class="buttons">
-		<?php echo CHtml::submitButton(Yii::t('UsrModule.usr', 'Change contaseña'), array('class'=>$this->module->submitButtonCssClass)); ?>
+		<?php echo CHtml::submitButton(Yii::t('UsrModule.usr', 'Cambiar la contraseña'), array('class'=>$this->module->submitButtonCssClass)); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

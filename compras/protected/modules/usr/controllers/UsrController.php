@@ -24,7 +24,7 @@ abstract class UsrController extends CController
 				$mail->Subject = $mode == 'recovery' ? Yii::t('UsrModule.usr', 'Recuperación de contraseña.') : Yii::t('UsrModule.usr', 'Verificación de correo electronico.');
 				$params['actionUrl'] = $this->createAbsoluteUrl('default/'.$mode, array(
 					'llave_activacion'=>$model->getIdentity()->getActivationKey(),
-					'username'=>$model->getIdentity()->getName(),
+					'usuario'=>$model->getIdentity()->getName(),
 				));
 				break;
 			case 'oneTimePassword':
