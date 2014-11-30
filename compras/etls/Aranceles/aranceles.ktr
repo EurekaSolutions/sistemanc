@@ -265,51 +265,6 @@
     </step>
 
   <step>
-    <name>Strings cut</name>
-    <type>StringCut</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>C&#xfffd;digo Arancelario</in_stream_name>
-        <out_stream_name>partida</out_stream_name>
-        <cut_from>0</cut_from>
-        <cut_to>4</cut_to>
-      </field>
-      <field>
-        <in_stream_name>C&#xfffd;digo Arancelario</in_stream_name>
-        <out_stream_name>subpartida</out_stream_name>
-        <cut_from>5</cut_from>
-        <cut_to>7</cut_to>
-      </field>
-      <field>
-        <in_stream_name>C&#xfffd;digo Arancelario</in_stream_name>
-        <out_stream_name>ncm</out_stream_name>
-        <cut_from>8</cut_from>
-        <cut_to>10</cut_to>
-      </field>
-      <field>
-        <in_stream_name>C&#xfffd;digo Arancelario</in_stream_name>
-        <out_stream_name>cod_pais</out_stream_name>
-        <cut_from>11</cut_from>
-        <cut_to>13</cut_to>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>264</xloc>
-      <yloc>157</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>Dimension lookup&#x2f;update</name>
     <type>DimensionLookup</type>
     <description/>
@@ -320,10 +275,10 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-      <schema>compras</schema>
+      <schema>public</schema>
       <table>codigos_ncm</table>
       <connection>snc</connection>
-      <commit>100</commit>
+      <commit>1000</commit>
       <update>Y</update>
       <fields>
         <key>
@@ -372,6 +327,51 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>460</xloc>
       <yloc>189</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Strings cut</name>
+    <type>StringCut</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <in_stream_name>C&#xfffd;digo Arancelario</in_stream_name>
+        <out_stream_name>partida</out_stream_name>
+        <cut_from>0</cut_from>
+        <cut_to>4</cut_to>
+      </field>
+      <field>
+        <in_stream_name>C&#xfffd;digo Arancelario</in_stream_name>
+        <out_stream_name>subpartida</out_stream_name>
+        <cut_from>5</cut_from>
+        <cut_to>7</cut_to>
+      </field>
+      <field>
+        <in_stream_name>C&#xfffd;digo Arancelario</in_stream_name>
+        <out_stream_name>ncm</out_stream_name>
+        <cut_from>8</cut_from>
+        <cut_to>10</cut_to>
+      </field>
+      <field>
+        <in_stream_name>C&#xfffd;digo Arancelario</in_stream_name>
+        <out_stream_name>cod_pais</out_stream_name>
+        <cut_from>11</cut_from>
+        <cut_to>13</cut_to>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>264</xloc>
+      <yloc>157</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
