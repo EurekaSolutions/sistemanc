@@ -49,9 +49,6 @@ class PlanificacionController extends Controller
 	public function actionIndex()   /*Aquí vamos a mostrar la primera vista del excel enviado por Zobeida*/
 	{
 
-
-		$usuario = new Usuarios();
-
 		$usuario = $usuario->model()->findByPk(Yii::app()->user->getId());
 
 		$proyectos = $usuario->codigoOnapre->proyectos;
@@ -71,9 +68,19 @@ class PlanificacionController extends Controller
 
 	public function actionPartidas() /*Aqui van la logica de negocio asociada a cada partida 401, 402, 403, 404 */
 	{
+		$model = new ProyectosAcciones('search');
+
+		$partidas = new ProyectoPartidas();
+
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 
-		$this->render('partidas', array('usuario'=>$usuario));
+		if(isset($_POST['ProyectosAcciones']))
+		{
+			$model->attributes = $_POST['ProyectosAcciones'];
+			$partidas = $model->proyectoPartidases;
+		}
+
+		$this->render('partidas', array('usuario'=>$usuario,'model'=>$model,'partidas'=>$partidas));
 	}
 
 
