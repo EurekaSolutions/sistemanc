@@ -50,7 +50,7 @@ class PlanificacionController extends Controller
 	{
 
 		$usuario = new Usuarios;
-		
+
 		$usuario = $usuario->model()->findByPk(Yii::app()->user->getId());
 
 		$proyectos = $usuario->codigoOnapre->proyectos;

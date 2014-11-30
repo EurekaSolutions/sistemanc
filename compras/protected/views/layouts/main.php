@@ -43,8 +43,8 @@
 					    'type' => 'navbar',
 					    'items' => array(
 						    //array('label' => 'Home', 'url' => '#', 'active' => true),
-						    array('label'=>'Inicio', 'url'=>array('planificacion/'), 'visible'=>!Yii::app()->user->isGuest),
-						    
+						    array('label'=>'Inicio', 'url'=>array('planificacion/index'), 'visible'=>!Yii::app()->user->isGuest),
+						    array('label'=>'Partidas', 'url'=>array('planificacion/partidas'), 'visible'=>!Yii::app()->user->isGuest),
 							array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/usr/logout'), 'visible'=>!Yii::app()->user->isGuest)
 					    )
 				    )
