@@ -18,27 +18,8 @@ tr.principaltr th {
     vertical-align:middle;
 }
 </style>
+<?php $mfinal = 0; ?>
 <!--<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>-->
-<?php
-	//echo print_r($proyectos);
-
-
-	foreach ($proyectos as $key => $value) {
-		# code...
-		echo $value->tipo;
-
-
-	}
-
-
-	foreach ($acciones as $key => $value) {
-		# code...
-		echo $value->tipo;
-
-
-	}
-?>
-		
 		<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
 		    <thead>
 		        <tr class="principaltr">
@@ -73,21 +54,16 @@ tr.principaltr th {
 		        </tr>
 		    </thead>
 		    <tbody>
+			 <?php   foreach ($acciones as $key => $value) { ?>
+		
 		    	<tr class="principaltr">
-		    		<td>xx0001000</td>
-		    		<td>Dirección y coordinación de los gastos de los trabajadores y trabajadoras</td>
-		    		<td>0.00</td>
+		    		<td><?php echo $value->codigo; ?></td>
+		    		<td><?php echo $value->nombre; ?></td>
+		    		<td><?php echo $value->monto; ?></td>
 		    	</tr>
-		    	<tr class="principaltr">
-		    		<td>xx0001000</td>
-		    		<td>Dirección y coordinación de los gastos de los trabajadores y trabajadoras</td>
-		    		<td>0.00</td>
-		    	</tr>
-		    	<tr class="principaltr">
-		    		<td>xx0001000</td>
-		    		<td>Dirección y coordinación de los gastos de los trabajadores y trabajadoras</td>
-		    		<td>0.00</td>
-		    	</tr>
+
+		    <?php $mfinal += $value->monto;
+			} ?>
 		    </tbody>
 		</table>	
 
@@ -103,23 +79,17 @@ tr.principaltr th {
 		        </tr>
 		    </thead>
 		    <tbody>
+
+			<?php  foreach ($proyectos as $key => $value){ ?> 
 		    	<tr class="principaltr">
-		    		<td>xx0001000</td>
-		    		<td>Dirección y coordinación de los gastos de los trabajadores y trabajadoras</td>
-		    		<td>0.00</td>
+		    		<td><?php echo $value->codigo; ?></td>
+		    		<td><?php echo $value->nombre; ?></td>
+		    		<td><?php echo $value->monto; ?></td>
 		    	</tr>
-		    	<tr class="principaltr">
-		    		<td>xx0001000</td>
-		    		<td>Dirección y coordinación de los gastos de los trabajadores y trabajadoras</td>
-		    		<td>0.00</td>
-		    	</tr>
-		    	<tr class="principaltr">
-		    		<td>xx0001000</td>
-		    		<td>Dirección y coordinación de los gastos de los trabajadores y trabajadoras</td>
-		    		<td>0.00</td>
-		    	</tr>
+		     <?php $mfinal += $value->monto;
+				} ?>
 		    </tbody>
 		</table>	
 
 		<BR><BR>
-				<p class="text-right"><STRONG>TOTAL COMPRAS</STRONG>: 213213213213213123213 <STRONG>(Bs.)</STRONG></p>
+				<p class="text-right"><STRONG>TOTAL COMPRAS</STRONG>: <?php echo $mfinal; ?> <STRONG>(Bs.)</STRONG></p>
