@@ -24,7 +24,7 @@ $this->breadcrumbs=array(
 	//echo $form->dropDownListGroup($model, 'nombre',$proyectos, array('prompt'=>'Seleccionar proyecto','multiple' => 'multiple'));
 	//echo $form->dropDownList($model,'category_id',  array('prompt'=>'Select category','multiple' => 'multiple'));
 
-	 echo $form->dropDownListGroup( $model,	'proyecto_id',
+	 echo $form->dropDownListGroup( $proyectoSel,	'proyecto_id',
 			array(
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
@@ -32,7 +32,7 @@ $this->breadcrumbs=array(
 				'widgetOptions' => array(
 					'data' => $lista_proyectos,
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array('prompt' => 'Seleccionar proyecto','multiple' => false, ),
+					'htmlOptions' => array(/*'prompt' => 'Seleccionar proyecto',*/'multiple' => false, ),
 				)
 			)
 		); 
@@ -51,6 +51,7 @@ $tabs = array();
 
 foreach ($usuario->codigoOnapre->proyectosAcciones as $key => $proyecto) {
 				
+
 	          /*$tail = array('label' => '401','content' => 'Partida 401', 'active' => empty($tabs) ? true : false, 'items' => array(
 	                    array('label' => '401.06', 'content'=>$this->widget(
 									    'booster.widgets.TbTabs',

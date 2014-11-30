@@ -70,7 +70,7 @@ class PlanificacionController extends Controller
 
 	public function actionPartidas() /*Aqui van la logica de negocio asociada a cada partida 401, 402, 403, 404 */
 	{
-		$model = new ProyectosAcciones('search');
+		$proyectoSel = new ProyectosAcciones('search');
 
 		$partidas = new ProyectoPartidas();
 
@@ -78,11 +78,11 @@ class PlanificacionController extends Controller
 
 		if(isset($_POST['ProyectosAcciones']))
 		{
-			$model->attributes = $_POST['ProyectosAcciones'];
-			$partidas = $model->proyectoPartidases;
+			$proyectoSel->attributes = $_POST['ProyectosAcciones'];
+			$partidas = $proyectoSel->proyectoPartidases;
 		}
 
-		$this->render('partidas', array('usuario'=>$usuario,'model'=>$model,'partidas'=>$partidas));
+		$this->render('partidas', array('usuario'=>$usuario,'proyectoSel'=>$proyectoSel,'partidas'=>$partidas));
 	}
 
 
