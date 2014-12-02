@@ -23,8 +23,8 @@ class PlanificacionController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('@'),
+				'actions'=>array('index','view', 'modal'),
+				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update','partidas','vistaparcial'),
@@ -45,6 +45,10 @@ class PlanificacionController extends Controller
 		$this->render('importacion');
 	}
 
+	public function actionModal() /*Aqui esta vista tratara todo lo que tenga relacion con los datos de CENCOEX.*/
+	{
+		$this->render('modal');
+	}
 
 	public function actionIndex()   /*Aquí vamos a mostrar la primera vista del excel enviado por Zobeida*/
 	{
