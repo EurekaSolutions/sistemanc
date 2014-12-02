@@ -87,7 +87,20 @@ class PlanificacionController extends Controller
 
 	public function actionVistaparcial()  /*Aquí mostramos la carga del usuario hasta donde la lleva al momento de consultarla.*/
 	{
-		$this->render('vistaparcial');
+
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+
+		$proyectos = $usuario->codigoOnapre->proyectos;
+		
+		$acciones = $usuario->codigoOnapre->acciones;
+		
+		
+		$usuario = $usuario->model()->findByPk(Yii::app()->user->getId());
+
+		$this->render('vistaparcial',array(
+			'proyectos' => $proyectos,  'acciones' => $acciones
+		));
+
 	}
 
 	public function actionVistaresumen()  /*Aquí mostramos la vista del usuario cuando ya guardo TODOS los datos*/

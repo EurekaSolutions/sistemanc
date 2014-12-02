@@ -94,10 +94,88 @@ $this->widget(
 								        'type' => 'tabs', // 'tabs' or 'pills'
 								        'placement'=>'top',
 								        'tabs' => array(
-								            array('label' => '401.06.02', 'content' => 'Lista de Partidas sub especificas 401.35.04', 'active' => true, ),
-								            array('label' => '401.35.04', 'content' => 'Lista de Partidas sub especificas 401.35.04',),
-								            array('label' => '401.35.04', 'content' => 'Lista de Partidas sub especificas 401.35.04',),
-								            array('label' => '401.35.04', 'content' => 'Lista de Partidas sub especificas 401.35.04', ),
+								            array('label' => '401.06.02', 'content' => '<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
+		    <thead>
+		        <tr class="principaltr">
+		        	 <th data-field="nombreoue">Denominación</th>
+		            <th data-field="nombreoue">Código</th>
+		            <th data-field="tipo">Costo unidad</th>
+		            <th data-field="conaprepadre">Cantidad</th>
+		            <th data-field="oadscripcion">Unidad de medida</th>
+		            <th data-field="conaprepadre">Bs.</th>
+		            <th data-field="conaprepadre">Total Bs.</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		    	<tr class="principaltr">
+
+		    		<td> 
+		    			Verduras frescas	
+					</td>
+
+
+					<td> 	
+						27112703	
+					</td>
+
+		    		<td>
+		    			 <div class="form-group">
+					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Costo unidad">
+					  	</div>
+		    		</td>
+
+		    		<td>
+		    			<div class="form-group">
+					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Cantidad">
+					  	</div>
+		    		</td>
+
+		    		<td>
+		    			<div class="form-group">
+					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Unidad de medida">
+					  	</div>
+		    		</td>
+		    		<td><div class="form-group">
+					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Bs">
+					  	</div></td>
+		    	</tr>
+
+		    	<tr class="principaltr">
+
+		    		<td> 
+		    			Harina verdura	
+					</td>
+
+
+					<td> 27112703
+					</td>
+
+		    		<td>
+		    			 <div class="form-group">
+					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Costo unidad">
+					  	</div>
+		    		</td>
+
+		    		<td>
+		    			<div class="form-group">
+					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Cantidad">
+					  	</div>
+		    		</td>
+
+		    		<td>
+		    			<div class="form-group">
+					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Unidad de medida">
+					  	</div>
+		    		</td>
+		    		<td><div class="form-group">
+					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Bs">
+					  	</div></td>
+		    	</tr>
+		    </tbody>
+		</table>', 'active' => true, ),
+								            array('label' => '401.06.06', 'content' => 'Lista de Partidas sub especificas 401.35.04',),
+								            array('label' => '401.06.28', 'content' => 'Lista de Partidas sub especificas 401.35.04',),
+								            array('label' => '401.06.39', 'content' => 'Lista de Partidas sub especificas 401.35.04', ),
 								        ),
 								    ),true),
 								     'view'=>'_especificos'),
