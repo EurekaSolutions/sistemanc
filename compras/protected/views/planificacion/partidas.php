@@ -173,7 +173,43 @@ $this->widget(
 		    	</tr>
 		    </tbody>
 		</table>', 'active' => true, ),
-								            array('label' => '401.06.06', 'content' => 'Lista de Partidas sub especificas 401.35.04',),
+								            array('label' => '401.06.06', 'content' => ' <div style="max-width:300px">
+ <div class="form-group">
+	<select class="form-control">
+	  <option value="">Código NCM</option>
+	  <option value="corpovex">3815.19.00.90</option>
+	</select>
+</div>
+
+ <div class="form-group">
+	<input type="email" class="form-control" id="exampleInputEmail1" placeholder="cantidad">
+</div>
+
+ <div class="form-group">
+	<input type="email" class="form-control" id="exampleInputEmail1" placeholder="monto">
+</div>
+
+<div class="form-group">
+	<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Fecha">
+</div>
+
+
+<div class="form-group">
+	<select class="form-control">
+	  <option value="">Tipo</option>
+	  <option value="corpovex">Corpovex</option>
+	  <option>Licitación internacion</option>
+	</select>
+</div>
+
+<div class="form-group">
+	<select class="form-control">
+	  <option value="">Divisa</option>
+	  <option value="corpovex">Dolar</option>
+	  <option>Euro</option>
+	</select>
+</div>
+</div>',),
 								            array('label' => '401.06.28', 'content' => 'Lista de Partidas sub especificas 401.35.04',),
 								            array('label' => '401.06.39', 'content' => 'Lista de Partidas sub especificas 401.35.04', ),
 								        ),
