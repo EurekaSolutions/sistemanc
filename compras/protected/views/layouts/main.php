@@ -23,7 +23,7 @@
 <div class="container-fluid" id="page">
 
 	<div id="header">
-		<div id="logo"><?php //echo CHtml::encode(Yii::app()->name); ?></div>
+		<div id="logo" style="text-align: center;"><?php echo CHtml::image(Yii::app()->request->baseUrl.'/images/banner_principal.gif'); ?></div>
 	</div><!-- header -->
 
 	<!--<div id="mainmenu">-->
@@ -45,7 +45,9 @@
 						    //array('label' => 'Home', 'url' => '#', 'active' => true),
 						    array('label'=>'Inicio', 'url'=>array('planificacion/index'), 'visible'=>!Yii::app()->user->isGuest),
 						    array('label'=>'Partidas', 'url'=>array('planificacion/partidas'), 'visible'=>!Yii::app()->user->isGuest),
-							array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/usr/logout'), 'visible'=>!Yii::app()->user->isGuest)
+						    array('label'=>'Vista parcial', 'url'=>array('#'), 'visible'=>!Yii::app()->user->isGuest),
+						    array('label'=>'Perfil usuario', 'url'=>array('#'), 'visible'=>!Yii::app()->user->isGuest),
+							array('label'=>'Salir ('.Yii::app()->user->name.')', 'url'=>array('/usr/logout'), 'visible'=>!Yii::app()->user->isGuest)
 					    )
 				    )
 			    )
