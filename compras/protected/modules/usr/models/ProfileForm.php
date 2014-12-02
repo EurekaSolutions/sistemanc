@@ -75,10 +75,12 @@ class ProfileForm extends BaseUsrForm
 
 	public function validarCodigo($codigo_onapre){
 		//Como validamos que la institución esta ingresando	 el código que le pertenece?
-		if(empty(EntesOrganos::model()->findByAttributes(array('codigo_onapre'=>$this->$codigo_onapre))))
+		$EnteOr = EntesOrganos::model()->findByAttributes(array('codigo_onapre'=>$this->$codigo_onapre));
+		if(empty($EnteOr))
 				$this->addError($codigo_onapre, 'El codigo onapre introducido no existe.');
 
-		if(!empty(Usuarios::model()->findByAttributes(array('codigo_onapre'=>$this->codigo_onapre))))
+		$usuario = Usuarios::model()->findByAttributes(array('codigo_onapre'=>$this->codigo_onapre));
+		if(!empty($usuario))
 				$this->addError($codigo_onapre, 'Codigo ya utilizado.');
 	}
 
