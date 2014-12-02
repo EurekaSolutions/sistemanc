@@ -222,6 +222,7 @@ class UserIdentity extends CUserIdentity
 		return array(
 			'usuario' => $this->username,
 			'correo' => $this->email,
+			'codigo_onapre'=>$this->codigo_onapre,
 			//'firstName' => $this->firstName,
 			//'lastName' => $this->lastName,
 		);

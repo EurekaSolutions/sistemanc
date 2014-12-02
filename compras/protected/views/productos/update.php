@@ -1,23 +1,18 @@
 <?php
-/* @var $this ProductosController */
-/* @var $model Productos */
-?>
-
-<?php
 $this->breadcrumbs=array(
-	'Productoses'=>array('index'),
-	$model->producto_id=>array('view','id'=>$model->producto_id),
-	'Update',
-);
+		'Productoses'=>array('index'),
+		$model->producto_id=>array('view','id'=>$model->producto_id),
+		'Actualizar',
+	);
 
-$this->menu=array(
-	array('label'=>'List Productos', 'url'=>array('index')),
-	array('label'=>'Create Productos', 'url'=>array('create')),
-	array('label'=>'View Productos', 'url'=>array('view', 'id'=>$model->producto_id)),
-	array('label'=>'Manage Productos', 'url'=>array('admin')),
-);
-?>
+	$this->menu=array(
+		array('label'=>'Lista de Productos','url'=>array('index')),
+		array('label'=>'Crear Productos','url'=>array('create')),
+		array('label'=>'Ver Productos','url'=>array('view','id'=>$model->producto_id)),
+		array('label'=>'Administrar Productos','url'=>array('admin')),
+		);
+	?>
 
-    <h1>Update Productos <?php echo $model->producto_id; ?></h1>
+	<h1>Actualizar Productos <?php echo $model->producto_id; ?></h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form',array('model'=>$model)); ?>

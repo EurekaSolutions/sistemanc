@@ -5,16 +5,16 @@
 
 <?php
 $this->breadcrumbs=array(
-	'Presupuesto Importacions'=>array('index'),
-	'Create',
+	'Presupuesto Importaciones'=>array('index'),
+	'Crear',
 );
 
 $this->menu=array(
-	array('label'=>'List PresupuestoImportacion', 'url'=>array('index')),
-	array('label'=>'Manage PresupuestoImportacion', 'url'=>array('admin')),
+	array('label'=>'Lista de PresupuestoImportacion', 'url'=>array('index')),
+	array('label'=>'Administrar PresupuestoImportacion', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Create PresupuestoImportacion</h1>
+<h1>Crear PresupuestoImportacion</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

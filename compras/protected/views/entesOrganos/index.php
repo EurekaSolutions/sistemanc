@@ -1,22 +1,17 @@
 <?php
-/* @var $this EntesOrganosController */
-/* @var $dataProvider CActiveDataProvider */
-?>
-
-<?php
 $this->breadcrumbs=array(
-	'Entes Organoses',
-);
+			'Entes Organoses',
+		);
 
 $this->menu=array(
-	array('label'=>'Create EntesOrganos','url'=>array('create')),
-	array('label'=>'Manage EntesOrganos','url'=>array('admin')),
-);
+	array('label'=>'Crear Entes y Organos','url'=>array('create')),
+	array('label'=>'Administrar Entes y Organos','url'=>array('admin')),
+	);
 ?>
 
-<h1>Entes Organoses</h1>
+<h1>Entes Organos</h1>
 
-<?php $this->widget('bootstrap.widgets.TbListView',array(
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
+<?php $this->widget('booster.widgets.TbListView',array(
+'dataProvider'=>$dataProvider,
+'itemView'=>'_view',
 )); ?>

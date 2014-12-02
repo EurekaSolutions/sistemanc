@@ -7,7 +7,7 @@
 $this->breadcrumbs=array(
 	'Presupuesto Importacions'=>array('index'),
 	$model->presupuesto_id=>array('view','id'=>$model->presupuesto_id),
-	'Update',
+	'Actualizar',
 );
 
 $this->menu=array(
@@ -18,6 +18,6 @@ $this->menu=array(
 );
 ?>
 
-    <h1>Update PresupuestoImportacion <?php echo $model->presupuesto_id; ?></h1>
+    <h1>Actualizar PresupuestoImportacion <?php echo $model->presupuesto_id; ?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

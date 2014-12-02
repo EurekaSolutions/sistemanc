@@ -4,7 +4,7 @@
 @var $passwordForm PasswordForm
  */
 
-$title = $model->scenario == 'register' ? Yii::t('UsrModule.usr', 'Registration') : Yii::t('UsrModule.usr', 'User profile');
+$title = $model->scenario == 'register' ? Yii::t('UsrModule.usr', 'Registro') : Yii::t('UsrModule.usr', 'Perfil de usuario');
 if (isset($this->breadcrumbs))
 	$this->breadcrumbs=array($this->module->id, $title);
 $this->pageTitle = Yii::app()->name.' - '.$title;
@@ -22,7 +22,7 @@ $this->pageTitle = Yii::app()->name.' - '.$title;
 		'validateOnSubmit'=>true,
 	),
 	'htmlOptions' => array('enctype' => 'multipart/form-data'),
-	'focus'=>array($model,'username'),
+	'focus'=>array($model,'usuario'),
 )); ?>
 
 	<p class="note"><?php echo Yii::t('UsrModule.usr', 'Campos marcados con <span class="required">*</span> son obligatorios.'); ?></p>
@@ -36,7 +36,7 @@ $this->pageTitle = Yii::app()->name.' - '.$title;
 <?php endif; ?>
 
 	<div class="buttons">
-		<?php echo CHtml::submitButton(Yii::t('UsrModule.usr', 'Submit'), array('class'=>$this->module->submitButtonCssClass)); ?>
+		<?php echo CHtml::submitButton(Yii::t('UsrModule.usr', 'Enviar'), array('class'=>$this->module->submitButtonCssClass)); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

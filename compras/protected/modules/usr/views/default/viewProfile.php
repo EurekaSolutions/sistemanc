@@ -2,18 +2,18 @@
 @var $this DefaultController
 @var $model ProfileForm */
 
-$title = Yii::t('UsrModule.usr', 'User profile');
+$title = Yii::t('UsrModule.usr', 'Perfil de usuario');
 if (isset($this->breadcrumbs))
 	$this->breadcrumbs=array($this->module->id, $title);
 $this->pageTitle = Yii::app()->name.' - '.$title;
 ?>
-<h1><?php echo $title; ?><small style="margin-left: 1em;"><?php echo CHtml::link(Yii::t('UsrModule.usr', 'update'), array('profile', 'update'=>true)); ?></small></h1>
+<h1><?php echo $title; ?><small style="margin-left: 1em;"><?php echo CHtml::link(Yii::t('UsrModule.usr', 'actualizar'), array('profile', 'update'=>true)); ?></small></h1>
 
 <?php $this->widget('usr.components.UsrAlerts', array('cssClassPrefix'=>$this->module->alertCssClassPrefix)); ?>
 
 <?php
-$attributes = array('username', 'email', 'firstName', 'lastName');
-if ($this->module->oneTimePasswordMode === UsrModule::OTP_TIME || $this->module->oneTimePasswordMode === UsrModule::OTP_COUNTER) {
+$attributes = array('codigo_onapre', 'usuario', 'correo');
+/*if ($this->module->oneTimePasswordMode === UsrModule::OTP_TIME || $this->module->oneTimePasswordMode === UsrModule::OTP_COUNTER) {
 	$attributes[] = array(
 		'name'=>'twoStepAuth',
 		'type'=>'raw',
@@ -31,11 +31,11 @@ if ($model->getIdentity() instanceof IPictureIdentity) {
 		'label'=>Yii::t('UsrModule.usr', 'Profile picture'),
 		'value'=>CHtml::image($url, Yii::t('UsrModule.usr', 'Profile picture'), $picture),
 	));
-}
+}*/
 $this->widget($this->module->detailViewClass, array('data' => $model, 'attributes' => $attributes));
 
-if ($this->module->hybridauthEnabled()) {
+/*if ($this->module->hybridauthEnabled()) {
     echo '<p>';
     $this->renderPartial('_login_remote', array('model'=>$model));
     echo '</p>';
-}
+}*/

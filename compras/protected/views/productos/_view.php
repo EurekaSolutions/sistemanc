@@ -1,11 +1,6 @@
-<?php
-/* @var $this ProductosController */
-/* @var $data Productos */
-?>
-
 <div class="view">
 
-    	<b><?php echo CHtml::encode($data->getAttributeLabel('producto_id')); ?>:</b>
+		<b><?php echo CHtml::encode($data->getAttributeLabel('producto_id')); ?>:</b>
 	<?php echo CHtml::link(CHtml::encode($data->producto_id),array('view','id'=>$data->producto_id)); ?>
 	<br />
 

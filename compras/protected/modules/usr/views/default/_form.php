@@ -5,27 +5,37 @@
  */
 ?>
 
-	<?php echo $form->textFieldControlGroup($model,'codigo_onapre',array('span'=>3,'maxlength'=>20, 'disabled'=>$model->scenario !== 'register' ? true:false)); ?>
+	<?php echo $form->textFieldGroup($model,'codigo_onapre',array('widgetOptions'=> array( 'htmlOptions'=>array('span'=>3,'maxlength'=>20,'disabled'=>true /*$model->scenario !== 'register' ? true:false*/)))); ?>
+	
+	<?php echo $form->textFieldGroup($model,'correo',array('widgetOptions'=> array( 'htmlOptions' => array('span'=>3,'maxlength'=>50,'disabled'=>true)))); ?>
+	
+	<?php echo $form->textFieldGroup($model,'usuario',array('widgetOptions'=> array( 'htmlOptions' => array('span'=>3,'maxlength'=>50)))); ?>
 
-	<div class="control-group">
-		<?php echo $form->labelEx($model,'usuario'); ?>
-		<?php echo $form->textField($model,'usuario'); ?>
-		<?php echo $form->error($model,'usuario'); ?>
-	</div>
+	
 
-	<div class="control-group">
-		<?php echo $form->labelEx($model,'correo'); ?>
-		<?php echo $form->textField($model,'correo'); ?>
-		<?php echo $form->error($model,'correo'); ?>
-	</div>
+<!-- 	<div class="control-group">
+	<?php /*echo $form->labelEx($model,'usuario'); ?>
+	<?php echo $form->textField($model,'usuario'); ?>
+	<?php echo $form->error($model,'usuario');*/ ?>
+</div>
+
+<div class="control-group">
+	<?php /*echo $form->labelEx($model,'correo'); ?>
+	<?php echo $form->textField($model,'correo'); ?>
+	<?php echo $form->error($model,'correo');*/ ?>
+</div> -->
 
 <?php if ($model->scenario !== 'register'): ?>
-	<div class="control-group">
-		<?php echo $form->labelEx($model,'contrasena'); ?>
-		<?php echo $form->passwordField($model,'contrasena', array('autocomplete'=>'off')); ?>
-		<?php echo $form->error($model,'contrasena'); ?>
-	</div>
-<?php endif; ?>
+
+	<?php echo $form->passwordFieldGroup($model,'contrasena',array('widgetOptions'=> array( 'htmlOptions' => array('span'=>3,'maxlength'=>50)))); ?>
+
+<!-- 	<div class="control-group">
+	<?php /*echo $form->labelEx($model,'contrasena'); ?>
+	<?php echo $form->passwordField($model,'contrasena', array('autocomplete'=>'off')); ?>
+	<?php echo $form->error($model,'contrasena');*/ ?>
+</div>
+
+ --><?php endif; ?>
 
 
 <?php if (isset($passwordForm) && $passwordForm !== null): ?>

@@ -61,7 +61,7 @@ abstract class BasePasswordForm extends BaseUsrForm
 			),
 			$this->passwordStrengthRules,
 			array(
-				array('newVerify', 'compare', 'compareAttribute'=>'newPassword', 'message' => Yii::t('UsrModule.usr', 'Please type the same new password twice to verify it.')),
+				array('newVerify', 'compare', 'compareAttribute'=>'newPassword', 'message' => Yii::t('UsrModule.usr', 'Por favor, escriba la misma contraseña nueva para verificarla.')),
 			)
 		);
 		return $rules;
@@ -88,8 +88,8 @@ abstract class BasePasswordForm extends BaseUsrForm
 	public function attributeLabels()
 	{
 		return array_merge(parent::attributeLabels(), array(
-			'newPassword'	=> Yii::t('UsrModule.usr','New password'),
-			'newVerify'		=> Yii::t('UsrModule.usr','Verify'),
+			'newPassword'	=> Yii::t('UsrModule.usr','Nueva contraseña'),
+			'newVerify'		=> Yii::t('UsrModule.usr','Verificar'),
 		));
 	}
 

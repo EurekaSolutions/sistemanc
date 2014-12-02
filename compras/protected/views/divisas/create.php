@@ -1,20 +1,15 @@
 <?php
-/* @var $this DivisasController */
-/* @var $model Divisas */
-?>
-
-<?php
 $this->breadcrumbs=array(
-	'Divisases'=>array('index'),
-	'Create',
+	'Divisas'=>array('index'),
+	'Crear',
 );
 
 $this->menu=array(
-	array('label'=>'List Divisas', 'url'=>array('index')),
-	array('label'=>'Manage Divisas', 'url'=>array('admin')),
+array('label'=>'Lista de Divisas','url'=>array('index')),
+array('label'=>'Administrar Divisas','url'=>array('admin')),
 );
 ?>
 
-<h1>Create Divisas</h1>
+<h1>Crear Divisas</h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

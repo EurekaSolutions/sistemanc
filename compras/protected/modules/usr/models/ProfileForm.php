@@ -64,12 +64,12 @@ class ProfileForm extends BaseUsrForm
 			array('codigo_onapre', 'length', 'max'=>20),
 			array('codigo_onapre', 'validarCodigo'),
 			array('usuario, correo', 'required'),
-			array('codigo_onapre', 'required', 'on'=>'register'),
+			array('codigo_onapre', 'required', 'except'=>'register'),
 			array('usuario, correo', 'uniqueIdentity'),
 			array('correo', 'email'),
 			array('removePicture', 'boolean'),
 			//array('contrasena', 'validCurrentPassword', 'except'=>'register'),
-			array('contrasena','EPasswordStrength', 'min'=>$this->_min, 'message'=>'La {attribute} es debil. La {attribute} debe contener al menos '.$this->_min.' caracteres, al menos una letra minuscula, una mayuscula, y un número.', 'except'=>'register'),
+			array('contrasena','EPasswordStrength', 'min'=>$this->_min, 'except'=>'register', 'message'=>'La {attribute} es debil. La {attribute} debe contener al menos '.$this->_min.' caracteres, al menos una letra minuscula, una mayuscula, y un número.'),
 		), $this->pictureUploadRules);
 	}
 

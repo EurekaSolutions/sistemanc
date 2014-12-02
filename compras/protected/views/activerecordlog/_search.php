@@ -1,36 +1,30 @@
-<?php
-/* @var $this ActiverecordlogController */
-/* @var $model Activerecordlog */
-/* @var $form CActiveForm */
-?>
-
-<div class="wide form">
-
-    <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+<?php $form=$this->beginWidget('booster.widgets.TbActiveForm',array(
 	'action'=>Yii::app()->createUrl($this->route),
 	'method'=>'get',
 )); ?>
 
-                    <?php echo $form->textFieldControlGroup($model,'id',array('span'=>5)); ?>
+		<?php echo $form->textFieldGroup($model,'id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
-                    <?php echo $form->textFieldControlGroup($model,'descripcion',array('span'=>5,'maxlength'=>255)); ?>
+		<?php echo $form->textFieldGroup($model,'descripcion',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
 
-                    <?php echo $form->textFieldControlGroup($model,'accion',array('span'=>5,'maxlength'=>255)); ?>
+		<?php echo $form->textFieldGroup($model,'accion',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
 
-                    <?php echo $form->textFieldControlGroup($model,'model',array('span'=>5,'maxlength'=>255)); ?>
+		<?php echo $form->textFieldGroup($model,'model',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
 
-                    <?php echo $form->textFieldControlGroup($model,'idmodel',array('span'=>5)); ?>
+		<?php echo $form->textFieldGroup($model,'idmodel',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
-                    <?php echo $form->textFieldControlGroup($model,'field',array('span'=>5,'maxlength'=>255)); ?>
+		<?php echo $form->textFieldGroup($model,'field',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
 
-                    <?php echo $form->textFieldControlGroup($model,'creationdate',array('span'=>5)); ?>
+		<?php echo $form->textFieldGroup($model,'creationdate',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
-                    <?php echo $form->textFieldControlGroup($model,'userid',array('span'=>5,'maxlength'=>255)); ?>
+		<?php echo $form->textFieldGroup($model,'userid',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
 
-        <div class="form-actions">
-        <?php echo TbHtml::submitButton('Search',  array('color' => TbHtml::BUTTON_COLOR_PRIMARY,));?>
-    </div>
+	<div class="form-actions">
+		<?php $this->widget('booster.widgets.TbButton', array(
+			'buttonType' => 'submit',
+			'context'=>'primary',
+			'label'=>'Buscar',
+		)); ?>
+	</div>
 
-    <?php $this->endWidget(); ?>
-
-</div><!-- search-form -->
+<?php $this->endWidget(); ?>

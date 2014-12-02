@@ -33,7 +33,7 @@ class PasswordForm extends BasePasswordForm
 	public function attributeLabels()
 	{
 		return array_merge(parent::attributeLabels(), array(
-			'password' => Yii::t('UsrModule.usr','Current password'),
+			'password' => Yii::t('UsrModule.usr','Contraseña actual'),
 		));
 	}
 
@@ -70,7 +70,7 @@ class PasswordForm extends BasePasswordForm
 		}
 		$identity->password = $this->password;
 		if(!$identity->authenticate()) {
-			$this->addError('password',Yii::t('UsrModule.usr','Invalid password.'));
+			$this->addError('password',Yii::t('UsrModule.usr','Contraseña no válida.'));
 			return false;
 		}
 		return true;
@@ -88,7 +88,7 @@ class PasswordForm extends BasePasswordForm
 		if ($identity === null)
 			$identity = $this->getIdentity();
 		if (!$identity->resetPassword($this->newPassword)) {
-			$this->addError('newPassword',Yii::t('UsrModule.usr','Failed to reset the password.'));
+			$this->addError('newPassword',Yii::t('UsrModule.usr','No se pudo restablecer la contraseña.'));
 			return false;
 		}
 		return true;

@@ -1,11 +1,6 @@
-<?php
-/* @var $this ProyectosAccionesController */
-/* @var $data ProyectosAcciones */
-?>
-
 <div class="view">
 
-    	<b><?php echo CHtml::encode($data->getAttributeLabel('proyecto_id')); ?>:</b>
+		<b><?php echo CHtml::encode($data->getAttributeLabel('proyecto_id')); ?>:</b>
 	<?php echo CHtml::link(CHtml::encode($data->proyecto_id),array('view','id'=>$data->proyecto_id)); ?>
 	<br />
 

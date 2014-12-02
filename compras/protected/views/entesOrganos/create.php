@@ -1,20 +1,15 @@
 <?php
-/* @var $this EntesOrganosController */
-/* @var $model EntesOrganos */
-?>
-
-<?php
 $this->breadcrumbs=array(
 	'Entes Organoses'=>array('index'),
 	'Create',
 );
 
 $this->menu=array(
-	array('label'=>'List EntesOrganos', 'url'=>array('index')),
-	array('label'=>'Manage EntesOrganos', 'url'=>array('admin')),
+array('label'=>'Lista de Entes y Organos','url'=>array('index')),
+array('label'=>'Administrar Entes y Organos','url'=>array('admin')),
 );
 ?>
 
-<h1>Create EntesOrganos</h1>
+<h1>Crear Entes y Organos</h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

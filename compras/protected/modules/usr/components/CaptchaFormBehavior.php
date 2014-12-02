@@ -35,7 +35,7 @@ class CaptchaFormBehavior extends FormModelBehavior
 	public function attributeLabels()
 	{
 		return array(
-			'verifyCode' => Yii::t('UsrModule.usr','Verification code'),
+			'verifyCode' => Yii::t('UsrModule.usr','Código de verificación'),
 		);
 	}
 }

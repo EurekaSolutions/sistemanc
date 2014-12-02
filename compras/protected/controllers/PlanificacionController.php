@@ -49,9 +49,8 @@ class PlanificacionController extends Controller
 	public function actionIndex()   /*Aquí vamos a mostrar la primera vista del excel enviado por Zobeida*/
 	{
 
-		$usuario = new Usuarios;
-
-		$usuario = $usuario->model()->findByPk(Yii::app()->user->getId());
+		
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 
 		$proyectos = $usuario->codigoOnapre->proyectos;
 		

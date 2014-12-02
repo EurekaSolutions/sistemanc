@@ -5,18 +5,18 @@
 
 <?php
 $this->breadcrumbs=array(
-	'Presupuesto Importacions',
+	'Presupuesto Importaciones',
 );
 
 $this->menu=array(
-	array('label'=>'Create PresupuestoImportacion','url'=>array('create')),
-	array('label'=>'Manage PresupuestoImportacion','url'=>array('admin')),
+	array('label'=>'Crear PresupuestoImportacion','url'=>array('create')),
+	array('label'=>'Administrar PresupuestoImportacion','url'=>array('admin')),
 );
 ?>
 
 <h1>Presupuesto Importacions</h1>
 
-<?php $this->widget('bootstrap.widgets.TbListView',array(
+<?php $this->widget('booster.widgets.TbListView',array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
 )); ?>

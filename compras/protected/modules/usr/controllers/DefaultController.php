@@ -330,9 +330,9 @@ class DefaultController extends UsrController
 			$passwordForm->setAttributes($_POST['PasswordForm']);
 			if ($passwordForm->validate()) {
 				if ($passwordForm->resetPassword($model->getIdentity())) {
-					$flashes['success'][] = Yii::t('UsrModule.usr', 'Changes have been saved successfully.');
+					$flashes['success'][] = Yii::t('UsrModule.usr', 'Los cambios se han guardado correctamente.');
 				} else {
-					$flashes['error'][] = Yii::t('UsrModule.usr', 'Failed to change password.');
+					$flashes['error'][] = Yii::t('UsrModule.usr', 'Error al cambiar la contraseña.');
 				}
 			}
 		}
@@ -346,19 +346,19 @@ class DefaultController extends UsrController
 				if ($model->save()) {
 					if ($this->module->requireVerifiedEmail && $oldEmail != $model->email) {
 						if ($this->sendEmail($model, 'verify')) {
-							$flashes['success'][] = Yii::t('UsrModule.usr', 'An email containing further instructions has been sent to the provided email address.');
+							$flashes['success'][] = Yii::t('UsrModule.usr', 'Un correo electrónico que contiene instrucciones adicionales ha sido enviado a la dirección de correo electrónico proporcionada.');
 						} else {
-							$flashes['error'][] = Yii::t('UsrModule.usr', 'Failed to send an email.').' '.Yii::t('UsrModule.usr', 'Try again or contact the site administrator.');
+							$flashes['error'][] = Yii::t('UsrModule.usr', 'Error al enviar el correo electrónico.').' '.Yii::t('UsrModule.usr', 'Inténtelo de nuevo o póngase en contacto con el administrador del sitio.');
 						}
 					}
-					$flashes['success'][] = Yii::t('UsrModule.usr', 'Changes have been saved successfully.');
+					$flashes['success'][] = Yii::t('UsrModule.usr', 'Los cambios se han guardado correctamente.');
 					if (!empty($flashes['success']))
 						Yii::app()->user->setFlash('success', implode('<br/>',$flashes['success']));
 					if (!empty($flashes['error']))
 						Yii::app()->user->setFlash('error', implode('<br/>',$flashes['error']));
 					$this->redirect(array('profile'));
 				} else {
-					$flashes['error'][] = Yii::t('UsrModule.usr', 'Failed to update profile.').' '.Yii::t('UsrModule.usr', 'Try again or contact the site administrator.');
+					$flashes['error'][] = Yii::t('UsrModule.usr', 'Error al actualizar el perfil.').' '.Yii::t('UsrModule.usr', 'Inténtelo de nuevo o póngase en contacto con el administrador del sitio.');
 				}
 			}
 		}

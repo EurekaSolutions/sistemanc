@@ -1,22 +1,17 @@
 <?php
-/* @var $this ProductosController */
-/* @var $dataProvider CActiveDataProvider */
-?>
-
-<?php
 $this->breadcrumbs=array(
-	'Productoses',
-);
+			'Productos',
+		);
 
 $this->menu=array(
-	array('label'=>'Create Productos','url'=>array('create')),
-	array('label'=>'Manage Productos','url'=>array('admin')),
-);
+	array('label'=>'Crear Productos','url'=>array('create')),
+	array('label'=>'Administrar Productos','url'=>array('admin')),
+	);
 ?>
 
-<h1>Productoses</h1>
+<h1>Productos</h1>
 
-<?php $this->widget('bootstrap.widgets.TbListView',array(
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
+<?php $this->widget('booster.widgets.TbListView',array(
+'dataProvider'=>$dataProvider,
+'itemView'=>'_view',
 )); ?>
