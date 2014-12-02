@@ -29,7 +29,9 @@ $this->breadcrumbs=array(
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
 				),
+				'label'=>'Seleccione Proyecto o Acción Centralizada a cargar',
 				'widgetOptions' => array(
+
 					'data' => $lista_proyectos,
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
 					'htmlOptions' => array(/*'prompt' => 'Seleccionar proyecto',*/'multiple' => false, ),

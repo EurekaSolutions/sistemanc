@@ -46,7 +46,7 @@
 						    array('label'=>'Inicio', 'url'=>array('planificacion/index'), 'visible'=>!Yii::app()->user->isGuest),
 						    array('label'=>'Partidas', 'url'=>array('planificacion/partidas'), 'visible'=>!Yii::app()->user->isGuest),
 						    array('label'=>'Vista parcial', 'url'=>array('#'), 'visible'=>!Yii::app()->user->isGuest),
-						    array('label'=>'Perfil usuario', 'url'=>array('#'), 'visible'=>!Yii::app()->user->isGuest),
+						    array('label'=>'Perfil usuario', 'url'=>array('/usr/profile'), 'visible'=>!Yii::app()->user->isGuest),
 							array('label'=>'Salir ('.Yii::app()->user->name.')', 'url'=>array('/usr/logout'), 'visible'=>!Yii::app()->user->isGuest)
 					    )
 				    )
