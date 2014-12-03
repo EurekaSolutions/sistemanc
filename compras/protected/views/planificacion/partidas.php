@@ -18,8 +18,14 @@ $this->breadcrumbs=array(
 	        'htmlOptions' => array('class' => 'well'), // for inset effect
 	    )
 	);
+	
 
-	 $lista_proyectos = CHtml::listData($usuario->codigoOnapre->proyectosAcciones, 'proyecto_id', 'nombre');
+	$lista_acciones = CHtml::listData($usuario->codigoOnapre->acciones, 'proyecto_id', 'nombre');
+	$lista_proyectos = CHtml::listData($usuario->codigoOnapre->proyectos, 'proyecto_id', 'nombre');
+	 
+	 $listas = array(!empty($lista_acciones)?'Acciones Centralizadas':null=>$lista_acciones,
+	 				!empty($lista_proyectos)?'Proyectos':null =>$lista_proyectos);
+
 	//echo $form->listBoxGroup($model, 'nombre',$proyectos);
 	//echo $form->dropDownListGroup($model, 'nombre',$proyectos, array('prompt'=>'Seleccionar proyecto','multiple' => 'multiple'));
 	//echo $form->dropDownList($model,'category_id',  array('prompt'=>'Select category','multiple' => 'multiple'));
@@ -32,7 +38,7 @@ $this->breadcrumbs=array(
 				'label'=>'Seleccione Proyecto o Acción Centralizada a cargar',
 				'widgetOptions' => array(
 
-					'data' => $lista_proyectos,
+					'data' => $listas,
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
 					'htmlOptions' => array(/*'prompt' => 'Seleccionar proyecto',*/'multiple' => false, ),
 				)
@@ -58,8 +64,8 @@ foreach ($partidas as $key => $partida) {
 			$partida = $partida->partida;
 
 			$numPartida = $this->numeroPartida($partida);
-			echo 'ENTRE ';
-			$pestanas[] = array('label' => $this->numeroPartida($partida).' - '.$partida->nombre, 'content' => 'Partida '.$numPartida);
+			//echo 'ENTRE ';
+			$pestanas[$numPartida] = array('label' => $this->numeroPartida($partida).' - '.$partida->nombre, 'content' => 'Partida '.$numPartida);
 
 			if($partida->p2==0) //Partida
 			{
@@ -67,7 +73,7 @@ foreach ($partidas as $key => $partida) {
 				//$partidass.= '<h2>Partida '.$numPartida.': '.$partida->nombre.'</h2>';
 				//$this->productosPartidas($partida);
 
-			}elseif($partida->p3==0) //Geeneral
+			}elseif($partida->p3==0) //General
 			{
 				//$partidass.= '<h3>General '.$numPartida.': '.$partida->nombre.'</h3>';
 				//$this->productosPartidas($partida);
