@@ -82,7 +82,6 @@ class PlanificacionController extends Controller
 			
 			$general = 0;
 			$especifica = 0;
-			$_401m;
 			foreach ($_403 as $key => $value) {
 				
 					if($value->p2==0) //Partida
