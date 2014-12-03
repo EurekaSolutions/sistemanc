@@ -52,7 +52,7 @@ class ProyectoPartidas extends CActiveRecord
 		return array(
 			'partida' => array(self::BELONGS_TO, 'Partidas', 'partida_id'),
 			'proyecto' => array(self::BELONGS_TO, 'ProyectosAcciones', 'proyecto_id'),
-			'presupuestoProductoses' => array(self::HAS_MANY, 'PresupuestoProductos', 'proyecto_partida_id'),
+			'presupuestoProductos' => array(self::HAS_MANY, 'PresupuestoProductos', 'proyecto_partida_id'),
 		);
 	}
 

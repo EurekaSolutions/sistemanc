@@ -157,8 +157,12 @@ class PlanificacionController extends Controller
 			$proyectoSel->attributes = $_POST['ProyectosAcciones'];
 			$partidas = $proyectoSel->proyectoPartidas;
 			$partidass = 'Partidas: <br>';
+			//echo $proyectoSel->proyecto_id;
+			$partidas = ProyectoPartidas::model()->findAllByAttributes(array('proyecto_id'=>$proyectoSel->proyecto_id));
+			//$partidas = $proyectoSel->proyectoPartidas;
+			//Yii::log('FUNCIONA!!!!!!','error');
 			foreach ($partidas as $key => $partida) {
-				
+				$partida = $partida->partida;
 
 				$numPartida = $this->numeroPartida($partida);
 
@@ -175,13 +179,13 @@ class PlanificacionController extends Controller
 
 					}elseif($partida->p4==0)//Especifica
 					{
-						$partidass.= '<h4>Específica '.$numPartida.': '.$partida->nombre.'id: '.$partida->partida_id.'</h4>';
-						$this->productosPartidas($partida);
+						$partidass .= '<h4>Específica '.$numPartida.': '.$partida->nombre.'id: '.$partida->partida_id.'</h4>';
+						//$partidass .= $this->productosPartidas($partida);
 
 					}else//Sub Especifica
 					{	
-						$partidass.= '<h5>Sub-Específica '.$numPartida.': <b>'.$partida->nombre.' </b></h5>';
-						$this->productosPartidas($partida);
+						$partidass .= '<h5>Sub-Específica '.$numPartida.': <b>'.$partida->nombre.' </b></h5>';
+						//$partidass .= $this->productosPartidas($partida);
 					}
 			
 			}
@@ -231,11 +235,13 @@ class PlanificacionController extends Controller
 
 	public function productosPartidas(Partidas $partida)  /*Retorna todas los productos asociados a una partida*/
 	{
+		$productos = '';
 			foreach ($partida->partidaProductos as $key => $parPro) {
 				$producto = $parPro->producto;
 				$numProducto = $this->numeroProducto($producto);
-				echo '<h6>'.$numProducto.' - '.$producto->nombre.'</h6>';
+				$productos .= '<h6>'.$numProducto.' - '.$producto->nombre.'</h6>';
 			}		
+		return $productos;
 	}
 
 	// Uncomment the following methods and override them if needed
