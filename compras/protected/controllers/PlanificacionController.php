@@ -60,26 +60,28 @@ class PlanificacionController extends Controller
 
 
 			foreach ($partidas as $key => $partida) {
+
+				$numPartida = $partida->p1.'.'.sprintf("%02s", $partida->p2).'.'.sprintf("%02s", $partida->p3).'.'.sprintf("%02s", $partida->p4);
 				
 					if($partida->p2==0) //Partida
 					{
 
-						echo '<h2>Partida '.$partida->p1.': '.$partida->nombre.'</h2>';
+						echo '<h2>Partida '.$numPartida.': '.$partida->nombre.'</h2>';
 						$this->productosPartidas($partida);
 
 					}elseif($partida->p3==0) 
 					{
-						echo '<h3>General '.$partida->p1.'.'.sprintf("%02s", $partida->p2).': '.$partida->nombre.'</h3>';
+						echo '<h3>General '.$numPartida.': '.$partida->nombre.'</h3>';
 						$this->productosPartidas($partida);
 
 					}elseif($partida->p4==0)
 					{
-						echo '<h4> Específica '.$partida->p1.'.'.sprintf("%02s", $partida->p2).'.'.sprintf("%02s", $partida->p3).': '.$partida->nombre.'</h4>';
+						echo '<h4> Específica '.$numPartida.': '.$partida->nombre.'</h4>';
 						//$this->productosPartidas($partida);
 
 					}else
 					{	
-						echo '<h5>Sub '.$partida->p1.'.'.sprintf("%02s", $partida->p2).'.'.sprintf("%02s", $partida->p3).'.'.sprintf("%02s", $partida->p4).': <b>'.$partida->nombre.'</b></h5>';
+						echo '<h5>Sub '.$numPartida.': <b>'.$partida->nombre.'</b></h5>';
 						//$this->productosPartidas($partida);
 					}
 
