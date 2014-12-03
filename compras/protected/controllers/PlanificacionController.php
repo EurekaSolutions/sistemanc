@@ -56,30 +56,31 @@ class PlanificacionController extends Controller
 	{
 
 		//$_401 = array();
-		$partida = $this->buscarpartida(401);
+		$partidas = $this->proyectosPartidas();
 
 
-			foreach ($partida as $key => $partida) {
+			foreach ($partidas as $key => $partida) {
 				
 					if($partida->p2==0) //Partida
 					{
-						echo '<h2>Partida: '.$partida->nombre.'</h2>';
+
+						echo '<h2>Partida '.$partida->p1.': '.$partida->nombre.'</h2>';
 						$this->productosPartidas($partida);
 
 					}elseif($partida->p3==0) 
 					{
-						echo '<h3>General: '.$partida->nombre.'</h3>';
+						echo '<h3>General '.$partida->p1.'.'.sprintf("%02s", $partida->p2).': '.$partida->nombre.'</h3>';
 						$this->productosPartidas($partida);
 
 					}elseif($partida->p4==0)
 					{
-						echo '<h4> Especifica: '.$partida->nombre.'</h4>';
-						$this->productosPartidas($partida);
+						echo '<h4> Específica '.$partida->p1.'.'.sprintf("%02s", $partida->p2).'.'.sprintf("%02s", $partida->p3).': '.$partida->nombre.'</h4>';
+						//$this->productosPartidas($partida);
 
 					}else
 					{	
-						echo '<h5>Sub: <b>'.$partida->nombre.'</b></h5>';
-						$this->productosPartidas($partida);
+						echo '<h5>Sub '.$partida->p1.'.'.sprintf("%02s", $partida->p2).'.'.sprintf("%02s", $partida->p3).'.'.sprintf("%02s", $partida->p4).': <b>'.$partida->nombre.'</b></h5>';
+						//$this->productosPartidas($partida);
 					}
 
 
@@ -168,9 +169,14 @@ class PlanificacionController extends Controller
 		
 	}
 
-	public function proyectosPartidas(ProyectosAcciones $proyecto)  /*Retorna todas las partidas pertenecientes a un proyecto*/
+	public function proyectosPartidas(ProyectosAcciones $proyecto=null)  /*Retorna todas las partidas pertenecientes a un proyecto*/
 	{
-
+		if(!$proyecto){
+			$criteria = new CDbCriteria();
+			//$criteria->condition = 'p1=:p1';
+			//$criteria->params = array(':p1'=>$partida);
+			return Partidas::model()->findAll();
+		}
 	}
 
 	public function productosPartidas(Partidas $partida)  /*Retorna todas los productos asociados a una partida*/
