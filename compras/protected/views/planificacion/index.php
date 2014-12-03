@@ -35,7 +35,7 @@ tr.principaltr th {
 
 		    		<td><?php echo $usuario->codigo_onapre;?></td>
 		    		<td><?php echo $usuario->codigoOnapre->nombre;?></td>
-		    		<td><?php echo $usuario->codigoOnapre->tipo == 'E' ? 'ENTE' : 'Organo';?></td>
+		    		<td><?php echo $usuario->codigoOnapre->tipo == 'E' ? 'ENTE' : 'ORGANO';?></td>
 		    		<td><?php echo $usuario->codigoOnapre->enteAdscrito->padre->nombre;?></td>
 		    		<td><?php echo $usuario->codigoOnapre->enteAdscrito->padre->codigo_onapre; ?></td>
 		    	</tr>

@@ -29,6 +29,8 @@ class RecoveryForm extends BasePasswordForm
 			array('correo, codigo_onapre', 'configurarUsuario','on'=>'reset', 'message','No se pudo obtener los datos del usuario'),
 			array('codigo_onapre, usuario, correo', 'existingIdentity'),
 			array('correo', 'email'),
+			array('verifyCode', 'required'),
+			array('verifyCode', 'safe'),
 			//array('codigo_onapre', 'exist', 'attributeName'=>'codigo_onapre','className'=>'EntesOrganos', 'message'=>Yii::t('UsrModule.usr','Codigo Onapre no existe.')),
 
 			array('llave_activacion', 'filter', 'filter'=>'trim', 'on'=>'reset,verify'),

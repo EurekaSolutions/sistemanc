@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
-	'Entes Organoses'=>array('index'),
-	'Create',
+	'Entes y Organos'=>array('index'),
+	'Crear',
 );
 
 $this->menu=array(

@@ -23,11 +23,20 @@ class UserIdentity extends CUserIdentity
     const MAX_FAILED_LOGIN_ATTEMPTS = 5;
     const LOGIN_ATTEMPTS_COUNT_SECONDS = 1800;
 
-	public $email = null;
+    public $usuario = null;
+    public $contrasena = null;
+	public $correo = null;
 	public $firstName = null;
 	public $codigo_onapre = null;
 	private $_id = null;
 	private $_activeRecord = null;
+
+	public function __construct($usuario,$contrasena)
+	{
+	   $this->usuario = $usuario;
+	   $this->contrasena = $contrasena;
+	   parent::__construct($usuario,$contrasena);
+	}
 
 	protected static function createFromUser(Usuarios $user)
 	{
@@ -40,8 +49,8 @@ class UserIdentity extends CUserIdentity
 	{
 		$this->_activeRecord = $user;
 		$this->_id = $user->getPrimaryKey();
-		$this->username = $user->usuario;
-		$this->email = $user->correo;
+		$this->username = $this->usuario = $user->usuario;
+		$this->correo = $user->correo;
 		//$this->firstName = $user->firstname;
 		$this->codigo_onapre = $user->codigo_onapre;
 	}
@@ -61,16 +70,16 @@ class UserIdentity extends CUserIdentity
      */
     public function authenticate()
     {
-        $record = Usuarios::model()->findByAttributes(array('usuario'=>$this->username));        	
-        $authenticated = $record !== null && $record->verificarContrasena($this->password);
+        $record = Usuarios::model()->findByAttributes(array('usuario'=>$this->usuario));        	
+        $authenticated = $record !== null && $record->verificarContrasena($this->contrasena);
 
         $attempt = new UserLoginAttempt;
-        $attempt->username = $this->username;
+        $attempt->username = $this->usuario;
         $attempt->user_id = $record === null ? null : $record->usuario_id;
         $attempt->is_successful = $authenticated;
         $attempt->save();
 
-        if (UserLoginAttempt::hasTooManyFailedAttempts($this->username, self::MAX_FAILED_LOGIN_ATTEMPTS, self::LOGIN_ATTEMPTS_COUNT_SECONDS)) {
+        if (UserLoginAttempt::hasTooManyFailedAttempts($this->usuario, self::MAX_FAILED_LOGIN_ATTEMPTS, self::LOGIN_ATTEMPTS_COUNT_SECONDS)) {
             // this is the first check not to reveal if the specified user account exists or not
             $this->errorCode=self::ERROR_USER_LOCKED;
             $this->errorMessage=Yii::t('UsrModule.usr','La cuenta de usuario ha sido bloqueada temporalmente debido a demasiados intentos fallidos. Por favor intenta de nuevo más tarde.');
@@ -115,16 +124,16 @@ class UserIdentity extends CUserIdentity
 	 * @param string $password new password or null if checking when the current password has been set
 	 * @return string date in YYYY-MM-DD format or null if password was never used.
 	 */
-	public function getPasswordDate($password = null)
+	public function getPasswordDate($contrasena = null)
 	{
 		if (($record=$this->getActiveRecord()) === null)
 			return null;
 
-		if ($password === null) {
+		if ($contrasena === null) {
 			return $record->password_set_on;
 		} else {
 			foreach($record->userUsedPasswords as $usedPassword) {
-				if ($usedPassword->verifyPassword($password))
+				if ($usedPassword->verifyPassword($contrasena))
 					return $usedPassword->set_on;
 			}
 		}
@@ -137,12 +146,12 @@ class UserIdentity extends CUserIdentity
 	 * @param string $password new password
 	 * @return boolean
 	 */
-	public function resetPassword($password)
+	public function resetPassword($contrasena)
 	{
 		if (($record=$this->getActiveRecord())===null) {
 			return false;
-		}
-		$hashedPassword = Usuarios::model()->hashPassword($password);
+		}return;
+		$hashedPassword = Usuarios::model()->hashPassword($contrasena);
 		$usedPassword = new UserUsedPassword;
 		$usedPassword->setAttributes(array(
 			'user_id'=>$this->_id,
@@ -166,8 +175,9 @@ class UserIdentity extends CUserIdentity
 	 * @param boolean $requireVerifiedEmail
 	 * @return boolean
 	 */
-	public function save($requireVerifiedEmail=false)
+	public function save($requireVerifiedEmail=false, $scenario=null)
 	{
+
 		if ($this->_id === null) {
 			$record = new Usuarios();
 			$record->contrasena = 'x';
@@ -176,10 +186,13 @@ class UserIdentity extends CUserIdentity
 			$record = $this->getActiveRecord();
 			$record->setScenario('actualizar');
 		}
+		if($scenario)
+			$record->setScenario($scenario);	
+
 		if ($record!==null) {
 			$record->setAttributes(array(
-				'usuario' => $this->username,
-				'correo' => $this->email,
+				'usuario' => $this->usuario,
+				'correo' => $this->correo,
 				'codigo_onapre' => $this->codigo_onapre,
 				//'firstname' => $this->firstName,
 				//'lastname' => $this->lastName,
@@ -198,7 +211,7 @@ class UserIdentity extends CUserIdentity
 	}
 
 	/**
-	 * Sets attributes like username, email, first and last name.
+	 * Sets attributes like usuario, email, first and last name.
 	 * Password should be changed using only the resetPassword() method from the IPasswordHistoryIdentity.
 	 * @param array $attributes
 	 * @return boolean
@@ -214,14 +227,14 @@ class UserIdentity extends CUserIdentity
 	}
 
 	/**
-	 * Returns attributes like username, email, first and last name.
+	 * Returns attributes like usuario, email, first and last name.
 	 * @return array
 	 */
 	public function getAttributes()
 	{
 		return array(
-			'usuario' => $this->username,
-			'correo' => $this->email,
+			'usuario' => $this->usuario,
+			'correo' => $this->correo,
 			'codigo_onapre'=>$this->codigo_onapre,
 			//'firstName' => $this->firstName,
 			//'lastName' => $this->lastName,
@@ -352,7 +365,7 @@ class UserIdentity extends CUserIdentity
 	 */
 	public function getEmail()
 	{
-		return $this->email;
+		return $this->correo;
 	}
 
 	// }}}
@@ -479,10 +492,10 @@ class UserIdentity extends CUserIdentity
      */
     public static function getRemoteAttributes($remoteProfile)
     {
-		$email = (isset($remoteProfile->emailVerifier) && $remoteProfile->emailVerifier !== null) ? $remoteProfile->emailVerifier : $remoteProfile->email;
+		$correo = (isset($remoteProfile->emailVerifier) && $remoteProfile->emailVerifier !== null) ? $remoteProfile->emailVerifier : $remoteProfile->email;
         return array(
-            'usuario' => $email,
-            'correo' => $email,
+            'usuario' => $correo,
+            'correo' => $correo,
             //'firstName' => $remoteProfile->firstName,
             //'lastName' => $remoteProfile->lastName,
         );

@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('application.extensions.validators.*');
+
 /**
  * BasePasswordForm class.
  * BasePasswordForm is the base class for forms used to set new password.
@@ -8,6 +10,8 @@ abstract class BasePasswordForm extends BaseUsrForm
 {
 	public $newPassword;
 	public $newVerify;
+
+	private $_min = 6;
 
 	/**
 	 * @var array Password strength validation rules.
@@ -58,6 +62,7 @@ abstract class BasePasswordForm extends BaseUsrForm
 				array('newPassword, newVerify', 'filter', 'filter'=>'trim'),
 				array('newPassword, newVerify', 'required'),
 				array('newPassword', 'unusedNewPassword'),
+				array('newPassword','EPasswordStrength', 'min'=>$this->_min, 'message'=>'La {attribute} es debil. La {attribute} debe contener al menos '.$this->_min.' caracteres, al menos una letra minuscula, una mayuscula, y un número.'),
 			),
 			$this->passwordStrengthRules,
 			array(

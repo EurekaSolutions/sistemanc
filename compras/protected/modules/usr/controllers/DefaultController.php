@@ -307,6 +307,7 @@ class DefaultController extends UsrController
 	{
 		/** @var ProfileForm */
 		$model = $this->module->createFormModel('ProfileForm');
+		$model->setScenario('update');
 		$model->setAttributes($model->getIdentity()->getAttributes());
 		/** @var PasswordForm */
 		$passwordForm = $this->module->createFormModel('PasswordForm');
@@ -344,7 +345,7 @@ class DefaultController extends UsrController
 			if ($model->validate()) {
 				$oldEmail = $model->getIdentity()->getEmail();
 				if ($model->save()) {
-					if ($this->module->requireVerifiedEmail && $oldEmail != $model->email) {
+					if ($this->module->requireVerifiedEmail && $oldEmail != $model->correo) {
 						if ($this->sendEmail($model, 'verify')) {
 							$flashes['success'][] = Yii::t('UsrModule.usr', 'Un correo electrónico que contiene instrucciones adicionales ha sido enviado a la dirección de correo electrónico proporcionada.');
 						} else {

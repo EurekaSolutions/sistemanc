@@ -27,7 +27,7 @@ class ProfileForm extends BaseUsrForm
 	 */
 	private $_pictureUploadRules;
 
-	private $_min = 6;
+	//private $_min = 6;
 
 	/**
 	 * Returns rules for picture upload or an empty array if they are not set.
@@ -60,16 +60,18 @@ class ProfileForm extends BaseUsrForm
 		return array_merge($this->getBehaviorRules(), array(
 			array('usuario, correo, removePicture', 'filter', 'filter'=>'trim'),
 			array('usuario, correo, removePicture', 'default', 'setOnEmpty'=>true, 'value' => null),
+			array('verifyCode', 'safe'),
+			//array('usuario', 'unique', 'attributeName'=>'usuario','className'=>'Usuarios', 'allowEmpty' => false, 'message'=>Yii::t('UsrModule.usr','El nombre de usuario ya existe.')),
 			
-			array('codigo_onapre', 'length', 'max'=>20),
-			array('codigo_onapre', 'validarCodigo'),
-			array('usuario, correo', 'required'),
 			array('codigo_onapre', 'required', 'except'=>'register'),
+			array('codigo_onapre', 'length', 'max'=>20),
+			array('codigo_onapre', 'validarCodigo', 'except'=>'update'),
+			array('usuario, correo, verifyCode', 'required'),
 			array('usuario, correo', 'uniqueIdentity'),
 			array('correo', 'email'),
 			array('removePicture', 'boolean'),
-			//array('contrasena', 'validCurrentPassword', 'except'=>'register'),
-			array('contrasena','EPasswordStrength', 'min'=>$this->_min, 'except'=>'register', 'message'=>'La {attribute} es debil. La {attribute} debe contener al menos '.$this->_min.' caracteres, al menos una letra minuscula, una mayuscula, y un número.'),
+			array('contrasena', 'validCurrentPassword', 'except'=>'register'),
+			//array('contrasena','EPasswordStrength', 'min'=>$this->_min, 'except'=>'update', 'message'=>'La {attribute} es debil. La {attribute} debe contener al menos '.$this->_min.' caracteres, al menos una letra minuscula, una mayuscula, y un número.'),
 		), $this->pictureUploadRules);
 	}
 
@@ -182,7 +184,7 @@ class ProfileForm extends BaseUsrForm
 			return false;
 
 		$identity->setAttributes($this->getAttributes());
-		if ($identity->save(Yii::app()->controller->module->requireVerifiedEmail)) {
+		if ($identity->save(Yii::app()->controller->module->requireVerifiedEmail,'actualizarPerfil')) {
 			if ((!($this->picture instanceof CUploadedFile) || $identity->savePicture($this->picture)) && (!$this->removePicture || $identity->removePicture())) {
 				$this->_identity = $identity;
 				return true;
