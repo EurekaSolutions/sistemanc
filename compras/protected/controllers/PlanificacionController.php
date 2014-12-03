@@ -75,24 +75,25 @@ class PlanificacionController extends Controller
 		$criteria->params = array(':p1'=>$part["404"]);
 		//$_401 = array();
 		$_404 = Partidas::model()->findAll($criteria);
-
-		$cant401 = count($_401);
-
-		//for ($i=0; $i < $cant401; $i++) { 
+		
 			
-			$general = 0;
-			$especifica = 0;
 			foreach ($_403 as $key => $value) {
 				
 					if($value->p2==0) //Partida
 					{
-						echo '<h3>'.$value->nombre.'</h3>';
-					}elseif($value->p3==0)
+						echo '<h3>Partida '.$value->nombre.'</h3>';
+
+					}elseif($value->p3==0) 
 					{
-						echo '<h4>'.$value->nombre.'</h4>';
+						echo '<h4> General '.$value->nombre.'</h4>';
+
+					}elseif($value->p4==0)
+					{
+						echo '<h5> Especifica: '.$value->nombre.'</h5>';
+
 					}else
-					{
-						echo '<h6>'.$value->nombre.'</h6>';
+					{	
+						echo '<h6>Sub: <b>'.$value->nombre.'</b></h6>';
 					}
 
 
