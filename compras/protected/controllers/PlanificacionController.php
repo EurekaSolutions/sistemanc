@@ -47,6 +47,71 @@ class PlanificacionController extends Controller
 
 	public function actionModal() /*Aqui esta vista tratara todo lo que tenga relacion con los datos de CENCOEX.*/
 	{
+
+		$part = array("401" => 401, "402" => 402,  "403" => 403, "404" => 404);
+
+		//$partidas = new Partidas;
+
+		$criteria = new CDbCriteria();
+		$criteria->condition = 'p1=:p1';
+		$criteria->params = array(':p1'=>$part["401"]);
+
+		$_401 = Partidas::model()->findAll($criteria);
+
+		$criteria = new CDbCriteria();
+		$criteria->condition = 'p1=:p1';
+		$criteria->params = array(':p1'=>$part["402"]);
+		//$_401 = array();
+		$_402 = Partidas::model()->findAll($criteria);
+		
+		$criteria = new CDbCriteria();
+		$criteria->condition = 'p1=:p1';
+		$criteria->params = array(':p1'=>$part["403"]);
+		//$_401 = array();
+		$_403 = Partidas::model()->findAll($criteria);
+
+		$criteria = new CDbCriteria();
+		$criteria->condition = 'p1=:p1';
+		$criteria->params = array(':p1'=>$part["404"]);
+		//$_401 = array();
+		$_404 = Partidas::model()->findAll($criteria);
+
+		$cant401 = count($_401);
+
+		//for ($i=0; $i < $cant401; $i++) { 
+			
+			$general = 0;
+			$especifica = 0;
+			$_401m;
+			foreach ($_403 as $key => $value) {
+				
+					if($value->p2==0) //Partida
+					{
+						echo '<h3>'.$value->nombre.'</h3>';
+					}elseif($value->p3==0)
+					{
+						echo '<h4>'.$value->nombre.'</h4>';
+					}else
+					{
+						echo '<h6>'.$value->nombre.'</h6>';
+					}
+
+
+				//$value->p3==0;
+			}
+			
+			//$_401[$i][]
+
+
+		//}
+
+		//echo $part["401"];
+
+		//echo count($_401);
+
+		//print_r($_401);
+
+
 		$this->render('modal');
 	}
 
