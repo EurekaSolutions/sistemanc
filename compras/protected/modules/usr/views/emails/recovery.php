@@ -2,7 +2,7 @@
 	This message contains instructions to perform a password recovery. It was requested on the <?php echo CHtml::link(Yii::app()->name, $siteUrl); ?> website.
     If you did not perform this request, please ignore this email or contact our administrator.
 </p>
-
+Tu nombre de usuario es <?php echo $usuario; ?>
 <p>To set a new password, open the following link:</p>
 <p>
 <?php echo CHtml::link($actionUrl, $actionUrl); ?>

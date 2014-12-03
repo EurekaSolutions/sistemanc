@@ -16,12 +16,13 @@ abstract class UsrController extends CController
 		$mail->AddAddress($model->getIdentity()->getEmail(), $model->getIdentity()->getName());
 		$params = array(
 			'siteUrl' => $this->createAbsoluteUrl('/'), 
+			'usuario' => ''//$model->getIdentity()->username,
 		);
 		switch($mode) {
 			default: return false;
 			case 'recovery':
 			case 'verify':
-				$mail->Subject = $mode == 'recovery' ? Yii::t('UsrModule.usr', 'Recuperación de contraseña.') : Yii::t('UsrModule.usr', 'Verificación de correo electronico.');
+				$mail->Subject = $mode == 'recovery' ? Yii::t('UsrModule.usr', 'Recuperar la contraseña') : Yii::t('UsrModule.usr', 'Verificación de la dirección de correo electrónico');
 				$params['actionUrl'] = $this->createAbsoluteUrl('default/'.$mode, array(
 					'llave_activacion'=>$model->getIdentity()->getActivationKey(),
 					'usuario'=>$model->getIdentity()->getName(),

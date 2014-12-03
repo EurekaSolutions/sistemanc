@@ -77,23 +77,27 @@ class PlanificacionController extends Controller
 		$_404 = Partidas::model()->findAll($criteria);
 		
 			
-			foreach ($_403 as $key => $value) {
+			foreach ($_403 as $key => $partida) {
 				
-					if($value->p2==0) //Partida
+					if($partida->p2==0) //Partida
 					{
-						echo '<h3>Partida '.$value->nombre.'</h3>';
+						echo '<h2>Partida: '.$partida->nombre.'</h2>';
+						$this->productosPartidas($partida);
 
-					}elseif($value->p3==0) 
+					}elseif($partida->p3==0) 
 					{
-						echo '<h4> General '.$value->nombre.'</h4>';
+						echo '<h3>General: '.$partida->nombre.'</h3>';
+						$this->productosPartidas($partida);
 
-					}elseif($value->p4==0)
+					}elseif($partida->p4==0)
 					{
-						echo '<h5> Especifica: '.$value->nombre.'</h5>';
+						echo '<h4> Especifica: '.$partida->nombre.'</h4>';
+						$this->productosPartidas($partida);
 
 					}else
 					{	
-						echo '<h6>Sub: <b>'.$value->nombre.'</b></h6>';
+						echo '<h5>Sub: <b>'.$partida->nombre.'</b></h5>';
+						$this->productosPartidas($partida);
 					}
 
 
@@ -184,12 +188,14 @@ class PlanificacionController extends Controller
 
 	public function proyectosPartidas(ProyectosAcciones $proyecto)  /*Retorna todas las partidas pertenecientes a un proyecto*/
 	{
-		
+
 	}
 
 	public function productosPartidas(Partidas $partida)  /*Retorna todas los productos asociados a una partida*/
 	{
-		
+			foreach ($partida->partidaProductos as $key => $parPro) {
+				echo '<h6>'.$parPro->producto->nombre.'</h6>';
+			}		
 	}
 
 	// Uncomment the following methods and override them if needed

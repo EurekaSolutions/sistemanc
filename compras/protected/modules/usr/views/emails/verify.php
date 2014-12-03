@@ -1,6 +1,6 @@
 <p>
-	This message contains instructions to verify this email address. La solicitud fue realizada a través de la página web <?php echo CHtml::link(Yii::app()->name, $siteUrl); ?>.
-    Si usted no realizo esta solicitud, por favor ignore este correo o pongase en contacto (xxxxx@snc.com) con el administrador del sitio.
+	Este mensaje contiene instrucciones para verificar este correo electronico. La solicitud fue realizada a través de la página web <?php echo CHtml::link(Yii::app()->name, $siteUrl); ?>.
+    Si usted no realizo esta solicitud, por favor ignore este correo o pongase en contacto (xxxxx@snc.gob.ve) con el administrador del sitio.
 </p>
 
 <p>haz clic aquí para cambiar tu contraseña:</p>

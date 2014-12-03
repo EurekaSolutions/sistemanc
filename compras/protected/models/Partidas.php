@@ -49,8 +49,8 @@ class Partidas extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'proyectoPartidases' => array(self::HAS_MANY, 'ProyectoPartidas', 'partida_id'),
-			'partidaProductoses' => array(self::HAS_MANY, 'PartidaProductos', 'partida_id'),
+			'proyectoPartidas' => array(self::HAS_MANY, 'ProyectoPartidas', 'partida_id'),
+			'partidaProductos' => array(self::HAS_MANY, 'PartidaProductos', 'partida_id'),
 		);
 	}
 
