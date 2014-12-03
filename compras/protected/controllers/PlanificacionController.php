@@ -45,13 +45,32 @@ class PlanificacionController extends Controller
 		$this->render('importacion');
 	}
 
-	public function buscarpartida($partida)
+	public function proyectosPartidasParticular($partida)
 	{
 		$criteria = new CDbCriteria();
 		$criteria->condition = 'p1=:p1';
 		$criteria->params = array(':p1'=>$partida);
 		return Partidas::model()->findAll($criteria);
 	}
+
+	public function numeroPartida($partida){
+			$numPartida = $partida->p1;
+			if($partida->p2 != 0){
+				$numPartida .= '.'.sprintf("%02s", $partida->p2);
+			}
+			if($partida->p3 != 0){
+				$numPartida .= '.'.sprintf("%02s", $partida->p3);
+			}
+			if($partida->p4 != 0){
+				$numPartida .= '.'.sprintf("%02s", $partida->p4);
+			}
+
+		return $numPartida;//$partida->p1.'.'.sprintf("%02s", $partida->p2).'.'.sprintf("%02s", $partida->p3).'.'.sprintf("%02s", $partida->p4);
+	}
+	public function numeroProducto($producto){
+		return $producto->cod_segmento.'.'.sprintf("%02s", $producto->cod_familia).'.'.sprintf("%02s", $producto->cod_clase).'.'.sprintf("%02s", $producto->cod_producto);
+	}
+
 	public function actionModal() /*Aqui esta vista tratara todo lo que tenga relacion con los datos de CENCOEX.*/
 	{
 
@@ -61,28 +80,28 @@ class PlanificacionController extends Controller
 
 			foreach ($partidas as $key => $partida) {
 
-				$numPartida = $partida->p1.'.'.sprintf("%02s", $partida->p2).'.'.sprintf("%02s", $partida->p3).'.'.sprintf("%02s", $partida->p4);
-				
+				$numPartida = $this->numeroPartida($partida);
+
 					if($partida->p2==0) //Partida
 					{
 
 						echo '<h2>Partida '.$numPartida.': '.$partida->nombre.'</h2>';
-						$this->productosPartidas($partida);
+						//$this->productosPartidas($partida);
 
-					}elseif($partida->p3==0) 
+					}elseif($partida->p3==0) //Geeneral
 					{
 						echo '<h3>General '.$numPartida.': '.$partida->nombre.'</h3>';
+						//$this->productosPartidas($partida);
+
+					}elseif($partida->p4==0)//Especifica
+					{
+						echo '<h4>Específica '.$numPartida.': '.$partida->nombre.'id: '.$partida->partida_id.'</h4>';
 						$this->productosPartidas($partida);
 
-					}elseif($partida->p4==0)
-					{
-						echo '<h4> Específica '.$numPartida.': '.$partida->nombre.'</h4>';
-						//$this->productosPartidas($partida);
-
-					}else
+					}else//Sub Especifica
 					{	
-						echo '<h5>Sub '.$numPartida.': <b>'.$partida->nombre.'</b></h5>';
-						//$this->productosPartidas($partida);
+						echo '<h5>Sub-Específica '.$numPartida.': <b>'.$partida->nombre.' </b></h5>';
+						$this->productosPartidas($partida);
 					}
 
 
@@ -132,14 +151,43 @@ class PlanificacionController extends Controller
 		$partidas = new ProyectoPartidas();
 
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
-
+		$partidass = '';
 		if(isset($_POST['ProyectosAcciones']))
 		{
 			$proyectoSel->attributes = $_POST['ProyectosAcciones'];
-			$partidas = $proyectoSel->proyectoPartidases;
+			$partidas = $proyectoSel->proyectoPartidas;
+			$partidass = 'Partidas: <br>';
+			foreach ($partidas as $key => $partida) {
+				
+
+				$numPartida = $this->numeroPartida($partida);
+
+					if($partida->p2==0) //Partida
+					{
+
+						$partidass.= '<h2>Partida '.$numPartida.': '.$partida->nombre.'</h2>';
+						//$this->productosPartidas($partida);
+
+					}elseif($partida->p3==0) //Geeneral
+					{
+						$partidass.= '<h3>General '.$numPartida.': '.$partida->nombre.'</h3>';
+						//$this->productosPartidas($partida);
+
+					}elseif($partida->p4==0)//Especifica
+					{
+						$partidass.= '<h4>Específica '.$numPartida.': '.$partida->nombre.'id: '.$partida->partida_id.'</h4>';
+						$this->productosPartidas($partida);
+
+					}else//Sub Especifica
+					{	
+						$partidass.= '<h5>Sub-Específica '.$numPartida.': <b>'.$partida->nombre.' </b></h5>';
+						$this->productosPartidas($partida);
+					}
+			
+			}
 		}
 
-		$this->render('partidas', array('usuario'=>$usuario,'proyectoSel'=>$proyectoSel,'partidas'=>$partidas));
+		$this->render('partidas', array('usuario'=>$usuario,'proyectoSel'=>$proyectoSel,'partidas'=>$partidass));
 	}
 
 
@@ -184,7 +232,9 @@ class PlanificacionController extends Controller
 	public function productosPartidas(Partidas $partida)  /*Retorna todas los productos asociados a una partida*/
 	{
 			foreach ($partida->partidaProductos as $key => $parPro) {
-				echo '<h6>'.$parPro->producto->nombre.'</h6>';
+				$producto = $parPro->producto;
+				$numProducto = $this->numeroProducto($producto);
+				echo '<h6>'.$numProducto.' - '.$producto->nombre.'</h6>';
 			}		
 	}
 

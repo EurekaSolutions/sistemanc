@@ -50,7 +50,7 @@ $this->breadcrumbs=array(
 ?>
 <?php
 $tabs = array();
-
+echo $partidas;
 foreach ($usuario->codigoOnapre->proyectosAcciones as $key => $proyecto) {
 				
 

@@ -12,12 +12,17 @@
     <div class="modal-body">
         <p>
         <?php
-
+        $productos = array();
+        foreach (Partidas::model()->findByAttributes(array('partida_id'=>18))->partidaProductos as $key => $partidaPro) {
+            $producto = $partidaPro->producto;
+            $productos = array_merge($productos,array($producto->producto_id=>$producto->nombre));
+        }
+        $lista_productos = $productos; // CHtml::listData(->productos, 'producto_id', 'nombre');
             $this->widget(
             'booster.widgets.TbSelect2',
             array(
                 'name' => 'group_id_list',
-                'data' => array('RU' => 'Russian Federation', 'CA' => 'Canada', 'US' => 'United States of America', 'GB' => 'Great Britain', 'ED' => 'Edgar leal', 'Pr' => 'asdokaosd'),
+                'data' => $lista_productos, //array('RU' => 'Russian Federation', 'CA' => 'Canada', 'US' => 'United States of America', 'GB' => 'Great Britain', 'ED' => 'Edgar leal', 'Pr' => 'asdokaosd'),
                     'htmlOptions' => array(
                         'multiple' => 'multiple',
                         'id' => 'issue-574-checker-select'

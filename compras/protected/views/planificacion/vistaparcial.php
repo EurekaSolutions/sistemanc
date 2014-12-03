@@ -45,9 +45,9 @@ tr.principaltr th {
 		    	<tr class="principaltr">
 		    		<td><?php echo $value->codigo; ?></td>
 		    		<td><?php echo $value->nombre; ?></td>
-		    		<td><?php echo $value->monto; ?></td>
-		    		<td><?php echo $valor = rand(0,$value->monto); ?></td>
-		    		<td><strong><?php echo $value->monto - $valor;?></strong></td>
+		    		<td><?php echo number_format($value->monto,2,',','.'); ?></td>
+		    		<td><?php echo number_format($valor = rand(0,$value->monto),2,',','.'); ?></td>
+		    		<td><strong><?php echo number_format($value->monto - $valor,2,',','.');?></strong></td>
 		    	</tr>
 
 		    <?php $mfinal += $value->monto;
@@ -74,9 +74,9 @@ tr.principaltr th {
 		    	<tr class="principaltr">
 		    		<td><?php echo $value->codigo; ?></td>
 		    		<td><?php echo $value->nombre; ?></td>
-		    		<td><?php echo $value->monto; ?></td>
-		    		<td><?php echo $valor = rand(0,$value->monto); ?></td>
-		    		<td><strong><?php echo $value->monto - $valor;?></strong></td>
+		    		<td><?php echo number_format($value->monto,2,',','.'); ?></td>
+		    		<td><?php echo number_format($valor = rand(0,$value->monto),2,',','.'); ?></td>
+		    		<td><strong><?php echo number_format($value->monto - $valor,2,',','.');?></strong></td>
 		    	</tr>
 		     <?php $mfinal += $value->monto;
 				} ?>

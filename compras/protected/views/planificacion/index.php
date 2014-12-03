@@ -18,7 +18,11 @@ tr.principaltr th {
     vertical-align:middle;
 }
 </style>
-<?php $mfinal = 0; ?>
+<?php $mfinal = 0;
+
+ if(isset($usuario->codigoOnapre->enteAdscrito))
+ 	$padre = $usuario->codigoOnapre->enteAdscrito->padre;
+?>
 <!--<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>-->
 		<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
 		    <thead>
@@ -36,8 +40,8 @@ tr.principaltr th {
 		    		<td><?php echo $usuario->codigo_onapre;?></td>
 		    		<td><?php echo $usuario->codigoOnapre->nombre;?></td>
 		    		<td><?php echo $usuario->codigoOnapre->tipo == 'E' ? 'ENTE' : 'ORGANO';?></td>
-		    		<td><?php echo $usuario->codigoOnapre->enteAdscrito->padre->nombre;?></td>
-		    		<td><?php echo $usuario->codigoOnapre->enteAdscrito->padre->codigo_onapre; ?></td>
+		    		<td><?php echo isset($padre)? $padre->nombre:'NO APLICA';?></td>
+		    		<td><?php echo isset($padre)? $padre->codigo_onapre:'NO APLICA'; ?></td>
 		    	</tr>
 		    </tbody>
 		</table>
@@ -59,7 +63,7 @@ tr.principaltr th {
 		    	<tr class="principaltr">
 		    		<td><?php echo $value->codigo; ?></td>
 		    		<td><?php echo $value->nombre; ?></td>
-		    		<td><?php echo $value->monto; ?></td>
+		    		<td><?php echo number_format($value->monto,2,',','.'); ?></td>
 		    	</tr>
 
 		    <?php $mfinal += $value->monto;
@@ -84,7 +88,7 @@ tr.principaltr th {
 		    	<tr class="principaltr">
 		    		<td><?php echo $value->codigo; ?></td>
 		    		<td><?php echo $value->nombre; ?></td>
-		    		<td><?php echo $value->monto; ?></td>
+		    		<td><?php echo number_format($value->monto,2,',','.'); ?></td>
 		    	</tr>
 		     <?php $mfinal += $value->monto;
 				} ?>
@@ -92,4 +96,4 @@ tr.principaltr th {
 		</table>	
 
 		<BR><BR>
-				<p class="text-right"><STRONG>TOTAL COMPRAS</STRONG>: <?php echo $mfinal; ?> <STRONG>(Bs.)</STRONG></p>
+				<p class="text-right"><STRONG>TOTAL COMPRAS</STRONG>: <?php echo number_format($mfinal,2,',','.'); ?> <STRONG>(Bs. F)</STRONG></p>

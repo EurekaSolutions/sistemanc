@@ -51,6 +51,7 @@ class PartidaProductos extends CActiveRecord
 		return array(
 			'partida' => array(self::BELONGS_TO, 'Partidas', 'partida_id'),
 			'producto' => array(self::BELONGS_TO, 'Productos', 'producto_id'),
+			'productos' => array(self::HAS_MANY, 'Productos', 'producto_id'),
 		);
 	}
 
