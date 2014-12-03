@@ -45,39 +45,21 @@ class PlanificacionController extends Controller
 		$this->render('importacion');
 	}
 
+	public function buscarpartida($partida)
+	{
+		$criteria = new CDbCriteria();
+		$criteria->condition = 'p1=:p1';
+		$criteria->params = array(':p1'=>$partida);
+		return Partidas::model()->findAll($criteria);
+	}
 	public function actionModal() /*Aqui esta vista tratara todo lo que tenga relacion con los datos de CENCOEX.*/
 	{
 
-		$part = array("401" => 401, "402" => 402,  "403" => 403, "404" => 404);
-
-		//$partidas = new Partidas;
-
-		$criteria = new CDbCriteria();
-		$criteria->condition = 'p1=:p1';
-		$criteria->params = array(':p1'=>$part["401"]);
-
-		$_401 = Partidas::model()->findAll($criteria);
-
-		$criteria = new CDbCriteria();
-		$criteria->condition = 'p1=:p1';
-		$criteria->params = array(':p1'=>$part["402"]);
 		//$_401 = array();
-		$_402 = Partidas::model()->findAll($criteria);
-		
-		$criteria = new CDbCriteria();
-		$criteria->condition = 'p1=:p1';
-		$criteria->params = array(':p1'=>$part["403"]);
-		//$_401 = array();
-		$_403 = Partidas::model()->findAll($criteria);
+		$partida = $this->buscarpartida(401);
 
-		$criteria = new CDbCriteria();
-		$criteria->condition = 'p1=:p1';
-		$criteria->params = array(':p1'=>$part["404"]);
-		//$_401 = array();
-		$_404 = Partidas::model()->findAll($criteria);
-		
-			
-			foreach ($_403 as $key => $partida) {
+
+			foreach ($partida as $key => $partida) {
 				
 					if($partida->p2==0) //Partida
 					{
