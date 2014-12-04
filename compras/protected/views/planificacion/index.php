@@ -20,8 +20,8 @@ tr.principaltr th {
 </style>
 <?php $mfinal = 0;
 
- if(isset($usuario->codigoOnapre->enteAdscrito))
- 	$padre = $usuario->codigoOnapre->enteAdscrito->padre;
+ if(isset($usuario->enteOrgano->enteAdscrito))
+ 	$padre = $usuario->enteOrgano->enteAdscrito->padre;
 ?>
 <!--<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>-->
 		<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
@@ -37,9 +37,9 @@ tr.principaltr th {
 		    <tbody>
 		    	<tr class="principaltr">
 
-		    		<td><?php echo $usuario->codigo_onapre;?></td>
-		    		<td><?php echo $usuario->codigoOnapre->nombre;?></td>
-		    		<td><?php echo $usuario->codigoOnapre->tipo == 'E' ? 'ENTE' : 'ORGANO';?></td>
+		    		<td><?php echo $usuario->enteOrgano->codigo_onapre;?></td>
+		    		<td><?php echo $usuario->enteOrgano->nombre;?></td>
+		    		<td><?php echo $usuario->enteOrgano->tipo == 'E' ? 'ENTE' : 'ORGANO';?></td>
 		    		<td><?php echo isset($padre)? $padre->nombre:'NO APLICA';?></td>
 		    		<td><?php echo isset($padre)? $padre->codigo_onapre:'NO APLICA'; ?></td>
 		    	</tr>
@@ -58,15 +58,16 @@ tr.principaltr th {
 		        </tr>
 		    </thead>
 		    <tbody>
-			 <?php   foreach ($acciones as $key => $value) { ?>
+			 <?php   foreach ($acciones as $key => $value) { 
+			 				$monto = $this->montoAccion($value);?>
 		
 		    	<tr class="principaltr">
 		    		<td><?php echo $value->codigo; ?></td>
 		    		<td><?php echo $value->nombre; ?></td>
-		    		<td><?php echo number_format($value->monto,2,',','.'); ?></td>
+		    		<td><?php echo number_format($monto,2,',','.'); ?></td>
 		    	</tr>
 
-		    <?php $mfinal += $value->monto;
+		    <?php $mfinal += $monto;
 			} ?>
 		    </tbody>
 		</table>	
@@ -84,13 +85,14 @@ tr.principaltr th {
 		    </thead>
 		    <tbody>
 
-			<?php  foreach ($proyectos as $key => $value){ ?> 
+			<?php  foreach ($proyectos as $key => $value){
+						$monto = $this->montoProyecto($value); ?> 
 		    	<tr class="principaltr">
 		    		<td><?php echo $value->codigo; ?></td>
 		    		<td><?php echo $value->nombre; ?></td>
-		    		<td><?php echo number_format($value->monto,2,',','.'); ?></td>
+		    		<td><?php echo number_format($monto,2,',','.'); ?></td>
 		    	</tr>
-		     <?php $mfinal += $value->monto;
+		     <?php $mfinal += $monto;
 				} ?>
 		    </tbody>
 		</table>	

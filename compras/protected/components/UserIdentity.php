@@ -27,7 +27,7 @@ class UserIdentity extends CUserIdentity
     public $contrasena = null;
 	public $correo = null;
 	public $firstName = null;
-	public $codigo_onapre = null;
+	public $cedula = null;
 	private $_id = null;
 	private $_activeRecord = null;
 
@@ -52,7 +52,7 @@ class UserIdentity extends CUserIdentity
 		$this->username = $this->usuario = $user->usuario;
 		$this->correo = $user->correo;
 		//$this->firstName = $user->firstname;
-		$this->codigo_onapre = $user->codigo_onapre;
+		$this->cedula = $user->cedula;
 	}
 
 	protected function getActiveRecord()
@@ -310,7 +310,7 @@ class UserIdentity extends CUserIdentity
 		if (($record=$this->getActiveRecord())===null) {
 			return false;
 		}
-		$activationKey = md5(time().mt_rand().$record->codigo_onapre);
+		$activationKey = md5(time().mt_rand().$record->correo);
 		if (!$record->saveAttributes(array('llave_activacion' => $activationKey))) {
 			return false;
 		}

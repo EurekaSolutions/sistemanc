@@ -123,15 +123,36 @@ class PlanificacionController extends Controller
 		$this->render('modal');
 	}
 
+
+	public function montoAccion(Acciones $accion){
+
+			$monto = 0;
+			foreach ($proyecto->presupuestoPartidaAcciones->presupuestoPartida as $key => $partida) {
+				$monto += $partida->monto;
+			}
+			return $monto;
+
+	}
+
+	public function montoProyecto(Proyectos $proyecto){
+
+			$monto = 0;
+			foreach ($proyecto->presupuestoPartidas as $key => $partida) {
+				$monto += $partida->monto_presupuestado;
+			}
+			return $monto;
+
+	}
+
 	public function actionIndex()   /*Aquí vamos a mostrar la primera vista del excel enviado por Zobeida*/
 	{
 
 		
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 
-		$proyectos = $usuario->codigoOnapre->proyectos;
+		$proyectos = $usuario->enteOrgano->proyectos;
 		
-		$acciones = $usuario->codigoOnapre->acciones;
+		$acciones = $usuario->enteOrgano->acciones;
 		
 		
 		$usuario = $usuario->model()->findByPk(Yii::app()->user->getId());

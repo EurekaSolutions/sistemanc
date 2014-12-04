@@ -10,7 +10,7 @@ class RecoveryForm extends BasePasswordForm
 	public $usuario;
 	public $correo;
 	public $llave_activacion;
-	public $codigo_onapre;
+	public $cedula;
 
 	/**
 	 * @var IdentityInterface cached object returned by @see getIdentity()
@@ -24,10 +24,10 @@ class RecoveryForm extends BasePasswordForm
 	 */
 	public function rules() {
 		$rules = array_merge($this->getBehaviorRules(), array(
-			array('codigo_onapre, usuario, correo', 'filter', 'filter'=>'trim'),
-			array('codigo_onapre, usuario, correo', 'default', 'setOnEmpty'=>true, 'value' => null),
-			array('correo, codigo_onapre', 'configurarUsuario','on'=>'reset', 'message','No se pudo obtener los datos del usuario'),
-			array('codigo_onapre, usuario, correo', 'existingIdentity'),
+			array('cedula, usuario, correo', 'filter', 'filter'=>'trim'),
+			array('cedula, usuario, correo', 'default', 'setOnEmpty'=>true, 'value' => null),
+			array('correo, cedula', 'configurarUsuario','on'=>'reset', 'message'=>'No se pudo obtener los datos del usuario'),
+			array('cedula, usuario, correo', 'existingIdentity'),
 			array('correo', 'email'),
 			array('verifyCode', 'required'),
 			array('verifyCode', 'safe'),
@@ -57,7 +57,7 @@ class RecoveryForm extends BasePasswordForm
 		$usuario = Usuarios::model()->findByAttributes(array('usuario'=>$this->usuario));
 		if(!$usuario)
 			return false;
-		$this->codigo_onapre = $usuario->codigo_onapre;
+		$this->cedula = $usuario->cedula;
 		$this->correo = $usuario->correo;
 
 		return true;
@@ -70,6 +70,7 @@ class RecoveryForm extends BasePasswordForm
 			'usuario'		=> Yii::t('UsrModule.usr','Usuario'),
 			'correo'			=> Yii::t('UsrModule.usr','Correo'),
 			'llave_activacion'	=> Yii::t('UsrModule.usr','Llave de Activación'),
+			'cedula'	=> Yii::t('UsrModule.usr','Cédula'),
 		));
 	}
 
@@ -87,7 +88,7 @@ class RecoveryForm extends BasePasswordForm
 			$attributes = array();
 			//if ($this->usuario !== null) $attributes['usuario'] = $this->usuario;
 			if ($this->correo !== null) $attributes['correo'] = $this->correo;
-			if ($this->codigo_onapre !== null) $attributes['codigo_onapre'] = $this->codigo_onapre;
+			if ($this->cedula !== null) $attributes['cedula'] = $this->cedula;
 			if (!empty($attributes))
 				$this->_identity=$userIdentityClass::find($attributes);
 		}
@@ -108,12 +109,12 @@ class RecoveryForm extends BasePasswordForm
 		if ($identity === null) {
 			/*if ($this->usuario !== null) {
 				$this->addError('usuario',Yii::t('UsrModule.usr','No user found matching this usuario.'));
-			} else*/if ($this->codigo_onapre !== null) {
+			} else*/if ($this->cedula !== null) {
 				$this->addError('codigo_onapre',Yii::t('UsrModule.usr','Ningún usuario coincide con el codigo onapre indicado.'));
 			} elseif ($this->correo !== null) {
 				$this->addError('correo',Yii::t('UsrModule.usr','Ningún usuario coincide con esta dirección de correo electrónico.'));
 			} else {
-				$this->addError('usuario',Yii::t('UsrModule.usr','Por favor, especifique codigo onapre o correo electrónico.'));
+				$this->addError('usuario',Yii::t('UsrModule.usr','Por favor, especifique su cédula o correo electrónico.'));
 			}
 			return false;
 		} elseif ($identity->isDisabled()) {
