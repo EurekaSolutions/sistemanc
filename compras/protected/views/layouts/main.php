@@ -53,6 +53,7 @@
 									array('label' => 'Acción centralizada', 'url' => array('/planificacion/agregarcentralizada')),
 								)
 							),
+							array('label'=>'Crear ente', 'url'=>array('/planificacion/crearente'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es ORGANO
 						    array('label'=>'Administración', 'url'=>array('/planificacion/administracion'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 						    array('label'=>'Perfil usuario', 'url'=>array('/usr/profile'), 'visible'=>!Yii::app()->user->isGuest),
 							array('label'=>'Salir ('.Yii::app()->user->name.')', 'url'=>array('/usr/logout'), 'visible'=>!Yii::app()->user->isGuest)

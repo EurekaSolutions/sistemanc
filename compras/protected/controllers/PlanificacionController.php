@@ -23,7 +23,7 @@ class PlanificacionController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'modal', 'agregarproyecto', 'agregarcentralizada', 'administracion'),
+				'actions'=>array('index','view', 'modal', 'agregarproyecto', 'agregarcentralizada', 'administracion', 'crearente'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -72,6 +72,11 @@ class PlanificacionController extends Controller
 		return $producto->cod_segmento.'.'.sprintf("%02s", $producto->cod_familia).'.'.sprintf("%02s", $producto->cod_clase).'.'.sprintf("%02s", $producto->cod_producto);
 	}
 
+
+	public function actionCrearente()
+	{
+		$this->render('crearente');
+	}
 	
 	public function actionAgregarproyecto()
 	{
