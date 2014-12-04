@@ -28,11 +28,11 @@ class PlanificacionController extends Controller
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update','partidas','vistaparcial'),
-				'users'=>array('@'),
+				'users'=>array('*'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
-				'users'=>array('@'),
+				'users'=>array('*'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -67,6 +67,7 @@ class PlanificacionController extends Controller
 
 		return $numPartida;//$partida->p1.'.'.sprintf("%02s", $partida->p2).'.'.sprintf("%02s", $partida->p3).'.'.sprintf("%02s", $partida->p4);
 	}
+
 	public function numeroProducto($producto){
 		return $producto->cod_segmento.'.'.sprintf("%02s", $producto->cod_familia).'.'.sprintf("%02s", $producto->cod_clase).'.'.sprintf("%02s", $producto->cod_producto);
 	}
@@ -74,11 +75,28 @@ class PlanificacionController extends Controller
 	public function actionModal() /*Aqui esta vista tratara todo lo que tenga relacion con los datos de CENCOEX.*/
 	{
 
-		//$_401 = array();
-		$partidas = $this->proyectosPartidas();
+			//$_401 = array();
+			//$partidas = $this->proyectosPartidas();
+			
+			$busqueda = "Gatos";
+			
+			$criteria = new CDbCriteria();
+			$criteria->condition = 'cod_producto <> 0';
+			$criteria->addSearchCondition('t.nombre', $busqueda);
+			
+			$productos = Productos::model()->findAll($criteria);
 
+			foreach ($productos as $key => $value) {
+				
+					Productos::model()->findAll($value->cod_segmento);
 
-			foreach ($partidas as $key => $partida) {
+			}
+
+			
+			//print_r($productos);
+
+			//$partidas = $this->productosPartidas();
+		/*	foreach ($partidas as $key => $partida) {
 
 				$numPartida = $this->numeroPartida($partida);
 
@@ -106,18 +124,7 @@ class PlanificacionController extends Controller
 
 
 				//$value->p3==0;
-			}
-			
-			//$_401[$i][]
-
-
-		//}
-
-		//echo $part["401"];
-
-		//echo count($_401);
-
-		//print_r($_401);
+			}*/
 
 
 		$this->render('modal');
@@ -263,21 +270,6 @@ class PlanificacionController extends Controller
 				$productos .= '<h6>'.$numProducto.' - '.$producto->nombre.'</h6>';
 			}		
 		return $productos;
-	}
-
-	public function nivelPartida(Partidas $partida){
-		return count(explode('.',$this->numeroPartida($partida)));
-	}
-	public function partidaPadre(Partidas $partida){
-		$nivel = $this->nivelPartida($partida);
-		if($nivel==1)
-			return $partida;
-		if($nivel==2)
-			return Partidas::model()->findByAttributes(array('p1'=>$partida->p1,'p2'=>0));
-		if($nivel==3)
-			return Partidas::model()->findByAttributes(array('p1'=>$partida->p1,'p2'=>$partida->p2,'p3'=>0));
-		if($nivel==4)
-			return Partidas::model()->findByAttributes(array('p1'=>$partida->p1,'p2'=>$partida->p2,'p3'=>$partida->p3,'p4'=>0));
 	}
 
 	// Uncomment the following methods and override them if needed

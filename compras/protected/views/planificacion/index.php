@@ -86,7 +86,8 @@ tr.principaltr th {
 		    <tbody>
 
 			<?php  foreach ($proyectos as $key => $value){
-						$monto = $this->montoProyecto($value); ?> 
+						$monto = $this->montoProyecto($value); 
+			?> 
 		    	<tr class="principaltr">
 		    		<td><?php echo $value->codigo; ?></td>
 		    		<td><?php echo $value->nombre; ?></td>

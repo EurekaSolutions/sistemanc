@@ -33,7 +33,7 @@ $this->breadcrumbs=array(
 	 echo $form->dropDownListGroup( $proyectoSel,	'proyecto_id',
 			array(
 				'wrapperHtmlOptions' => array(
-					'class' => 'col-sm-5',
+					'class' => 'col-sm-2',
 				),
 				'label'=>'Seleccione Proyecto o Acción Centralizada a cargar',
 				'widgetOptions' => array(
