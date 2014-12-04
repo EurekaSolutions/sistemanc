@@ -17,6 +17,7 @@ class ProfileForm extends BaseUsrForm
 	public $removePicture;
 	public $contrasena;
 	public $cedula;
+	public $nombre;
 
 	/**
 	 * @var IdentityInterface cached object returned by @see getIdentity()
@@ -65,6 +66,7 @@ class ProfileForm extends BaseUsrForm
 			
 			array('cedula', 'required', 'except'=>'register'),
 			array('cedula', 'length', 'max'=>20),
+			array('nombre', 'length', 'max'=>255),
 			//array('cedula', 'validarCodigo', 'except'=>'update'),
 			array('usuario, correo, verifyCode', 'required'),
 			array('usuario, correo', 'uniqueIdentity'),
@@ -92,7 +94,7 @@ class ProfileForm extends BaseUsrForm
 		return array_merge($this->getBehaviorLabels(), array(
 			'usuario'		=> Yii::t('UsrModule.usr','Usuario'),
 			'correo'			=> Yii::t('UsrModule.usr','Correo'),
-			'codigo_onapre'		=> Yii::t('UsrModule.usr','Codigo Onapre'),
+			'cedula'		=> Yii::t('UsrModule.usr','Cédula'),
 			//'lastName'		=> Yii::t('UsrModule.usr','Last name'),
 			//'picture'		=> Yii::t('UsrModule.usr','Profile picture'),
 			//'removePicture'	=> Yii::t('UsrModule.usr','Remove picture'),

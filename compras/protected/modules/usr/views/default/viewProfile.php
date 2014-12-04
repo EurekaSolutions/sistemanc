@@ -12,7 +12,7 @@ $this->pageTitle = Yii::app()->name.' - '.$title;
 <?php $this->widget('usr.components.UsrAlerts', array('cssClassPrefix'=>$this->module->alertCssClassPrefix)); ?>
 
 <?php
-$attributes = array('codigo_onapre', 'usuario', 'correo');
+$attributes = array('cedula', 'usuario', 'correo');
 /*if ($this->module->oneTimePasswordMode === UsrModule::OTP_TIME || $this->module->oneTimePasswordMode === UsrModule::OTP_COUNTER) {
 	$attributes[] = array(
 		'name'=>'twoStepAuth',

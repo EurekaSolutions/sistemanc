@@ -195,9 +195,10 @@ class PlanificacionController extends Controller
 
 	public function actionPartidas() /*Aqui van la logica de negocio asociada a cada partida 401, 402, 403, 404 */
 	{
-		$proyectoSel = new ProyectosAcciones('search');
+		$proyectoSel = new Proyectos('search');
+		$accionSel = new Acciones('search');
 
-		$partidas = new ProyectoPartidas();
+		$partidas = new PresupuestoPartidas();
 
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 		$partidass = '';
@@ -207,7 +208,7 @@ class PlanificacionController extends Controller
 			$partidas = $proyectoSel->proyectoPartidas;
 			$partidass = 'Partidas: <br>';
 			//echo $proyectoSel->proyecto_id;
-			$partidas = ProyectoPartidas::model()->findAllByAttributes(array('proyecto_id'=>$proyectoSel->proyecto_id));
+			$partidas = PresupuestoPartidas::model()->findAllByAttributes(array('proyecto_id'=>$proyectoSel->proyecto_id));
 			//$partidas = $proyectoSel->proyectoPartidas;
 			//Yii::log('FUNCIONA!!!!!!','error');
 			foreach ($partidas as $key => $partida) {

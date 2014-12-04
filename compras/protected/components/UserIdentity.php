@@ -28,6 +28,7 @@ class UserIdentity extends CUserIdentity
 	public $correo = null;
 	public $firstName = null;
 	public $cedula = null;
+	public $nombre = null;
 	private $_id = null;
 	private $_activeRecord = null;
 
@@ -193,7 +194,7 @@ class UserIdentity extends CUserIdentity
 			$record->setAttributes(array(
 				'usuario' => $this->usuario,
 				'correo' => $this->correo,
-				'codigo_onapre' => $this->codigo_onapre,
+				'cedula' => $this->cedula, 
 				//'firstname' => $this->firstName,
 				//'lastname' => $this->lastName,
 			));

@@ -20,8 +20,8 @@ $this->breadcrumbs=array(
 	);
 	
 
-	$lista_acciones = CHtml::listData($usuario->codigoOnapre->acciones, 'proyecto_id', 'nombre');
-	$lista_proyectos = CHtml::listData($usuario->codigoOnapre->proyectos, 'proyecto_id', 'nombre');
+	$lista_acciones = CHtml::listData($usuario->enteOrgano->acciones, 'proyecto_id', 'nombre');
+	$lista_proyectos = CHtml::listData($usuario->enteOrgano->proyectos, 'proyecto_id', 'nombre');
 	 
 	$listas = array(!empty($lista_acciones)?'Acciones Centralizadas':null=>$lista_acciones,
 	 				!empty($lista_proyectos)?'Proyectos':null =>$lista_proyectos);
@@ -48,7 +48,7 @@ $this->breadcrumbs=array(
 		//echo $form->checkboxGroup($model, 'checkbox');
 		$this->widget(
 		    'booster.widgets.TbButton',
-		    array('buttonType' => 'submit', 'label' => 'Cargar')
+		    array('buttonType' => 'submit', 'label' => 'Seleccionar')
 		);
 	 
 	$this->endWidget();
@@ -58,7 +58,7 @@ $this->breadcrumbs=array(
 <?php 
 
 	
-	/** @var TbActiveForm $form */
+	/** @var TbActiveForm $form *//*
 	$form = $this->beginWidget('booster.widgets.TbActiveForm',
 	    array(
 	        'id' => 'proyecto-form',
@@ -76,7 +76,7 @@ $this->breadcrumbs=array(
 
 					'data' => $listas,
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array(/*'prompt' => 'Seleccionar proyecto',*/'multiple' => false, ),
+					'htmlOptions' => array('multiple' => false, ),
 				)
 			)
 		); 
@@ -88,14 +88,19 @@ $this->breadcrumbs=array(
 		);
 	 
 	$this->endWidget();
-	unset($form);
+	unset($form);*/
 ?>
 
 
 <?php
 $tabs = array();
 echo $partidas;
-$partidas = ProyectoPartidas::model()->findAllByAttributes(array('proyecto_id'=>$proyectoSel->proyecto_id));
+
+	if($proyectoSel)
+		$partidas = $proyectoSel->presupuestoPartidas;
+	elseif($accionSel)
+		$partidas = $accionSel->presupuestoPartidaAcciones->presupuestoPartida;
+	
 $pestanas = array();
 foreach ($partidas as $key => $partida) {
 

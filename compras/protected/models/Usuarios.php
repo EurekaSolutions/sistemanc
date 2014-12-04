@@ -53,15 +53,15 @@ class Usuarios extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('actualizado_el, repetir_contrasena, nombre,', 'required', 'on'=>'registro, actualizar'),
-			array('correo, codigo_onapre, creado_el, rol, ente_organo_id', 'required', 'on'=>'registro'),
+			array('correo, creado_el, rol, ente_organo_id', 'required', 'on'=>'registro'),
 			array('usuario, contrasena','required','on'=>'registro, login'),
-			array('codigo_onapre', 'length', 'max'=>20),
+			//array('codigo_onapre', 'length', 'max'=>20),
 			array('usuario, contrasena, repetir_contrasena', 'length', 'max'=>50),
 			array('correo, llave_activacion, nombre, cedula, cargo', 'length', 'max'=>255),
 			array('correo','email'),
 			array('usuario', 'unique', 'except'=>'register, registro', 'criteria'=>array('condition'=>'usuario_id !=:id ','params'=>array(':id'=>Yii::app()->user->getId())), 'allowEmpty' => false, 'message'=>Yii::t('UsrModule.usr','El nombre de usuario ya existe.')),
 			array('contrasena','ext.validators.EPasswordStrength', 'min'=>$this->min, 'except'=>'actualizarPerfil','message'=>'La {attribute} es debil. La {attribute} debe contener al menos '.$this->min.' caracteres, al menos una letra minuscula, una mayuscula, y un número.'),
-			array('codigo_onapre', 'validarCodigo', 'except'=>'actualizarPerfil'),
+			//array('codigo_onapre', 'validarCodigo', 'except'=>'actualizarPerfil'),
 			array('llave_activacion, creado_el, actualizado_el, ultima_visita_el, correo_verificado', 'default', 'setOnEmpty' => true, 'value' => null, 'on' => 'search'),
 			array('creado_el, actualizado_el, ultima_visita_el', 'date', 'format' => array('yyyy-MM-dd', 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm:ss'), 'on' => 'search'),
 			array('activation_key', 'length', 'max'=>128, 'on' => 'search'),
@@ -105,7 +105,7 @@ class Usuarios extends CActiveRecord
             $this->contrasena=$this->repetir_contrasena=$this->contrasena_inicial;
  		
 
- 		$this->codigo_onapre = $this->codigoOnapre->codigo_onapre;
+ 		//$this->codigo_onapre = $this->codigoOnapre->codigo_onapre;
 
 		//because the hashes needs to match
         if(!empty($this->contrasena) && !empty($this->repetir_contrasena))
