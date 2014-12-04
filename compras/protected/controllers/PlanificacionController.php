@@ -23,7 +23,7 @@ class PlanificacionController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'modal'),
+				'actions'=>array('index','view', 'modal', 'agregarproyecto', 'agregarcentralizada', 'administracion'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -70,6 +70,22 @@ class PlanificacionController extends Controller
 
 	public function numeroProducto($producto){
 		return $producto->cod_segmento.'.'.sprintf("%02s", $producto->cod_familia).'.'.sprintf("%02s", $producto->cod_clase).'.'.sprintf("%02s", $producto->cod_producto);
+	}
+
+	
+	public function actionAgregarproyecto()
+	{
+		$this->render('agregarproyecto');
+	}
+
+	public function actionAgregarcentralizada()
+	{
+		$this->render('agregarcentralizada');
+	}
+
+	public function actionAdministracion()
+	{
+		$this->render('administracion');
 	}
 
 	public function actionModal() /*Aqui esta vista tratara todo lo que tenga relacion con los datos de CENCOEX.*/

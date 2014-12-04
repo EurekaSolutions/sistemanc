@@ -46,7 +46,13 @@
 						    array('label'=>'Inicio', 'url'=>array('/planificacion/index'), 'visible'=>!Yii::app()->user->isGuest),
 						    array('label'=>'Partidas', 'url'=>array('/planificacion/partidas'), 'visible'=>!Yii::app()->user->isGuest),
 						    array('label'=>'Vista parcial', 'url'=>array('/planificacion/vistaparcial'), 'visible'=>!Yii::app()->user->isGuest),
-						    array('label'=>'Agregar', 'url'=>array('/planificacion/agregar'), 'visible'=>!Yii::app()->user->isGuest),   // si el tipo es creado por el sistema
+						    array(
+								'label' => 'Agregar',  //si el usuario es creado por este sistema
+								'items' => array(
+									array('label' => 'Proyecto', 'url' => array('/planificacion/agregarproyecto')),
+									array('label' => 'Acción centralizada', 'url' => array('/planificacion/agregarcentralizada')),
+								)
+							),
 						    array('label'=>'Administración', 'url'=>array('/planificacion/administracion'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 						    array('label'=>'Perfil usuario', 'url'=>array('/usr/profile'), 'visible'=>!Yii::app()->user->isGuest),
 							array('label'=>'Salir ('.Yii::app()->user->name.')', 'url'=>array('/usr/logout'), 'visible'=>!Yii::app()->user->isGuest)
