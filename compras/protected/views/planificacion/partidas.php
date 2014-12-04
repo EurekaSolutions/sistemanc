@@ -23,7 +23,7 @@ $this->breadcrumbs=array(
 	$lista_acciones = CHtml::listData($usuario->codigoOnapre->acciones, 'proyecto_id', 'nombre');
 	$lista_proyectos = CHtml::listData($usuario->codigoOnapre->proyectos, 'proyecto_id', 'nombre');
 	 
-	 $listas = array(!empty($lista_acciones)?'Acciones Centralizadas':null=>$lista_acciones,
+	$listas = array(!empty($lista_acciones)?'Acciones Centralizadas':null=>$lista_acciones,
 	 				!empty($lista_proyectos)?'Proyectos':null =>$lista_proyectos);
 
 	//echo $form->listBoxGroup($model, 'nombre',$proyectos);
@@ -65,16 +65,47 @@ foreach ($partidas as $key => $partida) {
 
 			$numPartida = $this->numeroPartida($partida);
 			//echo 'ENTRE ';
-			$pestanas[$numPartida] = array('label' => $this->numeroPartida($partida).' - '.$partida->nombre, 'content' => 'Partida '.$numPartida);
+			//$pestanas[$numPartida] = array('label' => $this->numeroPartida($partida).' - '.$partida->nombre, 'content' => 'Partida '.$numPartida);
+			//$pestanas[$partida->p1][$partida->p2][$partida->p3][$partida->p4] = array('label' => $this->numeroPartida($partida).' - '.$partida->nombre, 'content' => 'Partida '.$numPartida);
+
+				if(!isset($pestanas[$partida->p1]))
+					$pestanas[$partida->p1] =  array('label' => $partida->p1.' - ', 'content' => 'Partida '.$partida->nombre, 'items' => array( ));
+				
+				if(!isset($pestanas[$partida->p1]['items'][$partida->p2]))
+						$pestanas[$partida->p1]['items'][$partida->p2] = array('label' => $this->numeroPartida($partida).' - ', 'content' => 'Carga de partidas especificas y sub especificas de la partida 402.01');
+
+				//if(!isset($pestanas[$partida->p1]['items'][$partida->p2]['items'][$partida->p3]))
+						//$pestanas[$partida->p1]['items'][$partida->p2]['items'][$partida->p3] = array('label' => $this->numeroPartida($partida), 'content' => 'Carga de partidas especificas y sub especificas de la partida 402.01');
+			
+			switch ($this->nivelPartida($partida)) {
+				case 1:
+					# code...
+					break;
+				case 2:
+					# code...
+					break;
+				case 3:
+					# code...
+					break;
+				case 4:
+					# code...
+					break;
+				default:
+					# code...
+					break;
+			}
 
 			if($partida->p2==0) //Partida
-			{
+			{	
 
+				//$pestanas[$partida->p1]['items'][] = array('label' => $this->numeroPartida($partida).' - '.$partida->nombre, 'content' => 'Partida '.$numPartida);
 				//$partidass.= '<h2>Partida '.$numPartida.': '.$partida->nombre.'</h2>';
 				//$this->productosPartidas($partida);
 
 			}elseif($partida->p3==0) //General
 			{
+
+				//$pestanas[$partida->p1]['items'][$partida->p2] = array('label' => $this->numeroPartida($partida), 'content' => 'Carga de partidas especificas y sub especificas de la partida 402.01');
 				//$partidass.= '<h3>General '.$numPartida.': '.$partida->nombre.'</h3>';
 				//$this->productosPartidas($partida);
 
@@ -113,7 +144,7 @@ foreach ($partidas as $key => $partida) {
 	        
 	//$tabs=array_merge($tabs,)
 }
-
+print_r($pestanas['401']['items']);
 $this->widget(
     'booster.widgets.TbTabs',
     array(
@@ -261,9 +292,9 @@ $this->widget(
 												     'view'=>'_especificos'),
 				                    array('label' => '401.35', 'content' => 'Carga de partidas especificas y sub especificas de la partida 401.35')),
 				            ),
-				            array('label' => '402', 'content' => 'Partida 402', 'items' => array(
+				            array('label' => '402', 'content' => 'Partida 402', 'items' => array('01'=>
 				                    array('label' => '402.01', 'content' => 'Carga de partidas especificas y sub especificas de la partida 402.01'),
-				                    array('label' => '402.04', 'content' => 'Carga de partidas especificas y sub especificas de la partida 402.04')),
+				                    '04'=>array('label' => '402.04', 'content' => 'Carga de partidas especificas y sub especificas de la partida 402.04')),
 				            ),
 				            array('label' => '403', 'content' => 'Partida 403', 'items' => array(
 				                    array('label' => '403.07', 'content' => 'Carga de partidas especificas y sub especificas de la partida 403.07'),

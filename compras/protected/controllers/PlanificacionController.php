@@ -244,6 +244,21 @@ class PlanificacionController extends Controller
 		return $productos;
 	}
 
+	public function nivelPartida(Partidas $partida){
+		return count(explode('.',$this->numeroPartida($partida)));
+	}
+	public function partidaPadre(Partidas $partida){
+		$nivel = $this->nivelPartida($partida);
+		if($nivel==1)
+			return $partida;
+		if($nivel==2)
+			return Partidas::model()->findByAttributes(array('p1'=>$partida->p1,'p2'=>0));
+		if($nivel==3)
+			return Partidas::model()->findByAttributes(array('p1'=>$partida->p1,'p2'=>$partida->p2,'p3'=>0));
+		if($nivel==4)
+			return Partidas::model()->findByAttributes(array('p1'=>$partida->p1,'p2'=>$partida->p2,'p3'=>$partida->p3,'p4'=>0));
+	}
+
 	// Uncomment the following methods and override them if needed
 	/*
 	public function filters()
