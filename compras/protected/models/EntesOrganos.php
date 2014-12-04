@@ -8,15 +8,15 @@
  * @property string $codigo_onapre
  * @property string $nombre
  * @property string $tipo
- * @property string $ente_adscrito
+ * @property string $rif
  * @property string $creado_por
  *
  * The followings are the available model relations:
  * @property Proyectos[] $proyectoses
  * @property Usuarios[] $usuarioses
- * @property EntesOrganos $enteAdscrito
- * @property EntesOrganos[] $entesOrganoses
- * @property ProyectosAcciones[] $proyectosAcciones
+ * @property EntesAdscritos[] $entesAdscritoses
+ * @property EntesAdscritos[] $entesAdscritoses1
+ * @property PresupuestoPartidaAcciones[] $presupuestoPartidaAcciones
  */
 class EntesOrganos extends CActiveRecord
 {
@@ -36,14 +36,15 @@ class EntesOrganos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('codigo_onapre, nombre, tipo', 'required'),
+			array('nombre, tipo', 'required'),
 			array('codigo_onapre', 'length', 'max'=>20),
 			array('nombre', 'length', 'max'=>255),
 			array('tipo', 'length', 'max'=>50),
-			array('ente_adscrito', 'safe'),
+			array('rif', 'length', 'max'=>30),
+			array('creado_por', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('ente_organo_id, codigo_onapre, nombre, tipo, ente_adscrito', 'safe', 'on'=>'search'),
+			array('ente_organo_id, codigo_onapre, nombre, tipo, rif, creado_por', 'safe', 'on'=>'search'),
 		);
 	}
 

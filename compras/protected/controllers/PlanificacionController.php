@@ -249,12 +249,10 @@ class PlanificacionController extends Controller
 
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 
-		$proyectos = $usuario->codigoOnapre->proyectos;
+		$proyectos = $usuario->enteOrgano->proyectos;
 		
-		$acciones = $usuario->codigoOnapre->acciones;
+		$acciones = $usuario->enteOrgano->acciones;
 		
-		
-		$usuario = $usuario->model()->findByPk(Yii::app()->user->getId());
 
 		$this->render('vistaparcial',array(
 			'proyectos' => $proyectos,  'acciones' => $acciones

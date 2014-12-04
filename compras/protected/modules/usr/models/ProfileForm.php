@@ -16,7 +16,7 @@ class ProfileForm extends BaseUsrForm
 	public $picture;
 	public $removePicture;
 	public $contrasena;
-	public $codigo_onapre;
+	public $cedula;
 
 	/**
 	 * @var IdentityInterface cached object returned by @see getIdentity()
@@ -63,9 +63,9 @@ class ProfileForm extends BaseUsrForm
 			array('verifyCode', 'safe'),
 			array('usuario', 'unique', 'attributeName'=>'usuario','criteria'=>array('condition'=>'usuario_id !=:id ','params'=>array(':id'=>Yii::app()->user->getId())),'className'=>'Usuarios', 'allowEmpty' => false, 'message'=>Yii::t('UsrModule.usr','El nombre de usuario ya existe.')),
 			
-			array('codigo_onapre', 'required', 'except'=>'register'),
-			array('codigo_onapre', 'length', 'max'=>20),
-			array('codigo_onapre', 'validarCodigo', 'except'=>'update'),
+			array('cedula', 'required', 'except'=>'register'),
+			array('cedula', 'length', 'max'=>20),
+			//array('cedula', 'validarCodigo', 'except'=>'update'),
 			array('usuario, correo, verifyCode', 'required'),
 			array('usuario, correo', 'uniqueIdentity'),
 			array('correo', 'email'),
@@ -75,15 +75,13 @@ class ProfileForm extends BaseUsrForm
 		), $this->pictureUploadRules);
 	}
 
-	public function validarCodigo($codigo_onapre){
-		//Como validamos que la institución esta ingresando	 el código que le pertenece?
-		$EnteOr = EntesOrganos::model()->findByAttributes(array('codigo_onapre'=>$this->$codigo_onapre));
-		if(empty($EnteOr))
-				$this->addError($codigo_onapre, 'El codigo onapre introducido no existe.');
+	public function validarCodigo($cedula){
 
-		$usuario = Usuarios::model()->findByAttributes(array('codigo_onapre'=>$this->codigo_onapre));
-		if(!empty($usuario))
-				$this->addError($codigo_onapre, 'Codigo ya utilizado.');
+		$usuario = Usuarios::model()->findByAttributes(array('cedula'=>$this->cedula));
+		if(empty($usuario))
+				$this->addError($cedula, 'La cédula no se esta registrada.');
+		/*else(!empty($usuario))
+				$this->addError($cedula, 'Cédula ya existe ya utilizado.');*/
 	}
 
 	/**

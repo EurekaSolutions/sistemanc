@@ -5,7 +5,7 @@
  */
 ?>
 
-	<?php echo $form->textFieldGroup($model,'codigo_onapre',array('widgetOptions'=> array( 'htmlOptions'=>array('span'=>3,'maxlength'=>20,'disabled'=>true /*$model->scenario !== 'register' ? true:false*/)))); ?>
+	<?php echo $form->textFieldGroup($model,'cedula',array('widgetOptions'=> array( 'htmlOptions'=>array('span'=>3,'maxlength'=>20,'disabled'=>true /*$model->scenario !== 'register' ? true:false*/)))); ?>
 	
 	<?php echo $form->textFieldGroup($model,'correo',array('widgetOptions'=> array( 'htmlOptions' => array('span'=>3,'maxlength'=>50,'disabled'=>true)))); ?>
 	

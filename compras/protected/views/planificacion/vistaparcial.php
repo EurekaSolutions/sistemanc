@@ -40,17 +40,18 @@ tr.principaltr th {
 		        </tr>
 		    </thead>
 		    <tbody>
-			 <?php   foreach ($acciones as $key => $value) { ?>
+			 <?php   foreach ($acciones as $key => $value) { 
+			 				$monto = $this->montoAccion($value);?>
 		
 		    	<tr class="principaltr">
 		    		<td><?php echo $value->codigo; ?></td>
 		    		<td><?php echo $value->nombre; ?></td>
-		    		<td><?php echo number_format($value->monto,2,',','.'); ?></td>
-		    		<td><?php echo number_format($valor = rand(0,$value->monto),2,',','.'); ?></td>
+		    		<td><?php echo number_format($monto,2,',','.'); ?></td>
+		    		<td><?php echo number_format($valor = rand(0,$monto),2,',','.'); ?></td>
 		    		<td><strong><?php echo number_format($value->monto - $valor,2,',','.');?></strong></td>
 		    	</tr>
 
-		    <?php $mfinal += $value->monto;
+		    <?php $mfinal += $monto;
 			} ?>
 		    </tbody>
 		</table>	
@@ -70,15 +71,16 @@ tr.principaltr th {
 		    </thead>
 		    <tbody>
 
-			<?php  foreach ($proyectos as $key => $value){ ?> 
+			<?php  foreach ($proyectos as $key => $value){ 
+						$monto = $this->montoProyecto($value);?> 
 		    	<tr class="principaltr">
 		    		<td><?php echo $value->codigo; ?></td>
 		    		<td><?php echo $value->nombre; ?></td>
-		    		<td><?php echo number_format($value->monto,2,',','.'); ?></td>
-		    		<td><?php echo number_format($valor = rand(0,$value->monto),2,',','.'); ?></td>
-		    		<td><strong><?php echo number_format($value->monto - $valor,2,',','.');?></strong></td>
+		    		<td><?php echo number_format($monto,2,',','.'); ?></td>
+		    		<td><?php echo number_format($valor = rand(0,$monto),2,',','.'); ?></td>
+		    		<td><strong><?php echo number_format($monto - $valor,2,',','.');?></strong></td>
 		    	</tr>
-		     <?php $mfinal += $value->monto;
+		     <?php $mfinal += $monto;
 				} ?>
 		    </tbody>
 		</table>
