@@ -1,16 +1,18 @@
 <?php
 
 /**
- * This is the model class for table "compras.entes_organos".
+ * This is the model class for table "public.entes_organos".
  *
- * The followings are the available columns in table 'compras.entes_organos':
+ * The followings are the available columns in table 'public.entes_organos':
  * @property string $ente_organo_id
  * @property string $codigo_onapre
  * @property string $nombre
  * @property string $tipo
  * @property string $ente_adscrito
+ * @property string $creado_por
  *
  * The followings are the available model relations:
+ * @property Proyectos[] $proyectoses
  * @property Usuarios[] $usuarioses
  * @property EntesOrganos $enteAdscrito
  * @property EntesOrganos[] $entesOrganoses
@@ -53,12 +55,11 @@ class EntesOrganos extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'usuarioses' => array(self::HAS_MANY, 'Usuarios', 'codigo_onapre'),
-			'enteAdscrito' => array(self::HAS_ONE, 'EntesAdscritos', 'ente_organo_id'),
-			'entesOrganoses' => array(self::HAS_MANY, 'EntesAdscritos', 'ente_organo_id'),
-			'proyectosAcciones' => array(self::HAS_MANY, 'ProyectosAcciones', 'ente_organo_id'),
-			'proyectos'=>array(self::HAS_MANY, 'ProyectosAcciones', 'ente_organo_id', 'condition'=>'proyectos.tipo=\'P\''),
-			'acciones'=>array(self::HAS_MANY, 'ProyectosAcciones', 'ente_organo_id', 'condition'=>'acciones.tipo=\'C\''),
+			'usuarios' => array(self::HAS_MANY, 'Usuarios', 'ente_organo_id'),
+			'padre' => array(self::HAS_ONE, 'EntesAdscritos', 'padre_id'),
+			'hijo' => array(self::HAS_MANY, 'EntesAdscritos', 'ente_organo_id'),
+			'proyectos' => array(self::HAS_MANY, 'Proyectos', 'ente_organo_id'),
+			'acciones' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones', 'ente_organo_id'),
 		);
 	}
 
@@ -68,11 +69,12 @@ class EntesOrganos extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'ente_organo_id' => 'Ente',
+			'ente_organo_id' => 'Ente Organo',
 			'codigo_onapre' => 'Codigo Onapre',
 			'nombre' => 'Nombre',
 			'tipo' => 'Tipo',
-			'ente_adscrito' => 'Ente Adscrito',
+			'rif' => 'Rif',
+			'creado_por' => 'Creado Por',
 		);
 	}
 
@@ -98,7 +100,8 @@ class EntesOrganos extends CActiveRecord
 		$criteria->compare('codigo_onapre',$this->codigo_onapre,true);
 		$criteria->compare('nombre',$this->nombre,true);
 		$criteria->compare('tipo',$this->tipo,true);
-		$criteria->compare('ente_adscrito',$this->ente_adscrito,true);
+		$criteria->compare('rif',$this->rif,true);
+		$criteria->compare('creado_por',$this->creado_por,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

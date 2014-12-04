@@ -17,7 +17,7 @@
  * The followings are the available model relations:
  * @property CodigosNcm[] $codigosNcms
  * @property Productos $producto
- * @property ProyectoPartidas $proyectoPartida
+ * @property PresupuestoPartidas $proyectoPartida
  * @property Unidades $unidad
  */
 class PresupuestoProductos extends CActiveRecord
@@ -57,7 +57,7 @@ class PresupuestoProductos extends CActiveRecord
 		return array(
 			'codigosNcms' => array(self::MANY_MANY, 'CodigosNcm', 'presupuesto_importacion(presupuesto_id, codigo_ncm_id)'),
 			'producto' => array(self::BELONGS_TO, 'Productos', 'producto_id'),
-			'proyectoPartida' => array(self::BELONGS_TO, 'ProyectoPartidas', 'proyecto_partida_id'),
+			'proyectoPartida' => array(self::BELONGS_TO, 'PresupuestoPartidas', 'proyecto_partida_id'),
 			'unidad' => array(self::BELONGS_TO, 'Unidades', 'unidad_id'),
 		);
 	}

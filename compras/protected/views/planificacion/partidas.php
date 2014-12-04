@@ -54,6 +54,44 @@ $this->breadcrumbs=array(
 	$this->endWidget();
 	unset($form);
 ?>
+
+<?php 
+
+	
+	/** @var TbActiveForm $form */
+	$form = $this->beginWidget('booster.widgets.TbActiveForm',
+	    array(
+	        'id' => 'proyecto-form',
+	        'htmlOptions' => array('class' => 'well'), // for inset effect
+	    )
+	);
+	
+	 echo $form->dropDownListGroup( $partida,	'proyecto_id',
+			array(
+				'wrapperHtmlOptions' => array(
+					'class' => 'col-sm-5',
+				),
+				'label'=>'Seleccione Proyecto o Acción Centralizada a cargar',
+				'widgetOptions' => array(
+
+					'data' => $listas,
+					//'options'=>array($model->proyecto_id => array('selected'=>true)),
+					'htmlOptions' => array(/*'prompt' => 'Seleccionar proyecto',*/'multiple' => false, ),
+				)
+			)
+		); 
+         
+		//echo $form->checkboxGroup($model, 'checkbox');
+		$this->widget(
+		    'booster.widgets.TbButton',
+		    array('buttonType' => 'submit', 'label' => 'Cargar')
+		);
+	 
+	$this->endWidget();
+	unset($form);
+?>
+
+
 <?php
 $tabs = array();
 echo $partidas;
@@ -72,11 +110,24 @@ foreach ($partidas as $key => $partida) {
 					$pestanas[$partida->p1] =  array('label' => $partida->p1.' - ', 'content' => 'Partida '.$partida->nombre, 'items' => array( ));
 				
 				if(!isset($pestanas[$partida->p1]['items'][$partida->p2]))
-						$pestanas[$partida->p1]['items'][$partida->p2] = array('label' => $this->numeroPartida($partida).' - ', 'content' => 'Carga de partidas especificas y sub especificas de la partida 402.01');
+					$pestanas[$partida->p1]['items'][$partida->p2] = array('label' => $this->numeroPartida($partida).' - ', 'content' => 'Carga de partidas especificas y sub especificas de la partida 402.01');
 
-				//if(!isset($pestanas[$partida->p1]['items'][$partida->p2]['items'][$partida->p3]))
-						//$pestanas[$partida->p1]['items'][$partida->p2]['items'][$partida->p3] = array('label' => $this->numeroPartida($partida), 'content' => 'Carga de partidas especificas y sub especificas de la partida 402.01');
-			
+				/*if($this->nivelPartida($partida) == 4)
+				{
+					$nivel4 = array('label' => $this->numeroPartida($partida), 'content' => 'Carga de partidas especificas y sub especificas de la partida 403.07.XX.XX');
+				}*/
+
+				/*if(!isset($pestanas[$partida->p1]['items'][$partida->p2]['items'][$partida->p3]))
+						$pestanas[$partida->p1]['items'][$partida->p2]['content'] = array('label' => $this->numeroPartida($partida), 
+						'content' => $this->widget(
+													    'booster.widgets.TbTabs',
+													    array(
+													        'type' => 'tabs', // 'tabs' or 'pills'
+													        'placement'=>'top',
+													        'tabs' =>array())
+									);
+						);*/
+						
 			switch ($this->nivelPartida($partida)) {
 				case 1:
 					# code...

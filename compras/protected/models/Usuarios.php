@@ -1,19 +1,30 @@
 <?php
 
 /**
- * This is the model class for table "compras.usuarios".
+ * This is the model class for table "public.usuarios".
  *
- * The followings are the available columns in table 'compras.usuarios':
+ * The followings are the available columns in table 'public.usuarios':
  * @property string $usuario_id
- * @property string $codigo_onapre
  * @property string $usuario
  * @property string $contrasena
  * @property string $correo
  * @property string $creado_el
  * @property string $actualizado_el
+ * @property boolean $esta_activo
+ * @property boolean $esta_deshabilitado
+ * @property boolean $correo_verificado
+ * @property string $llave_activacion
+ * @property string $ultima_visita_el
+ * @property string $nombre
+ * @property string $cedula
+ * @property string $cargo
+ * @property string $rol
+ * @property string $ente_organo_id
  *
  * The followings are the available model relations:
- * @property EntesOrganos $codigoOnapre
+ * @property EntesOrganos $enteOrgano
+ * @property UserUsedPasswords[] $userUsedPasswords
+ * @property UserLoginAttempts[] $userLoginAttempts
  */
 class Usuarios extends CActiveRecord
 {
@@ -41,12 +52,12 @@ class Usuarios extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('actualizado_el, repetir_contrasena', 'required', 'on'=>'registro, actualizar'),
-			array('correo, codigo_onapre, creado_el', 'required', 'on'=>'registro'),
+			array('actualizado_el, repetir_contrasena, nombre,', 'required', 'on'=>'registro, actualizar'),
+			array('correo, codigo_onapre, creado_el, rol, ente_organo_id', 'required', 'on'=>'registro'),
 			array('usuario, contrasena','required','on'=>'registro, login'),
 			array('codigo_onapre', 'length', 'max'=>20),
 			array('usuario, contrasena, repetir_contrasena', 'length', 'max'=>50),
-			array('correo', 'length', 'max'=>255),
+			array('correo, llave_activacion, nombre, cedula, cargo', 'length', 'max'=>255),
 			array('correo','email'),
 			array('usuario', 'unique', 'except'=>'register, registro', 'criteria'=>array('condition'=>'usuario_id !=:id ','params'=>array(':id'=>Yii::app()->user->getId())), 'allowEmpty' => false, 'message'=>Yii::t('UsrModule.usr','El nombre de usuario ya existe.')),
 			array('contrasena','ext.validators.EPasswordStrength', 'min'=>$this->min, 'except'=>'actualizarPerfil','message'=>'La {attribute} es debil. La {attribute} debe contener al menos '.$this->min.' caracteres, al menos una letra minuscula, una mayuscula, y un número.'),
@@ -55,9 +66,10 @@ class Usuarios extends CActiveRecord
 			array('creado_el, actualizado_el, ultima_visita_el', 'date', 'format' => array('yyyy-MM-dd', 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm:ss'), 'on' => 'search'),
 			array('activation_key', 'length', 'max'=>128, 'on' => 'search'),
 			array('esta_activo, esta_deshabilitado, correo_verificado', 'boolean'),
+
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('usuario_id, codigo_onapre, usuario, contrasena, correo, creado_el, actualizado_el', 'safe', 'on'=>'search'),
+			array('usuario_id, usuario, contrasena, correo, creado_el, actualizado_el, esta_activo, esta_deshabilitado, correo_verificado, llave_activacion, ultima_visita_el, nombre, cedula, cargo, rol, ente_organo_id', 'safe', 'on'=>'search'),
 			array('repetir_contrasena', 'compare', 'compareAttribute'=>'contrasena', 'operator'=>'==', 'on'=>'registro', 'message'=>'Las contraseñas deben coincidir.'),
 			//array('repetir_contrasena', 'safe'),
 		);
@@ -170,7 +182,7 @@ class Usuarios extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'codigoOnapre' => array(self::BELONGS_TO, 'EntesOrganos', 'codigo_onapre'),
+			'enteOrgano' => array(self::BELONGS_TO, 'EntesOrganos', 'ente_organo_id'),
 			'userLoginAttempts' => array(self::HAS_MANY, 'UserLoginAttempt', 'user_id', 'order'=>'performed_on DESC'),
 			'userUsedPasswords' => array(self::HAS_MANY, 'UserUsedPassword', 'user_id'),
 		);
@@ -195,6 +207,11 @@ class Usuarios extends CActiveRecord
 			'ultima_visita_el' => 'Ultima visita el',
 			'llave_activacion' => 'Llave de activación',
 			'correo_verificado' => 'Correo Verificado',
+			'nombre' => 'Nombre',
+			'cedula' => 'Cedula',
+			'cargo' => 'Cargo',
+			'rol' => 'Rol',
+			'ente_organo_id' => 'Ente Organo',
 		);
 	}
 
@@ -217,7 +234,6 @@ class Usuarios extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('usuario_id',$this->usuario_id,true);
-		$criteria->compare('codigo_onapre',$this->codigo_onapre,true);
 		$criteria->compare('usuario',$this->usuario,true);
 		$criteria->compare('contrasena',$this->contrasena,true);
 		$criteria->compare('correo',$this->correo,true);
@@ -228,6 +244,12 @@ class Usuarios extends CActiveRecord
 		$criteria->compare('ultima_visita_el',$this->ultima_visita_el,true);
 		$criteria->compare('correo_verificado',$this->correo_verificado,true);
 		$criteria->compare('llave_activacion',$this->llave_activacion,true);
+		$criteria->compare('nombre',$this->nombre,true);
+		$criteria->compare('cedula',$this->cedula,true);
+		$criteria->compare('cargo',$this->cargo,true);
+		$criteria->compare('rol',$this->rol,true);
+		$criteria->compare('ente_organo_id',$this->ente_organo_id,true);
+
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

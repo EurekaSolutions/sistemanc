@@ -1,28 +1,26 @@
 <?php
 
 /**
- * This is the model class for table "public.partidas".
+ * This is the model class for table "public.proyectos".
  *
- * The followings are the available columns in table 'public.partidas':
- * @property string $partida_id
- * @property string $p1
- * @property string $p2
- * @property string $p3
- * @property string $p4
+ * The followings are the available columns in table 'public.proyectos':
+ * @property string $proyecto_id
  * @property string $nombre
+ * @property string $codigo
+ * @property string $ente_organo_id
  *
  * The followings are the available model relations:
+ * @property EntesOrganos $enteOrgano
  * @property PresupuestoPartidas[] $presupuestoPartidases
- * @property PartidaProductos[] $partidaProductoses
  */
-class Partidas extends CActiveRecord
+class Proyectos extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'public.partidas';
+		return 'public.proyectos';
 	}
 
 	/**
@@ -33,11 +31,11 @@ class Partidas extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('p1, p2, p3, p4, nombre', 'required'),
-			array('p1, p2, p3, p4', 'length', 'max'=>4),
+			array('nombre, codigo, ente_organo_id', 'required'),
+			array('codigo', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('partida_id, p1, p2, p3, p4, nombre', 'safe', 'on'=>'search'),
+			array('proyecto_id, nombre, codigo, ente_organo_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,8 +47,8 @@ class Partidas extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'presupuestoPartidases' => array(self::HAS_MANY, 'PresupuestoPartidas', 'partida_id'),
-			'partidaProductos' => array(self::HAS_MANY, 'PartidaProductos', 'partida_id'),
+			'enteOrgano' => array(self::BELONGS_TO, 'EntesOrganos', 'ente_organo_id'),
+			'presupuestoPartidases' => array(self::MANY_MANY, 'PresupuestoPartidas', 'presupuesto_partida_proyecto(proyecto_id, presupuesto_partida_id)'),
 		);
 	}
 
@@ -60,12 +58,10 @@ class Partidas extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'partida_id' => 'Partida',
-			'p1' => 'P1',
-			'p2' => 'P2',
-			'p3' => 'P3',
-			'p4' => 'P4',
+			'proyecto_id' => 'Proyecto',
 			'nombre' => 'Nombre',
+			'codigo' => 'Codigo',
+			'ente_organo_id' => 'Ente Organo',
 		);
 	}
 
@@ -87,12 +83,10 @@ class Partidas extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('partida_id',$this->partida_id,true);
-		$criteria->compare('p1',$this->p1,true);
-		$criteria->compare('p2',$this->p2,true);
-		$criteria->compare('p3',$this->p3,true);
-		$criteria->compare('p4',$this->p4,true);
+		$criteria->compare('proyecto_id',$this->proyecto_id,true);
 		$criteria->compare('nombre',$this->nombre,true);
+		$criteria->compare('codigo',$this->codigo,true);
+		$criteria->compare('ente_organo_id',$this->ente_organo_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -103,7 +97,7 @@ class Partidas extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Partidas the static model class
+	 * @return Proyectos the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
