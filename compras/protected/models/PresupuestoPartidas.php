@@ -53,7 +53,7 @@ class PresupuestoPartidas extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'presupuestoProductoses' => array(self::HAS_MANY, 'PresupuestoProductos', 'proyecto_partida_id'),
-			'partida' => array(self::BELONGS_TO, 'Partidas', 'partida_id'),
+			'partidas' => array(self::HAS_MANY, 'Partidas', 'partida_id'),
 			'proyectoses' => array(self::MANY_MANY, 'Proyectos', 'presupuesto_partida_proyecto(presupuesto_partida_id, proyecto_id)'),
 			'presupuestoPartidaAcciones' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones', 'presupuesto_partida_id'),
 			'presupuestoPartidaProyecto' => array(self::HAS_MANY, 'PresupuestoPartidaProyecto', 'presupuesto_partida_id'),

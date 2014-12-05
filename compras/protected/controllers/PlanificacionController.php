@@ -196,11 +196,11 @@ class PlanificacionController extends Controller
 	}
 
 
-	public function montoAccion(Acciones $accion){
+	public function montoAccion(PresupuestoPartidaAcciones $accion){
 
 			$monto = 0;
-			foreach ($proyecto->presupuestoPartidaAcciones->presupuestoPartida as $key => $partida) {
-				$monto += $partida->monto;
+			foreach ($accion->presupuestoPartida as $key => $presupuestoPartida) {
+				$monto += $presupuestoPartida->monto_presupuestado;
 			}
 			return $monto;
 
@@ -209,8 +209,8 @@ class PlanificacionController extends Controller
 	public function montoProyecto(Proyectos $proyecto){
 
 			$monto = 0;
-			foreach ($proyecto->presupuestoPartidas as $key => $partida) {
-				$monto += $partida->monto_presupuestado;
+			foreach ($proyecto->presupuestoPartidas as $key => $presupuestoPartida) {
+				$monto += $presupuestoPartida->monto_presupuestado;
 			}
 			return $monto;
 
@@ -241,21 +241,37 @@ class PlanificacionController extends Controller
 	{
 		$proyectoSel = new Proyectos('search');
 		$accionSel = new Acciones('search');
+		$presupuestoPartidaAcciones = new PresupuestoPartidaAcciones();
+
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+		$presupuestoPartidaAcciones->ente_organo_id = $usuario->ente_organo_id;
 
 		$partidas = new PresupuestoPartidas();
 
-		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+		
 		$partidass = '';
-		if(isset($_POST['ProyectosAcciones']))
+		if(isset($_POST['Proyectos']) /*&& isset($_POST['Acciones'])*/)
 		{
-			$proyectoSel->attributes = $_POST['ProyectosAcciones'];
-			$partidas = $proyectoSel->proyectoPartidas;
+			
+			// Para el manejo del dropdown de acciones y proyectos
+			if(strpos('a', $_POST['Proyectos']['proyecto_id']))
+			{
+				$accionSel->accion_id = explode('a',$_POST['Proyectos']['proyecto_id']);
+				$presupuestoPartidaAcciones->accion_id = $accionSel->accion_id;
+				
+
+			}else
+				$proyectoSel->attributes = $_POST['Proyectos'];
+
+
+			$presupuestoPartidas = $proyectoSel->presupuestoPartidas;
+			print_r($_POST['Proyectos']['proyecto_id']);
 			$partidass = 'Partidas: <br>';
 			//echo $proyectoSel->proyecto_id;
-			$partidas = PresupuestoPartidas::model()->findAllByAttributes(array('proyecto_id'=>$proyectoSel->proyecto_id));
+			//$partidas = PresupuestoPartidas::model()->findAllByAttributes(array('proyecto_id'=>$proyectoSel->proyecto_id));
 			//$partidas = $proyectoSel->proyectoPartidas;
 			//Yii::log('FUNCIONA!!!!!!','error');
-			foreach ($partidas as $key => $partida) {
+			foreach ($presupuestoPartidas as $key => $partida) {
 				$partida = $partida->partida;
 
 				$numPartida = $this->numeroPartida($partida);
@@ -285,7 +301,7 @@ class PlanificacionController extends Controller
 			}
 		}
 
-		$this->render('partidas', array('usuario'=>$usuario,'proyectoSel'=>$proyectoSel,'partidas'=>$partidass));
+		$this->render('partidas', array('usuario'=>$usuario,'proyectoSel'=>$proyectoSel,'accionSel'=>$accionSel,'partidas'=>$partidass));
 	}
 
 

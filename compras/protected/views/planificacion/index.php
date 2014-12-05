@@ -62,8 +62,8 @@ tr.principaltr th {
 			 				$monto = $this->montoAccion($value);?>
 		
 		    	<tr class="principaltr">
-		    		<td><?php echo $value->presupuestoPartidaAcciones->codigo_accion; ?></td>
-		    		<td><?php echo $value->nombre; ?></td>
+		    		<td><?php echo $value->codigo_accion; ?></td>
+		    		<td><?php echo $value->accion->nombre; ?></td>
 		    		<td><?php echo number_format($monto,2,',','.'); ?></td>
 		    	</tr>
 

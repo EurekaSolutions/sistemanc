@@ -20,8 +20,14 @@ $this->breadcrumbs=array(
 	);
 	
 
-	$lista_acciones = CHtml::listData($usuario->enteOrgano->acciones, 'proyecto_id', 'nombre');
-	$lista_proyectos = CHtml::listData($usuario->enteOrgano->proyectos, 'proyecto_id', 'nombre');
+	$lista_acciones = CHtml::listData($usuario->enteOrgano->acciones, function($accion) {
+																return CHtml::encode('a'.$accion->accion->accion_id);
+															}, function($accion) {
+																return CHtml::encode($accion->codigo_accion.' - '.$accion->accion->nombre);
+															});
+	$lista_proyectos = CHtml::listData($usuario->enteOrgano->proyectos, 'proyecto_id', function($proyecto) {
+																return CHtml::encode($proyecto->codigo.' - '.$proyecto->nombre);
+															},'Proyectos');
 	 
 	$listas = array(!empty($lista_acciones)?'Acciones Centralizadas':null=>$lista_acciones,
 	 				!empty($lista_proyectos)?'Proyectos':null =>$lista_proyectos);
@@ -44,7 +50,20 @@ $this->breadcrumbs=array(
 				)
 			)
 		); 
-         
+	/* echo $form->dropDownListGroup( $accionSel,	'accion_id',
+			array(
+				'wrapperHtmlOptions' => array(
+					'class' => 'col-sm-2',
+				),
+				'label'=>'Seleccione Proyecto o Acción Centralizada a cargar',
+				'widgetOptions' => array(
+
+					'data' => $lista_acciones,
+					//'options'=>array($model->proyecto_id => array('selected'=>true)),
+					'htmlOptions' => array(multiple' => false, ),
+				)
+			)
+		); */
 		//echo $form->checkboxGroup($model, 'checkbox');
 		$this->widget(
 		    'booster.widgets.TbButton',
@@ -95,12 +114,13 @@ $this->breadcrumbs=array(
 <?php
 $tabs = array();
 echo $partidas;
-
-	if($proyectoSel)
-		$partidas = $proyectoSel->presupuestoPartidas;
+$partidas = array();
+	/*if($proyectoSel)
+		$partidas = $proyectoSel->presupuestoPartidas->partidas;
 	elseif($accionSel)
-		$partidas = $accionSel->presupuestoPartidaAcciones->presupuestoPartida;
-	
+		$partidas = $accionSel->presupuestoPartidaAcciones->presupuestoPartida->partidas;*/
+
+
 $pestanas = array();
 foreach ($partidas as $key => $partida) {
 
@@ -199,7 +219,7 @@ foreach ($partidas as $key => $partida) {
 	         
 	        
 	//$tabs=array_merge($tabs,)
-}
+}/*
 print_r($pestanas['401']['items']);
 $this->widget(
     'booster.widgets.TbTabs',
@@ -209,159 +229,7 @@ $this->widget(
         'justified'=>'true',
         'tabs' => $pestanas,
       )
-);
+);*/
 
-$this->widget(
-    'booster.widgets.TbTabs',
-    array(
-        'type' => 'pills', // 'tabs' or 'pills'
-        'placement'=>'top',
-        'justified'=>'true',
-        'tabs' => array(
-				            array('label' => '401','content' => 'Partida 401', 'active' => true, 'items' => array(
-				                    array('label' => '401.06', 'content'=>$this->widget(
-												    'booster.widgets.TbTabs',
-												    array(
-												        'type' => 'tabs', // 'tabs' or 'pills'
-												        'placement'=>'top',
-												        'tabs' => array(
-												            array('label' => '401.06.02', 'content' => '<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
-																	    <thead>
-																	        <tr class="principaltr">
-																	        	 <th data-field="nombreoue">Denominación</th>
-																	            <th data-field="nombreoue">Código</th>
-																	            <th data-field="tipo">Costo unidad</th>
-																	            <th data-field="conaprepadre">Cantidad</th>
-																	            <th data-field="oadscripcion">Unidad de medida</th>
-																	            <th data-field="conaprepadre">Bs.</th>
-																	            <th data-field="conaprepadre">Total Bs.</th>
-																	        </tr>
-																	    </thead>
-																	    <tbody>
-																	    	<tr class="principaltr">
-
-																	    		<td> 
-																	    			Verduras frescas	
-																				</td>
-
-
-																				<td> 	
-																					27112703	
-																				</td>
-
-																	    		<td>
-																	    			 <div class="form-group">
-																				    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Costo unidad">
-																				  	</div>
-																	    		</td>
-
-																	    		<td>
-																	    			<div class="form-group">
-																				    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Cantidad">
-																				  	</div>
-																	    		</td>
-
-																	    		<td>
-																	    			<div class="form-group">
-																				    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Unidad de medida">
-																				  	</div>
-																	    		</td>
-																	    		<td><div class="form-group">
-																				    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Bs">
-																				  	</div></td>
-																	    	</tr>
-
-																	    	<tr class="principaltr">
-
-																	    		<td> 
-																	    			Harina verdura	
-																				</td>
-
-
-																				<td> 27112703
-																				</td>
-
-																	    		<td>
-																	    			 <div class="form-group">
-																				    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Costo unidad">
-																				  	</div>
-																	    		</td>
-
-																	    		<td>
-																	    			<div class="form-group">
-																				    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Cantidad">
-																				  	</div>
-																	    		</td>
-
-																	    		<td>
-																	    			<div class="form-group">
-																				    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Unidad de medida">
-																				  	</div>
-																	    		</td>
-																	    		<td><div class="form-group">
-																				    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Bs">
-																				  	</div></td>
-																	    	</tr>
-																	    </tbody>
-																	</table>', 'active' => true, ),
-																							            array('label' => '401.06.06', 'content' => ' <div style="max-width:300px">
-															 <div class="form-group">
-																<select class="form-control">
-																  <option value="">Código NCM</option>
-																  <option value="corpovex">3815.19.00.90</option>
-																</select>
-															</div>
-
-															 <div class="form-group">
-																<input type="email" class="form-control" id="exampleInputEmail1" placeholder="cantidad">
-															</div>
-
-															 <div class="form-group">
-																<input type="email" class="form-control" id="exampleInputEmail1" placeholder="monto">
-															</div>
-
-															<div class="form-group">
-																<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Fecha">
-															</div>
-
-
-															<div class="form-group">
-																<select class="form-control">
-																  <option value="">Tipo</option>
-																  <option value="corpovex">Corpovex</option>
-																  <option>Licitación internacion</option>
-																</select>
-															</div>
-
-															<div class="form-group">
-																<select class="form-control">
-																  <option value="">Divisa</option>
-																  <option value="corpovex">Dolar</option>
-																  <option>Euro</option>
-																</select>
-															</div>
-															</div>',),
-												            array('label' => '401.06.28', 'content' => 'Lista de Partidas sub especificas 401.35.04',),
-												            array('label' => '401.06.39', 'content' => 'Lista de Partidas sub especificas 401.35.04', ),
-												        ),
-												    ),true),
-												     'view'=>'_especificos'),
-				                    array('label' => '401.35', 'content' => 'Carga de partidas especificas y sub especificas de la partida 401.35')),
-				            ),
-				            array('label' => '402', 'content' => 'Partida 402', 'items' => array('01'=>
-				                    array('label' => '402.01', 'content' => 'Carga de partidas especificas y sub especificas de la partida 402.01'),
-				                    '04'=>array('label' => '402.04', 'content' => 'Carga de partidas especificas y sub especificas de la partida 402.04')),
-				            ),
-				            array('label' => '403', 'content' => 'Partida 403', 'items' => array(
-				                    array('label' => '403.07', 'content' => 'Carga de partidas especificas y sub especificas de la partida 403.07'),
-				                    array('label' => '403.51', 'content' => 'Carga de partidas especificas y sub especificas de la partida 403.51')),
-				            ),
-				            array('label' => '404', 'content' => 'Partida 404', 'items' => array(
-				                    array('label' => '404.09', 'content' => 'Carga de partidas especificas y sub especificas de la partida 404.09'),
-				                    array('label' => '404.15', 'content' => 'Carga de partidas especificas y sub especificas de la partida 404.15')),
-				            ),
-        				),
-    )
-);
 
 ?>
