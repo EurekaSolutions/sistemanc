@@ -104,8 +104,8 @@
   <hop> <from>longitud</from><to>Filter rows</to><enabled>Y</enabled> </hop>
   <hop> <from>Filter rows</from><to>Add constants 2</to><enabled>Y</enabled> </hop>
   <hop> <from>Filter rows</from><to>Add constants 3</to><enabled>Y</enabled> </hop>
-  <hop> <from>Add constants 2</from><to>Insert &#x2f; Update</to><enabled>Y</enabled> </hop>
-  <hop> <from>Add constants 3</from><to>Insert &#x2f; Update</to><enabled>Y</enabled> </hop>
+  <hop> <from>Add constants 2</from><to>Insert &#x2f; Update</to><enabled>N</enabled> </hop>
+  <hop> <from>Add constants 3</from><to>Insert &#x2f; Update</to><enabled>N</enabled> </hop>
   </order>
   <step>
     <name>Add constants</name>
@@ -390,8 +390,8 @@
     <spreadsheet_type>JXL</spreadsheet_type>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>79</xloc>
-      <yloc>182</yloc>
+      <xloc>61</xloc>
+      <yloc>39</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
