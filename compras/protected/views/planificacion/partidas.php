@@ -113,7 +113,7 @@ $this->breadcrumbs=array(
 
 <?php
 $tabs = array();
-echo $partidas;
+var_export($partidas);
 $partidas = array();
 	/*if($proyectoSel)
 		$partidas = $proyectoSel->presupuestoPartidas->partidas;

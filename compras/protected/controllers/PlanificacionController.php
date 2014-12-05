@@ -229,7 +229,7 @@ class PlanificacionController extends Controller
 
 		$proyectos = $usuario->enteOrgano->proyectos;
 		
-		$acciones = $usuario->enteOrgano->acciones;
+		$acciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('ente_organo_id'=>$usuario->ente_organo_id));//$usuario->enteOrgano->acciones;
 		
 		
 		$usuario = $usuario->model()->findByPk(Yii::app()->user->getId());
@@ -249,9 +249,10 @@ class PlanificacionController extends Controller
 		$presupuestoPartidaAcciones = new PresupuestoPartidaAcciones();
 
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
-		$presupuestoPartidaAcciones->ente_organo_id = $usuario->ente_organo_id;
+		
 
-		$partidas = new PresupuestoPartidas();
+		//$partidas = new PresupuestoPartidas();
+		$partidas =array();
 
 		
 		$partidass = '';
@@ -263,15 +264,23 @@ class PlanificacionController extends Controller
 			{
 				$accionSel->accion_id = explode('a',$_POST['Proyectos']['proyecto_id']);
 				$presupuestoPartidaAcciones->accion_id = $accionSel->accion_id;
-				
+				$presupuestoPartidaAcciones->ente_organo_id = $usuario->ente_organo_id;
 
-			}else
+				$partidas = $presupuestoPartidaAcciones->presupuestoPartida->partidas;
+			}else{
 				$proyectoSel->attributes = $_POST['Proyectos'];
+
+				$partidas = $proyectoSel->presupuestoPartidas->partidas;
+				
+				//$partidas = Proyectos::model()->findByPk($proyectoSel->proyecto_id)->presupuestoPartidas;
+				//$partidas = $proyectoSel->presupuestoPartidaProyecto->presupuestoPartida;
+
+			}
 
 
 			$presupuestoPartidas = $proyectoSel->presupuestoPartidas;
 			print_r($_POST['Proyectos']['proyecto_id']);
-			$partidass = 'Partidas: <br>';
+			/*$partidass = 'Partidas: <br>';
 			//echo $proyectoSel->proyecto_id;
 			//$partidas = PresupuestoPartidas::model()->findAllByAttributes(array('proyecto_id'=>$proyectoSel->proyecto_id));
 			//$partidas = $proyectoSel->proyectoPartidas;
@@ -303,10 +312,10 @@ class PlanificacionController extends Controller
 						//$partidass .= $this->productosPartidas($partida);
 					}
 			
-			}
+			}*/
 		}
 
-		$this->render('partidas', array('usuario'=>$usuario,'proyectoSel'=>$proyectoSel,'accionSel'=>$accionSel,'partidas'=>$partidass));
+		$this->render('partidas', array('usuario'=>$usuario,'proyectoSel'=>$proyectoSel,'accionSel'=>$accionSel,'partidas'=>$partidas));
 	}
 
 

@@ -58,7 +58,7 @@ tr.principaltr th {
 		        </tr>
 		    </thead>
 		    <tbody>
-			 <?php   foreach ($acciones as $key => $value) { 
+			 <?php   foreach ($usuario->enteOrgano->acciones as $key => $value) { 
 			 				$monto = $this->montoAccion($value);?>
 		
 		    	<tr class="principaltr">

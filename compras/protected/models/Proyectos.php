@@ -49,7 +49,7 @@ class Proyectos extends CActiveRecord
 		return array(
 			'enteOrgano' => array(self::BELONGS_TO, 'EntesOrganos', 'ente_organo_id'),
 			'presupuestoPartidas' => array(self::MANY_MANY, 'PresupuestoPartidas', 'presupuesto_partida_proyecto(proyecto_id, presupuesto_partida_id)'),
-			'presupuestoPartidaProyecto' => array(self::MANY_MANY, 'PresupuestoPartidaProyecto', 'proyecto_id'),
+			'presupuestoPartidaProyecto' => array(self::HAS_MANY, 'PresupuestoPartidaProyecto', 'proyecto_id'),
 		);
 	}
 

@@ -64,6 +64,7 @@ class EntesOrganos extends CActiveRecord
 			'hijo' => array(self::HAS_MANY, 'EntesAdscritos', 'ente_organo_id'),
 			'proyectos' => array(self::HAS_MANY, 'Proyectos', 'ente_organo_id'),
 			'acciones' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones', 'ente_organo_id'),
+			'accionesUni' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones', 'ente_organo_id', 'select'=>'DISTINCT(accion_id)'),
 		);
 	}
 
