@@ -10,6 +10,8 @@
  * @property string $fecha_desde
  * @property string $fecha_hasta
  * @property string $tipo
+ * @property string $anho
+ * @string $ente_organo_id
  *
  * The followings are the available model relations:
  * @property PresupuestoProductos[] $presupuestoProductoses
@@ -35,12 +37,12 @@ class PresupuestoPartidas extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('partida_id, monto_presupuestado, fecha_desde, fecha_hasta', 'required'),
+			array('partida_id, monto_presupuestado, fecha_desde, fecha_hasta, anho, ente_organo_id', 'required'),
 			array('monto_presupuestado', 'length', 'max'=>38),
 			array('tipo', 'length', 'max'=>1),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('presupuesto_partida_id, partida_id, monto_presupuestado, fecha_desde, fecha_hasta, tipo', 'safe', 'on'=>'search'),
+			array('presupuesto_partida_id, partida_id, monto_presupuestado, fecha_desde, fecha_hasta, tipo, anho, ente_organo_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -72,6 +74,8 @@ class PresupuestoPartidas extends CActiveRecord
 			'fecha_desde' => 'Fecha Desde',
 			'fecha_hasta' => 'Fecha Hasta',
 			'tipo' => 'Tipo',
+			'anho' => 'Anho',
+			'ente_organo_id' => 'Ente Organo',
 		);
 	}
 
@@ -99,6 +103,8 @@ class PresupuestoPartidas extends CActiveRecord
 		$criteria->compare('fecha_desde',$this->fecha_desde,true);
 		$criteria->compare('fecha_hasta',$this->fecha_hasta,true);
 		$criteria->compare('tipo',$this->tipo,true);
+		$criteria->compare('anho',$this->anho,true);
+		$criteria->compare('ente_organo_id',$this->ente_organo_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

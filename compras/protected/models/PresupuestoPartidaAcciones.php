@@ -6,7 +6,6 @@
  * The followings are the available columns in table 'public.presupuesto_partida_acciones':
  * @property string $accion_id
  * @property string $presupuesto_partida_id
- * @property string $anho
  * @property string $codigo_accion
  * @property string $ente_organo_id
  * @property string $codigo_accion_padre
@@ -34,12 +33,12 @@ class PresupuestoPartidaAcciones extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('accion_id, presupuesto_partida_id, anho, codigo_accion, ente_organo_id', 'required'),
+			array('accion_id, presupuesto_partida_id, codigo_accion, ente_organo_id', 'required'),
 			array('codigo_accion', 'length', 'max'=>100),
 			array('codigo_accion_padre', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('accion_id, presupuesto_partida_id, anho, codigo_accion, ente_organo_id,codigo_accion_padre', 'safe', 'on'=>'search'),
+			array('accion_id, presupuesto_partida_id, codigo_accion, ente_organo_id,codigo_accion_padre', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -65,7 +64,6 @@ class PresupuestoPartidaAcciones extends CActiveRecord
 		return array(
 			'accion_id' => 'Accion',
 			'presupuesto_partida_id' => 'Presupuesto Partida',
-			'anho' => 'Anho',
 			'codigo_accion' => 'Codigo Accion',
 			'ente_organo_id' => 'Ente Organo',
 			'codigo_accion_padre' => 'Codigo Accion Padre',
@@ -92,7 +90,6 @@ class PresupuestoPartidaAcciones extends CActiveRecord
 
 		$criteria->compare('accion_id',$this->accion_id,true);
 		$criteria->compare('presupuesto_partida_id',$this->presupuesto_partida_id,true);
-		$criteria->compare('anho',$this->anho,true);
 		$criteria->compare('codigo_accion',$this->codigo_accion,true);
 		$criteria->compare('ente_organo_id',$this->ente_organo_id,true);
 		$criteria->compare('codigo_accion_padre',$this->codigo_accion_padre,true);

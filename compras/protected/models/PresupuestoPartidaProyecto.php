@@ -6,7 +6,6 @@
  * The followings are the available columns in table 'public.presupuesto_partida_proyecto':
  * @property string $proyecto_id
  * @property string $presupuesto_partida_id
- * @property string $anho
  */
 class PresupuestoPartidaProyecto extends CActiveRecord
 {
@@ -26,10 +25,10 @@ class PresupuestoPartidaProyecto extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('proyecto_id, presupuesto_partida_id, anho', 'required'),
+			array('proyecto_id, presupuesto_partida_id', 'required'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('proyecto_id, presupuesto_partida_id, anho', 'safe', 'on'=>'search'),
+			array('proyecto_id, presupuesto_partida_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,7 +53,6 @@ class PresupuestoPartidaProyecto extends CActiveRecord
 		return array(
 			'proyecto_id' => 'Proyecto',
 			'presupuesto_partida_id' => 'Presupuesto Partida',
-			'anho' => 'Anho',
 		);
 	}
 
@@ -78,7 +76,6 @@ class PresupuestoPartidaProyecto extends CActiveRecord
 
 		$criteria->compare('proyecto_id',$this->proyecto_id,true);
 		$criteria->compare('presupuesto_partida_id',$this->presupuesto_partida_id,true);
-		$criteria->compare('anho',$this->anho,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
