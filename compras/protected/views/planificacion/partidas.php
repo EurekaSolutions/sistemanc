@@ -50,6 +50,22 @@ $this->breadcrumbs=array(
 				)
 			)
 		); 
+
+	 	 echo $form->dropDownListGroup( $partidaSel, 'partida_id',
+			array(
+				'wrapperHtmlOptions' => array(
+					'class' => 'col-sm-5',
+				),
+				'label'=>'Seleccione Partida para cargar sus productos',
+				'widgetOptions' => array(
+
+					'data' => CHtml::listData($partidas,'partida_id','nombre' ),
+					//'options'=>array($model->proyecto_id => array('selected'=>true)),
+					'htmlOptions' => array('multiple' => false, ),
+				)
+			)
+		); 
+
 		//echo $form->checkboxGroup($model, 'checkbox');
 		$this->widget(
 		    'booster.widgets.TbButton',
@@ -64,7 +80,7 @@ $this->breadcrumbs=array(
 
 	//print_r($partidas);
 	/* @var TbActiveForm $form */
-	$form = $this->beginWidget('booster.widgets.TbActiveForm',
+	/*$form = $this->beginWidget('booster.widgets.TbActiveForm',
 	    array(
 	        'id' => 'partida-form',
 	        'htmlOptions' => array('class' => 'well'), // for inset effect
@@ -93,7 +109,7 @@ $this->breadcrumbs=array(
 		);
 	 
 	$this->endWidget();
-	unset($form);
+	unset($form);*/
 ?>
 
 
