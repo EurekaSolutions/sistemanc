@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'public.acciones':
  * @property string $accion_id
  * @property string $nombre
+ * @property string $codigo
  *
  * The followings are the available model relations:
  * @property PresupuestoPartidaAcciones[] $presupuestoPartidaAcciones
@@ -29,9 +30,10 @@ class Acciones extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('nombre', 'required'),
+			array('codigo', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('accion_id, nombre', 'safe', 'on'=>'search'),
+			array('accion_id, nombre, codigo', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,6 +57,7 @@ class Acciones extends CActiveRecord
 		return array(
 			'accion_id' => 'Accion',
 			'nombre' => 'Nombre',
+			'codigo' => 'Codigo',
 		);
 	}
 
@@ -78,6 +81,7 @@ class Acciones extends CActiveRecord
 
 		$criteria->compare('accion_id',$this->accion_id,true);
 		$criteria->compare('nombre',$this->nombre,true);
+		$criteria->compare('codigo',$this->codigo,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
