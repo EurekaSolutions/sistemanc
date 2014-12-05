@@ -95,7 +95,10 @@ class PlanificacionController extends Controller
 	        if($model->save())
 	        {
 	           $entesAscritos = new EntesAdscritos;
-	           $entesAscritos->padre_id = $model->ente_organo_id; // aqui va el id del usuario en la tabla enteorganos de quien lo crea.
+	           $usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+			   
+	           $entesAscritos->padre_id = $usuario->ente_organo_id;
+	           
 	           $entesAscritos->ente_organo_id = $model->ente_organo_id;
 	           $entesAscritos->fecha_desde =  date("Y-m-d");
 	           $entesAscritos->fecha_hasta = "2199-12-31";
