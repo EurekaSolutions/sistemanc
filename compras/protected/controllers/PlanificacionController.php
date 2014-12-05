@@ -24,15 +24,15 @@ class PlanificacionController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view', 'modal', 'agregarproyecto', 'agregarcentralizada', 'administracion', 'crearente'),
-				'users'=>array('*'),
+				'users'=>array('@'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update','partidas','vistaparcial'),
-				'users'=>array('*'),
+				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
-				'users'=>array('*'),
+				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -124,17 +124,53 @@ class PlanificacionController extends Controller
 	
 	public function actionAgregarproyecto()
 	{
-		$this->render('agregarproyecto');
+		
+
+		$model = new Proyectos;
+
+		if(isset($_POST['Proyectos']))
+	    {
+
+	        $model->attributes=$_POST['Proyectos'];
+	      
+	        if($model->save())
+	        {
+	           $entesAscritos = new EntesAdscritos;
+	           
+	           $usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+			   
+	           $entesAscritos->padre_id = $usuario->ente_organo_id;
+	           
+	           $entesAscritos->ente_organo_id = $model->ente_organo_id;
+	           $entesAscritos->fecha_desde =  date("Y-m-d");
+	           $entesAscritos->fecha_hasta = "2199-12-31";
+			   $entesAscritos->save();
+
+			   Yii::app()->user->setFlash('success', "Ente creado con éxito!");
+
+			  // $this->redirect(array('view','id'=>$model->producto_id));
+			   $model = new EntesOrganos();
+
+			    $this->render('crearente',array(
+						'model'=>$model,
+			   ));
+	            // form inputs are valid, do something here
+	            return;
+	        }
+	    }
+		
+		$this->render('agregarproyecto',array('model'=>$model));
+
 	}
 
 	public function actionAgregarcentralizada()
 	{
 		$acciones = new Acciones;
 
-		$acciones = Acciones::model()->findAll();
+		$accionestodas = Acciones::model()->findAll();
 
 		
-		$this->render('agregarcentralizada',array('acciones'=>$acciones));
+		$this->render('agregarcentralizada',array('acciones'=>$acciones, 'accionestodas' => $accionestodas));
 	}
 
 	public function actionAdministracion()
