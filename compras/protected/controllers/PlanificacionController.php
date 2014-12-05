@@ -270,15 +270,18 @@ class PlanificacionController extends Controller
 			}else{
 				$proyectoSel->attributes = $_POST['Proyectos'];
 
-				$partidas = $proyectoSel->presupuestoPartidas->partidas;
-				
-				//$partidas = Proyectos::model()->findByPk($proyectoSel->proyecto_id)->presupuestoPartidas;
+				//$partidas = $proyectoSel->presupuestoPartidas;
+				//$partidas = ]
+				$partidas = Proyectos::model()->findByPk($proyectoSel->proyecto_id)->presupuestoPartidas;
+				foreach (Proyectos::model()->findByPk($proyectoSel->proyecto_id)->presupuestoPartidas as $key => $partida) {
+					$partidas[$key] = $partida->partidas;
+ 				}
+				//$partidas = Partidas::model()->findByPk($partidas[0]->partida_id);
 				//$partidas = $proyectoSel->presupuestoPartidaProyecto->presupuestoPartida;
 
 			}
 
 
-			$presupuestoPartidas = $proyectoSel->presupuestoPartidas;
 			print_r($_POST['Proyectos']['proyecto_id']);
 			/*$partidass = 'Partidas: <br>';
 			//echo $proyectoSel->proyecto_id;

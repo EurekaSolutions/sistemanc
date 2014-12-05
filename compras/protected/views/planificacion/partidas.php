@@ -76,24 +76,24 @@ $this->breadcrumbs=array(
 
 <?php 
 
-	
-	/** @var TbActiveForm $form *//*
-	$form = $this->beginWidget('booster.widgets.TbActiveForm',
+	print_r($partidas);
+	/* @var TbActiveForm $form */
+	/*$form = $this->beginWidget('booster.widgets.TbActiveForm',
 	    array(
-	        'id' => 'proyecto-form',
+	        'id' => 'partida-form',
 	        'htmlOptions' => array('class' => 'well'), // for inset effect
 	    )
 	);
 	
-	 echo $form->dropDownListGroup( $partida,	'proyecto_id',
+	 echo $form->dropDownListGroup( Partidas::model()->findAll(), 'partida_id',
 			array(
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
 				),
-				'label'=>'Seleccione Proyecto o Acción Centralizada a cargar',
+				'label'=>'Seleccione Partida para cargar sus productos',
 				'widgetOptions' => array(
 
-					'data' => $listas,
+					'data' => CHtml::listData(Partidas::model()->findAll(),'partida_id','nombre' ),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
 					'htmlOptions' => array('multiple' => false, ),
 				)
@@ -113,7 +113,7 @@ $this->breadcrumbs=array(
 
 <?php
 $tabs = array();
-var_export($partidas);
+
 $partidas = array();
 	/*if($proyectoSel)
 		$partidas = $proyectoSel->presupuestoPartidas->partidas;
