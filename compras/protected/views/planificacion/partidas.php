@@ -59,7 +59,7 @@ $this->breadcrumbs=array(
 				'label'=>'Seleccione Partida para cargar sus productos',
 				'widgetOptions' => array(
 
-					'data' => CHtml::listData($partidas,'partida_id','nombre' ),
+					'data' => CHtml::listData($partidas,'partida_id', function($partida){ return CHtml::encode($this->numeroPartida($partida).' - '.$partida->nombre);}),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
 					'htmlOptions' => array('multiple' => false, ),
 				)
