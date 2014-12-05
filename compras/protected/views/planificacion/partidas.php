@@ -50,20 +50,6 @@ $this->breadcrumbs=array(
 				)
 			)
 		); 
-	/* echo $form->dropDownListGroup( $accionSel,	'accion_id',
-			array(
-				'wrapperHtmlOptions' => array(
-					'class' => 'col-sm-2',
-				),
-				'label'=>'Seleccione Proyecto o Acción Centralizada a cargar',
-				'widgetOptions' => array(
-
-					'data' => $lista_acciones,
-					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array(multiple' => false, ),
-				)
-			)
-		); */
 		//echo $form->checkboxGroup($model, 'checkbox');
 		$this->widget(
 		    'booster.widgets.TbButton',
@@ -76,16 +62,16 @@ $this->breadcrumbs=array(
 
 <?php 
 
-	print_r($partidas);
+	//print_r($partidas);
 	/* @var TbActiveForm $form */
-	/*$form = $this->beginWidget('booster.widgets.TbActiveForm',
+	$form = $this->beginWidget('booster.widgets.TbActiveForm',
 	    array(
 	        'id' => 'partida-form',
 	        'htmlOptions' => array('class' => 'well'), // for inset effect
 	    )
 	);
 	
-	 echo $form->dropDownListGroup( Partidas::model()->findAll(), 'partida_id',
+	 echo $form->dropDownListGroup( $partidaSel, 'partida_id',
 			array(
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
@@ -93,7 +79,7 @@ $this->breadcrumbs=array(
 				'label'=>'Seleccione Partida para cargar sus productos',
 				'widgetOptions' => array(
 
-					'data' => CHtml::listData(Partidas::model()->findAll(),'partida_id','nombre' ),
+					'data' => CHtml::listData($partidas,'partida_id','nombre' ),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
 					'htmlOptions' => array('multiple' => false, ),
 				)
@@ -103,11 +89,11 @@ $this->breadcrumbs=array(
 		//echo $form->checkboxGroup($model, 'checkbox');
 		$this->widget(
 		    'booster.widgets.TbButton',
-		    array('buttonType' => 'submit', 'label' => 'Cargar')
+		    array('buttonType' => 'submit', 'label' => 'Seleccionar')
 		);
 	 
 	$this->endWidget();
-	unset($form);*/
+	unset($form);
 ?>
 
 

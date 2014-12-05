@@ -246,6 +246,7 @@ class PlanificacionController extends Controller
 	{
 		$proyectoSel = new Proyectos('search');
 		$accionSel = new Acciones('search');
+		$partidaSel = new Partidas('search');
 		$presupuestoPartidaAcciones = new PresupuestoPartidaAcciones();
 
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
@@ -278,6 +279,10 @@ class PlanificacionController extends Controller
  				}
 				//$partidas = Partidas::model()->findByPk($partidas[0]->partida_id);
 				//$partidas = $proyectoSel->presupuestoPartidaProyecto->presupuestoPartida;
+
+				if(isset($_POST['Partidas'])){
+					$partidaSel->attributes = $_POST['Partidas'];
+				}
 
 			}
 
@@ -318,7 +323,7 @@ class PlanificacionController extends Controller
 			}*/
 		}
 
-		$this->render('partidas', array('usuario'=>$usuario,'proyectoSel'=>$proyectoSel,'accionSel'=>$accionSel,'partidas'=>$partidas));
+		$this->render('partidas', array('usuario'=>$usuario,'proyectoSel'=>$proyectoSel,'accionSel'=>$accionSel,'partidas'=>$partidas,'partidaSel'=>$partidaSel));
 	}
 
 
