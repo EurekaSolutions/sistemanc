@@ -75,7 +75,48 @@ class PlanificacionController extends Controller
 
 	public function actionCrearente()
 	{
-		$this->render('crearente');
+		$model = new EntesOrganos();
+
+	    // uncomment the following code to enable ajax-based validation
+	    /*
+	    if(isset($_POST['ajax']) && $_POST['ajax']==='entes-organos-crearente-form')
+	    {
+	        echo CActiveForm::validate($model);
+	        Yii::app()->end();
+	    }
+	    */
+
+	    if(isset($_POST['EntesOrganos']))
+	    {
+
+	        $model->attributes=$_POST['EntesOrganos'];
+	        $model->creado_por= 'snc';
+	        $model->tipo = 'E';
+	        if($model->save())
+	        {
+	           $entesAscritos = new EntesAdscritos;
+	           $entesAscritos->padre_id = $model->ente_organo_id; // aqui va el id del usuario en la tabla enteorganos de quien lo crea.
+	           $entesAscritos->ente_organo_id = $model->ente_organo_id;
+	           $entesAscritos->fecha_desde =  date("Y-m-d");
+	           $entesAscritos->fecha_hasta = "2199-12-31";
+			   $entesAscritos->save();
+
+			   Yii::app()->user->setFlash('success', "Ente creado con éxito!");
+
+			  // $this->redirect(array('view','id'=>$model->producto_id));
+			   $model = new EntesOrganos();
+
+			    $this->render('crearente',array(
+						'model'=>$model,
+			   ));
+	            // form inputs are valid, do something here
+	            return;
+	        }
+	    }
+
+	    $this->render('crearente',array('model'=>$model));
+
+
 	}
 	
 	public function actionAgregarproyecto()

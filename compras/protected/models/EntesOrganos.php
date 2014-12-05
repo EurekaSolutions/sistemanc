@@ -36,7 +36,10 @@ class EntesOrganos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre, tipo', 'required'),
+			array('nombre, tipo, codigo_onapre, rif', 'required'),
+			array('rif', 'match', 'pattern' => '/^(j|J|v|V|e|E|G|g)(-)([0-9]{3,8})(-)([0-9]{1})$/', 'allowEmpty' => false),
+			array('codigo_onapre', 'unique', 'attributeName'=> 'codigo_onapre', 'caseSensitive' => 'false', 'className' => 'EntesOrganos'),
+			array('rif', 'unique', 'attributeName'=> 'rif', 'caseSensitive' => 'false', 'className' => 'EntesOrganos'),
 			array('codigo_onapre', 'length', 'max'=>20),
 			array('nombre', 'length', 'max'=>255),
 			array('tipo', 'length', 'max'=>50),
