@@ -129,7 +129,12 @@ class PlanificacionController extends Controller
 
 	public function actionAgregarcentralizada()
 	{
-		$this->render('agregarcentralizada');
+		$acciones = new Acciones;
+
+		$acciones = Acciones::model()->findAll();
+
+		
+		$this->render('agregarcentralizada',array('acciones'=>$acciones));
 	}
 
 	public function actionAdministracion()

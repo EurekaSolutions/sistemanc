@@ -13,7 +13,7 @@
     'enableAjaxValidation'=>false,
 )); ?>
 
-    <h4 style="">CREAR ENTES</h4>
+    <h4 style="text-align: center;">CREAR ENTES</h4>
 
      <?php
         foreach(Yii::app()->user->getFlashes() as $key => $message) {
