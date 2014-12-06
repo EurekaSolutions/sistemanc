@@ -66,12 +66,140 @@ $this->breadcrumbs=array(
 			)
 		); 
 
-		//echo $form->checkboxGroup($model, 'checkbox');
-		$this->widget(
+	 	 $this->widget(
 		    'booster.widgets.TbButton',
 		    array('buttonType' => 'submit', 'label' => 'Seleccionar')
 		);
 	 
+
+		 	     $this->widget(
+	    'booster.widgets.TbTabs',
+	    array(
+	    'type' => 'tabs', // 'tabs' or 'pills'
+	    'tabs' => array(
+	    array('label' => 'Nacional', 'content' => '<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
+		    <thead>
+		        <tr class="principaltr">
+		        	 <th data-field="nombreoue">Denominación</th>
+		            <th data-field="nombreoue">Código</th>
+		            <th data-field="tipo">Costo unidad</th>
+		            <th data-field="conaprepadre">Cantidad</th>
+		            <th data-field="oadscripcion">Unidad de medida</th>
+		            <th data-field="conaprepadre">Bs.</th>
+		            <th data-field="conaprepadre">Total Bs.</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		    	<tr class="principaltr">
+
+		    		<td> 
+		    			UNIFORME DE PERSONAL OBRERO	
+					</td>
+
+
+					<td> 	
+						27112703	
+					</td>
+
+		    		<td>
+		    			 <div class="form-group">
+					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Costo unidad">
+					  	</div>
+		    		</td>
+
+		    		<td>
+		    			<div class="form-group">
+					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Cantidad">
+					  	</div>
+		    		</td>
+
+		    		<td>
+		    			<div class="form-group">
+					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Unidad de medida">
+					  	</div>
+		    		</td>
+		    		<td><div class="form-group">
+					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Bs">
+					  	</div></td>
+		    	</tr>
+
+		    	<tr class="principaltr">
+
+		    		<td> 
+		    			CALZADO DE SEGURIDAD	
+					</td>
+
+
+					<td> 27112703
+					</td>
+
+		    		<td>
+		    			 <div class="form-group">
+					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Costo unidad">
+					  	</div>
+		    		</td>
+
+		    		<td>
+		    			<div class="form-group">
+					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Cantidad">
+					  	</div>
+		    		</td>
+
+		    		<td>
+		    			<div class="form-group">
+					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Unidad de medida">
+					  	</div>
+		    		</td>
+		    		<td><div class="form-group">
+					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Bs">
+					  	</div></td>
+		    	</tr>
+		    </tbody>
+		</table>', 'active' => true),
+	    array('label' => 'Importado', 'content' => ' <div style="max-width:300px">
+	    	<div class="form-group">
+	<select class="form-control">
+	  <option value="">Divisa</option>
+	  <option value="corpovex">Dolar</option>
+	  <option>Euro</option>
+	</select>
+</div>
+
+ <div class="form-group">
+	<select class="form-control">
+	  <option value="">Código NCM</option>
+	  <option value="corpovex">3815.19.00.90</option>
+	</select>
+</div>
+
+ <div class="form-group">
+	<input type="email" class="form-control" id="exampleInputEmail1" placeholder="cantidad">
+</div>
+
+ <div class="form-group">
+	<input type="email" class="form-control" id="exampleInputEmail1" placeholder="monto">
+</div>
+
+<div class="form-group">
+	<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Fecha">
+</div>
+
+
+<div class="form-group">
+	<select class="form-control">
+	  <option value="">Tipo</option>
+	  <option value="corpovex">Corpovex</option>
+	  <option>Licitación internacion</option>
+	</select>
+</div>
+</div>'),
+	    ),
+	    )
+	    );
+
+
+		//echo $form->checkboxGroup($model, 'checkbox');
+		
 	$this->endWidget();
 	unset($form);
 ?>

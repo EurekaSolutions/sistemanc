@@ -36,50 +36,28 @@
 
 
 			<div class="well">
-				<label>
-					Seleccione la Partida
-				<select class="form-control">
-				  <option value="">Partidas</option>
-				  <option value="corpovex">Corpovex</option>
-				  <option>Licitación internacion</option>
-				</select>
-				</label>
-			</div>
+                <label>
+                    Seleccione la Partida
+                <select class="form-control">
+                  <option value="">Partidas</option>
+                  <option value="corpovex">401 GASTOS DE PERSONAL</option>
+                  <option>402 MATERIALES Y SUMINISTRO</option>
+                  <option>403 GASTOS NO PERSONALES</option>
+                  <option>404 BIENES</option>
+                </select>
+                </label>
+            </div>
 
 
-			<div class="well">
-				<label>
-					Seleccione la partida general
-					<select class="form-control">
-					  <option value="">Generales</option>
-					  <option value="corpovex">Corpovex</option>
-					  <option>Licitación internacion</option>
-					</select>
-				</label>
-			</div>
-
-
-			<div class="well">
-				<label>
-					Seleccione la partida especifica
-					<select class="form-control">
-					  <option value="">Especifica</option>
-					  <option value="corpovex">Corpovex</option>
-					  <option>Licitación internacion</option>
-					</select>
-				</label>
-			</div>
-
-			<div class="well">
-				<label>
-					Seleccione la partida Sub-especifica (* SI APLICA)
-					<select class="form-control">
-					  <option value="">Subespecifica</option>
-					  <option value="corpovex">Corpovex</option>
-					  <option>Licitación internacion</option>
-					</select>
-				</label>
-			</div>
+            <div class="well">
+                <label>
+                    Seleccione la partida general
+                    <select class="form-control">
+                      <option value="">Generales</option>
+                      <option value="corpovex">401.07.00.00</option>
+                    </select>
+                </label>
+            </div>
 			
 			<div class="well">
 				<label>

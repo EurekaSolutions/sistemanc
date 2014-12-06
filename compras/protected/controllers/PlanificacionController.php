@@ -184,7 +184,7 @@ class PlanificacionController extends Controller
 			//$_401 = array();
 			//$partidas = $this->proyectosPartidas();
 			
-			$busqueda = "Gatos";
+			/*$busqueda = "Gatos";
 			
 			$criteria = new CDbCriteria();
 			$criteria->condition = 'cod_producto <> 0';
@@ -196,7 +196,7 @@ class PlanificacionController extends Controller
 				
 					Productos::model()->findAll($value->cod_segmento);
 
-			}
+			}*/
 
 			
 			//print_r($productos);
