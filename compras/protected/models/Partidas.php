@@ -51,6 +51,7 @@ class Partidas extends CActiveRecord
 		return array(
 			'presupuestoPartidases' => array(self::HAS_MANY, 'PresupuestoPartidas', 'partida_id'),
 			'partidaProductos' => array(self::HAS_MANY, 'PartidaProductos', 'partida_id'),
+			'productos' => array(self::MANY_MANY, 'Productos', 'partida_productos(partida_id, producto_id)'),
 		);
 	}
 

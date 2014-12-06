@@ -46,8 +46,9 @@ $this->breadcrumbs=array(
 
 					'data' => $listas,
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array(/*'prompt' => 'Seleccionar proyecto',*/'multiple' => false, ),
-				)
+					'htmlOptions' => array(/*'prompt' => 'Seleccionar proyecto',*/'multiple' => false, 'onChange'=>'submit','submit' => array('/planificacion/partidas')),
+				),
+				'hint' => 'Selecciona la Acción o Proyecto.'
 			)
 		); 
 
@@ -62,7 +63,8 @@ $this->breadcrumbs=array(
 					'data' => CHtml::listData($partidas,'partida_id', function($partida){ return CHtml::encode($this->numeroPartida($partida).' - '.$partida->nombre);}),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
 					'htmlOptions' => array('multiple' => false, ),
-				)
+				),
+				'hint' => 'Selecciona la partida correspondiente al proyecto para cargar sus productos.'
 			)
 		); 
 
@@ -72,294 +74,85 @@ $this->breadcrumbs=array(
 		);
 	 
 
-		 	     $this->widget(
-	    'booster.widgets.TbTabs',
-	    array(
-	    'type' => 'tabs', // 'tabs' or 'pills'
-	    'tabs' => array(
-	    array('label' => 'Nacional', 'content' => '<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
-		    <thead>
-		        <tr class="principaltr">
-		        	 <th data-field="nombreoue">Denominación</th>
-		            <th data-field="nombreoue">Código</th>
-		            <th data-field="tipo">Costo unidad</th>
-		            <th data-field="conaprepadre">Cantidad</th>
-		            <th data-field="oadscripcion">Unidad de medida</th>
-		            <th data-field="conaprepadre">Bs.</th>
-		            <th data-field="conaprepadre">Total Bs.</th>
-		        </tr>
-		    </thead>
-		    <tbody>
-		    	<tr class="principaltr">
-
-		    		<td> 
-		    			UNIFORME DE PERSONAL OBRERO	
-					</td>
-
-
-					<td> 	
-						27112703	
-					</td>
-
-		    		<td>
-		    			 <div class="form-group">
-					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Costo unidad">
-					  	</div>
-		    		</td>
-
-		    		<td>
-		    			<div class="form-group">
-					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Cantidad">
-					  	</div>
-		    		</td>
-
-		    		<td>
-		    			<div class="form-group">
-					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Unidad de medida">
-					  	</div>
-		    		</td>
-		    		<td><div class="form-group">
-					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Bs">
-					  	</div></td>
-		    	</tr>
-
-		    	<tr class="principaltr">
-
-		    		<td> 
-		    			CALZADO DE SEGURIDAD	
-					</td>
-
-
-					<td> 27112703
-					</td>
-
-		    		<td>
-		    			 <div class="form-group">
-					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Costo unidad">
-					  	</div>
-		    		</td>
-
-		    		<td>
-		    			<div class="form-group">
-					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Cantidad">
-					  	</div>
-		    		</td>
-
-		    		<td>
-		    			<div class="form-group">
-					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Unidad de medida">
-					  	</div>
-		    		</td>
-		    		<td><div class="form-group">
-					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Bs">
-					  	</div></td>
-		    	</tr>
-		    </tbody>
-		</table>', 'active' => true),
-	    array('label' => 'Importado', 'content' => ' <div style="max-width:300px">
-	    	<div class="form-group">
-	<select class="form-control">
-	  <option value="">Divisa</option>
-	  <option value="corpovex">Dolar</option>
-	  <option>Euro</option>
-	</select>
-</div>
-
- <div class="form-group">
-	<select class="form-control">
-	  <option value="">Código NCM</option>
-	  <option value="corpovex">3815.19.00.90</option>
-	</select>
-</div>
-
- <div class="form-group">
-	<input type="email" class="form-control" id="exampleInputEmail1" placeholder="cantidad">
-</div>
-
- <div class="form-group">
-	<input type="email" class="form-control" id="exampleInputEmail1" placeholder="monto">
-</div>
-
-<div class="form-group">
-	<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Fecha">
-</div>
-
-
-<div class="form-group">
-	<select class="form-control">
-	  <option value="">Tipo</option>
-	  <option value="corpovex">Corpovex</option>
-	  <option>Licitación internacion</option>
-	</select>
-</div>
-</div>'),
-	    ),
-	    )
-	    );
-
-
-		//echo $form->checkboxGroup($model, 'checkbox');
-		
-	$this->endWidget();
-	unset($form);
+		 	  
 ?>
 
 <?php 
 
-	//print_r($partidas);
-	/* @var TbActiveForm $form */
-	/*$form = $this->beginWidget('booster.widgets.TbActiveForm',
-	    array(
-	        'id' => 'partida-form',
-	        'htmlOptions' => array('class' => 'well'), // for inset effect
-	    )
-	);
-	
-	 echo $form->dropDownListGroup( $partidaSel, 'partida_id',
+	if(isset($partidaSel->partida_id)){
+		//print_r($partidas);
+		/* @var TbActiveForm $form */
+		$formp = $this->beginWidget('booster.widgets.TbActiveForm',
+		    array(
+		        'id' => 'partida-form',
+		        'htmlOptions' => array('class' => 'well'), // for inset effect
+		    )
+		);
+		//print_r($partidaSel);
+		//echo '<br> '.$partidaSel->partida_id;
+		//echo print_r($partidaSel);
+		//echo count(Partidas::model()->findByPk($partidaSel->partida_id)->productos);
+
+
+		/*$par_productos = PartidaProductos::model()->findAllByAttributes(array('partida_id'=>$partidaSel->partida_id));
+		$productos = array();
+		foreach ($par_productos as $key => $par_producto) {
+			$productos[] = Productos::model()->findByAttributes(array('producto_id'=>$par_producto->producto_id));
+		}*/
+		
+		/*foreach ($productos as $key => $producto) {
+			
+		   echo $formp->textFieldGroup($producto, 'nombre',
+				array(
+					'wrapperHtmlOptions' => array(
+						'class' => 'col-sm-5',
+					),
+					'hint' => 'In addition to freeform text, any HTML5 text-based input appears like so.'
+				)
+			);
+		}*/
+		
+	/*	foreach (Partidas::model()->findByPk($partidaSel->partida_id)->productos as $key => $producto) {
+			
+		   echo $formp->textFieldGroup($producto, 'nombre',
+				array(
+					'wrapperHtmlOptions' => array(
+						'class' => 'col-sm-5',
+					),
+					'hint' => 'In addition to freeform text, any HTML5 text-based input appears like so.'
+				)
+			);
+		}*/
+		
+		 echo $formp->dropDownListGroup( $productoSel, 'producto_id',
 			array(
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
 				),
-				'label'=>'Seleccione Partida para cargar sus productos',
+				'label'=>'Seleccione el producto',
 				'widgetOptions' => array(
 
-					'data' => CHtml::listData($partidas,'partida_id','nombre' ),
+					'data' => CHtml::listData(Partidas::model()->findByPk($partidaSel->partida_id)->productos,
+						'producto_id', function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);}),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
 					'htmlOptions' => array('multiple' => false, ),
-				)
+				),
+				'hint' => 'Selecciona el producto para añadir.'
 			)
 		); 
-         
-		//echo $form->checkboxGroup($model, 'checkbox');
-		$this->widget(
-		    'booster.widgets.TbButton',
-		    array('buttonType' => 'submit', 'label' => 'Seleccionar')
-		);
-	 
-	$this->endWidget();
-	unset($form);*/
+			//echo $form->checkboxGroup($model, 'checkbox');
+			$this->widget(
+			    'booster.widgets.TbButton',
+			    array('buttonType' => 'submit', 'label' => 'Añadir')
+			);
+		
+		$this->endWidget();
+		unset($formp);
+	}
 ?>
 
 
 <?php
-$tabs = array();
-
-$partidas = array();
-	/*if($proyectoSel)
-		$partidas = $proyectoSel->presupuestoPartidas->partidas;
-	elseif($accionSel)
-		$partidas = $accionSel->presupuestoPartidaAcciones->presupuestoPartida->partidas;*/
-
-
-$pestanas = array();
-foreach ($partidas as $key => $partida) {
-
-			$partida = $partida->partida;
-
-			$numPartida = $this->numeroPartida($partida);
-			//echo 'ENTRE ';
-			//$pestanas[$numPartida] = array('label' => $this->numeroPartida($partida).' - '.$partida->nombre, 'content' => 'Partida '.$numPartida);
-			//$pestanas[$partida->p1][$partida->p2][$partida->p3][$partida->p4] = array('label' => $this->numeroPartida($partida).' - '.$partida->nombre, 'content' => 'Partida '.$numPartida);
-
-				if(!isset($pestanas[$partida->p1]))
-					$pestanas[$partida->p1] =  array('label' => $partida->p1.' - ', 'content' => 'Partida '.$partida->nombre, 'items' => array( ));
-				
-				if(!isset($pestanas[$partida->p1]['items'][$partida->p2]))
-					$pestanas[$partida->p1]['items'][$partida->p2] = array('label' => $this->numeroPartida($partida).' - ', 'content' => 'Carga de partidas especificas y sub especificas de la partida 402.01');
-
-				/*if($this->nivelPartida($partida) == 4)
-				{
-					$nivel4 = array('label' => $this->numeroPartida($partida), 'content' => 'Carga de partidas especificas y sub especificas de la partida 403.07.XX.XX');
-				}*/
-
-				/*if(!isset($pestanas[$partida->p1]['items'][$partida->p2]['items'][$partida->p3]))
-						$pestanas[$partida->p1]['items'][$partida->p2]['content'] = array('label' => $this->numeroPartida($partida), 
-						'content' => $this->widget(
-													    'booster.widgets.TbTabs',
-													    array(
-													        'type' => 'tabs', // 'tabs' or 'pills'
-													        'placement'=>'top',
-													        'tabs' =>array())
-									);
-						);*/
-						
-			switch ($this->nivelPartida($partida)) {
-				case 1:
-					# code...
-					break;
-				case 2:
-					# code...
-					break;
-				case 3:
-					# code...
-					break;
-				case 4:
-					# code...
-					break;
-				default:
-					# code...
-					break;
-			}
-
-			if($partida->p2==0) //Partida
-			{	
-
-				//$pestanas[$partida->p1]['items'][] = array('label' => $this->numeroPartida($partida).' - '.$partida->nombre, 'content' => 'Partida '.$numPartida);
-				//$partidass.= '<h2>Partida '.$numPartida.': '.$partida->nombre.'</h2>';
-				//$this->productosPartidas($partida);
-
-			}elseif($partida->p3==0) //General
-			{
-
-				//$pestanas[$partida->p1]['items'][$partida->p2] = array('label' => $this->numeroPartida($partida), 'content' => 'Carga de partidas especificas y sub especificas de la partida 402.01');
-				//$partidass.= '<h3>General '.$numPartida.': '.$partida->nombre.'</h3>';
-				//$this->productosPartidas($partida);
-
-			}elseif($partida->p4==0)//Especifica
-			{
-				//$partidass .= '<h4>Específica '.$numPartida.': '.$partida->nombre.'id: '.$partida->partida_id.'</h4>';
-				//$partidass .= $this->productosPartidas($partida);
-
-			}else//Sub Especifica
-			{	
-				//$partidass .= '<h5>Sub-Específica '.$numPartida.': <b>'.$partida->nombre.' </b></h5>';
-				//$partidass .= $this->productosPartidas($partida);
-			}
-	          /*$taiarray('label' => '402', 'content' => 'Partida 402')l = array('label' => '401','content' => 'Partida 401', 'active' => empty($tabs) ? true : false, 'items' => array(
-	                    array('label' => '401.06', 'content'=>$this->widget(
-									    'booster.widgets.TbTabs',
-									    array(
-									        'type' => 'tabs', // 'tabs' or 'pills'
-									        'placement'=>'top',
-									        'tabs' => array(
-									            array('label' => '401.06.02', 'content' => 'Lista de Partidas sub especificas 401.35.04', 'active' => true, ),
-									            array('label' => '401.35.04', 'content' => 'Lista de Partidas sub especificas 401.35.04',),
-									            array('label' => '401.35.04', 'content' => 'Lista de Partidas sub especificas 401.35.04',),
-									            array('label' => '401.35.04', 'content' => 'Lista de Partidas sub especificas 401.35.04', ),
-									        ),
-									    ),true),
-									     'view'=>'_especificos'),
-	                    array('label' => '401.35', 'content' => 'Carga de partidas especificas y sub especificas de la partida 401.35')),
-	            ),
-	            array('label' => '402', 'content' => 'Partida 402', 'items' => array(
-	                    array('label' => '402.01', 'content' => 'Carga de partidas especificas y sub especificas de la partida 402.01'),
-	                    array('label' => '402.04', 'content' => 'Carga de partidas especificas y sub especificas de la partida 402.04')),
-	            )*/
-
-	         
-	        
-	//$tabs=array_merge($tabs,)
-}/*
-print_r($pestanas['401']['items']);
-$this->widget(
-    'booster.widgets.TbTabs',
-    array(
-        'type' => 'pills', // 'tabs' or 'pills'
-        'placement'=>'top',
-        'justified'=>'true',
-        'tabs' => $pestanas,
-      )
-);*/
 
 
 ?>
