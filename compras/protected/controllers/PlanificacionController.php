@@ -86,6 +86,24 @@ class PlanificacionController extends Controller
 		return $producto->cod_segmento.'.'.sprintf("%02s", $producto->cod_familia).'.'.sprintf("%02s", $producto->cod_clase).'.'.sprintf("%02s", $producto->cod_producto);
 	}
 
+	public function numeroCodigoNcm($codigo){
+		
+
+		$numCodigo = $codigo->codigo_ncm_nivel_1;
+			
+			if(intval($codigo->codigo_ncm_nivel_4) != 0)
+				$numCodigo .= '.'.$codigo->codigo_ncm_nivel_2.'.'.$codigo->codigo_ncm_nivel_3.'.'.$codigo->codigo_ncm_nivel_4;
+			else
+			if(intval($codigo->codigo_ncm_nivel_3) != 0)
+				$numCodigo .= '.'.$codigo->codigo_ncm_nivel_2.'.'.$codigo->codigo_ncm_nivel_3;
+			else
+			if(intval($codigo->codigo_ncm_nivel_2) != 0)
+				$numCodigo .= '.'.$codigo->codigo_ncm_nivel_2;
+
+			return $numCodigo;
+		//return $codigo->codigo_ncm_nivel_1.'.'.sprintf("%02s", $codigo->codigo_ncm_nivel_2).'.'.sprintf("%02s", $codigo->codigo_ncm_nivel_3).'.'.sprintf("%02s", $codigo->codigo_ncm_nivel_4);
+	}
+
 	public function obtenerAccionesCentralizadas()
 	{
 
@@ -454,9 +472,9 @@ class PlanificacionController extends Controller
 
 	}
 	/**
-	*Recibe el id de la acción y retorna la lista de partidas de la acción
+	*Busca la lista de partidas de la acción
 	*@param integer $id
-	*@return array(Partidas)
+	*@return Partidas[] $partidas
 	**/
 	public function partidasAccion($id){
 
@@ -476,9 +494,9 @@ class PlanificacionController extends Controller
 		return $partidas;
 	}
 	/**
-	*Recibe el id del proyecto y retorna la lista de partidas del proyecto
+	*Busca la lista de partidas del proyecto
 	*@param integer $id
-	*@return array(Partidas)
+	*@return Partidas[] $partidas
 	**/
 	public function partidasProyecto($id){
 			
@@ -487,6 +505,10 @@ class PlanificacionController extends Controller
 				$partidas[$key] = $prePar->partida;
 			}
 			return $partidas;
+	}
+
+	public function condicionVersion(){
+		return 't.fecha_desde<\''.date('Y-m-d').'\' AND t.fecha_hasta>\''.date('Y-m-d').'\'';
 	}
 
 	public function actionPartidas() /*Aqui van la logica de negocio asociada a cada partida 401, 402, 403, 404 */
@@ -505,8 +527,14 @@ class PlanificacionController extends Controller
 
 		$presuPros = new PresupuestoProductos();
 
+		$presuPro = new PresupuestoProductos();
+		$presuImp = new PresupuestoImportacion();
+		$codigoNcmSel = new CodigosNcm();
+
 		//$partidas = new PresupuestoPartidas();
 		$partidas =array();
+		
+		$productosPartidas = new Productos();
 
 		
 		//$partidass = '';
@@ -536,8 +564,48 @@ class PlanificacionController extends Controller
 						if(isset($_POST['Partidas']) && !empty($_POST['Partidas']['partida_id'])){
 							$partidaSel->attributes = $_POST['Partidas'];
 
-							$productos = Partidas::model()->findByPk($partidaSel->partida_id)->productos;
- 
+							$productosPartidas = Partidas::model()->findByPk($partidaSel->partida_id)->productos;
+							
+							// Producto Nacional
+							if(isset($_POST['PresupuestoProductos'])){
+ 								$presuPro->attributes = $_POST['PresupuestoProductos'];
+								if($presuPro->validate())
+								{
+									$presuPro->tipo = 'nacional';
+									if($presupuestoPartida = $proyectoActual->presupuestoPartidas->findByAttributes(array('partida_id'=>$partidaSel->partida_id)))
+										$presuPro->proyecto_partida_id = $presupuestoPartida->presupuesto_partida_id;
+									/*else{
+										$presupuestoPartida = new PresupuestoPartidas();
+										$presupuestoPartida->partida_id = $partidaSel->partida_id;
+									}*/
+									//Monto en presupuesto en Bs. del producto
+									$presuPro->monto_presupuesto = floatval($presuPro->costo_unidad) * floatval($presuPro->cantidad);
+								
+									if($presuPro->save()){
+										$this->redirect(array('/planificacion/partidas'));
+									}else
+									throw new Exception("Error Processing Request", 1);
+								}
+							}else
+							// Producto Importado
+							if(isset($_POST['PresupuestoImportacion']) /*&& isset($_POST['PresupuestoProductos'])*/)
+							{
+								
+								if(isset($_POST['CodigosNcm'])){
+									$presuImpSel->attributes = $_POST['CodigosNcm'];
+									
+									$presuImp->attributes = $_POST['PresupuestoImportacion'];
+									if($presuImp->validate())
+									{
+
+									}
+								}
+
+							
+								//$this->guardarPresupuestoProductos($presuPro);
+							}
+
+
 							if($presuPros = PresupuestoPartidas::model()->findByAttributes(array('partida_id'=>$partidaSel->partida_id,'ente_organo_id'=>$proyectoActual->ente_organo_id)))
 							{
 								//print_r($presuPros);
@@ -588,7 +656,8 @@ class PlanificacionController extends Controller
 		}
 
 		$this->render('partidas', array('usuario'=>$usuario,'proyectoSel'=>$proyectoSel,'accionSel'=>$accionSel,
-			'partidas'=>$partidas, 'partidaSel'=>$partidaSel,'productoSel'=>$productoSel,'presuPros'=>$presuPros));
+			'partidas'=>$partidas, 'partidaSel'=>$partidaSel,'productoSel'=>$productoSel,'presuPros'=>$presuPros,
+			'presuPro'=>$presuPro, 'presuImp'=>$presuImp, 'productosPartidas'=>$productosPartidas,'codigoNcmSel'=>$codigoNcmSel));
 	}
 
 

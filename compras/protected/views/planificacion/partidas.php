@@ -15,6 +15,7 @@ $this->breadcrumbs=array(
 	$form = $this->beginWidget('booster.widgets.TbActiveForm',
 	    array(
 	        'id' => 'proyecto-form',
+	        //'action'=>$this->createUrl('')."#proyecto",
 	        'htmlOptions' => array('class' => 'well'), // for inset effect
 	    )
 	);
@@ -43,15 +44,16 @@ $this->breadcrumbs=array(
 				),
 				'label'=>'Seleccione Proyecto o Acción Centralizada a cargar',
 				'widgetOptions' => array(
-
 					'data' => $listas,
+
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array('prompt' => 'Seleccionar proyecto', 'onChange'=>'submit','submit' => array('/planificacion/partidas')),
+					'htmlOptions' => array(	'id'=>'proyecto', 'prompt' => 'Seleccionar proyecto', 'onChange'=>'submit','submit' => array('/planificacion/partidas','#'=>'proyecto')),
 				),
 				'hint' => 'Selecciona la Acción o Proyecto.'
 			)
 		); 
 
+?><?php
 	 //print_r($partidas);
 
 	 	 echo $form->dropDownListGroup( $partidaSel, 'partida_id',
@@ -61,10 +63,11 @@ $this->breadcrumbs=array(
 				),
 				'label'=>'Seleccione Partida para cargar sus productos',
 				'widgetOptions' => array(
-
+					'id'=>'partida',
+					'name'=>'partida',
 					'data' => CHtml::listData($partidas,'partida_id', function($partida){ return CHtml::encode($this->numeroPartida($partida).' - '.$partida->nombre);}),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array('prompt' => 'Seleccionar Partida', 'onChange'=>'submit','submit' => array('/planificacion/partidas') ),
+					'htmlOptions' => array('id'=>'partida', 'prompt' => 'Seleccionar Partida', 'onChange'=>'submit','submit' => array('/planificacion/partidas','#'=>'partida') ),
 				),
 				'hint' => 'Selecciona la partida correspondiente al proyecto para cargar sus productos.'
 			)
@@ -75,7 +78,7 @@ $this->breadcrumbs=array(
 		    array('buttonType' => 'submit', 'label' => 'Seleccionar')
 		);*/
 	 	 $this->endWidget();
-		 	  
+
 ?>
 <?php 
 	$formpc = $this->beginWidget('booster.widgets.TbActiveForm',
@@ -167,8 +170,10 @@ $this->breadcrumbs=array(
 				)
 			);
 		}*/
-		
-		 echo $formp->dropDownListGroup( $productoSel, 'producto_id',
+
+
+		$nacional = '';
+		 $nacional .= $formp->dropDownListGroup( $presuPro, 'producto_id',
 			array(
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
@@ -176,14 +181,150 @@ $this->breadcrumbs=array(
 				'label'=>'Seleccione el producto',
 				'widgetOptions' => array(
 
-					'data' => CHtml::listData(Partidas::model()->findByPk($partidaSel->partida_id)->productos,
-						'producto_id', function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);}),
+					'data' => CHtml::listData($productosPartidas,'producto_id', 
+							function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);}),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
 					'htmlOptions' => array('prompt' => 'Seleccionar producto', /*'multiple' => false,*/ ),
 				),
 				'hint' => 'Selecciona el producto para añadir.'
 			)
 		); 
+
+		
+		$nacional .= $formp->dropDownListGroup( $presuPro, 'unidad_id',
+			array(
+				'wrapperHtmlOptions' => array(
+					'class' => 'col-sm-5',
+				),
+				'label'=>'Unidad',
+				'widgetOptions' => array(
+
+					'data' => CHtml::listData(Unidades::model()->findAll(),'unidad_id', 'nombre'),
+					//'options'=>array($model->proyecto_id => array('selected'=>true)),
+					'htmlOptions' => array('prompt' => 'Seleccionar Unidad', /*'multiple' => false,*/ ),
+				),
+				'hint' => 'Selecciona la unidad del producto.'
+			)
+		); 
+		$nacional .= $formp->textFieldGroup($presuPro, 'costo_unidad',array('prepend'=>'Bs'));
+		$nacional .= $formp->textFieldGroup($presuPro, 'cantidad');
+
+
+		/***************************************************/
+
+		
+		$importado = '';
+		$importado .= $formp->dropDownListGroup( $codigoNcmSel, 'codigo_ncm_id',
+			array(
+				'wrapperHtmlOptions' => array(
+					'class' => 'col-sm-5',
+				),
+				'label'=>'Seleccione el producto',
+				'widgetOptions' => array(
+
+					'data' => CHtml::listData(CodigosNcm::model()->findAll(' to_number(codigo_ncm_nivel_1, \'99G999D9S\')!=0 AND to_number(codigo_ncm_nivel_2, \'99G999D9S\') = 0 
+	AND to_number(codigo_ncm_nivel_3, \'99G999D9S\') = 0 AND (coalesce(codigo_ncm_nivel_4, \'\')=\'\' OR to_number(codigo_ncm_nivel_4, \'99G999D9S\') = 0) AND t.fecha_desde<\''.date('Y-m-d').'\' AND t.fecha_hasta>\''.date('Y-m-d').'\''),
+						'codigo_ncm_id', function($codigo){ return CHtml::encode($this->numeroCodigoNcm($codigo).' - '.$codigo->descripcion_ncm);}),
+					//'options'=>array($model->proyecto_id => array('selected'=>true)),
+					'htmlOptions' => array('id'=>'codigoNcm1','prompt' => 'Seleccionar producto',/*'onChange'=>'submit','submit'=>array('planificacion/partidas','#'=>'codigoNcm1')*/),
+				),
+				'hint' => 'Producto para añadir.'
+			)
+		);
+
+		$listaCodigos = array();
+		if($codigoSel=CodigosNcm::model()->findByPk($codigoNcmSel->codigo_ncm_id))
+			$listaCodigos = CHtml::listData(CodigosNcm::model()->findAll('codigo_ncm_nivel_1='.$codigoSel->codigo_ncm_nivel_1.' AND t.fecha_desde<\''.date('Y-m-d').'\' AND t.fecha_hasta>\''.date('Y-m-d').'\''),
+						'codigo_ncm_id', function($codigo){ return CHtml::encode($this->numeroCodigoNcm($codigo).' - '.$codigo->descripcion_ncm);});
+		$importado .= $formp->dropDownListGroup( $presuImp, 'codigo_ncm_id',
+			array(
+				'wrapperHtmlOptions' => array(
+					'class' => 'col-sm-5',
+				),
+				'label'=>'Seleccione el producto',
+				'widgetOptions' => array(
+
+					'data' => $listaCodigos,
+					//'options'=>array($model->proyecto_id => array('selected'=>true)),
+					'htmlOptions' => array('prompt' => 'Seleccionar producto', /*'multiple' => false,*/ ),
+				),
+				'hint' => 'Producto para añadir.'
+			)
+		); 
+		$importado .= $formp->dropDownListGroup( $presuImp, 'divisa_id',
+			array(
+				'wrapperHtmlOptions' => array(
+					'class' => 'col-sm-5',
+				),
+				'label'=>'Divisa',
+				'widgetOptions' => array(
+
+					'data' =>  CHtml::listData(Divisas::model()->findAll(),'divisa_id', function($divisa){ return CHtml::encode($divisa->nombre.' - '.$divisa->simbolo);}),
+					//'options'=>array($model->proyecto_id => array('selected'=>true)),
+					'htmlOptions' => array('prompt' => 'Seleccionar divisa', /*'multiple' => false,*/ ),
+				),
+				'hint' => 'Divisa a ser utiilzada en este producto.'
+			)
+		); 
+
+		$importado .= $formp->dropDownListGroup( $presuImp, 'tipo',
+			array(
+				'wrapperHtmlOptions' => array(
+					'class' => 'col-sm-5',
+				),
+				'label'=>'Tipo Importación',
+				'widgetOptions' => array(
+
+					'data' =>  array('corpovex'=>'Corpovex','licitacionInternacional'=>'Licitación Internacional'),
+					//'options'=>array($model->proyecto_id => array('selected'=>true)),
+					'htmlOptions' => array('prompt' => 'Seleccionar tipo', /*'multiple' => false,*/ ),
+				),
+				'hint' => 'Tipo de importación a ser utiilzada en este producto.'
+			)
+		); 
+
+
+ 		$importado .= $form->datePickerGroup(
+			$presuImp,
+			'fecha_llegada',
+			array(
+
+				'widgetOptions' => array(
+
+					'options' => array(
+						'format' => 'dd-mm-yyyy',
+						'language' => 'es',
+					),
+				),
+				'wrapperHtmlOptions' => array(
+					'class' => 'col-sm-5',
+				),
+				'hint' => 'Fecha de llegada estimada del producto.',
+				'prepend' => '<i class="glyphicon glyphicon-calendar"></i>'
+			)
+		);
+
+		$importado .= $formp->textFieldGroup($presuImp, 'monto_presupuesto',array('prepend'=>'Bs','widgetOptions'=>array('htmlOptions'=> array('id'=>'montoPresupuesto'))));
+		$importado .= $formp->textFieldGroup($presuImp, 'cantidad');
+		
+
+
+		$this->widget(
+		    'booster.widgets.TbTabs',
+		    array(
+		        'type' => 'tabs', // 'tabs' or 'pills'
+		        'tabs' => array(
+		            array(
+		                'label' => 'Nacional',
+		                'content' => $nacional,
+		                'active' => true
+		            ),
+		            array('label' => 'Importado', 'content' => $importado),
+		        ),
+		    )
+		);
+
+
 			//echo $form->checkboxGroup($model, 'checkbox');
 			$this->widget(
 			    'booster.widgets.TbButton',
