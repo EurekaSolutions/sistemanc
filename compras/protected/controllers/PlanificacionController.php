@@ -318,10 +318,11 @@ class PlanificacionController extends Controller
 
 		$proyectos = $usuario->enteOrgano->proyectos;
 		
-		$acciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('ente_organo_id'=>$usuario->ente_organo_id));//$usuario->enteOrgano->acciones;
-		
-		
-		$usuario = $usuario->model()->findByPk(Yii::app()->user->getId());
+		$criteria = new CDbCriteria();
+		$criteria->distinct=true;
+		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
+		$criteria->select = 'accion_id';
+		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
 
 		$this->render('index',array(
 			'usuario'=>$usuario, 'proyectos' => $proyectos,  'acciones' => $acciones
