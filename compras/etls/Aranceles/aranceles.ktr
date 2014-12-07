@@ -122,7 +122,7 @@
     <sheetfield/>
     <filefield/>
     <limit>0</limit>
-    <encoding>windows-1250</encoding>
+    <encoding>windows-1252</encoding>
     <add_to_result_filenames>Y</add_to_result_filenames>
     <accept_filenames>N</accept_filenames>
     <accept_field/>
@@ -306,7 +306,7 @@
         <field>
           <name>UF</name>
           <lookup>unidad</lookup>
-          <update>Update</update>
+          <update>Insert</update>
         </field>
         <field>
           <name>desc</name>
@@ -331,53 +331,8 @@
       <start_date_field_name/>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>460</xloc>
-      <yloc>189</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Strings cut</name>
-    <type>StringCut</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>C&#xfffd;digo Arancelario</in_stream_name>
-        <out_stream_name>partida</out_stream_name>
-        <cut_from>0</cut_from>
-        <cut_to>4</cut_to>
-      </field>
-      <field>
-        <in_stream_name>C&#xfffd;digo Arancelario</in_stream_name>
-        <out_stream_name>subpartida</out_stream_name>
-        <cut_from>5</cut_from>
-        <cut_to>7</cut_to>
-      </field>
-      <field>
-        <in_stream_name>C&#xfffd;digo Arancelario</in_stream_name>
-        <out_stream_name>ncm</out_stream_name>
-        <cut_from>8</cut_from>
-        <cut_to>10</cut_to>
-      </field>
-      <field>
-        <in_stream_name>C&#xfffd;digo Arancelario</in_stream_name>
-        <out_stream_name>cod_pais</out_stream_name>
-        <cut_from>11</cut_from>
-        <cut_to>13</cut_to>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>264</xloc>
-      <yloc>157</yloc>
+      <xloc>525</xloc>
+      <yloc>195</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -446,6 +401,51 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>361</xloc>
       <yloc>172</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Strings cut</name>
+    <type>StringCut</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <in_stream_name>C&#xfffd;digo Arancelario</in_stream_name>
+        <out_stream_name>partida</out_stream_name>
+        <cut_from>0</cut_from>
+        <cut_to>4</cut_to>
+      </field>
+      <field>
+        <in_stream_name>C&#xfffd;digo Arancelario</in_stream_name>
+        <out_stream_name>subpartida</out_stream_name>
+        <cut_from>5</cut_from>
+        <cut_to>7</cut_to>
+      </field>
+      <field>
+        <in_stream_name>C&#xfffd;digo Arancelario</in_stream_name>
+        <out_stream_name>ncm</out_stream_name>
+        <cut_from>8</cut_from>
+        <cut_to>10</cut_to>
+      </field>
+      <field>
+        <in_stream_name>C&#xfffd;digo Arancelario</in_stream_name>
+        <out_stream_name>cod_pais</out_stream_name>
+        <cut_from>11</cut_from>
+        <cut_to>13</cut_to>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>264</xloc>
+      <yloc>157</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
