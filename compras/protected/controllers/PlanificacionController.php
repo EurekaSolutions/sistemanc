@@ -239,13 +239,117 @@ class PlanificacionController extends Controller
 
 	        $model->attributes=$_POST['Acciones'];
 
-	        if($model->save())
+	        if($model->validate())
 	        {
 	        	//return;
+	        }else
+	        {
+	        	if($model->nombre)
+	        	{
+	        		//$prueba = $lista_acciones = CHtml::listData($accionestodas, 'codigo', 'nombre');
+	        		$partidas = $this->obtenerPartidas($model->nombre);
+		    
+		    		$partidas_principal = CHtml::listData($partidas, function($partidas) {
+																	return CHtml::encode($partidas->partida_id);
+																}, function($partidas) {
+																	return CHtml::encode($partidas->p1.'-'. $partidas->nombre);
+																});
+		    		if($model->partida)
+		    		{
+		    			$tipo = Partidas::model()->findByPk($model->partida);
+
+						$generales = $this->GeneralXpartida($tipo->p1);
+					    
+					    $generales_todas = CHtml::listData($generales, function($generales) {
+																			return CHtml::encode($generales->partida_id);
+																		}, function($generales) {
+																			return CHtml::encode($generales->p1.'-'.$generales->p2.'-'.$generales->p3.'-'. $generales->nombre);
+																		});
+
+					 	$this->render('agregarcentralizada',array('acciones'=>$model, 'accionestodas' => $accionestodas, 'fuentes' => $fuentes, 'partidas_principal' => $partidas_principal, 'generales_todas' => $generales_todas));
+
+		    		}else
+		    		{
+		    			$this->render('agregarcentralizada',array('acciones'=>$model, 'accionestodas' => $accionestodas, 'fuentes' => $fuentes, 'partidas_principal' => $partidas_principal));
+		    		}
+	        	}else
+	        	{
+	        		$this->render('agregarcentralizada',array('acciones'=>$model, 'accionestodas' => $accionestodas, 'fuentes' => $fuentes));
+	        	}
 	        }
+	    }else
+	    {
+	    	$this->render('agregarcentralizada',array('acciones'=>$model, 'accionestodas' => $accionestodas, 'fuentes' => $fuentes));
 	    }
-		$this->render('agregarcentralizada',array('acciones'=>$model, 'accionestodas' => $accionestodas, 'fuentes' => $fuentes));
+		
 	}
+
+	public function actionBuscarpartida()
+	{
+		$name = "Seleccionar partida";
+
+		if($_POST['Acciones']['nombre'])
+		{
+			$tipo = $_POST['Acciones']['nombre'];
+			$partidas = $this->obtenerPartidas($tipo);
+		    
+		    $partidas_principal = CHtml::listData($partidas, function($partidas) {
+																	return CHtml::encode($partidas->partida_id);
+																}, function($partidas) {
+																	return CHtml::encode($partidas->p1.'-'. $partidas->nombre);
+																});
+		     echo CHtml::tag('option',
+		                   array('value'=>""),CHtml::encode($name),true);
+
+		    foreach($partidas_principal as $value => $name)
+		    {
+		        echo CHtml::tag('option',
+		                   array('value'=>$value),CHtml::encode($name),true);
+		    }
+		}else
+		{
+
+		     echo CHtml::tag('option',
+		                   array('value'=>""),CHtml::encode($name),true);
+		}
+
+	}
+
+
+	public function actionBuscargeneral()
+	{
+		$name = "Seleccionar partida general";
+
+		if($_POST['Acciones']['partida'] and !empty($_POST['Acciones']['nombre']))
+		{
+			$tipo = Partidas::model()->findByPk($_POST['Acciones']['partida']);
+
+			$generales = $this->GeneralXpartida($tipo->p1);
+		    
+		    $generales_todas = CHtml::listData($generales, function($generales) {
+																return CHtml::encode($generales->partida_id);
+															}, function($generales) {
+																return CHtml::encode($generales->p1.'-'.$generales->p2.'-'.$generales->p3.'-'. $generales->nombre);
+															});
+								
+		     echo CHtml::tag('option',
+		                   array('value'=>""),CHtml::encode($name),true);
+
+		    foreach($generales_todas as $value => $name)
+		    {
+		        echo CHtml::tag('option',
+		                   array('value'=>$value),CHtml::encode($name),true);
+		    }
+		}else
+		{
+
+		     echo CHtml::tag('option',
+		                   array('value'=>""),CHtml::encode($name),true);
+		}
+
+	}
+
+
 
 	public function actionAdministracion()
 	{
@@ -331,72 +435,7 @@ class PlanificacionController extends Controller
 
 	}
 
-	public function actionBuscarpartida()
-	{
-		$name = "Seleccionar partida";
-
-		if($_POST['Acciones']['nombre'])
-		{
-			$tipo = $_POST['Acciones']['nombre'];
-			$partidas = $this->obtenerPartidas($tipo);
-		    
-		    $partidas_principal = CHtml::listData($partidas, function($partidas) {
-																	return CHtml::encode($partidas->partida_id);
-																}, function($partidas) {
-																	return CHtml::encode($partidas->p1.'-'. $partidas->nombre);
-																});
-		     echo CHtml::tag('option',
-		                   array('value'=>""),CHtml::encode($name),true);
-
-		    foreach($partidas_principal as $value => $name)
-		    {
-		        echo CHtml::tag('option',
-		                   array('value'=>$value),CHtml::encode($name),true);
-		    }
-		}else
-		{
-
-		     echo CHtml::tag('option',
-		                   array('value'=>""),CHtml::encode($name),true);
-		}
-
-	}
-
-
-	public function actionBuscargeneral()
-	{
-		$name = "Seleccionar partida general";
-
-		if($_POST['Acciones']['partida'] and !empty($_POST['Acciones']['nombre']))
-		{
-			$tipo = Partidas::model()->findByPk($_POST['Acciones']['partida']);
-
-			$generales = $this->GeneralXpartida($tipo->p1);
-		    
-		    $generales_todas = CHtml::listData($generales, function($generales) {
-																return CHtml::encode($generales->partida_id);
-															}, function($generales) {
-																return CHtml::encode($generales->p1.'-'.$generales->p2.'-'.$generales->p3.'-'. $generales->nombre);
-															});
-								
-		     echo CHtml::tag('option',
-		                   array('value'=>""),CHtml::encode($name),true);
-
-		    foreach($generales_todas as $value => $name)
-		    {
-		        echo CHtml::tag('option',
-		                   array('value'=>$value),CHtml::encode($name),true);
-		    }
-		}else
-		{
-
-		     echo CHtml::tag('option',
-		                   array('value'=>""),CHtml::encode($name),true);
-		}
-
-	}
-
-
+	
 	public function actionIndex()   /*Aquí vamos a mostrar la primera vista del excel enviado por Zobeida*/
 	{
 

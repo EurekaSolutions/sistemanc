@@ -7,7 +7,7 @@
 				});
 			});
 		</script>
-		
+
 		<div>
 			<h4 style="text-align: center;">AGREGAR ACCIONES CENTRALIZADAS</h4><br>				
 				  	
@@ -69,7 +69,7 @@
 											'label'=>'Seleccione la partida',
 											'widgetOptions' => array(
 
-												'data' => array(),
+												'data' => empty($partidas_principal)? array() : $partidas_principal ,
 												//'options'=>array($model->proyecto_id => array('selected'=>true)),
 												'htmlOptions' => array('prompt' => 'Seleccionar partida', 'id' => 'partida', 'ajax' => array(
 													'type'=>'POST', //request type
@@ -91,7 +91,7 @@
 											'label'=>'Seleccione general',
 											'widgetOptions' => array(
 
-												'data' => array(),
+												'data' => empty($generales_todas)? array() : $generales_todas,
 												
 												//'options'=>array($model->proyecto_id => array('selected'=>true)),
 												'htmlOptions' => array('prompt' => 'Seleccionar partida general', 'id' => 'general'
