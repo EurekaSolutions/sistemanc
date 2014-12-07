@@ -11,7 +11,8 @@
  * @property string $fecha_hasta
  * @property string $tipo
  * @property string $anho
- * @string $ente_organo_id
+ * @property string $ente_organo_id
+ * @property string $fuente_fianciamiento_id
  *
  * The followings are the available model relations:
  * @property PresupuestoProductos[] $presupuestoProductoses
@@ -54,11 +55,13 @@ class PresupuestoPartidas extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'presupuestoProductoses' => array(self::HAS_MANY, 'PresupuestoProductos', 'proyecto_partida_id'),
-			'partidas' => array(self::HAS_ONE, 'Partidas', 'partida_id'),
+			'enteOrgano' => array(self::BELONGS_TO, 'EntesOrganos', 'ente_organo_id'),
+			'presupuestoProductos' => array(self::HAS_MANY, 'PresupuestoProductos', 'proyecto_partida_id'),
+			'partida' => array(self::BELONGS_TO, 'Partidas', 'partida_id'),
 			'proyectoses' => array(self::MANY_MANY, 'Proyectos', 'presupuesto_partida_proyecto(presupuesto_partida_id, proyecto_id)'),
 			'presupuestoPartidaAcciones' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones', 'presupuesto_partida_id'),
 			'presupuestoPartidaProyecto' => array(self::HAS_MANY, 'PresupuestoPartidaProyecto', 'presupuesto_partida_id'),
+			'fuenteFianciamiento' => array(self::BELONGS_TO, 'FuentesFinanciamiento', 'fuente_fianciamiento_id'),
 		);
 	}
 
@@ -76,6 +79,8 @@ class PresupuestoPartidas extends CActiveRecord
 			'tipo' => 'Tipo',
 			'anho' => 'Anho',
 			'ente_organo_id' => 'Ente Organo',
+			'fuente_fianciamiento_id' => 'Fuente Fianciamiento',
+
 		);
 	}
 
@@ -105,6 +110,7 @@ class PresupuestoPartidas extends CActiveRecord
 		$criteria->compare('tipo',$this->tipo,true);
 		$criteria->compare('anho',$this->anho,true);
 		$criteria->compare('ente_organo_id',$this->ente_organo_id,true);
+		$criteria->compare('fuente_fianciamiento_id',$this->fuente_fianciamiento_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

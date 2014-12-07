@@ -46,11 +46,13 @@ $this->breadcrumbs=array(
 
 					'data' => $listas,
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array(/*'prompt' => 'Seleccionar proyecto',*/'multiple' => false, 'onChange'=>'submit','submit' => array('/planificacion/partidas')),
+					'htmlOptions' => array('prompt' => 'Seleccionar proyecto', 'onChange'=>'submit','submit' => array('/planificacion/partidas')),
 				),
 				'hint' => 'Selecciona la Acción o Proyecto.'
 			)
 		); 
+
+	 //print_r($partidas);
 
 	 	 echo $form->dropDownListGroup( $partidaSel, 'partida_id',
 			array(
@@ -62,21 +64,63 @@ $this->breadcrumbs=array(
 
 					'data' => CHtml::listData($partidas,'partida_id', function($partida){ return CHtml::encode($this->numeroPartida($partida).' - '.$partida->nombre);}),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array('multiple' => false, ),
+					'htmlOptions' => array('prompt' => 'Seleccionar Partida', 'onChange'=>'submit','submit' => array('/planificacion/partidas') ),
 				),
 				'hint' => 'Selecciona la partida correspondiente al proyecto para cargar sus productos.'
 			)
 		); 
 
-	 	 $this->widget(
+	 	/* $this->widget(
 		    'booster.widgets.TbButton',
 		    array('buttonType' => 'submit', 'label' => 'Seleccionar')
-		);
-	 
-
+		);*/
+	 	 $this->endWidget();
 		 	  
 ?>
+<?php 
+	$formpc = $this->beginWidget('booster.widgets.TbActiveForm',
+		    array(
+		        'id' => 'partida-form',
+		        'htmlOptions' => array('class' => 'well'), // for inset effect
+		    )
+		);
 
+		print_r($presuPros);
+		foreach ($presuPros as $key => $prepro) {
+
+		
+				//$producto = $prepro->producto;
+			 	//echo $producto->nombre;
+			 	print_r($prepro);
+			
+
+		/*	$formpc->inputFieldGroup($productosCargados[$key],'');
+			$formpc->inputFieldGroup($productosCargados[$key],'');
+			$formpc->inputFieldGroup($productosCargados[$key],'');
+			$formpc->inputFieldGroup($productosCargados[$key],'');
+			$formpc->inputFieldGroup($productosCargados[$key],'');
+			$formpc->inputFieldGroup($productosCargados[$key],'');*/
+		}
+	 $this->endWidget();
+		/*$this->widget(
+		    'booster.widgets.TbSelect2',
+		    array(
+		        'name' => 'emptydata',
+		        'data' => $listas,
+		        'options' => array(
+		            'placeholder' => 'type clever, or is, or just type!',
+		            'width' => '80%',
+		        )
+		    )
+		);*/
+/*		foreach(
+    array('default', 'primary', 'success', 'info', 'warning', 'danger')
+    as $context
+		) {
+		    $label = $context;
+		    $this->widget('booster.widgets.TbLabel', compact('context', 'label'));
+		}*/
+?>
 <?php 
 
 	if(isset($partidaSel->partida_id)){
@@ -135,7 +179,7 @@ $this->breadcrumbs=array(
 					'data' => CHtml::listData(Partidas::model()->findByPk($partidaSel->partida_id)->productos,
 						'producto_id', function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);}),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array('multiple' => false, ),
+					'htmlOptions' => array('prompt' => 'Seleccionar producto', /*'multiple' => false,*/ ),
 				),
 				'hint' => 'Selecciona el producto para añadir.'
 			)
