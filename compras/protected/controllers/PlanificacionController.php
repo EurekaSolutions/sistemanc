@@ -318,11 +318,7 @@ class PlanificacionController extends Controller
 
 		$proyectos = $usuario->enteOrgano->proyectos;
 		
-		$criteria = new CDbCriteria();
-		$criteria->distinct=true;
-		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
-		$criteria->select = 'accion_id, codigo_accion';
-		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
+		$acciones=PresupuestoPartidaAcciones::model()->findAllByAttributes(array('ente_organo_id'=>$usuario->ente_organo_id),array('distinct'=>true,'select'=>'codigo_accion, accion_id'));
 
 		$this->render('index',array(
 			'usuario'=>$usuario, 'proyectos' => $proyectos,  'acciones' => $acciones
@@ -418,7 +414,7 @@ class PlanificacionController extends Controller
  
 							if($presuPros = PresupuestoPartidas::model()->findByAttributes(array('partida_id'=>$partidaSel->partida_id,'ente_organo_id'=>$proyectoActual->ente_organo_id)))
 							{
-								print_r($presuPros);
+								//print_r($presuPros);
 								$presuPros = $presuPros->presupuestoProductos;
 							}else{
 								Yii::log('No se pudo obtener la lista de productos asociados a la partida id: '.$partidaSel->partida_id.' y ente id: '.$proyectoActual->ente_organo_id,'warning');
@@ -480,7 +476,7 @@ class PlanificacionController extends Controller
 		$criteria = new CDbCriteria();
 		$criteria->distinct=true;
 		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
-		$criteria->select = 'accion_id, codigo_accion';
+		$criteria->select = 'accion_id';
 		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
 		
 
