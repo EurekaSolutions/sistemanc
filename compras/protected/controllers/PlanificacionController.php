@@ -27,7 +27,7 @@ class PlanificacionController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','partidas','vistaparcial'),
+				'actions'=>array('create','update','partidas','vistaparcial', 'buscarpartida'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -104,13 +104,28 @@ class PlanificacionController extends Controller
 
 	}
 
-	public function obtenerPartidas()
+	public function obtenerPartidas($tipo)
 	{
-			$criteria = new CDbCriteria();
+		$criteria = new CDbCriteria();
+
+		if($tipo == "*")
+		{
 			$criteria->compare('t.p1',401, FALSE, "OR");
 			$criteria->compare('t.p1',402, FALSE,  "OR");
 			$criteria->compare('t.p1',403, FALSE,  "OR");
 			$criteria->compare('t.p1',404, FALSE , "OR"); 
+
+		}elseif($tipo=="1000")
+		{	
+			$criteria->compare('t.p1',401);
+
+		}else
+		{
+			$criteria->compare('t.p1',402, FALSE,  "OR");
+			$criteria->compare('t.p1',403, FALSE,  "OR");
+			$criteria->compare('t.p1',404, FALSE , "OR"); 
+			
+		}
 			$criteria->compare('t.p2',0); 
 			$criteria->compare('t.p3',0); 
 			$criteria->compare('t.p4',0);
@@ -217,9 +232,9 @@ class PlanificacionController extends Controller
 
 		$accionestodas = $this->obtenerAccionesCentralizadas();
 
-		$partidas = $this->obtenerPartidas();
+		$partidas = $this->obtenerPartidas("*");
 
-		$generales = $this->GeneralXpartida(404);
+		$generales = $this->GeneralXpartida(401);
 
 		$fuentes = FuentesFinanciamiento::model()->findAll();
 
@@ -309,6 +324,23 @@ class PlanificacionController extends Controller
 			return $monto;
 
 	}
+
+	public function actionBuscarpartida()
+	{
+		$tipo = $_POST['Acciones']['nombre'];
+
+		$dato = $this->obtenerPartidas($tipo);
+		$data=CHtml::listData($dato,'p1','nombre');
+	    
+	    //return $data;
+	    foreach($data as $value)
+	    {
+	        echo CHtml::tag('option',
+	                   array('value'=>$value),CHtml::encode($value),true);
+	    }
+
+	}
+
 
 	public function actionIndex()   /*Aquí vamos a mostrar la primera vista del excel enviado por Zobeida*/
 	{

@@ -41,15 +41,22 @@
 
 												'data' => $lista_acciones,
 												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												'htmlOptions' => array('prompt' => 'Seleccione Acción centralizada'),
+												'htmlOptions' => array('prompt' => 'Seleccione Acción centralizada', 'ajax' => array(
+													'type'=>'POST', //request type
+													'url'=>CController::createUrl('planificacion/buscarpartida'), //url to call.
+													//Style: CController::createUrl('currentController/methodToCall')
+													'update'=>'#partida', //selector to update
+													//'data'=>'js:javascript statement' 
+													//leave out the data key to pass all form values through
+											  )),
 											)
 										)
 									); 
 
-								 echo CHtml::dropDownList('city_id','', array());
+								// echo CHtml::dropDownList('partida','', array());
 
 								 
-								  echo $form->dropDownListGroup($acciones , 'partida',
+								 echo $form->dropDownListGroup($acciones , 'partida',
 										array(
 											'wrapperHtmlOptions' => array(
 												'class' => 'col-sm-2',
@@ -57,12 +64,12 @@
 											'label'=>'Seleccione la partida',
 											'widgetOptions' => array(
 
-												'data' => $partidas_principal,
+												'data' => array(),
 												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												'htmlOptions' => array('prompt' => 'Seleccionar partida'),
+												'htmlOptions' => array('prompt' => 'Seleccionar partida', 'id' => 'partida'),
 											)
 										)
-									); 
+									);
 
 								  echo $form->dropDownListGroup($acciones , 'general',
 										array(
@@ -75,14 +82,9 @@
 												'data' => $generales_todas,
 												
 												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												'htmlOptions' => array('prompt' => 'Seleccionar partida general', 'ajax' => array(
-													'type'=>'POST', //request type
-													'url'=>CController::createUrl('currentController/dynamiccities'), //url to call.
-													//Style: CController::createUrl('currentController/methodToCall')
-													'update'=>'#city_id', //selector to update
-													//'data'=>'js:javascript statement' 
-													//leave out the data key to pass all form values through
-											  )),
+												'htmlOptions' => array('prompt' => 'Seleccionar partida general'
+
+												),
 											),
 
 										)
