@@ -321,7 +321,7 @@ class PlanificacionController extends Controller
 		$criteria = new CDbCriteria();
 		$criteria->distinct=true;
 		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
-		$criteria->select = 'accion_id';
+		$criteria->select = 'accion_id, codigo_accion';
 		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
 
 		$this->render('index',array(
@@ -480,7 +480,7 @@ class PlanificacionController extends Controller
 		$criteria = new CDbCriteria();
 		$criteria->distinct=true;
 		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
-		$criteria->select = 'accion_id';
+		$criteria->select = 'accion_id, codigo_accion';
 		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
 		
 
