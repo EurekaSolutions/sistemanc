@@ -27,7 +27,7 @@ class PlanificacionController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','partidas','vistaparcial', 'buscarpartida'),
+				'actions'=>array('create','update','partidas','vistaparcial', 'buscarpartida', 'buscargeneral'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -228,17 +228,23 @@ class PlanificacionController extends Controller
 
 	public function actionAgregarcentralizada()
 	{
-		$acciones = new Acciones;
+		$model = new Acciones;
 
 		$accionestodas = $this->obtenerAccionesCentralizadas();
 
-		$partidas = $this->obtenerPartidas("*");
-
-		$generales = $this->GeneralXpartida(401);
-
 		$fuentes = FuentesFinanciamiento::model()->findAll();
 
-		$this->render('agregarcentralizada',array('acciones'=>$acciones, 'accionestodas' => $accionestodas, 'partidas' => $partidas, 'generales' => $generales, 'fuentes' => $fuentes));
+		if(isset($_POST['Acciones']))
+	    {
+
+	        $model->attributes=$_POST['Acciones'];
+
+	        if($model->save())
+	        {
+	        	//return;
+	        }
+	    }
+		$this->render('agregarcentralizada',array('acciones'=>$model, 'accionestodas' => $accionestodas, 'fuentes' => $fuentes));
 	}
 
 	public function actionAdministracion()
@@ -327,17 +333,66 @@ class PlanificacionController extends Controller
 
 	public function actionBuscarpartida()
 	{
-		$tipo = $_POST['Acciones']['nombre'];
+		$name = "Seleccionar partida";
 
-		$dato = $this->obtenerPartidas($tipo);
-		$data=CHtml::listData($dato,'p1','nombre');
-	    
-	    //return $data;
-	    foreach($data as $value)
-	    {
-	        echo CHtml::tag('option',
-	                   array('value'=>$value),CHtml::encode($value),true);
-	    }
+		if($_POST['Acciones']['nombre'])
+		{
+			$tipo = $_POST['Acciones']['nombre'];
+			$partidas = $this->obtenerPartidas($tipo);
+		    
+		    $partidas_principal = CHtml::listData($partidas, function($partidas) {
+																	return CHtml::encode($partidas->partida_id);
+																}, function($partidas) {
+																	return CHtml::encode($partidas->p1.'-'. $partidas->nombre);
+																});
+		     echo CHtml::tag('option',
+		                   array('value'=>""),CHtml::encode($name),true);
+
+		    foreach($partidas_principal as $value => $name)
+		    {
+		        echo CHtml::tag('option',
+		                   array('value'=>$value),CHtml::encode($name),true);
+		    }
+		}else
+		{
+
+		     echo CHtml::tag('option',
+		                   array('value'=>""),CHtml::encode($name),true);
+		}
+
+	}
+
+
+	public function actionBuscargeneral()
+	{
+		$name = "Seleccionar partida general";
+
+		if($_POST['Acciones']['partida'] and !empty($_POST['Acciones']['nombre']))
+		{
+			$tipo = Partidas::model()->findByPk($_POST['Acciones']['partida']);
+
+			$generales = $this->GeneralXpartida($tipo->p1);
+		    
+		    $generales_todas = CHtml::listData($generales, function($generales) {
+																return CHtml::encode($generales->partida_id);
+															}, function($generales) {
+																return CHtml::encode($generales->p1.'-'.$generales->p2.'-'.$generales->p3.'-'. $generales->nombre);
+															});
+								
+		     echo CHtml::tag('option',
+		                   array('value'=>""),CHtml::encode($name),true);
+
+		    foreach($generales_todas as $value => $name)
+		    {
+		        echo CHtml::tag('option',
+		                   array('value'=>$value),CHtml::encode($name),true);
+		    }
+		}else
+		{
+
+		     echo CHtml::tag('option',
+		                   array('value'=>""),CHtml::encode($name),true);
+		}
 
 	}
 

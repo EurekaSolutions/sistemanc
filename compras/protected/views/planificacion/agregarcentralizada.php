@@ -1,3 +1,13 @@
+		<script type="text/javascript">
+			$( document ).ready(function() {
+				//alert("ready!");
+				$( "#Acciones_nombre" ).change(function() {
+					$('#general').html("");
+					$( "#general" ).append( '<option value="">Seleccionar partida general</option>' );
+				});
+			});
+		</script>
+		
 		<div>
 			<h4 style="text-align: center;">AGREGAR ACCIONES CENTRALIZADAS</h4><br>				
 				  	
@@ -7,17 +17,12 @@
 
 				    			$lista_acciones = CHtml::listData($accionestodas, 'codigo', 'nombre');
 
-				    			$generales_todas = CHtml::listData($generales, function($generales) {
-																return CHtml::encode($generales->partida_id);
-															}, function($generales) {
-																return CHtml::encode($generales->p1.'-'.$generales->p2.'-'.$generales->p3.'-'. $generales->nombre);
-															});
-								
-								$partidas_principal = CHtml::listData($partidas, function($partidas) {
+				    			
+								/*$partidas_principal = CHtml::listData($partidas, function($partidas) {
 																return CHtml::encode($partidas->partida_id);
 															}, function($partidas) {
 																return CHtml::encode($partidas->p1.'-'. $partidas->nombre);
-															});
+															});*/
 
 								$fuentes = CHtml::listData($fuentes, 'fuente_financiamiento_id', 'nombre');
 
@@ -66,7 +71,14 @@
 
 												'data' => array(),
 												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												'htmlOptions' => array('prompt' => 'Seleccionar partida', 'id' => 'partida'),
+												'htmlOptions' => array('prompt' => 'Seleccionar partida', 'id' => 'partida', 'ajax' => array(
+													'type'=>'POST', //request type
+													'url'=>CController::createUrl('planificacion/buscargeneral'), //url to call.
+													//Style: CController::createUrl('currentController/methodToCall')
+													'update'=>'#general', //selector to update
+													//'data'=>'js:javascript statement' 
+													//leave out the data key to pass all form values through
+											  )),
 											)
 										)
 									);
@@ -79,10 +91,10 @@
 											'label'=>'Seleccione general',
 											'widgetOptions' => array(
 
-												'data' => $generales_todas,
+												'data' => array(),
 												
 												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												'htmlOptions' => array('prompt' => 'Seleccionar partida general'
+												'htmlOptions' => array('prompt' => 'Seleccionar partida general', 'id' => 'general'
 
 												),
 											),
