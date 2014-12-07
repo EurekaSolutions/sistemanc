@@ -1,9 +1,26 @@
 		<div>
 			<h4 style="text-align: center;">AGREGAR ACCIONES CENTRALIZADAS</h4><br>				
+				  	
+
+
 				   <?php 
 
-				    			$lista_acciones = CHtml::listData($accionestodas, 'accion_id', 'nombre');
-	
+				    			$lista_acciones = CHtml::listData($accionestodas, 'codigo', 'nombre');
+
+				    			$generales_todas = CHtml::listData($generales, function($generales) {
+																return CHtml::encode($generales->partida_id);
+															}, function($generales) {
+																return CHtml::encode($generales->p1.'-'.$generales->p2.'-'.$generales->p3.'-'. $generales->nombre);
+															});
+								
+								$partidas_principal = CHtml::listData($partidas, function($partidas) {
+																return CHtml::encode($partidas->partida_id);
+															}, function($partidas) {
+																return CHtml::encode($partidas->p1.'-'. $partidas->nombre);
+															});
+
+								$fuentes = CHtml::listData($fuentes, 'fuente_financiamiento_id', 'nombre');
+
 								/** @var TbActiveForm $form */
 								$form = $this->beginWidget('booster.widgets.TbActiveForm',
 								    array(
@@ -12,7 +29,9 @@
 								    )
 								);
 
-								 echo $form->dropDownListGroup($acciones ,	'nombre',
+								echo $form->errorSummary($acciones);
+
+								 echo $form->dropDownListGroup($acciones , 'nombre',
 										array(
 											'wrapperHtmlOptions' => array(
 												'class' => 'col-sm-2',
@@ -22,63 +41,88 @@
 
 												'data' => $lista_acciones,
 												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												'htmlOptions' => array(/*'prompt' => 'Seleccionar proyecto',*/'multiple' => false, ),
+												'htmlOptions' => array('prompt' => 'Seleccione Acción centralizada'),
 											)
 										)
 									); 
+
+								 echo CHtml::dropDownList('city_id','', array());
+
+								 
+								  echo $form->dropDownListGroup($acciones , 'partida',
+										array(
+											'wrapperHtmlOptions' => array(
+												'class' => 'col-sm-2',
+											),
+											'label'=>'Seleccione la partida',
+											'widgetOptions' => array(
+
+												'data' => $partidas_principal,
+												//'options'=>array($model->proyecto_id => array('selected'=>true)),
+												'htmlOptions' => array('prompt' => 'Seleccionar partida'),
+											)
+										)
+									); 
+
+								  echo $form->dropDownListGroup($acciones , 'general',
+										array(
+											'wrapperHtmlOptions' => array(
+												'class' => 'col-sm-2',
+											),
+											'label'=>'Seleccione general',
+											'widgetOptions' => array(
+
+												'data' => $generales_todas,
+												
+												//'options'=>array($model->proyecto_id => array('selected'=>true)),
+												'htmlOptions' => array('prompt' => 'Seleccionar partida general', 'ajax' => array(
+													'type'=>'POST', //request type
+													'url'=>CController::createUrl('currentController/dynamiccities'), //url to call.
+													//Style: CController::createUrl('currentController/methodToCall')
+													'update'=>'#city_id', //selector to update
+													//'data'=>'js:javascript statement' 
+													//leave out the data key to pass all form values through
+											  )),
+											),
+
+										)
+									);
+
+									echo $form->dropDownListGroup($acciones , 'fuente',
+										array(
+											'wrapperHtmlOptions' => array(
+												'class' => 'col-sm-2',
+											),
+											'label'=>'Fuente de financiamiento',
+											'widgetOptions' => array(
+
+												'data' => $fuentes,
+												//'options'=>array($model->proyecto_id => array('selected'=>true)),
+												'htmlOptions' => array('prompt' => 'Seleccionar la fuente de financiamiento'),
+											)
+										)
+									); 
+
+
+									echo $form->textFieldGroup($acciones,'monto',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span3','maxlength'=>20))));
 
 								/*	$this->widget(
 									    'booster.widgets.TbButton',
 									    array('buttonType' => 'submit', 'label' => 'Seleccionar')
 									); */
 								 
-							?>
 
 
-			<div class="well">
-                <label>
-                    Seleccione la Partida
-                <select class="form-control">
-                  <option value="">Partidas</option>
-                  <option value="corpovex">401 GASTOS DE PERSONAL</option>
-                  <option>402 MATERIALES Y SUMINISTRO</option>
-                  <option>403 GASTOS NO PERSONALES</option>
-                  <option>404 BIENES</option>
-                </select>
-                </label>
-            </div>
-
-
-            <div class="well">
-                <label>
-                    Seleccione la partida general
-                    <select class="form-control">
-                      <option value="">Generales</option>
-                      <option value="corpovex">401.07.00.00</option>
-                    </select>
-                </label>
-            </div>
-			
-			<div class="well">
-				<label>
-					Dinero asignado
-					<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Dinero asignado">
-				</label>
-			</div>
-
-
-			<?php
-
-			$this->widget('booster.widgets.TbButton', array(
-            	'buttonType'=>'submit',
-            	'context'=>'primary',
-            	'label'=>$model->isNewRecord ? 'Asignar dinero' : 'Agregar dinero',
-        	)); 
+						$this->widget('booster.widgets.TbButton', array(
+			            	'buttonType'=>'submit',
+			            	'context'=>'primary',
+			            	'label'=>$model->isNewRecord ? 'Asignar dinero' : 'Agregar dinero',
+			        	)); 
 
 
 
-			$this->endWidget();
-								unset($form);
+						$this->endWidget();
+					unset($form);
 			?>
 
 		</div>

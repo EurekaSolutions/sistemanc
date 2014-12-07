@@ -23,7 +23,7 @@ class PlanificacionController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'modal', 'agregarproyecto', 'agregarcentralizada', 'administracion', 'crearente'),
+				'actions'=>array('index','view', 'modal', 'agregarproyecto', 'agregarcentralizada', 'administracion', 'crearente', 'misentes'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -45,10 +45,24 @@ class PlanificacionController extends Controller
 		$this->render('importacion');
 	}
 
+
+	public function actionMisentes() 
+	{
+		$this->render('misentes');
+	}
+
 	public function proyectosPartidasParticular($partida)
 	{
 		$criteria = new CDbCriteria();
 		$criteria->condition = 'p1=:p1';
+		$criteria->params = array(':p1'=>$partida);
+		return Partidas::model()->findAll($criteria);
+	}
+
+	public function GeneralXpartida($partida)
+	{
+		$criteria = new CDbCriteria();
+		$criteria->condition = 'p1=:p1 and p3 = 0 and p2 <> 0';
 		$criteria->params = array(':p1'=>$partida);
 		return Partidas::model()->findAll($criteria);
 	}
@@ -72,6 +86,40 @@ class PlanificacionController extends Controller
 		return $producto->cod_segmento.'.'.sprintf("%02s", $producto->cod_familia).'.'.sprintf("%02s", $producto->cod_clase).'.'.sprintf("%02s", $producto->cod_producto);
 	}
 
+	public function obtenerAccionesCentralizadas()
+	{
+
+		$search_values = array('1000' => 1000, '2000' => 2000, '3000' => 3000, '7000' => 7000);
+		//$match = addcslashes($match, '000');
+		//$match = "000";
+		
+		$criteria = new CDbCriteria();
+		
+		$criteria->condition = 'codigo=:_1000 OR codigo=:_2000 OR codigo=:_3000 OR codigo=:_7000';
+		$criteria->params = array(':_1000'=>$search_values['1000'],':_2000'=>$search_values['2000'], ':_3000'=>$search_values['3000'], ':_7000'=>$search_values['7000']);
+
+		$AccionesValidas = Acciones::model()->findAll($criteria);
+
+		return $AccionesValidas;
+
+	}
+
+	public function obtenerPartidas()
+	{
+			$criteria = new CDbCriteria();
+			$criteria->compare('t.p1',401, FALSE, "OR");
+			$criteria->compare('t.p1',402, FALSE,  "OR");
+			$criteria->compare('t.p1',403, FALSE,  "OR");
+			$criteria->compare('t.p1',404, FALSE , "OR"); 
+			$criteria->compare('t.p2',0); 
+			$criteria->compare('t.p3',0); 
+			$criteria->compare('t.p4',0);
+			
+			//$criteria->addSearchCondition('t.nombre', $busqueda);
+			$partidas = Partidas::model()->findAll($criteria);
+
+			return $partidas;
+	}
 
 	public function actionCrearente()
 	{
@@ -167,10 +215,15 @@ class PlanificacionController extends Controller
 	{
 		$acciones = new Acciones;
 
-		$accionestodas = Acciones::model()->findAll();
+		$accionestodas = $this->obtenerAccionesCentralizadas();
 
-		
-		$this->render('agregarcentralizada',array('acciones'=>$acciones, 'accionestodas' => $accionestodas));
+		$partidas = $this->obtenerPartidas();
+
+		$generales = $this->GeneralXpartida(404);
+
+		$fuentes = FuentesFinanciamiento::model()->findAll();
+
+		$this->render('agregarcentralizada',array('acciones'=>$acciones, 'accionestodas' => $accionestodas, 'partidas' => $partidas, 'generales' => $generales, 'fuentes' => $fuentes));
 	}
 
 	public function actionAdministracion()

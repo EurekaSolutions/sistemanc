@@ -103,8 +103,8 @@ return array(
 		'db'=>array(
 			'connectionString' => 'pgsql:host=localhost;dbname=sistemanc',
 			'emulatePrepare' => true,
-			'username' => 'compras',
-			'password' => 'compras',
+			'username' => 'eureka',
+			'password' => 'eureka',
 			'charset' => 'utf8',
 		),
 		

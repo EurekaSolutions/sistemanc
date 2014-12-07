@@ -1,30 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "public.acciones".
+ * This is the model class for table "fuentes_financiamiento".
  *
- * The followings are the available columns in table 'public.acciones':
- * @property string $accion_id
+ * The followings are the available columns in table 'fuentes_financiamiento':
+ * @property string $fuente_financiamiento_id
  * @property string $nombre
- * @property string $codigo
+ * @property boolean $activo
  *
  * The followings are the available model relations:
- * @property PresupuestoPartidaAcciones[] $presupuestoPartidaAcciones
+ * @property PresupuestoPartidas[] $presupuestoPartidases
  */
-class Acciones extends CActiveRecord
+class FuentesFinanciamiento extends CActiveRecord
 {
-
-	public $partida;
-	public $general;
-	public $monto;
-	public $fuente;
-
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'public.acciones';
+		return 'fuentes_financiamiento';
 	}
 
 	/**
@@ -35,11 +29,11 @@ class Acciones extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre, partida, general, monto, fuente', 'required'),
-			array('codigo', 'safe'),
+			array('nombre, activo', 'required'),
+			array('nombre', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('accion_id, nombre, codigo', 'safe', 'on'=>'search'),
+			array('fuente_financiamiento_id, nombre, activo', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,7 +45,7 @@ class Acciones extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'presupuestoPartidaAcciones' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones', 'accion_id'),
+			'presupuestoPartidases' => array(self::HAS_MANY, 'PresupuestoPartidas', 'fuente_fianciamiento_id'),
 		);
 	}
 
@@ -61,9 +55,9 @@ class Acciones extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'accion_id' => 'Accion',
+			'fuente_financiamiento_id' => 'Fuente Financiamiento',
 			'nombre' => 'Nombre',
-			'codigo' => 'Codigo',
+			'activo' => 'Activo',
 		);
 	}
 
@@ -85,9 +79,9 @@ class Acciones extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('accion_id',$this->accion_id,true);
+		$criteria->compare('fuente_financiamiento_id',$this->fuente_financiamiento_id,true);
 		$criteria->compare('nombre',$this->nombre,true);
-		$criteria->compare('codigo',$this->codigo,true);
+		$criteria->compare('activo',$this->activo);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -98,7 +92,7 @@ class Acciones extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Acciones the static model class
+	 * @return FuentesFinanciamiento the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
