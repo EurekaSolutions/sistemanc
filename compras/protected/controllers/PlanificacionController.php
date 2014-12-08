@@ -48,13 +48,6 @@ class PlanificacionController extends Controller
 
 	public function actionMisentes() 
 	{
-		//$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
-
-		/*$mishijos = EntesAdscritos::model()->findAll('padre_id=:padre_id', array(':padre_id' => $usuario->ente_organo_id));
-
-		$datoshijos = */
-
-		//$this->render('misentes');
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 
 		$entesadscritos = $usuario->enteOrgano->hijos;
