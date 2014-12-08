@@ -42,10 +42,29 @@ class Proyectos extends CActiveRecord
 			array('nombreid, partida, general, monto, fuente', 'required', 'on' => 'creaproyecto'),
 			array('monto', 'numerical', 'integerOnly'=>true, 'min'=>1),
 			array('codigo', 'length', 'max'=>20),
+			array('nombre', 'proyectounico', 'on'=>'create'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('proyecto_id, nombre, codigo, ente_organo_id', 'safe', 'on'=>'search'),
 		);
+	}
+
+	public function proyectounico($attribute,$params)
+	{
+		
+		$criteria = new CDbCriteria();
+
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+
+		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;
+
+		//$criteria->addSearchCondition('t.nombre', $this->nombre);
+		$criteria->compare('LOWER(nombre)',strtolower($this->nombre),true); 
+
+
+		if(Proyectos::model()->find($criteria))
+			$this->addError($attribute, 'Ya tines un proyecto con este nombre!');
+
 	}
 
 	/**

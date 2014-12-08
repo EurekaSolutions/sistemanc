@@ -212,7 +212,7 @@ class PlanificacionController extends Controller
 	public function actionAgregarproyecto()
 	{
 		
-		$model = new Proyectos();
+		$model = new Proyectos('create');
 
 		if(isset($_POST['Proyectos']))
 	    {
@@ -228,7 +228,7 @@ class PlanificacionController extends Controller
 			   Yii::app()->user->setFlash('success', "Proyecto creado con éxito!");
 
 			  // $this->redirect(array('view','id'=>$model->producto_id));
-			   $model = new Proyectos();
+			   $model = new Proyectos('create');
 
 			    $this->render('agregarproyecto',array(
 						'model'=>$model,
