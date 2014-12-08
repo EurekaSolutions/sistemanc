@@ -218,7 +218,7 @@ $this->breadcrumbs=array(
 			)
 		); 
 
-		Yii::app()->clientScript->registerScript("cambioDivisa", "$('#divisa').change(function(){$('#montoImp').val();})");
+		Yii::app()->clientScript->registerScript("cambioDivisa", '$(\'#divisa\').change(function(){$(\'#montoPresupuesto\').parent(\'span.input-group-addon\').val(\'$\');})');
 		$importado .= $form->dropDownListGroup( $presuImp, 'divisa_id',
 			array(
 				'wrapperHtmlOptions' => array(
@@ -272,7 +272,7 @@ $this->breadcrumbs=array(
 			)
 		);
 
-		$importado .= $form->textFieldGroup($presuImp, 'monto_presupuesto',array('prepend'=>'Bs','widgetOptions'=>array('id'=>'montoImp','htmlOptions'=> array('id'=>'montoPresupuesto'))));
+		$importado .= $form->textFieldGroup($presuImp, 'monto_presupuesto',array('prepend'=>'Bs','widgetOptions'=>array('htmlOptions'=> array('id'=>'montoPresupuesto'))));
 		$importado .= $form->textFieldGroup($presuImp, 'cantidad');
 		
 		Yii::app()->clientScript->registerScript("linkClick", "$('#nacional').click(function(){ $('#tipoPro').val('N');})
