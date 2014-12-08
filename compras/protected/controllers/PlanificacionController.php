@@ -27,7 +27,7 @@ class PlanificacionController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','partidas','vistaparcial', 'buscarpartida', 'buscargeneral', 'asignarpartidasproyecto', 'buscargeneralproyecto'),
+				'actions'=>array('create','update','partidas','vistaparcial', 'buscarpartida', 'buscargeneral', 'asignarpartidasproyecto', 'buscargeneralproyecto','buscarNcm'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -559,11 +559,18 @@ class PlanificacionController extends Controller
 	public function montoAccion(PresupuestoPartidaAcciones $accion){
 
 			$monto = 0;
-			foreach ($accion->presupuestoPartida as $key => $presupuestoPartida) {
-
-				$monto += $presupuestoPartida->monto_presupuestado;
-
-			}
+			
+			$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+/*
+			foreach (PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accion->accion_id,'ente_organo_id'=>$usuario->enteOrgano->ente_organo_id)) as $key => $value) {
+				
+				foreach ($value->presupuestoPartida as $key => $presupuestoPartida) {
+					$monto += $presupuestoPartida->monto_presupuestado;
+				}
+			}*/
+				foreach ($accion->presupuestoPartida as $key => $presupuestoPartida) {
+					$monto += $presupuestoPartida->monto_presupuestado;
+				}
 			return $monto;
 
 	}
@@ -587,8 +594,9 @@ class PlanificacionController extends Controller
 
 		$proyectos = $usuario->enteOrgano->proyectos;
 		
-		$acciones=PresupuestoPartidaAcciones::model()->findAllByAttributes(array('ente_organo_id'=>$usuario->ente_organo_id),array('distinct'=>true,'select'=>'codigo_accion, accion_id'));
+		$acciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('ente_organo_id'=>$usuario->ente_organo_id),array('distinct'=>true,'select'=>'codigo_accion, accion_id, ente_organo_id'));
 
+		print_r($acciones);
 		$this->render('index',array(
 			'usuario'=>$usuario, 'proyectos' => $proyectos,  'acciones' => $acciones
 		));
@@ -634,6 +642,37 @@ class PlanificacionController extends Controller
 
 	public function condicionVersion(){
 		return 't.fecha_desde<\''.date('Y-m-d').'\' AND t.fecha_hasta>\''.date('Y-m-d').'\'';
+	}
+
+
+	public function hijosCodigoNcm(CodigosNcm $codigo){
+		return CodigosNcm::model()->findAll('codigo_ncm_nivel_1=\''.$codigo->codigo_ncm_nivel_1.'\' AND (codigo_ncm_nivel_2!=\''.$codigo->codigo_ncm_nivel_2.'\' 
+										AND codigo_ncm_nivel_3!=\''.$codigo->codigo_ncm_nivel_3.'\' OR codigo_ncm_nivel_4!=\''.$codigo->codigo_ncm_nivel_4.'\') AND '.$this->condicionVersion());
+	}
+
+	public function actionBuscarNcm(){
+		$name = "Seleccionar producto";
+
+		echo CHtml::tag('option',
+		                  array('value'=>""),CHtml::encode($name),true);
+
+		if(isset($_POST['CodigosNcm']) and !empty($_POST['CodigosNcm']['codigo_ncm_id']))
+		{
+
+		$listaCodigos = array();
+		if($codigoSel=CodigosNcm::model()->findByPk($_POST['CodigosNcm']['codigo_ncm_id']))
+			$listaCodigos = CHtml::listData($this->hijosCodigoNcm($codigoSel),
+						'codigo_ncm_id', function($codigo){ return CHtml::encode($this->numeroCodigoNcm($codigo).' - '.$codigo->descripcion_ncm);});
+
+			
+		//$listaCodigos = array('era'=>'asdfasdf','asdfad'=>'asdfasdf');
+		    foreach($listaCodigos as $value => $name)
+		    {
+		        echo CHtml::tag('option',
+		                   array('value'=>$value),CHtml::encode($name),true);
+		    }
+		}
+		
 	}
 
 	public function actionPartidas() /*Aqui van la logica de negocio asociada a cada partida 401, 402, 403, 404 */
@@ -685,51 +724,84 @@ class PlanificacionController extends Controller
 						//$partidas = Partidas::model()->findByPk($partidas[0]->partida_id);
 						//$partidas = $proyectoSel->presupuestoPartidaProyecto->presupuestoPartida;
 		 				//print_r($_POST['Partidas']);
-		 				
+		 			}	
 						if(isset($_POST['Partidas']) && !empty($_POST['Partidas']['partida_id'])){
 							$partidaSel->attributes = $_POST['Partidas'];
 
 							$productosPartidas = Partidas::model()->findByPk($partidaSel->partida_id)->productos;
 							
 							// Producto Nacional
-							if(isset($_POST['PresupuestoProductos'])){
- 								$presuPro->attributes = $_POST['PresupuestoProductos'];
-								if($presuPro->validate())
-								{
-									$presuPro->tipo = 'nacional';
-									if($presupuestoPartida = $proyectoActual->presupuestoPartidas->findByAttributes(array('partida_id'=>$partidaSel->partida_id)))
-										$presuPro->proyecto_partida_id = $presupuestoPartida->presupuesto_partida_id;
-									/*else{
-										$presupuestoPartida = new PresupuestoPartidas();
-										$presupuestoPartida->partida_id = $partidaSel->partida_id;
-									}*/
-									//Monto en presupuesto en Bs. del producto
-									$presuPro->monto_presupuesto = floatval($presuPro->costo_unidad) * floatval($presuPro->cantidad);
-								
-									if($presuPro->save()){
-										$this->redirect(array('/planificacion/partidas'));
-									}else
-									throw new Exception("Error Processing Request", 1);
-								}
-							}else
-							// Producto Importado
-							if(isset($_POST['PresupuestoImportacion']) /*&& isset($_POST['PresupuestoProductos'])*/)
-							{
-								
-								if(isset($_POST['CodigosNcm'])){
-									$presuImpSel->attributes = $_POST['CodigosNcm'];
-									
-									$presuImp->attributes = $_POST['PresupuestoImportacion'];
-									if($presuImp->validate())
-									{
-
-									}
-								}
-
 							
-								//$this->guardarPresupuestoProductos($presuPro);
-							}
+							if(isset($_POST['PresupuestoProductos'])){
+	 								$presuPro->attributes = $_POST['PresupuestoProductos'];
 
+	 								if($presuPro->tipo == 'N'){
+
+	 									foreach ($proyectoActual->presupuestoPartidas as $key => $presupuestoPartida) 
+	 										if($presupuestoPartida->partida_id == $partidaSel->partida_id)
+	 											$presuPro->proyecto_partida_id = $presupuestoPartida->presupuesto_partida_id;
+	 										
+	 								$presuPro->monto_ejecutado = 0;
+	 								/*	if($presupuestoPartida = ->findByAttributes(array('partida_id'=>$partidaSel->partida_id)))
+											$presuPro->proyecto_partida_id = $presupuestoPartida->presupuesto_partida_id;*/
+										
+										//Monto en presupuesto en Bs. del producto
+										$presuPro->monto_presupuesto = floatval($presuPro->costo_unidad) * floatval($presuPro->cantidad);
+
+										if($presuPro->validate())
+										{
+											
+
+											/*else{
+												$presupuestoPartida = new PresupuestoPartidas();
+												$presupuestoPartida->partida_id = $partidaSel->partida_id;
+											}*/
+
+											if($presuPro->save()){
+												$this->redirect(array('/planificacion/partidas'));
+											}else
+											throw new Exception("Error Processing Request", 1);
+										}
+									}
+									elseif($presuPro->tipo == 'I')
+										// Producto Importado
+										if(isset($_POST['PresupuestoImportacion']) /*&& isset($_POST['PresupuestoProductos'])*/)
+										{
+											
+											if(isset($_POST['CodigosNcm'])){
+												//$presuImpSel->attributes = $_POST['CodigosNcm'];
+
+												$presuImp->attributes = $_POST['PresupuestoImportacion'];
+												if($presuImp->validate())
+												{
+													$transaction = $presuImp->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
+													 try{
+														$presupuestoProducto = new PresupuestoProductos();
+														$presupuestoProducto->monto_presupuesto = Divisas::model()->findByPk($presuImp->divisa_id)->tasa * $presuImp->monto_presupuesto;
+														$presupuestoProducto->cantidad = $presuImp->cantidad;
+														$presupuestoProducto->tipo = 'I';
+														$presupuestoProducto->monto_ejecutado = 0;
+														if($presupuestoProducto->save())
+														{
+															$presuImp->presupuesto_id = $presupuestoProducto->presupuesto_id;
+															if($presuImp->save())
+															{
+																$transaction->commit();    // committing 
+															}else $transaction->rollBack();
+															
+														}else $transaction->rollBack();
+
+													}
+							                        catch (Exception $e){
+							                            $transaction->rollBack();
+							                        }
+												}
+											}
+
+										
+											//$this->guardarPresupuestoProductos($presuPro);
+										}
+							}
 
 							if($presuPros = PresupuestoPartidas::model()->findByAttributes(array('partida_id'=>$partidaSel->partida_id,'ente_organo_id'=>$proyectoActual->ente_organo_id)))
 							{
@@ -741,43 +813,10 @@ class PlanificacionController extends Controller
 							//print_r($presuPros);
 						}
 
-					}
+					
 				}
 
-			
-			/*$partidass = 'Partidas: <br>';
-			//echo $proyectoSel->proyecto_id;
-			//$partidas = PresupuestoPartidas::model()->findAllByAttributes(array('proyecto_id'=>$proyectoSel->proyecto_id));
-			//$partidas = $proyectoSel->proyectoPartidas;
-			//Yii::log('FUNCIONA!!!!!!','error');
-			foreach ($presupuestoPartidas as $key => $partida) {
-				$partida = $partida->partida;
 
-				$numPartida = $this->numeroPartida($partida);
-
-					if($partida->p2==0) //Partida
-					{
-
-						$partidass.= '<h2>Partida '.$numPartida.': '.$partida->nombre.'</h2>';
-						//$this->productosPartidas($partida);
-
-					}elseif($partida->p3==0) //Geeneral
-					{
-						$partidass.= '<h3>General '.$numPartida.': '.$partida->nombre.'</h3>';
-						//$this->productosPartidas($partida);
-
-					}elseif($partida->p4==0)//Especifica
-					{
-						$partidass .= '<h4>Específica '.$numPartida.': '.$partida->nombre.'id: '.$partida->partida_id.'</h4>';
-						//$partidass .= $this->productosPartidas($partida);
-
-					}else//Sub Especifica
-					{	
-						$partidass .= '<h5>Sub-Específica '.$numPartida.': <b>'.$partida->nombre.' </b></h5>';
-						//$partidass .= $this->productosPartidas($partida);
-					}
-			
-			}*/
 		}
 
 		$this->render('partidas', array('usuario'=>$usuario,'proyectoSel'=>$proyectoSel,'accionSel'=>$accionSel,

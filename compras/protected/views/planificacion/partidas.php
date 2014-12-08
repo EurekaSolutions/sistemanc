@@ -77,64 +77,21 @@ $this->breadcrumbs=array(
 		    'booster.widgets.TbButton',
 		    array('buttonType' => 'submit', 'label' => 'Seleccionar')
 		);*/
-	 	 $this->endWidget();
+	 	 //$this->endWidget();
 
 ?>
-<?php 
-	$formpc = $this->beginWidget('booster.widgets.TbActiveForm',
-		    array(
-		        'id' => 'partida-form',
-		        'htmlOptions' => array('class' => 'well'), // for inset effect
-		    )
-		);
 
-		print_r($presuPros);
-		foreach ($presuPros as $key => $prepro) {
-
-		
-				//$producto = $prepro->producto;
-			 	//echo $producto->nombre;
-			 	print_r($prepro);
-			
-
-		/*	$formpc->inputFieldGroup($productosCargados[$key],'');
-			$formpc->inputFieldGroup($productosCargados[$key],'');
-			$formpc->inputFieldGroup($productosCargados[$key],'');
-			$formpc->inputFieldGroup($productosCargados[$key],'');
-			$formpc->inputFieldGroup($productosCargados[$key],'');
-			$formpc->inputFieldGroup($productosCargados[$key],'');*/
-		}
-	 $this->endWidget();
-		/*$this->widget(
-		    'booster.widgets.TbSelect2',
-		    array(
-		        'name' => 'emptydata',
-		        'data' => $listas,
-		        'options' => array(
-		            'placeholder' => 'type clever, or is, or just type!',
-		            'width' => '80%',
-		        )
-		    )
-		);*/
-/*		foreach(
-    array('default', 'primary', 'success', 'info', 'warning', 'danger')
-    as $context
-		) {
-		    $label = $context;
-		    $this->widget('booster.widgets.TbLabel', compact('context', 'label'));
-		}*/
-?>
 <?php 
 
 	if(isset($partidaSel->partida_id)){
 		//print_r($partidas);
 		/* @var TbActiveForm $form */
-		$formp = $this->beginWidget('booster.widgets.TbActiveForm',
+	/*	$formp = $this->beginWidget('booster.widgets.TbActiveForm',
 		    array(
 		        'id' => 'partida-form',
 		        'htmlOptions' => array('class' => 'well'), // for inset effect
 		    )
-		);
+		);*/
 		//print_r($partidaSel);
 		//echo '<br> '.$partidaSel->partida_id;
 		//echo print_r($partidaSel);
@@ -172,8 +129,9 @@ $this->breadcrumbs=array(
 		}*/
 
 
+	/********************** NACIONAL *****************************/
 		$nacional = '';
-		 $nacional .= $formp->dropDownListGroup( $presuPro, 'producto_id',
+		 $nacional .= $form->dropDownListGroup( $presuPro, 'producto_id',
 			array(
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
@@ -191,7 +149,7 @@ $this->breadcrumbs=array(
 		); 
 
 		
-		$nacional .= $formp->dropDownListGroup( $presuPro, 'unidad_id',
+		$nacional .= $form->dropDownListGroup( $presuPro, 'unidad_id',
 			array(
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
@@ -206,37 +164,45 @@ $this->breadcrumbs=array(
 				'hint' => 'Selecciona la unidad del producto.'
 			)
 		); 
-		$nacional .= $formp->textFieldGroup($presuPro, 'costo_unidad',array('prepend'=>'Bs'));
-		$nacional .= $formp->textFieldGroup($presuPro, 'cantidad');
+		$nacional .= $form->textFieldGroup($presuPro, 'costo_unidad',array('prepend'=>'Bs'));
+		$nacional .= $form->textFieldGroup($presuPro, 'cantidad');
 
 
-		/***************************************************/
+		/********************** IMPORTADO *****************************/
 
 		
 		$importado = '';
-		$importado .= $formp->dropDownListGroup( $codigoNcmSel, 'codigo_ncm_id',
+		$importado .= $form->dropDownListGroup( $codigoNcmSel, 'codigo_ncm_id',
 			array(
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
 				),
-				'label'=>'Seleccione el producto',
+				'label'=>'Seleccione el grupo del producto',
 				'widgetOptions' => array(
 
-					'data' => CHtml::listData(CodigosNcm::model()->findAll(' to_number(codigo_ncm_nivel_1, \'99G999D9S\')!=0 AND to_number(codigo_ncm_nivel_2, \'99G999D9S\') = 0 
-	AND to_number(codigo_ncm_nivel_3, \'99G999D9S\') = 0 AND (coalesce(codigo_ncm_nivel_4, \'\')=\'\' OR to_number(codigo_ncm_nivel_4, \'99G999D9S\') = 0) AND t.fecha_desde<\''.date('Y-m-d').'\' AND t.fecha_hasta>\''.date('Y-m-d').'\''),
+					'data' => CHtml::listData(CodigosNcm::model()->findAll('to_number(codigo_ncm_nivel_1, \'99G999D9S\')!=0 AND to_number(codigo_ncm_nivel_2, \'99G999D9S\') = 0 
+	AND to_number(codigo_ncm_nivel_3, \'99G999D9S\') = 0 AND (coalesce(codigo_ncm_nivel_4, \'\')=\'\' OR to_number(codigo_ncm_nivel_4, \'99G999D9S\') = 0) AND '.$this->condicionVersion()),
 						'codigo_ncm_id', function($codigo){ return CHtml::encode($this->numeroCodigoNcm($codigo).' - '.$codigo->descripcion_ncm);}),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array('id'=>'codigoNcm1','prompt' => 'Seleccionar producto',/*'onChange'=>'submit','submit'=>array('planificacion/partidas','#'=>'codigoNcm1')*/),
+					'htmlOptions' => array('id'=>'codigoNcm1','prompt' => 'Seleccionar producto',/*'onChange'=>'submit','submit'=>array('/planificacion/partidas','#'=>'codigoNcm1')*/
+										'ajax' => array(
+												'type'=>'POST', //request type
+												'url'=>CController::createUrl('planificacion/buscarNcm'), //url to call.
+												//Style: CController::createUrl('currentController/methodToCall')
+												'update'=>'#ncmnivel2', //selector to update
+												//'data'=>'js:javascript statement' 
+												//leave out the data key to pass all form values through
+										  )),
 				),
-				'hint' => 'Producto para añadir.'
+				'hint' => 'Grupo del producto para añadir.'
 			)
 		);
 
-		$listaCodigos = array();
+		/*$listaCodigos = array();
 		if($codigoSel=CodigosNcm::model()->findByPk($codigoNcmSel->codigo_ncm_id))
 			$listaCodigos = CHtml::listData(CodigosNcm::model()->findAll('codigo_ncm_nivel_1='.$codigoSel->codigo_ncm_nivel_1.' AND t.fecha_desde<\''.date('Y-m-d').'\' AND t.fecha_hasta>\''.date('Y-m-d').'\''),
-						'codigo_ncm_id', function($codigo){ return CHtml::encode($this->numeroCodigoNcm($codigo).' - '.$codigo->descripcion_ncm);});
-		$importado .= $formp->dropDownListGroup( $presuImp, 'codigo_ncm_id',
+						'codigo_ncm_id', function($codigo){ return CHtml::encode($this->numeroCodigoNcm($codigo).' - '.$codigo->descripcion_ncm);});*/
+		$importado .= $form->dropDownListGroup( $presuImp, 'codigo_ncm_id',
 			array(
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
@@ -244,14 +210,16 @@ $this->breadcrumbs=array(
 				'label'=>'Seleccione el producto',
 				'widgetOptions' => array(
 
-					'data' => $listaCodigos,
+					'data' => array(),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array('prompt' => 'Seleccionar producto', /*'multiple' => false,*/ ),
+					'htmlOptions' => array('prompt' => 'Seleccionar producto', 'id'=>'ncmnivel2' /*'multiple' => false,*/ ),
 				),
 				'hint' => 'Producto para añadir.'
 			)
 		); 
-		$importado .= $formp->dropDownListGroup( $presuImp, 'divisa_id',
+
+		Yii::app()->clientScript->registerScript("cambioDivisa", "$('#divisa').change(function(){$('#montoImp').val();})");
+		$importado .= $form->dropDownListGroup( $presuImp, 'divisa_id',
 			array(
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
@@ -261,13 +229,13 @@ $this->breadcrumbs=array(
 
 					'data' =>  CHtml::listData(Divisas::model()->findAll(),'divisa_id', function($divisa){ return CHtml::encode($divisa->nombre.' - '.$divisa->simbolo);}),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array('prompt' => 'Seleccionar divisa', /*'multiple' => false,*/ ),
+					'htmlOptions' => array('id'=>'divisa', 'prompt' => 'Seleccionar divisa', /*'multiple' => false,*/ ),
 				),
 				'hint' => 'Divisa a ser utiilzada en este producto.'
 			)
 		); 
 
-		$importado .= $formp->dropDownListGroup( $presuImp, 'tipo',
+		$importado .= $form->dropDownListGroup( $presuImp, 'tipo',
 			array(
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
@@ -304,39 +272,96 @@ $this->breadcrumbs=array(
 			)
 		);
 
-		$importado .= $formp->textFieldGroup($presuImp, 'monto_presupuesto',array('prepend'=>'Bs','widgetOptions'=>array('htmlOptions'=> array('id'=>'montoPresupuesto'))));
-		$importado .= $formp->textFieldGroup($presuImp, 'cantidad');
+		$importado .= $form->textFieldGroup($presuImp, 'monto_presupuesto',array('prepend'=>'Bs','widgetOptions'=>array('id'=>'montoImp','htmlOptions'=> array('id'=>'montoPresupuesto'))));
+		$importado .= $form->textFieldGroup($presuImp, 'cantidad');
 		
-
+		Yii::app()->clientScript->registerScript("linkClick", "$('#nacional').click(function(){ $('#tipoPro').val('N');})
+															   $('#importado').click(function(){ $('#tipoPro').val('I');})");
+		//Yii::app()->clientScript->registerScript("link2Click", "$('#link2').click(function(){alert('link2 is clicked');})");
 
 		$this->widget(
 		    'booster.widgets.TbTabs',
 		    array(
 		        'type' => 'tabs', // 'tabs' or 'pills'
+		        'id' => 'pestanas',
 		        'tabs' => array(
 		            array(
 		                'label' => 'Nacional',
 		                'content' => $nacional,
-		                'active' => true
+		                'active' => $presuPro->tipo == 'N'?true:false,'linkOptions' => array('id'=>'nacional')
 		            ),
-		            array('label' => 'Importado', 'content' => $importado),
+		            array(
+		            	'label' => 'Importado', 
+		            	'content' => $importado,
+		                'active' => $presuPro->tipo == 'N'?false:true, 'linkOptions' => array('id'=>'importado')),
 		        ),
 		    )
 		);
+
+		echo $form->hiddenField($presuPro,'tipo',array('id'=>'tipoPro'));
+
+
 
 
 			//echo $form->checkboxGroup($model, 'checkbox');
 			$this->widget(
 			    'booster.widgets.TbButton',
-			    array('buttonType' => 'submit', 'label' => 'Añadir')
+			    array('buttonType' => 'submit',/*'url'=>array('/planificacion/partidas','#'=>'pestanas'),*/ 'label' => 'Añadir')
 			);
 		
-		$this->endWidget();
-		unset($formp);
+
 	}
+		$this->endWidget();
+		unset($form);
 ?>
 
+<?php 
+	$formpc = $this->beginWidget('booster.widgets.TbActiveForm',
+		    array(
+		        'id' => 'partida-form',
+		        'htmlOptions' => array('class' => 'well'), // for inset effect
+		    )
+		);
 
+		print_r($presuPros);
+		foreach ($presuPros as $key => $prepro) {
+		
+				//$producto = $prepro->producto;
+			 	//echo $producto->nombre;
+			 	print_r($prepro);
+			
+
+			 //if($prepro->tipo == 'N')
+			 {
+
+				/*$formpc->textFieldGroup($presuPros[$key],'');
+				$formpc->textFieldGroup($presuPros[$key],'');
+				$formpc->textFieldGroup($presuPros[$key],'');
+				$formpc->textFieldGroup($presuPros[$key],'');
+				$formpc->textFieldGroup($presuPros[$key],'');
+				$formpc->textFieldGroup($presuPros[$key],'');*/
+			}
+		}
+	 $this->endWidget();
+		/*$this->widget(
+		    'booster.widgets.TbSelect2',
+		    array(
+		        'name' => 'emptydata',
+		        'data' => $listas,
+		        'options' => array(
+		            'placeholder' => 'type clever, or is, or just type!',
+		            'width' => '80%',
+		        )
+		    )
+		);*/
+/*		foreach(
+    array('default', 'primary', 'success', 'info', 'warning', 'danger')
+    as $context
+		) {
+		    $label = $context;
+		    $this->widget('booster.widgets.TbLabel', compact('context', 'label'));
+		}*/
+?>
 <?php
 
 
