@@ -455,7 +455,7 @@ class PlanificacionController extends Controller
 
 	        $model->nombre = $nombre_proyecto->nombre;
 
-	        if($model->save())
+	        if($model->validate())
 	        {
 
 	        	$presupuesto_partida = new PresupuestoPartidas;
@@ -474,7 +474,7 @@ class PlanificacionController extends Controller
 	        	{
 	        		//$accion = Acciones::model()->find('codigo=:codigo', array(':codigo'=>$model->nombre));
 		        	$presupuesto_partida_proyecto->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
-		        	$presupuesto_partida_proyecto->proyecto_id = $model->proyecto_id;
+		        	$presupuesto_partida_proyecto->proyecto_id = $nombre_proyecto->proyecto_id;
 
 		        	if($presupuesto_partida_proyecto->save())
 		        	{
