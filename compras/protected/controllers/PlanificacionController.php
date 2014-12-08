@@ -398,7 +398,7 @@ class PlanificacionController extends Controller
 	{
 		$name = "Seleccionar partida general";
 
-		if($_POST['Proyectos']['partida'] and !empty($_POST['Proyectos']['nombre']))
+		if($_POST['Proyectos']['partida'] and !empty($_POST['Proyectos']['nombreid']))
 		{
 			$tipo = Partidas::model()->findByPk($_POST['Proyectos']['partida']);
 
@@ -449,9 +449,9 @@ class PlanificacionController extends Controller
 
 	        $model->attributes=$_POST['Proyectos'];
 	        $model->ente_organo_id = $usuario->ente_organo_id;
-	        $model->codigo = $model->nombre;
+	        $model->codigo = $model->nombreid;
 
-	        $nombre_proyecto = Proyectos::model()->find('codigo=:codigo and ente_organo_id=:ente_organo_id', array(':codigo' => $model->nombre, ':ente_organo_id' => $usuario->ente_organo_id));
+	        $nombre_proyecto = Proyectos::model()->find('codigo=:codigo and ente_organo_id=:ente_organo_id', array(':codigo' => $model->codigo, ':ente_organo_id' => $usuario->ente_organo_id));
 
 	        $model->nombre = $nombre_proyecto->nombre;
 
@@ -483,7 +483,25 @@ class PlanificacionController extends Controller
 
 		        	$this->refresh();
 	        	}			  
-	        }
+	        }else
+		    {
+		    	if($model->partida)
+			    		{
+			    			$tipo = Partidas::model()->findByPk($model->partida);
+
+							$generales = $this->GeneralXpartida($tipo->p1);
+						    
+						    $generales_todas = CHtml::listData($generales, function($generales) {
+																				return CHtml::encode($generales->partida_id);
+																			}, function($generales) {
+																				return CHtml::encode($generales->p1.'-'.$generales->p2.'-'.$generales->p3.'-'. $generales->nombre);
+																			});
+
+						    $this->render('asignarpartidasproyecto',array(
+							'model'=>$model, 'fuentes' => $fuentes, 'generales_todas' => $generales_todas, 'partidas' => $partidas_principal, 'proyectos' => $proyectos
+				   ));
+						}
+		    }
 	    }
 		
 		$this->render('asignarpartidasproyecto',array(

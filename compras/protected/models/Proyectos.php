@@ -19,6 +19,7 @@ class Proyectos extends CActiveRecord
 	public $general;
 	public $monto;
 	public $fuente;
+	public $nombreid;
 
 
 	/**
@@ -37,9 +38,9 @@ class Proyectos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre, codigo, ente_organo_id', 'required'),
-			array('nombre, partida, general, monto, fuente', 'required', 'on' => 'creaproyecto'),
-
+			array('nombre, codigo, ente_organo_id', 'required', 'on' => 'create'),
+			array('nombreid, partida, general, monto, fuente', 'required', 'on' => 'creaproyecto'),
+			array('monto', 'numerical', 'integerOnly'=>true, 'min'=>1),
 			array('codigo', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -71,6 +72,7 @@ class Proyectos extends CActiveRecord
 			'nombre' => 'Nombre',
 			'codigo' => 'Codigo',
 			'ente_organo_id' => 'Ente Organo',
+			'nombreid' => 'Proyecto',
 		);
 	}
 

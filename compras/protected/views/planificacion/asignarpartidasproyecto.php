@@ -1,7 +1,7 @@
         <script type="text/javascript">
             $( document ).ready(function() {
                 //alert("ready!");
-                $( "#Proyectos_nombre" ).change(function() {
+                $( "#Proyectos_nombreid" ).change(function() {
                     $('#general').html("");
                     $( "#general" ).append( '<option value="">Seleccionar partida general</option>' );
 
@@ -12,7 +12,7 @@
         </script>
 
         <div>
-            <h4 style="text-align: center;">AGREGAR ACCIONES CENTRALIZADAS</h4><br>             
+            <h4 style="text-align: center;">AGREGAR PARTIDAS A PROYECTOS</h4><br>             
                     
 
                <?php 
@@ -43,12 +43,12 @@
 
                                 echo $form->errorSummary($model);
 
-                                 echo $form->dropDownListGroup($model , 'nombre',
+                                 echo $form->dropDownListGroup($model , 'nombreid',
                                         array(
                                             'wrapperHtmlOptions' => array(
                                                 'class' => 'col-sm-2',
                                             ),
-                                            'label'=>'Seleccione Acción Centralizada a cargar',
+                                            'label'=>'Seleccione proyecto',
                                             'widgetOptions' => array(
 
                                                 'data' => $lista_proyectos,
