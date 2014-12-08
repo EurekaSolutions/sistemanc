@@ -265,6 +265,73 @@
     </step>
 
   <step>
+    <name>Data Validator</name>
+    <type>Validator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<validate_all>N</validate_all>
+<concat_errors>N</concat_errors>
+<concat_separator>&#x7c;</concat_separator>
+       <validator_field><name>accion_id</name>
+<validation_name>accion not null</validation_name>
+<max_length/>
+<min_length/>
+<null_allowed>N</null_allowed>
+<only_null_allowed>N</only_null_allowed>
+<only_numeric_allowed>N</only_numeric_allowed>
+<data_type>None</data_type>
+<data_type_verified>N</data_type_verified>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<max_value/>
+<min_value/>
+<start_string/>
+<end_string/>
+<start_string_not_allowed/>
+<end_string_not_allowed/>
+<regular_expression/>
+<regular_expression_not_allowed/>
+<error_code/>
+<error_description/>
+<is_sourcing_values>N</is_sourcing_values>
+<sourcing_step/>
+<sourcing_field/>
+<allowed_value></allowed_value></validator_field>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>921</xloc>
+      <yloc>775</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Dummy &#x28;do nothing&#x29;</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>825</xloc>
+      <yloc>875</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Filter rows</name>
     <type>FilterRows</type>
     <description/>
@@ -517,6 +584,70 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>807</xloc>
       <yloc>71</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Replace in string</name>
+    <type>ReplaceString</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <in_stream_name>cod_ini</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>,0</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>683</xloc>
+      <yloc>690</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Replace in string 2</name>
+    <type>ReplaceString</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <in_stream_name>codigo_accion</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>,0</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>865</xloc>
+      <yloc>706</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -915,10 +1046,6 @@
     <return_field/>
     <fields>
         <field>
-          <column_name>presupuesto_partida_id</column_name>
-          <stream_name>presupuesto_partida_id</stream_name>
-        </field>
-        <field>
           <column_name>partida_id</column_name>
           <stream_name>partida_id</stream_name>
         </field>
@@ -945,6 +1072,10 @@
         <field>
           <column_name>fuente_fianciamiento_id</column_name>
           <stream_name>FFIN_ID</stream_name>
+        </field>
+        <field>
+          <column_name>presupuesto_partida_id</column_name>
+          <stream_name>presupuesto_partida_id</stream_name>
         </field>
     </fields>
      <cluster_schema/>
@@ -1476,8 +1607,8 @@
       <max_value>999999999</max_value>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>364</xloc>
-      <yloc>283</yloc>
+      <xloc>397</xloc>
+      <yloc>280</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -1560,11 +1691,6 @@
         <name2/>
       </key>
       <value>
-        <name>presupuesto_partida_id</name>
-        <rename>presupuesto_partida_id</rename>
-        <update>N</update>
-      </value>
-      <value>
         <name>partida_id</name>
         <rename>partida_id</rename>
         <update>N</update>
@@ -1596,7 +1722,7 @@
       </value>
       <value>
         <name>fuente_fianciamiento_id</name>
-        <rename/>
+        <rename>fuente_fianciamiento_id</rename>
         <update>N</update>
       </value>
     </lookup>
@@ -1652,137 +1778,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>511</xloc>
       <yloc>489</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Replace in string</name>
-    <type>ReplaceString</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>cod_ini</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>,0</replace_string>
-        <replace_by_string/>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>683</xloc>
-      <yloc>690</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Replace in string 2</name>
-    <type>ReplaceString</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>codigo_accion</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>,0</replace_string>
-        <replace_by_string/>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>865</xloc>
-      <yloc>706</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Dummy &#x28;do nothing&#x29;</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>825</xloc>
-      <yloc>875</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Data Validator</name>
-    <type>Validator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<validate_all>N</validate_all>
-<concat_errors>N</concat_errors>
-<concat_separator>&#x7c;</concat_separator>
-       <validator_field><name>accion_id</name>
-<validation_name>accion not null</validation_name>
-<max_length/>
-<min_length/>
-<null_allowed>N</null_allowed>
-<only_null_allowed>N</only_null_allowed>
-<only_numeric_allowed>N</only_numeric_allowed>
-<data_type>None</data_type>
-<data_type_verified>N</data_type_verified>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<max_value/>
-<min_value/>
-<start_string/>
-<end_string/>
-<start_string_not_allowed/>
-<end_string_not_allowed/>
-<regular_expression/>
-<regular_expression_not_allowed/>
-<error_code/>
-<error_description/>
-<is_sourcing_values>N</is_sourcing_values>
-<sourcing_step/>
-<sourcing_field/>
-<allowed_value></allowed_value></validator_field>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>921</xloc>
-      <yloc>775</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
