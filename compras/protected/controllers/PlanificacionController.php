@@ -270,7 +270,7 @@ class PlanificacionController extends Controller
 	        	$presupuesto_partida = new PresupuestoPartidas;
 	        	$presupuesto_partida_acciones = new PresupuestoPartidaAcciones;
 
-	        	$presupuesto_partida->partida_id = $model->partida;
+	        	$presupuesto_partida->partida_id = $model->general;
 	        	$presupuesto_partida->monto_presupuestado = $model->monto;
 	        	$presupuesto_partida->fecha_desde = "1900-01-01";
 	        	$presupuesto_partida->fecha_hasta = "2199-12-31";
