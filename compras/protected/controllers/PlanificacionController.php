@@ -579,16 +579,13 @@ class PlanificacionController extends Controller
 			$monto = 0;
 			
 			$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
-/*
-			foreach (PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accion->accion_id,'ente_organo_id'=>$usuario->enteOrgano->ente_organo_id)) as $key => $value) {
-				
-				foreach ($value->presupuestoPartida as $key => $presupuestoPartida) {
-					$monto += $presupuestoPartida->monto_presupuestado;
-				}
-			}*/
-				foreach ($accion->presupuestoPartida as $key => $presupuestoPartida) {
-					$monto += $presupuestoPartida->monto_presupuestado;
-				}
+
+			$partidasAcciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accion->accion_id,'ente_organo_id'=>$usuario->enteOrgano->ente_organo_id));
+			foreach ($partidasAcciones as $key => $partidaAcciones) {
+
+					$monto += $partidaAcciones->presupuestoPartida->monto_presupuestado;
+			}
+
 			return $monto;
 
 	}
@@ -639,7 +636,7 @@ class PlanificacionController extends Controller
 		$presupuestoPartidaAcciones->ente_organo_id = $usuario->ente_organo_id;
 
 		$partidas =array();
-		foreach ($presupuestoPartidaAcciones->presupuestoPartida as $key => $prePar) {
+		foreach ($presupuestoPartidaAcciones->presupuestoPartidas as $key => $prePar) {
 			$partidas[$keys] = $prePar->partida;
 		}
 		return $partidas;
@@ -768,7 +765,6 @@ class PlanificacionController extends Controller
 
 										if($presuPro->validate())
 										{
-											
 
 											/*else{
 												$presupuestoPartida = new PresupuestoPartidas();

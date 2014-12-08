@@ -329,20 +329,21 @@ $this->breadcrumbs=array(
 				//$producto = $prepro->producto;
 			 	//echo $producto->nombre;
 			 	print_r($prepro);
-			
 
 			 //if($prepro->tipo == 'N')
 			 {
-
 				/*$formpc->textFieldGroup($presuPros[$key],'');
 				$formpc->textFieldGroup($presuPros[$key],'');
 				$formpc->textFieldGroup($presuPros[$key],'');
 				$formpc->textFieldGroup($presuPros[$key],'');
 				$formpc->textFieldGroup($presuPros[$key],'');
-				$formpc->textFieldGroup($presuPros[$key],'');*/
+				$formpc->textFieldGroup($presuPros[$key],'');
+			}elseif($prepro->tipo == 'I')
+			{*/
+
 			}
 		}
-	 $this->endWidget();
+	$this->endWidget();
 		/*$this->widget(
 		    'booster.widgets.TbSelect2',
 		    array(
