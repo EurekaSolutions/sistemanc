@@ -58,6 +58,7 @@ tr.principaltr th {
 		        </tr>
 		    </thead>
 		    <tbody>
+			 
 			 <?php   foreach ($acciones as $key => $value) { 
 			 				$monto = $this->montoAccion($value);?>
 		

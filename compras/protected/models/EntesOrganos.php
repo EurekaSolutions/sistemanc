@@ -23,6 +23,8 @@ class EntesOrganos extends CActiveRecord
 	/**
 	 * @return string the associated database table name
 	 */
+	public $correo;
+	
 	public function tableName()
 	{
 		return 'entes_organos';
@@ -37,6 +39,7 @@ class EntesOrganos extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('nombre, tipo, codigo_onapre, rif', 'required'),
+			array('nombre, tipo, codigo_onapre, rif, correo', 'required', 'on' => 'crearente'),
 			array('rif', 'match', 'pattern' => '/^(j|J|v|V|e|E|G|g)(-)([0-9]{3,8})(-)([0-9]{1})$/', 'allowEmpty' => false),
 			array('codigo_onapre', 'unique', 'attributeName'=> 'codigo_onapre', 'caseSensitive' => 'false', 'className' => 'EntesOrganos'),
 			array('rif', 'unique', 'attributeName'=> 'rif', 'caseSensitive' => 'false', 'className' => 'EntesOrganos'),

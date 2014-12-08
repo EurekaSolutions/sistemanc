@@ -15,6 +15,12 @@
  */
 class Proyectos extends CActiveRecord
 {
+	public $partida;
+	public $general;
+	public $monto;
+	public $fuente;
+
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -32,6 +38,8 @@ class Proyectos extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('nombre, codigo, ente_organo_id', 'required'),
+			array('nombre, partida, general, monto, fuente', 'required', 'on' => 'creaproyecto'),
+
 			array('codigo', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.

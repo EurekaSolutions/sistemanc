@@ -27,7 +27,7 @@ class PlanificacionController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','partidas','vistaparcial', 'buscarpartida', 'buscargeneral'),
+				'actions'=>array('create','update','partidas','vistaparcial', 'buscarpartida', 'buscargeneral', 'asignarpartidasproyecto', 'buscargeneralproyecto'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -162,7 +162,7 @@ class PlanificacionController extends Controller
 
 	public function actionCrearente()
 	{
-		$model = new EntesOrganos();
+		$model = new EntesOrganos('crearente');
 
 	    // uncomment the following code to enable ajax-based validation
 	    /*
@@ -194,7 +194,7 @@ class PlanificacionController extends Controller
 			   Yii::app()->user->setFlash('success', "Ente creado con éxito!");
 
 			  // $this->redirect(array('view','id'=>$model->producto_id));
-			   $model = new EntesOrganos();
+			   $model = new EntesOrganos('crearente');
 
 			    $this->render('crearente',array(
 						'model'=>$model,
@@ -212,33 +212,25 @@ class PlanificacionController extends Controller
 	public function actionAgregarproyecto()
 	{
 		
-
-		$model = new Proyectos;
+		$model = new Proyectos();
 
 		if(isset($_POST['Proyectos']))
 	    {
 
 	        $model->attributes=$_POST['Proyectos'];
-	      
+	      	$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+
+	      	$model->ente_organo_id = $usuario->ente_organo_id;
+
 	        if($model->save())
 	        {
-	           $entesAscritos = new EntesAdscritos;
-	           
-	           $usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
-			   
-	           $entesAscritos->padre_id = $usuario->ente_organo_id;
-	           
-	           $entesAscritos->ente_organo_id = $model->ente_organo_id;
-	           $entesAscritos->fecha_desde =  date("Y-m-d");
-	           $entesAscritos->fecha_hasta = "2199-12-31";
-			   $entesAscritos->save();
-
-			   Yii::app()->user->setFlash('success', "Ente creado con éxito!");
+	          
+			   Yii::app()->user->setFlash('success', "Proyecto creado con éxito!");
 
 			  // $this->redirect(array('view','id'=>$model->producto_id));
-			   $model = new EntesOrganos();
+			   $model = new Proyectos();
 
-			    $this->render('crearente',array(
+			    $this->render('agregarproyecto',array(
 						'model'=>$model,
 			   ));
 	            // form inputs are valid, do something here
@@ -252,7 +244,7 @@ class PlanificacionController extends Controller
 
 	public function actionAgregarcentralizada()
 	{
-		$model = new Acciones;
+		$model = new Acciones('crearaccion');
 
 		$accionestodas = $this->obtenerAccionesCentralizadas();
 
@@ -382,7 +374,40 @@ class PlanificacionController extends Controller
 		    $generales_todas = CHtml::listData($generales, function($generales) {
 																return CHtml::encode($generales->partida_id);
 															}, function($generales) {
-																return CHtml::encode($generales->p1.'-'.$generales->p2.'-'.$generales->p3.'-'. $generales->nombre);
+																return CHtml::encode($generales->p1.'-'.$generales->p2.' '.$generales->nombre);
+															});
+								
+		     echo CHtml::tag('option',
+		                   array('value'=>""),CHtml::encode($name),true);
+
+		    foreach($generales_todas as $value => $name)
+		    {
+		        echo CHtml::tag('option',
+		                   array('value'=>$value),CHtml::encode($name),true);
+		    }
+		}else
+		{
+
+		     echo CHtml::tag('option',
+		                   array('value'=>""),CHtml::encode($name),true);
+		}
+
+	}
+
+	public function actionBuscargeneralproyecto()
+	{
+		$name = "Seleccionar partida general";
+
+		if($_POST['Proyectos']['partida'] and !empty($_POST['Proyectos']['nombre']))
+		{
+			$tipo = Partidas::model()->findByPk($_POST['Proyectos']['partida']);
+
+			$generales = $this->GeneralXpartida($tipo->p1);
+		    
+		    $generales_todas = CHtml::listData($generales, function($generales) {
+																return CHtml::encode($generales->partida_id);
+															}, function($generales) {
+																return CHtml::encode($generales->p1.'-'.$generales->p2.' '.$generales->nombre);
 															});
 								
 		     echo CHtml::tag('option',
@@ -403,10 +428,73 @@ class PlanificacionController extends Controller
 	}
 
 
+	public function actionAsignarpartidasproyecto()
+	{
+		$model = new Proyectos('creaproyecto');
+
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+
+	      	//$model->ente_organo_id = $usuario->ente_organo_id;
+
+	    $fuentes = FuentesFinanciamiento::model()->findAll();
+	    
+	    $partidas_principal = $this->obtenerPartidas("*");
+	      	
+		$proyectos = $usuario->enteOrgano->proyectos;
+
+
+
+		if(isset($_POST['Proyectos']))
+	    {
+
+	        $model->attributes=$_POST['Proyectos'];
+	        $model->ente_organo_id = $usuario->ente_organo_id;
+	        $model->codigo = $model->nombre;
+
+	        $nombre_proyecto = Proyectos::model()->find('codigo=:codigo and ente_organo_id=:ente_organo_id', array(':codigo' => $model->nombre, ':ente_organo_id' => $usuario->ente_organo_id));
+
+	        $model->nombre = $nombre_proyecto->nombre;
+
+	        if($model->save())
+	        {
+
+	        	$presupuesto_partida = new PresupuestoPartidas;
+	        	$presupuesto_partida_proyecto = new PresupuestoPartidaProyecto;
+
+	        	$presupuesto_partida->partida_id = $model->general;
+	        	$presupuesto_partida->monto_presupuestado = $model->monto;
+	        	$presupuesto_partida->fecha_desde = "1900-01-01";
+	        	$presupuesto_partida->fecha_hasta = "2199-12-31";
+	        	$presupuesto_partida->tipo = "P";
+	        	$presupuesto_partida->anho = date("Y");
+	        	$presupuesto_partida->ente_organo_id= $usuario->ente_organo_id;
+	        	$presupuesto_partida->fuente_fianciamiento_id = $model->fuente;
+	        	
+	        	if($presupuesto_partida->save())
+	        	{
+	        		//$accion = Acciones::model()->find('codigo=:codigo', array(':codigo'=>$model->nombre));
+		        	$presupuesto_partida_proyecto->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
+		        	$presupuesto_partida_proyecto->proyecto_id = $model->proyecto_id;
+
+		        	if($presupuesto_partida_proyecto->save())
+		        	{
+		        		 Yii::app()->user->setFlash('success', 'Partida asignada con éxito!');
+		        	}
+
+		        	$this->refresh();
+	        	}			  
+	        }
+	    }
+		
+		$this->render('asignarpartidasproyecto',array(
+						'model'=>$model, 'fuentes' => $fuentes, 'partidas' => $partidas_principal, 'proyectos' => $proyectos
+			   ));
+	}
 
 	public function actionAdministracion()
 	{
 		$this->render('administracion');
+		//$this->redirect('asignarpartidasproyecto');
 	}
 
 	public function actionModal() /*Aqui esta vista tratara todo lo que tenga relacion con los datos de CENCOEX.*/
@@ -472,7 +560,9 @@ class PlanificacionController extends Controller
 
 			$monto = 0;
 			foreach ($accion->presupuestoPartida as $key => $presupuestoPartida) {
+
 				$monto += $presupuestoPartida->monto_presupuestado;
+
 			}
 			return $monto;
 

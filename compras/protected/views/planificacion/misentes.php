@@ -26,7 +26,7 @@ tr.principaltr th {
 						<?php
 							foreach ($model as $key => $value) {
 						?>	
-							<tr>
+							<tr class="principaltr">
 								<td><?php echo $value->enteOrgano->nombre?></td>
 								<td><?php echo $value->enteOrgano->codigo_onapre?></td>
 								<td><?php echo $value->enteOrgano->rif?></td>
