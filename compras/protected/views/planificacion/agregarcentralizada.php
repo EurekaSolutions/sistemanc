@@ -12,8 +12,12 @@
 			<h4 style="text-align: center;">AGREGAR ACCIONES CENTRALIZADAS</h4><br>				
 				  	
 
+			   <?php 
 
-				   <?php 
+
+					    foreach(Yii::app()->user->getFlashes() as $key => $message) {
+					        echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+					    }
 
 				    			$lista_acciones = CHtml::listData($accionestodas, 'codigo', 'nombre');
 

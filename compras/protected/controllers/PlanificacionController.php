@@ -48,7 +48,20 @@ class PlanificacionController extends Controller
 
 	public function actionMisentes() 
 	{
-		$this->render('misentes');
+		//$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+
+		/*$mishijos = EntesAdscritos::model()->findAll('padre_id=:padre_id', array(':padre_id' => $usuario->ente_organo_id));
+
+		$datoshijos = */
+
+		//$this->render('misentes');
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+
+		$entesadscritos = $usuario->enteOrgano->hijos;
+
+		$this->render('misentes',array(
+						'model'=>$entesadscritos,
+		));
 	}
 
 	public function proyectosPartidasParticular($partida)
@@ -260,6 +273,35 @@ class PlanificacionController extends Controller
 	        if($model->validate())
 	        {
 	        	//return;
+	        	$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+	        	$presupuesto_partida = new PresupuestoPartidas;
+	        	$presupuesto_partida_acciones = new PresupuestoPartidaAcciones;
+
+	        	$presupuesto_partida->partida_id = $model->partida;
+	        	$presupuesto_partida->monto_presupuestado = $model->monto;
+	        	$presupuesto_partida->fecha_desde = "1900-01-01";
+	        	$presupuesto_partida->fecha_hasta = "2199-12-31";
+	        	$presupuesto_partida->tipo = "A";
+	        	$presupuesto_partida->anho = date("Y");
+	        	$presupuesto_partida->ente_organo_id= $usuario->ente_organo_id;
+	        	$presupuesto_partida->fuente_fianciamiento_id = $model->fuente;
+	        	
+	        	if($presupuesto_partida->save())
+	        	{
+	        		$accion = Acciones::model()->find('codigo=:codigo', array(':codigo'=>$model->nombre));
+		        	$presupuesto_partida_acciones->accion_id = $accion->accion_id;
+		        	$presupuesto_partida_acciones->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
+		        	$presupuesto_partida_acciones->ente_organo_id = $usuario->ente_organo_id;
+		        	$presupuesto_partida_acciones->codigo_accion = $model->nombre;
+
+		        	if($presupuesto_partida_acciones->save())
+		        	{
+		        		Yii::app()->user->setFlash('success', "Acción centralizada creada con éxito!");
+		        	}
+
+		        	$this->refresh();
+	        	}
+
 	        }else
 	        {
 	        	if($model->nombre)
