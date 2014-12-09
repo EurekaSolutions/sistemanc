@@ -45,14 +45,14 @@
 						    //array('label' => 'Home', 'url' => '#', 'active' => true),
 						    array('label'=>'Inicio', 'url'=>array('/planificacion/index'), 'visible'=>!Yii::app()->user->isGuest),
 						    //array('label'=>'Partidas', 'url'=>array('/planificacion/partidas'), 'visible'=>!Yii::app()->user->isGuest),
-						   /* array(
+						    array(
 								'label' => 'Productos',  //si el usuario es creado por este sistema
 								'items' => array(
 									array('label' => 'Nacional', 'url' => array('/planificacion/nacional')),
 									array('label' => 'Importado', 'url' => array('/planificacion/importado')),
 									//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 								)
-							),*/
+							),
 						    array('label'=>'Estado de carga', 'url'=>array('/planificacion/vistaparcial'), 'visible'=>!Yii::app()->user->isGuest),
 						    array(
 								'label' => 'Agregar',  //si el usuario es creado por este sistema
