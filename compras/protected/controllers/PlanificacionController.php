@@ -645,11 +645,45 @@ class PlanificacionController extends Controller
 
 	}
 
+	public function enviarCorreoRecuperacion($correo,$cedula){
+		list($controlador) = Yii::app()->createController('usr/default');
+		if($controlador->Recuperar($correo, $cedula))
+			Yii::app()->user->setFlash('success','Se envio un correo de recuperación al ente registrado.');
+		else
+			Yii::app()->user->setFlash('warning','No se pudo enviar el correo de recuperación al ente registrado.');
+	}
 	
 	public function actionIndex()   /*Aquí vamos a mostrar la primera vista del excel enviado por Zobeida*/
 	{
 
-		
+/*
+			Yii::import('usr.controllers.DefaultController');
+			Yii::import('usr.models.*');
+	   		$model = new RecoveryForm();
+	   		$model->correo = 'eurekasolutionsca@gmail.com';
+	   		$model->cedula = '8';
+	   		//$controlador = new DefaultController(222);
+	   		//$controlador->sendEmail($model,'recovery');
+			//UsrController::sendEmail($model,'recovery');*/
+
+			
+
+		/*Yii::import('application.extensions.phpmailer.JPhpMailer');
+		$mail = new JPhpMailer;
+		$mail->IsSMTP();
+		$mail->Host = 'smpt.gmail.com';
+		$mail->SMTPAuth = true;
+		$mail->Username = 'eurekasolutionsca@gmail.com';
+		$mail->Password = '3ur3k4123';
+		$mail->Port = 465;
+		$mail->SMTPSecure = 'ssl';
+		$mail->SetFrom('eurekasolutionsca@gmail.com', 'yourname');
+		$mail->Subject = 'PHPMailer Test Subject via smtp, basic with authentication';
+		$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!';
+		$mail->MsgHTML('<h1>JUST A TEST!</h1>');
+		$mail->AddAddress('edgar.leal0@gmail.com', 'John Doe');
+		$mail->Send();*/
+
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 
 		$proyectos = $usuario->enteOrgano->proyectos;

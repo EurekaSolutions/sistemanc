@@ -173,6 +173,19 @@ class DefaultController extends UsrController
 		$this->redirect(Yii::app()->homeUrl);
 	}
 
+	public function Recuperar($correo,$cedula)
+	{
+		/** @var RecoveryForm */
+		$model = $this->module->createFormModel('RecoveryForm');
+	   	$model->correo = 'eurekasolutionsca@gmail.com';
+	   	$model->cedula = '8';
+		if ($this->sendEmail($model, $model->identity->isActive() ? 'recovery' : 'verify'))
+			return true;
+		else
+			return false;
+			
+	}
+
 	/**
 	 * Processes a request for password recovery email or resetting the password. 
 	 * @return string

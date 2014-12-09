@@ -1,7 +1,7 @@
 <?php
 /* @var $this PlanificacionController */
 //echo $this->montoAccionProyectoBsf('P',5570,3049);
-echo $this->montoAccionProyectoDivisa('A',5570,3049,'1900-01-01','2199-01-01');
+//echo $this->montoAccionProyectoDivisa('A',5570,3049,'1900-01-01','2199-01-01');
 $this->breadcrumbs=array(
 	'Planificacion',
 );

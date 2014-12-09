@@ -62,6 +62,7 @@ class Usuarios extends CActiveRecord
 			array('usuario, contrasena, repetir_contrasena', 'length', 'max'=>50),
 			array('correo, llave_activacion, nombre, cedula, cargo', 'length', 'max'=>255),
 			array('correo','email'),
+			array('correo','unique', 'except'=>'update'),
 			array('usuario', 'unique', 'except'=>'register, registro', 'criteria'=>array('condition'=>'usuario_id !=:id ','params'=>array(':id'=>Yii::app()->user->getId())), 'allowEmpty' => false, 'message'=>Yii::t('UsrModule.usr','El nombre de usuario ya existe.')),
 			array('contrasena','ext.validators.EPasswordStrength', 'min'=>$this->min, 'except'=>'actualizarPerfil, crearente','message'=>'La {attribute} es debil. La {attribute} debe contener al menos '.$this->min.' caracteres, al menos una letra minuscula, una mayuscula, y un número.'),
 			//array('codigo_onapre', 'validarCodigo', 'except'=>'actualizarPerfil'),
