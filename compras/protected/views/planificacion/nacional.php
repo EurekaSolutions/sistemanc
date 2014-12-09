@@ -7,7 +7,11 @@ $this->breadcrumbs=array(
 );
 ?>
 
-
+    <?php
+        foreach(Yii::app()->user->getFlashes() as $key => $message) {
+            echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+        }
+    ?>
 <?php 
 
 	
@@ -75,7 +79,7 @@ $this->breadcrumbs=array(
 					//'name'=>'partida',
 					'data' =>CHtml::listData($partidas,'partida_id', function($partida){ return CHtml::encode($this->numeroPartida($partida).' - '.$partida->nombre);}),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array('id'=>'partida', 'prompt' => 'Seleccionar Partida', //'onChange'=>'submit','submit' => array('/planificacion/nacional','#'=>'partida') 
+					'htmlOptions' => array('id'=>'partida', 'prompt' => 'Seleccionar partida', //'onChange'=>'submit','submit' => array('/planificacion/nacional','#'=>'partida') 
 										'ajax' => array(	
 												'type'=>'POST', //request type
 												'url'=>CController::createUrl('planificacion/buscarproductospartida'), //url to call.
@@ -114,7 +118,7 @@ $this->breadcrumbs=array(
 			)
 		); 
 
-	if(isset($partidaSel->partida_id)){
+	if(isset($productoSel->producto_id)){
 		//print_r($partidas);
 		/* @var TbActiveForm $form */
 	/*	$formp = $this->beginWidget('booster.widgets.TbActiveForm',
@@ -164,7 +168,8 @@ $this->breadcrumbs=array(
 		
 
 
-		
+		echo $form->errorSummary($presuPro);
+
 		echo  $form->dropDownListGroup( $presuPro, 'unidad_id',
 			array(
 				'wrapperHtmlOptions' => array(

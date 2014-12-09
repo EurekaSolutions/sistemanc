@@ -7,7 +7,12 @@ $this->breadcrumbs=array(
 );
 ?>
 
-
+    <?php
+        foreach(Yii::app()->user->getFlashes() as $key => $message) {
+            echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+        }
+    ?>
+    
 <?php 
 
 	
@@ -114,7 +119,7 @@ $this->breadcrumbs=array(
 			)
 		); 
 
-	if(isset($partidaSel->partida_id)){
+	if(isset($productoSel->producto_id)){
 		//print_r($partidas);
 		/* @var TbActiveForm $form */
 	/*	$formp = $this->beginWidget('booster.widgets.TbActiveForm',
@@ -195,6 +200,9 @@ $this->breadcrumbs=array(
 		if($codigoSel=CodigosNcm::model()->findByPk($codigoNcmSel->codigo_ncm_id))
 			$listaCodigos = CHtml::listData(CodigosNcm::model()->findAll('codigo_ncm_nivel_1='.$codigoSel->codigo_ncm_nivel_1.' AND t.fecha_desde<\''.date('Y-m-d').'\' AND t.fecha_hasta>\''.date('Y-m-d').'\''),
 						'codigo_ncm_id', function($codigo){ return CHtml::encode($this->numeroCodigoNcm($codigo).' - '.$codigo->descripcion_ncm);});*/
+
+		echo $form->errorSummary($presuImp);
+
 		echo $form->dropDownListGroup( $presuImp, 'codigo_ncm_id',
 			array(
 				'wrapperHtmlOptions' => array(
@@ -273,9 +281,6 @@ $this->breadcrumbs=array(
 		//Yii::app()->clientScript->registerScript("linkClick", "$('#nacional').click(function(){ $('#tipoPro').val('N');})
 		//													   $('#importado').click(function(){ $('#tipoPro').val('I');})");
 		//Yii::app()->clientScript->registerScript("link2Click", "$('#link2').click(function(){alert('link2 is clicked');})");
-
-
-		echo $form->hiddenField($presuPro,'tipo',array('id'=>'tipoPro'));
 
 
 

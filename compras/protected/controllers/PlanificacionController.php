@@ -744,7 +744,7 @@ print_r('Hola');
 	}
 
 	public function condicionVersion(){
-		return 't.fecha_desde<\''.date('Y-m-d').'\' AND t.fecha_hasta>\''.date('Y-m-d').'\'';
+		return 't.fecha_desde<\''.date('Y-m-d').'\' AND t.fecha_hasta>=\''.date('Y-m-d').'\'';
 	}
 
 
@@ -824,9 +824,9 @@ print_r('Hola');
 			$productosPartidas = array();
 			if(isset($_POST['Partidas']) && !empty($_POST['Partidas']['partida_id'])){
 
-				$productosPartidas = Partidas::model()->findByPk($_POST['Partidas']['partida_id'])->productos;
+				$productosPartidas = $this->listaProductosPartida($_POST['Partidas']['partida_id'], $_POST['Proyectos']['proyecto_id']); // Partidas::model()->findByPk($_POST['Partidas']['partida_id'])->productos;
 			}
-		    
+		   
 		    $productosPartidass = CHtml::listData($productosPartidas, 'producto_id', 
 									function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);}
 																);
@@ -866,6 +866,51 @@ print_r('Hola');
 	public  function obtenerCostoUnidadNombre($data,$row){
 			return number_format($data->costo_unidad,2,',','.').' Bs.'; 
 	}
+	public function productoExisteProyecto($presuProId,$proyectoActualId,$partidaId){
+
+			foreach (Proyectos::model()->findByPk($proyectoActualId)->presupuestoPartidas as $key => $value) {
+				if($value->partida_id == $partidaId && $value->ente_organo_id == $this->usuario()->ente_organo_id)
+					foreach ($value->presupuestoProductos as $key => $producto) {
+						if($producto->producto_id == $presuProId){
+							echo 'Existe';
+							return true;
+						}
+					}
+			}
+		return false;
+	}
+	public function listaProductosPartida($partidaId, $proyectoActualId)
+	{
+		$productos = array();
+		
+	/*	foreach (Proyectos::model()->findByPk($proyectoActualId)->presupuestoPartidas as $key => $value) {
+			if($value->partida_id == $partidaId)
+				foreach ($value->presupuestoProductos as $key => $producto) {
+						foreach (Partidas::model()->findByPk($partidaId)->productos as $key => $productoPar) {
+							if($productoPar->producto_id != $producto->producto_id)
+								$productos[] = $productoPar;
+						}
+						
+				}
+		}
+*/
+		foreach (PresupuestoPartidaProyecto::model()->findAllByAttributes(array('proyecto_id'=>$proyectoActualId)) as $key => $value) {
+			foreach (PresupuestoPartidas::model()->findAllByAttributes(array('presupuesto_partida_id'=>$value->presupuesto_partida_id)) as $key => $value) {
+				if($value->partida_id == $partidaId)
+					foreach (PresupuestoProductos::model()->findAllByAttributes(array('proyecto_partida_id'=>$value->presupuesto_partida_id)) as $key => $producto) {
+						foreach (Partidas::model()->findByPk($partidaId)->productos as $key => $productoPar) {
+							if($productoPar->producto_id != $producto->producto_id)
+								$productos[] = $productoPar;
+						}
+						
+					}
+			}
+		}
+		return $productos;
+	}
+	public function usuario(){
+		return Usuarios::model()->findByPk(Yii::app()->user->getId());
+	}
 	public function actionNacional() /*Aqui van la logica de negocio asociada a cada partida 401, 402, 403, 404 */
 	{
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
@@ -891,20 +936,12 @@ print_r('Hola');
 		
 		$productosPartidas = array();
 
-		if(isset($_POST['Partidas']) && !empty($_POST['Partidas']['partida_id'])){
-							$partidaSel->attributes = $_POST['Partidas'];
-							//$presuPros = Proyectos::model()->findAllByAttributes(array('proyecto_id'=>attributeValue), condition, array('key'=>value))
-
-							$productosPartidas = Partidas::model()->findByPk($partidaSel->partida_id)->productos;
-							$productosPartidas = CHtml::listData($productosPartidas, 'producto_id', 
-                                                        function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);});
-						}
 		//$partidass = '';
 		if(isset($_POST['Proyectos']) /*&& isset($_POST['Acciones'])*/)
 		{
 			$proyectoSel->attributes = $_POST['Proyectos'];
 			// Para el manejo del dropdown de acciones y proyectos
-			print_r($_POST['Proyectos']['proyecto_id']);
+			//print_r($_POST['Proyectos']['proyecto_id']);
 				if(!empty($_POST['Proyectos']['proyecto_id'])){
 
 					
@@ -957,12 +994,22 @@ print_r('Hola');
 						}
 
 					}
+
+					if(isset($_POST['Partidas']) && !empty($_POST['Partidas']['partida_id'])){
+							$partidaSel->attributes = $_POST['Partidas'];
+							//$presuPros = Proyectos::model()->findAllByAttributes(array('proyecto_id'=>attributeValue), condition, array('key'=>value))
+
+							$productosPartidas = $this->listaProductosPartida($partidaSel->partida_id, $proyectoSel->proyecto_id); //Partidas::model()->findByPk($partidaSel->partida_id)->productos;
+							$productosPartidas = CHtml::listData($productosPartidas, 'producto_id', 
+                                                        function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);});
+					}
 				}
 
 
 		}
 				if(isset($_POST['PresupuestoProductos'])){
 								$presuPro->attributes = $_POST['PresupuestoProductos'];
+								$presuPro->tipo = 'N';
 
 								//print_r($presuPro);
 								$presuPartida = new PresupuestoPartidas();
@@ -991,19 +1038,20 @@ print_r('Hola');
 								//Monto en presupuesto en Bs. del producto
 								$presuPro->monto_presupuesto = floatval($presuPro->costo_unidad) * floatval($presuPro->cantidad);
 
+
 								if($presuPro->validate())
 								{
-									//echo 'HOLA';
-									/*else{
-										$presupuestoPartida = new PresupuestoPartidas();
-										$presupuestoPartida->partida_id = $partidaSel->partida_id;
-									}*/
-
-									if($presuPro->save()){
-										$presuPro = new PresupuestoProductos();
-										//$this->redirect(array('/planificacion/partidas'));
-									}else
-									throw new Exception("Error Processing Request", 1);
+									/*if($this->productoExisteProyecto($presuPro->producto_id,$proyectoActual->proyecto_id,$partidaSel->partida_id))
+									{
+										Yii::app()->user->setFlash('error', "El producto ya esta cargado!");
+									}else{*/
+										if($presuPro->save()){
+											$presuPro = new PresupuestoProductos();
+											//$this->redirect(array('/planificacion/partidas'));
+											Yii::app()->user->setFlash('success', "Producto cargado con  éxito!");
+										}else
+										throw new Exception("Error Processing Request", 1);
+									//}
 								}//else Yii::app()->user->setFlash('Error','error');
 							
 
@@ -1030,9 +1078,8 @@ print_r('Hola');
 		// Lista de productos cargados
 		$presuPros = new PresupuestoImportacion();
 
-		$presuPro = new PresupuestoImportacion();
-		$presuPro->tipo = 'I';
 		$presuImp = new PresupuestoImportacion();
+
 		$codigoNcmSel = new CodigosNcm();
 
 		//$partidas = new PresupuestoPartidas();
@@ -1040,14 +1087,6 @@ print_r('Hola');
 		
 		$productosPartidas = array();
 
-		if(isset($_POST['Partidas']) && !empty($_POST['Partidas']['partida_id'])){
-			$partidaSel->attributes = $_POST['Partidas'];
-			//$presuPros = Proyectos::model()->findAllByAttributes(array('proyecto_id'=>attributeValue), condition, array('key'=>value))
-
-			$productosPartidas = Partidas::model()->findByPk($partidaSel->partida_id)->productos;
-			$productosPartidas = CHtml::listData($productosPartidas, 'producto_id', 
-                                        function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);});
-		}
 		//$partidass = '';
 		if(isset($_POST['Proyectos']) /*&& isset($_POST['Acciones'])*/)
 		{
@@ -1105,65 +1144,78 @@ print_r('Hola');
 							//print_r($presuPros);
 						}
 
+						if(isset($_POST['Partidas']) && !empty($_POST['Partidas']['partida_id'])){
+							$partidaSel->attributes = $_POST['Partidas'];
+							//$presuPros = Proyectos::model()->findAllByAttributes(array('proyecto_id'=>attributeValue), condition, array('key'=>value))
+
+							$productosPartidas = Partidas::model()->findByPk($partidaSel->partida_id)->productos;
+							$productosPartidas = CHtml::listData($productosPartidas, 'producto_id', 
+				                                        function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);});
+						}
 					}
 				}
 
 
 		}
 
-								
-								$presuPartida = new PresupuestoPartidas();
-								if(!empty($accionSel->accion_id)){
-									foreach ( PresupuestoPartidasAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
-									 	if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
-									 		$presuPartida = $value->presupuestoPartida;
-									 }
+					
+					$presuPartida = new PresupuestoPartidas();
+					if(!empty($accionSel->accion_id)){
+						foreach ( PresupuestoPartidasAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
+						 	if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
+						 		$presuPartida = $value->presupuestoPartida;
+						 }
+					}
+
+					if(isset($proyectoActual))
+					{
+						foreach ($proyectoActual->presupuestoPartidas as $key => $presupuestoPartida) 
+							if($presupuestoPartida->partida_id == $partidaSel->partida_id)
+								$presuPartida = $presupuestoPartida;
+					}
+
+					// Producto Importado
+					if(isset($_POST['PresupuestoImportacion']) /*&& isset($_POST['PresupuestoProductos'])*/)
+					{
+						
+						//if(isset($_POST['CodigosNcm'])){
+							//$presuImpSel->attributes = $_POST['CodigosNcm'];
+
+							$presuImp->attributes = $_POST['PresupuestoImportacion'];
+							$presuImp->presupuesto_partida_id = $presuPartida->presupuesto_partida_id;
+							$presuImp->monto_ejecutado = 0;
+							$presuImp->producto_id = $productoSel->producto_id;
+							
+							
+								$transaction = $presuImp->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
+								try{
+
+										if($presuImp->save())
+										{
+											$transaction->commit();    // committing 
+											$presuImp = new PresupuestoImportacion();
+											Yii::app()->user->setFlash('success', "Producto cargado con  éxito!");
+										}else {
+											Yii::app()->user->setFlash('warning', "No se pudo guardar el producto.");
+											$transaction->rollBack();
+										}
+
 								}
+		                        catch (Exception $e){
+		                        	Yii::app()->user->setFlash('error', "Hubo un problema. No se guardo el producto. ID:".$e);
+		                            $transaction->rollBack();
+		                        }
+							
+						//}
 
-								if(isset($proyectoActual))
-								{
-									foreach ($proyectoActual->presupuestoPartidas as $key => $presupuestoPartida) 
-										if($presupuestoPartida->partida_id == $partidaSel->partida_id)
-											$presuPartida = $presupuestoPartida;
-								}
-
-								// Producto Importado
-								if(isset($_POST['PresupuestoImportacion']) /*&& isset($_POST['PresupuestoProductos'])*/)
-								{
-									
-									//if(isset($_POST['CodigosNcm'])){
-										//$presuImpSel->attributes = $_POST['CodigosNcm'];
-
-										$presuImp->attributes = $_POST['PresupuestoImportacion'];
-										print_r($presuImp);
-										
-											$transaction = $presuImp->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
-											 try{
-													echo 'Hola';
-													$presuImp->presupuesto_id = $presuPartida->presupuesto_partida_id;
-													$presuImp->monto_ejecutado = 0;
-													if($presuImp->save())
-													{
-														
-														$transaction->commit();    // committing 
-														$presuImp = new PresupuestoImportacion();
-													}else $transaction->rollBack();	
-
-											}
-					                        catch (Exception $e){
-					                            $transaction->rollBack();
-					                        }
-										
-									//}
-
-								
-									//$this->guardarPresupuestoProductos($presuPro);
-								}
+					
+						//$this->guardarPresupuestoProductos($presuPro);
+					}
 
 
 		$this->render('importado', array('usuario'=>$usuario,'proyectoSel'=>$proyectoSel,'accionSel'=>$accionSel,
 			'partidas'=>$partidas, 'partidaSel'=>$partidaSel,'productoSel'=>$productoSel,'presuPros'=>$presuPros,
-			'presuPro'=>$presuPro, 'presuImp'=>$presuImp, 'productosPartidas'=>$productosPartidas,'codigoNcmSel'=>$codigoNcmSel));
+			'presuImp'=>$presuImp, 'productosPartidas'=>$productosPartidas,'codigoNcmSel'=>$codigoNcmSel));
 	}
 
 
@@ -1210,11 +1262,9 @@ print_r('Hola');
 
 	public function productosPartidas(Partidas $partida)  /*Retorna todas los productos asociados a una partida*/
 	{
-		$productos = '';
+		$productos = array();
 			foreach ($partida->partidaProductos as $key => $parPro) {
-				$producto = $parPro->producto;
-				$numProducto = $this->numeroProducto($producto);
-				$productos .= '<h6>'.$numProducto.' - '.$producto->nombre.'</h6>';
+				$productos[] = $parPro->producto;
 			}		
 		return $productos;
 	}
