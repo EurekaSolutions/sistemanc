@@ -54,19 +54,19 @@ return array(
 			),
 			'mailerConfig'=>array(
 				'SetLanguage' => array('es'),
-				'SetFrom' => array('marcospha@gmail.com', 'Administrator'),
-				'AddReplyTo' => array('eurekasolutionsca@gmail.com','Administrator'),
+				'SetFrom' => array('rnce@snc.gob.ve', 'Administrator'),
+				'AddReplyTo' => array('rnce@snc.gob.ve','Administrator'),
 				'IsMail' => array(),
 				// SMTP options
 				'IsSMTP' => array(),
-				'Host' => 'smtp.gmail.com',
+				'Host' => 'correo.snc.gob.ve',
 				'Port' => 465,
-				'SMTPSecure' => 'tls',
+				'SMTPSecure' => 'ssl',
 				'SMTPDebug' => 2,
 				'SMTPAuth' => true,
-				'Username' => 'eurekasolutionsca@gmail.com',
-				'Password' => '3ur3k4123',
-				'FromName' => 'SNC Compras',
+				'Username' => 'admin_rnce',
+				'Password' => 'GikforewnEd3',
+				'FromName' => 'Sistema de Compras del Estado',
 				'CharSet' => 'UTF-8',
 				
 				),
@@ -101,7 +101,7 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			'connectionString' => 'pgsql:host=localhost;dbname=snc',
+			'connectionString' => 'pgsql:host=localhost;dbname=sistemanc',
 			'emulatePrepare' => true,
 			'username' => 'eureka',
 			'password' => 'eureka',
