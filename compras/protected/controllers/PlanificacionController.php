@@ -175,7 +175,7 @@ class PlanificacionController extends Controller
 	public function actionCrearente()
 	{
 		$model = new EntesOrganos('crearente');
-		$usuario = new Usuarios();
+		$usuario = new Usuarios('registro');
 
 	    // uncomment the following code to enable ajax-based validation
 	    /*
@@ -198,29 +198,36 @@ class PlanificacionController extends Controller
 		        if($model->save())
 		        {
 		           $entesAscritos = new EntesAdscritos;
-		           $usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+		           $usuarioActual = Usuarios::model()->findByPk(Yii::app()->user->getId());
 				   
-		           $entesAscritos->padre_id = $usuario->ente_organo_id;
+		           $entesAscritos->padre_id = $usuarioActual->ente_organo_id;
 		           
 		           $entesAscritos->ente_organo_id = $model->ente_organo_id;
 		           $entesAscritos->fecha_desde =  date("Y-m-d");
 		           $entesAscritos->fecha_hasta = "2199-12-31";
 
-		           if(isset($_POST['Usuarios'])){
+		           
 			           $usuario->usuario = $model->correo;
+			           $usuario->correo = $model->correo;
 			           $usuario->contrasena = md5(rand(0,100));
+			           $usuario->repetir_contrasena = $usuario->contrasena;
 			           $usuario->creado_el = date("Y-m-d");
 			           $usuario->actualizado_el = date("Y-m-d");
 			           $usuario->ultima_visita_el = date("Y-m-d");
 			           $usuario->esta_activo = true;
-			           $usuario->esta_deshabilitado = false;
+			           $usuario->esta_deshabilitado = 0;
 			           $usuario->correo_verificado = true;
 			           $usuario->llave_activacion = md5(rand(0,100));
 			           $usuario->ente_organo_id = $model->ente_organo_id;
-			           $usuario->cedula = 0;
+			           $usuario->cedula = '1836654';
+			           $usuario->nombre = 'Juan Mendez';
 			           $usuario->cargo = 'Presidente';
 			           $usuario->rol = 'normal';
-					}
+
+					print_r($usuario);
+
+			          //if($usuario->save())
+
 				   if($entesAscritos->save() && $usuario->save()){
 				   		$transaction->commit();
 
@@ -230,7 +237,7 @@ class PlanificacionController extends Controller
 				   		$model->correo = 'eurekasolutionsca@gmail.com';
 				   		$model->cedula = '8';
 						UsrController::senMail($model,'recovery');*/
-
+print_r('Hola');
 
          			  Yii::app()->user->setFlash('success', "Ente creado con éxito!");
 				   }else $transaction->rollBack();
