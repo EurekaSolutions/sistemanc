@@ -1017,6 +1017,30 @@ class PlanificacionController extends Controller
 		return $productos;
 	}
 
+
+
+
+
+
+	/*public function montoAccionProyecto($id,$ente_id,$tipo){
+		if($tipo == 'A'){
+
+		$monto = PresupuestoPartidas::model()->findAllBySql('select sum(monto_presupuesto)  
+from presupuesto_productos p join presupuesto_partidas pr on (p.proyecto_partida_id = pr.presupuesto_partida_id)
+join presupuesto_partida_proyecto py on (pr.presupuesto_partida_id = py.presupuesto_partida_id)
+join proyectos t on (py.proyecto_id = t.proyecto_id)');
+
+		}else{
+
+			PresupuestoPartida::model()->findAllBySql();
+
+		}
+
+		return $monto;
+
+
+	}*/
+
 	// Uncomment the following methods and override them if needed
 	/*
 	public function filters()

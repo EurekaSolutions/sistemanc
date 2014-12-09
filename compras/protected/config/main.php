@@ -101,7 +101,7 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			'connectionString' => 'pgsql:host=localhost;dbname=sistemanc',
+			'connectionString' => 'pgsql:host=localhost;dbname=snc',
 			'emulatePrepare' => true,
 			'username' => 'eureka',
 			'password' => 'eureka',
