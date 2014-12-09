@@ -17,6 +17,7 @@ return array(
 	// path aliases
     'aliases' => array(
         'booster' => realpath(__DIR__ . '/../extensions/booster'), // change this if necessary
+        //'usr' => realpath(__DIR__.'/../modules/usr'),
     ),
 
 	// autoloading model and component classes
@@ -25,6 +26,8 @@ return array(
 		'application.components.*',
 		//'booster.',
 		'application.behaviors.ActiveRecordLogableBehavior',
+		'application.modules.usr.controllers.*',
+		'application.modules.usr.models.*'
 	),
 
 	'modules'=>array(

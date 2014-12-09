@@ -175,6 +175,7 @@ class PlanificacionController extends Controller
 	public function actionCrearente()
 	{
 		$model = new EntesOrganos('crearente');
+		$usuario = new Usuarios();
 
 	    // uncomment the following code to enable ajax-based validation
 	    /*
@@ -191,32 +192,68 @@ class PlanificacionController extends Controller
 	        $model->attributes=$_POST['EntesOrganos'];
 	        $model->creado_por= 'snc';
 	        $model->tipo = 'E';
-	        if($model->save())
-	        {
-	           $entesAscritos = new EntesAdscritos;
-	           $usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
-			   
-	           $entesAscritos->padre_id = $usuario->ente_organo_id;
-	           
-	           $entesAscritos->ente_organo_id = $model->ente_organo_id;
-	           $entesAscritos->fecha_desde =  date("Y-m-d");
-	           $entesAscritos->fecha_hasta = "2199-12-31";
-			   $entesAscritos->save();
+	        	$transaction = $model->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
+			try{
+		
+		        if($model->save())
+		        {
+		           $entesAscritos = new EntesAdscritos;
+		           $usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+				   
+		           $entesAscritos->padre_id = $usuario->ente_organo_id;
+		           
+		           $entesAscritos->ente_organo_id = $model->ente_organo_id;
+		           $entesAscritos->fecha_desde =  date("Y-m-d");
+		           $entesAscritos->fecha_hasta = "2199-12-31";
 
-			   Yii::app()->user->setFlash('success', "Ente creado con éxito!");
+		           if(isset($_POST['Usuarios'])){
+			           $usuario->usuario = $model->correo;
+			           $usuario->contrasena = md5(rand(0,100));
+			           $usuario->creado_el = date("Y-m-d");
+			           $usuario->actualizado_el = date("Y-m-d");
+			           $usuario->ultima_visita_el = date("Y-m-d");
+			           $usuario->esta_activo = true;
+			           $usuario->esta_deshabilitado = false;
+			           $usuario->correo_verificado = true;
+			           $usuario->llave_activacion = md5(rand(0,100));
+			           $usuario->ente_organo_id = $model->ente_organo_id;
+			           $usuario->cedula = 0;
+			           $usuario->cargo = 'Presidente';
+			           $usuario->rol = 'normal';
+					}
+				   if($entesAscritos->save() && $usuario->save()){
+				   		$transaction->commit();
 
+				   		/*Yii::import('application.modules.usr.controllers.UsrController');
+				   		Yii::import('application.modules.usr.models.RecoveryForm');
+				   		$model = new RecoveryForm();
+				   		$model->correo = 'eurekasolutionsca@gmail.com';
+				   		$model->cedula = '8';
+						UsrController::senMail($model,'recovery');*/
+
+
+         			  Yii::app()->user->setFlash('success', "Ente creado con éxito!");
+				   }else $transaction->rollBack();
+
+				   
+				}else $transaction->rollBack();
+
+		    }catch (Exception $e){
+		            $transaction->rollBack();
+		            return false;
+		    }
 			  // $this->redirect(array('view','id'=>$model->producto_id));
-			   $model = new EntesOrganos('crearente');
+			   //$model = new EntesOrganos('crearente');
 
 			    $this->render('crearente',array(
-						'model'=>$model,
+						'model'=>$model,'usuario'=>$usuario
 			   ));
 	            // form inputs are valid, do something here
 	            return;
 	        }
-	    }
+	    
 
-	    $this->render('crearente',array('model'=>$model));
+	    $this->render('crearente',array('model'=>$model,'usuario'=>$usuario));
 
 
 	}
@@ -615,8 +652,40 @@ class PlanificacionController extends Controller
 	
 	public function actionIndex()   /*Aquí vamos a mostrar la primera vista del excel enviado por Zobeida*/
 	{
+							/*$para      = 'eurekasolutionsca@gmail.com';
+					$titulo    = 'Activación de cuenta';
+					$mensaje   = 'Probando';
+					$cabeceras = 'From: rnce@snc.gob.ve' . "\r\n" .
+					   'Reply-To: rnce@snc.gob.ve' . "\r\n" .
+					   'X-Mailer: PHP/' . phpversion();
 
-		
+					mail($para, $titulo, $mensaje, $cabeceras);*/
+				   		//Yii::import('application.modules.usr.controllers.UsrController');
+				   		//Yii::import('application.modules.usr.models.RecoveryForm');
+	   /*		$model = new RecoveryForm();
+	   		$model->correo = 'eurekasolutionsca@gmail.com';
+	   		$model->cedula = '8';
+			//UsrController::sendMail($model,'recovery');
+
+			list($controlador) = Yii::app()->createController('UsrController');
+			$controlador->sendMail($model,'recovery');*/
+
+		/*Yii::import('application.extensions.phpmailer.JPhpMailer');
+		$mail = new JPhpMailer;
+		$mail->IsSMTP();
+		$mail->Host = 'smpt.gmail.com';
+		$mail->SMTPAuth = true;
+		$mail->Username = 'eurekasolutionsca@gmail.com';
+		$mail->Password = '3ur3k4123';
+		$mail->Port = 465;
+		$mail->SMTPSecure = 'ssl';
+		$mail->SetFrom('eurekasolutionsca@gmail.com', 'yourname');
+		$mail->Subject = 'PHPMailer Test Subject via smtp, basic with authentication';
+		$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!';
+		$mail->MsgHTML('<h1>JUST A TEST!</h1>');
+		$mail->AddAddress('edgar.leal0@gmail.com', 'John Doe');
+		$mail->Send();*/
+
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 
 		$proyectos = $usuario->enteOrgano->proyectos;

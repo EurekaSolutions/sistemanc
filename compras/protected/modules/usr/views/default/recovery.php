@@ -39,7 +39,7 @@ $this->pageTitle = Yii::app()->name.' - '.$title;
 <?php else: ?>
 
 
-	<?php echo $form->textFieldGroup($model, 'cedula'); ?>
+	<?php //echo $form->textFieldGroup($model, 'cedula'); ?>
 
 	<?php echo $form->textFieldGroup($model, 'correo'); ?>
 
