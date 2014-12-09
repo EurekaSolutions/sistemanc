@@ -43,10 +43,40 @@ class Proyectos extends CActiveRecord
 			array('monto', 'numerical', 'integerOnly'=>true, 'min'=>1),
 			array('codigo', 'length', 'max'=>20),
 			array('nombre', 'proyectounico', 'on'=>'create'),
+			array('general', 'condinero', 'on'=>'creaproyecto'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('proyecto_id, nombre, codigo, ente_organo_id', 'safe', 'on'=>'search'),
 		);
+	}
+
+
+	public function condinero($attribute,$params)
+	{
+		
+		$criteria = new CDbCriteria();
+
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+
+		$proyecto = Proyectos::model()->find('codigo=:codigo', array(':codigo' => $this->nombreid));
+
+
+		$presupuestopartidaproyecto = PresupuestoPartidaProyecto::model()->findAll('proyecto_id=:proyecto_id', array(':proyecto_id'=>$proyecto->proyecto_id));
+
+		foreach ($presupuestopartidaproyecto as $key => $value) {
+			
+			$value->presupuesto_partida_id;
+			$partida = PresupuestoPartidas::model()->find('presupuesto_partida_id=:presupuesto_partida_id and ente_organo_id=:ente_organo_id', array(':ente_organo_id' => $usuario->ente_organo_id, ':presupuesto_partida_id' => $value->presupuesto_partida_id));	
+			
+			if($partida->partida_id == $this->general)
+			{
+				$this->addError($attribute, 'Esta partida ya tiene asignado dinero para este proyecto!');
+				break;
+			}			
+		}
+		//$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;
+		//$criteria->addSearchCondition('t.nombre', $this->nombre);
+		//$criteria->compare('LOWER(nombre)',strtolower($this->nombre),true); 
 	}
 
 	public function proyectounico($attribute,$params)

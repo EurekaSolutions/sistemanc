@@ -12,3 +12,11 @@ $this->breadcrumbs=array(
 	You may change the content of this page by modifying
 	the file <tt><?php echo __FILE__; ?></tt>.
 </p>
+
+<?php
+	foreach ($model as $key => $value) {
+
+		echo $value->p2;
+		# code...
+	}
+?>
