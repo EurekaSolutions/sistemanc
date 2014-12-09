@@ -47,7 +47,15 @@ $this->breadcrumbs=array(
 					'data' => $listas,
 
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array(	'id'=>'proyecto', 'prompt' => 'Seleccionar proyecto', 'onChange'=>'submit','submit' => array('/planificacion/partidas','#'=>'proyecto')),
+					'htmlOptions' => array(	'id'=>'proyecto', 'prompt' => 'Seleccionar proyecto', //'onChange'=>'submit','submit' => array('/planificacion/partidas','#'=>'proyecto')
+										  'ajax' => array(
+												'type'=>'POST', //request type
+												'url'=>CController::createUrl('planificacion/buscarpartidasproyecto'), //url to call.
+												//Style: CController::createUrl('currentController/methodToCall')
+												'update'=>'#partida', //selector to update
+												//'data'=>'js:javascript statement' 
+												//leave out the data key to pass all form values through
+										  )),
 				),
 				'hint' => 'Selecciona la Acción o Proyecto.'
 			)
@@ -63,11 +71,19 @@ $this->breadcrumbs=array(
 				),
 				'label'=>'Seleccione Partida para cargar sus productos',
 				'widgetOptions' => array(
-					'id'=>'partida',
-					'name'=>'partida',
-					'data' => CHtml::listData($partidas,'partida_id', function($partida){ return CHtml::encode($this->numeroPartida($partida).' - '.$partida->nombre);}),
+					//'id'=>'partida',
+					//'name'=>'partida',
+					'data' =>CHtml::listData($partidas,'partida_id', function($partida){ return CHtml::encode($this->numeroPartida($partida).' - '.$partida->nombre);}),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array('id'=>'partida', 'prompt' => 'Seleccionar Partida', 'onChange'=>'submit','submit' => array('/planificacion/partidas','#'=>'partida') ),
+					'htmlOptions' => array('id'=>'partida', 'prompt' => 'Seleccionar Partida', //'onChange'=>'submit','submit' => array('/planificacion/partidas','#'=>'partida') 
+										'ajax' => array(	
+												'type'=>'POST', //request type
+												'url'=>CController::createUrl('planificacion/buscarproductospartida'), //url to call.
+												//Style: CController::createUrl('currentController/methodToCall')
+												'update'=>'#producto', //selector to update
+												//'data'=>'js:javascript statement' 
+												//leave out the data key to pass all form values through
+										  )),
 				),
 				'hint' => 'Selecciona la partida correspondiente al proyecto para cargar sus productos.'
 			)
@@ -82,6 +98,21 @@ $this->breadcrumbs=array(
 ?>
 
 <?php 
+		 echo  $form->dropDownListGroup( $productoSel, 'producto_id',
+			array(
+				'wrapperHtmlOptions' => array(
+					'class' => 'col-sm-5',
+				),
+				'label'=>'Seleccione el producto',
+				'widgetOptions' => array(
+
+					'data' => $productosPartidas,// CHtml::listData($productosPartidas, 'producto_id',function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);}),
+					//'options'=>array($model->proyecto_id => array('selected'=>true)),
+					'htmlOptions' => array('id'=>'producto','prompt' => 'Seleccionar producto', 'onChange'=>'submit','submit' => array('/planificacion/partidas','#'=>'producto') ),
+				),
+				'hint' => 'Selecciona el producto para añadir.'
+			)
+		); 
 
 	if(isset($partidaSel->partida_id)){
 		//print_r($partidas);
@@ -130,25 +161,10 @@ $this->breadcrumbs=array(
 
 
 	/********************** NACIONAL *****************************/
-		$nacional = '';
-		 $nacional .= $form->dropDownListGroup( $presuPro, 'producto_id',
-			array(
-				'wrapperHtmlOptions' => array(
-					'class' => 'col-sm-5',
-				),
-				'label'=>'Seleccione el producto',
-				'widgetOptions' => array(
-
-					'data' => CHtml::listData($productosPartidas,'producto_id', 
-							function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);}),
-					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array('prompt' => 'Seleccionar producto', /*'multiple' => false,*/ ),
-				),
-				'hint' => 'Selecciona el producto para añadir.'
-			)
-		); 
-
 		
+
+
+		$nacional = '';
 		$nacional .= $form->dropDownListGroup( $presuPro, 'unidad_id',
 			array(
 				'wrapperHtmlOptions' => array(
@@ -172,7 +188,7 @@ $this->breadcrumbs=array(
 
 		
 		$importado = '';
-		$importado .= $form->dropDownListGroup( $codigoNcmSel, 'codigo_ncm_id',
+		/*$importado .= $form->dropDownListGroup( $codigoNcmSel, 'codigo_ncm_id',
 			array(
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
@@ -184,7 +200,7 @@ $this->breadcrumbs=array(
 	AND to_number(codigo_ncm_nivel_3, \'99G999D9S\') = 0 AND (coalesce(codigo_ncm_nivel_4, \'\')=\'\' OR to_number(codigo_ncm_nivel_4, \'99G999D9S\') = 0) AND '.$this->condicionVersion()),
 						'codigo_ncm_id', function($codigo){ return CHtml::encode($this->numeroCodigoNcm($codigo).' - '.$codigo->descripcion_ncm);}),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array('id'=>'codigoNcm1','prompt' => 'Seleccionar producto',/*'onChange'=>'submit','submit'=>array('/planificacion/partidas','#'=>'codigoNcm1')*/
+					'htmlOptions' => array('id'=>'codigoNcm1','prompt' => 'Seleccionar producto',//'onChange'=>'submit','submit'=>array('/planificacion/partidas','#'=>'codigoNcm1')
 										'ajax' => array(
 												'type'=>'POST', //request type
 												'url'=>CController::createUrl('planificacion/buscarNcm'), //url to call.
@@ -196,7 +212,7 @@ $this->breadcrumbs=array(
 				),
 				'hint' => 'Grupo del producto para añadir.'
 			)
-		);
+		);*/
 
 		/*$listaCodigos = array();
 		if($codigoSel=CodigosNcm::model()->findByPk($codigoNcmSel->codigo_ncm_id))
@@ -210,7 +226,8 @@ $this->breadcrumbs=array(
 				'label'=>'Seleccione el producto',
 				'widgetOptions' => array(
 
-					'data' => array(),
+					'data' => CHtml::listData(CodigosNcm::model()->findAll($this->condicionVersion()),
+						'codigo_ncm_id', function($codigo){ return CHtml::encode($this->numeroCodigoNcm($codigo).' - '.$codigo->descripcion_ncm);}),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
 					'htmlOptions' => array('prompt' => 'Seleccionar producto', 'id'=>'ncmnivel2' /*'multiple' => false,*/ ),
 				),
@@ -218,7 +235,7 @@ $this->breadcrumbs=array(
 			)
 		); 
 
-		Yii::app()->clientScript->registerScript("cambioDivisa", '$(\'#divisa\').change(function(){$(\'#montoPresupuesto\').parent(\'span.input-group-addon\').val(\'$\');})');
+		Yii::app()->clientScript->registerScript("cambioDivisa", '$(\'#divisa\').change(function(){$(\'#montoPresupuesto\').parent(\'span\').html(\'$\');})');
 		$importado .= $form->dropDownListGroup( $presuImp, 'divisa_id',
 			array(
 				'wrapperHtmlOptions' => array(
@@ -274,6 +291,7 @@ $this->breadcrumbs=array(
 
 		$importado .= $form->textFieldGroup($presuImp, 'monto_presupuesto',array('prepend'=>'Bs','widgetOptions'=>array('htmlOptions'=> array('id'=>'montoPresupuesto'))));
 		$importado .= $form->textFieldGroup($presuImp, 'cantidad');
+		$importado .= $form->textFieldGroup($presuImp, 'descripcion');
 		
 		Yii::app()->clientScript->registerScript("linkClick", "$('#nacional').click(function(){ $('#tipoPro').val('N');})
 															   $('#importado').click(function(){ $('#tipoPro').val('I');})");
@@ -323,26 +341,56 @@ $this->breadcrumbs=array(
 		    )
 		);
 
+		//echo 'probando';
 		print_r($presuPros);
-		foreach ($presuPros as $key => $prepro) {
-		
-				//$producto = $prepro->producto;
-			 	//echo $producto->nombre;
-			 	print_r($prepro);
 
-			 //if($prepro->tipo == 'N')
-			 {
-				/*$formpc->textFieldGroup($presuPros[$key],'');
-				$formpc->textFieldGroup($presuPros[$key],'');
-				$formpc->textFieldGroup($presuPros[$key],'');
-				$formpc->textFieldGroup($presuPros[$key],'');
-				$formpc->textFieldGroup($presuPros[$key],'');
-				$formpc->textFieldGroup($presuPros[$key],'');
-			}elseif($prepro->tipo == 'I')
-			{*/
+		echo '<h3>Lista de productos nacionales</h3>';
+		$presuProducto = new PresupuestoProductos();
+		// $gridColumns
+		$gridColumns = array(
+			//array('name'=>'id', 'header'=>'#', 'htmlOptions'=>array('style'=>'width: 60px')),
+			array('name'=>'producto_id', 'header'=>'Producto','value'=>array($this,'obtenerProductoNombre')),
+			array('name'=>'unidad_id', 'header'=>'Unidad','value'=>array($this,'obtenerUnidadNombre')),
+			array('name'=>'costo_unidad', 'header'=>'Costo Unidad', 'value'=>array($this,'obtenerCostoUnidadNombre')),
+			array('name'=>'cantidad', 'header'=>'Cantidad'),
+			//array('name'=>'tipo', 'header'=>'Tipo de Compra'),
+			array(
+				'htmlOptions' => array('nowrap'=>'nowrap'),
+				'class'=>'booster.widgets.TbButtonColumn',
+				'viewButtonUrl'=>null,
+				'updateButtonUrl'=>null,
+				'deleteButtonUrl'=>null,
+			)
+		);
 
+		/*$gridDataProvider = new CArrayDataProvider($presuPros,array(
+											    'keyField' => 'presupuesto_id',
+											));
+		$this->widget('booster.widgets.TbGridView', array(
+		        'type' => 'striped bordered condensed',
+		        'id'=>'presupuesto_id',
+		        'dataProvider' => $gridDataProvider,
+		        'template' => "{items}",
+		        //'filter' => $presuProducto->search(),
+		        'columns' => $gridColumns,
+		    ));*/
+		echo '<h3>Lista de productos importados</h3>';
+		/*foreach ($presuPros as $key => $prepro) {
+			if(isset($prepro)){
+					//$producto = $prepro->producto;
+				 	//echo $producto->nombre;
+				 	print_r($prepro);
+
+				 if($prepro->tipo == 'N')
+				 {
+				 	$this->renderPartial('_nacional',array('form'=>$formpc,'presuPro'=>$prepro, 'productosPartidas'=>$productosPartidas));
+
+				}elseif($prepro->tipo == 'I')
+				{
+					$this->renderPartial('_internacional',array('form'=>$formpc,'presuPro'=>$prepro, 'productosPartidas'=>$productosPartidas));
+				}
 			}
-		}
+		}*/
 	$this->endWidget();
 		/*$this->widget(
 		    'booster.widgets.TbSelect2',

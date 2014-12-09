@@ -27,7 +27,7 @@ class PlanificacionController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','partidas','vistaparcial', 'buscarpartida', 'buscargeneral', 'asignarpartidasproyecto', 'buscargeneralproyecto','buscarNcm'),
+				'actions'=>array('create','update','partidas','vistaparcial', 'buscarpartida', 'buscargeneral', 'asignarpartidasproyecto', 'buscargeneralproyecto','buscarNcm', 'buscarpartidasproyecto', 'buscarproductospartida'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -615,7 +615,7 @@ class PlanificacionController extends Controller
 		
 		$acciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('ente_organo_id'=>$usuario->ente_organo_id),array('distinct'=>true,'select'=>'codigo_accion, accion_id, ente_organo_id'));
 
-		print_r($acciones);
+		//print_r($acciones);
 		$this->render('index',array(
 			'usuario'=>$usuario, 'proyectos' => $proyectos,  'acciones' => $acciones
 		));
@@ -678,9 +678,9 @@ class PlanificacionController extends Controller
 		if(isset($_POST['CodigosNcm']) and !empty($_POST['CodigosNcm']['codigo_ncm_id']))
 		{
 
-		$listaCodigos = array();
-		if($codigoSel=CodigosNcm::model()->findByPk($_POST['CodigosNcm']['codigo_ncm_id']))
-			$listaCodigos = CHtml::listData($this->hijosCodigoNcm($codigoSel),
+			$listaCodigos = array();
+			if($codigoSel=CodigosNcm::model()->findByPk($_POST['CodigosNcm']['codigo_ncm_id']))
+				$listaCodigos = CHtml::listData($this->hijosCodigoNcm($codigoSel),
 						'codigo_ncm_id', function($codigo){ return CHtml::encode($this->numeroCodigoNcm($codigo).' - '.$codigo->descripcion_ncm);});
 
 			
@@ -693,9 +693,98 @@ class PlanificacionController extends Controller
 		}
 		
 	}
+	public function actionBuscarpartidasproyecto()
+	{
+		$name = "Seleccionar partida";
 
+		 echo CHtml::tag('option',
+		                   array('value'=>""),CHtml::encode($name),true);
+
+		if(isset($_POST['Proyectos']) and !empty($_POST['Proyectos']['proyecto_id']))
+		{
+
+			if(strstr($_POST['Proyectos']['proyecto_id'], 'a'))
+			{//Es un id de accion
+				$accionId = intval(explode('a', $_POST['Proyectos']['proyecto_id']));
+				$partidas = $this->partidasAccion($accionId);
+			}else{//Es un id de proyecto
+				$proyectoSel = Proyectos::model()->findByPk($_POST['Proyectos']['proyecto_id'] );
+
+				//$proyectoActual = Proyectos::model()->findByPk($proyectoSel->proyecto_id);
+				$partidas = $this->partidasProyecto($proyectoSel->proyecto_id);
+			}	
+		    
+		    $partidas_principal = CHtml::listData($partidas, function($partida) {
+																	return CHtml::encode($partida->partida_id);
+																}, function($partida) {
+																	return CHtml::encode($this->numeroPartida($partida).' - '. $partida->nombre);
+																});
+		    
+		    foreach($partidas_principal as $value => $name)
+		    {
+		        echo CHtml::tag('option',
+		                   array('value'=>$value),CHtml::encode($name),true);
+		    }
+		}
+
+	}
+	public function actionBuscarproductospartida()
+	{
+		$name = "Seleccionar producto";
+
+		 echo CHtml::tag('option',
+		                   array('value'=>""),CHtml::encode($name),true);
+
+		if(isset($_POST['Proyectos']) and !empty($_POST['Proyectos']['proyecto_id']))
+		{
+			$productosPartidas = array();
+			if(isset($_POST['Partidas']) && !empty($_POST['Partidas']['partida_id'])){
+
+				$productosPartidas = Partidas::model()->findByPk($_POST['Partidas']['partida_id'])->productos;
+			}
+		    
+		    $productosPartidass = CHtml::listData($productosPartidas, 'producto_id', 
+									function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);}
+																);
+		    
+		    foreach($productosPartidass as $value => $name)
+		    {
+		        echo CHtml::tag('option',
+		                   array('value'=>$value),CHtml::encode($name),true);
+		    }
+		}
+
+	}
+	public function eliminarProducto(Productos $producto){
+		return false;
+		$transaction = $producto->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
+		 try{
+
+				if($producto->delete())
+				{
+					$transaction->commit();    // committing 
+					return true;
+				}else $transaction->rollBack();
+		}
+        catch (Exception $e){
+            $transaction->rollBack();
+            return false;
+        }
+        return false;
+	}
+	public  function obtenerUnidadNombre($data,$row){
+			return $data->unidad->nombre; 
+	}
+	public  function obtenerProductoNombre($data,$row){
+			return $this->numeroProducto($data->producto).' - '.$data->producto->nombre; 
+	}
+	public  function obtenerCostoUnidadNombre($data,$row){
+			return number_format($data->costo_unidad,2,',','.').' Bs.'; 
+	}
 	public function actionPartidas() /*Aqui van la logica de negocio asociada a cada partida 401, 402, 403, 404 */
 	{
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+
 		//Selección de Proyecto a Acción
 		$proyectoSel = new Proyectos('search');
 		$accionSel = new Acciones('search');
@@ -704,22 +793,29 @@ class PlanificacionController extends Controller
 		$partidaSel = new Partidas('search');
 		//Selección Producto
 		$productoSel = new Productos('search');
-		$presupuestoPartidaAcciones = new PresupuestoPartidaAcciones();
 
-		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
-
+		
+		// Lista de productos cargados
 		$presuPros = new PresupuestoProductos();
 
 		$presuPro = new PresupuestoProductos();
+		$presuPro->tipo = 'N';
 		$presuImp = new PresupuestoImportacion();
 		$codigoNcmSel = new CodigosNcm();
 
 		//$partidas = new PresupuestoPartidas();
 		$partidas =array();
 		
-		$productosPartidas = new Productos();
+		$productosPartidas = array();
 
-		
+		if(isset($_POST['Partidas']) && !empty($_POST['Partidas']['partida_id'])){
+							$partidaSel->attributes = $_POST['Partidas'];
+							//$presuPros = Proyectos::model()->findAllByAttributes(array('proyecto_id'=>attributeValue), condition, array('key'=>value))
+
+							$productosPartidas = Partidas::model()->findByPk($partidaSel->partida_id)->productos;
+							$productosPartidas = CHtml::listData($productosPartidas, 'producto_id', 
+                                                        function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);});
+						}
 		//$partidass = '';
 		if(isset($_POST['Proyectos']) /*&& isset($_POST['Acciones'])*/)
 		{
@@ -743,99 +839,126 @@ class PlanificacionController extends Controller
 						//$partidas = Partidas::model()->findByPk($partidas[0]->partida_id);
 						//$partidas = $proyectoSel->presupuestoPartidaProyecto->presupuestoPartida;
 		 				//print_r($_POST['Partidas']);
-		 			}	
+		 				
 						if(isset($_POST['Partidas']) && !empty($_POST['Partidas']['partida_id'])){
 							$partidaSel->attributes = $_POST['Partidas'];
+							//$presuPros = Proyectos::model()->findAllByAttributes(array('proyecto_id'=>attributeValue), condition, array('key'=>value))
 
-							$productosPartidas = Partidas::model()->findByPk($partidaSel->partida_id)->productos;
+							//$productosPartidas = Partidas::model()->findByPk($partidaSel->partida_id)->productos;
 							
 							// Producto Nacional
-							
-							if(isset($_POST['PresupuestoProductos'])){
-	 								$presuPro->attributes = $_POST['PresupuestoProductos'];
+							if(isset($_POST['Productos']))
+								$productoSel->attributes = $_POST['Productos'];
 
-	 								if($presuPro->tipo == 'N'){
 
-	 									foreach ($proyectoActual->presupuestoPartidas as $key => $presupuestoPartida) 
-	 										if($presupuestoPartida->partida_id == $partidaSel->partida_id)
-	 											$presuPro->proyecto_partida_id = $presupuestoPartida->presupuesto_partida_id;
-	 										
-	 								$presuPro->monto_ejecutado = 0;
-	 								/*	if($presupuestoPartida = ->findByAttributes(array('partida_id'=>$partidaSel->partida_id)))
-											$presuPro->proyecto_partida_id = $presupuestoPartida->presupuesto_partida_id;*/
-										
-										//Monto en presupuesto en Bs. del producto
-										$presuPro->monto_presupuesto = floatval($presuPro->costo_unidad) * floatval($presuPro->cantidad);
+							/*localhost:1721616613 port:5435
+							echo 'partidaId: '.$partidaSel->partida_id.'  ente: '.$usuario->ente_organo_id;
+							echo '<br>';*/
 
-										if($presuPro->validate())
-										{
-
-											/*else{
-												$presupuestoPartida = new PresupuestoPartidas();
-												$presupuestoPartida->partida_id = $partidaSel->partida_id;
-											}*/
-
-											if($presuPro->save()){
-												$this->redirect(array('/planificacion/partidas'));
-											}else
-											throw new Exception("Error Processing Request", 1);
-										}
-									}
-									elseif($presuPro->tipo == 'I')
-										// Producto Importado
-										if(isset($_POST['PresupuestoImportacion']) /*&& isset($_POST['PresupuestoProductos'])*/)
-										{
-											
-											if(isset($_POST['CodigosNcm'])){
-												//$presuImpSel->attributes = $_POST['CodigosNcm'];
-
-												$presuImp->attributes = $_POST['PresupuestoImportacion'];
-												if($presuImp->validate())
-												{
-													$transaction = $presuImp->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
-													 try{
-														$presupuestoProducto = new PresupuestoProductos();
-														$presupuestoProducto->monto_presupuesto = Divisas::model()->findByPk($presuImp->divisa_id)->tasa * $presuImp->monto_presupuesto;
-														$presupuestoProducto->cantidad = $presuImp->cantidad;
-														$presupuestoProducto->tipo = 'I';
-														$presupuestoProducto->monto_ejecutado = 0;
-														if($presupuestoProducto->save())
-														{
-															$presuImp->presupuesto_id = $presupuestoProducto->presupuesto_id;
-															if($presuImp->save())
-															{
-																$transaction->commit();    // committing 
-															}else $transaction->rollBack();
-															
-														}else $transaction->rollBack();
-
-													}
-							                        catch (Exception $e){
-							                            $transaction->rollBack();
-							                        }
-												}
-											}
-
-										
-											//$this->guardarPresupuestoProductos($presuPro);
-										}
+							$presuPros = $proyectoActual->presupuestoPartidas;
+							$aux = array();
+							foreach ($presuPros as $key => $value) {
+								if($value->partida_id == $partidaSel->partida_id)
+									$aux[] = $value->presupuestoProducto;
 							}
-
-							if($presuPros = PresupuestoPartidas::model()->findByAttributes(array('partida_id'=>$partidaSel->partida_id,'ente_organo_id'=>$proyectoActual->ente_organo_id)))
+							//print_r($presuPros=$aux);
+							$presuPros=$aux;
+							/*if($presuPros = PresupuestoPartidas::model()->findByAttributes(array('partida_id'=>$partidaSel->partida_id,'ente_organo_id'=>$usuario->ente_organo_id)))
 							{
 								//print_r($presuPros);
 								$presuPros = $presuPros->presupuestoProductos;
 							}else{
-								Yii::log('No se pudo obtener la lista de productos asociados a la partida id: '.$partidaSel->partida_id.' y ente id: '.$proyectoActual->ente_organo_id,'warning');
-							}
+								Yii::log('No se pudo obtener la lista de productos asociados a la partida id: '.$partidaSel->partida_id.' y ente id: '.$usuario->ente_organo_id,'warning');
+							}*/
 							//print_r($presuPros);
 						}
 
-					
+					}
 				}
 
 
 		}
+				if(isset($_POST['PresupuestoProductos'])){
+								$presuPro->attributes = $_POST['PresupuestoProductos'];
+
+								//print_r($presuPro);
+								//if(!empty($accionSel->accion_id))
+								//if(isset($proyectoActual))
+
+
+							if($presuPro->tipo == 'N'){
+
+									foreach ($proyectoActual->presupuestoPartidas as $key => $presupuestoPartida) 
+										if($presupuestoPartida->partida_id == $partidaSel->partida_id)
+											$presuPro->proyecto_partida_id = $presupuestoPartida->presupuesto_partida_id;
+										
+								$presuPro->monto_ejecutado = 0;
+								$presuPro->producto_id = $productoSel->producto_id;
+								/*	if($presupuestoPartida = ->findByAttributes(array('partida_id'=>$partidaSel->partida_id)))
+									$presuPro->proyecto_partida_id = $presupuestoPartida->presupuesto_partida_id;*/
+								
+								//Monto en presupuesto en Bs. del producto
+								$presuPro->monto_presupuesto = floatval($presuPro->costo_unidad) * floatval($presuPro->cantidad);
+
+								if($presuPro->validate())
+								{
+									echo 'HOLA';
+									/*else{
+										$presupuestoPartida = new PresupuestoPartidas();
+										$presupuestoPartida->partida_id = $partidaSel->partida_id;
+									}*/
+
+									if($presuPro->save()){
+										$presuPro = new PresupuestoProductos();
+										//$this->redirect(array('/planificacion/partidas'));
+									}else
+									throw new Exception("Error Processing Request", 1);
+								}//else Yii::app()->user->setFlash('Error','error');
+							}
+							if($presuPro->tipo == 'I')
+								// Producto Importado
+								if(isset($_POST['PresupuestoImportacion']) /*&& isset($_POST['PresupuestoProductos'])*/)
+								{
+									
+									//if(isset($_POST['CodigosNcm'])){
+										//$presuImpSel->attributes = $_POST['CodigosNcm'];
+
+										$presuImp->attributes = $_POST['PresupuestoImportacion'];
+										print_r($presuImp);
+										if($presuImp->validate())
+										{
+											$transaction = $presuImp->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
+											 try{
+											 	
+												$presupuestoProducto = new PresupuestoProductos();echo 'Hola';
+												if($tasa = Divisas::model()->findByPk($presuImp->divisa_id)->tasa)
+													$presupuestoProducto->monto_presupuesto =  $tasa * $presuImp->monto_presupuesto;
+												$presupuestoProducto->cantidad = $presuImp->cantidad;
+												$presupuestoProducto->tipo = 'I';
+												$presupuestoProducto->monto_ejecutado = 0;
+												$presupuestoProducto->producto_id = $productoSel->producto_id;
+												if($presupuestoProducto->save())
+												{
+													$presuImp->presupuesto_id = $presupuestoProducto->presupuesto_id;
+													if($presuImp->save())
+													{
+														$presuImp = new PresupuestoImportacion();
+														$transaction->commit();    // committing 
+													}else $transaction->rollBack();
+													
+												}else $transaction->rollBack();
+
+											}
+					                        catch (Exception $e){
+					                            $transaction->rollBack();
+					                        }
+										}
+									//}
+
+								
+									//$this->guardarPresupuestoProductos($presuPro);
+								}
+					}
 
 		$this->render('partidas', array('usuario'=>$usuario,'proyectoSel'=>$proyectoSel,'accionSel'=>$accionSel,
 			'partidas'=>$partidas, 'partidaSel'=>$partidaSel,'productoSel'=>$productoSel,'presuPros'=>$presuPros,

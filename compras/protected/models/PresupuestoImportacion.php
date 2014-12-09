@@ -12,6 +12,7 @@
  * @property string $tipo
  * @property string $monto_ejecutado
  * @property string $divisa_id
+ * @property string $descripcion
  */
 class PresupuestoImportacion extends CActiveRecord
 {
@@ -31,8 +32,8 @@ class PresupuestoImportacion extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('codigo_ncm_id, presupuesto_id, cantidad, fecha_llegada, monto_presupuesto, tipo, monto_ejecutado, divisa_id', 'required'),
-			array('monto_presupuesto, monto_ejecutado', 'length', 'max'=>38),
+			array('codigo_ncm_id, cantidad, fecha_llegada, monto_presupuesto, tipo, divisa_id, descripcion', 'required'),
+			array('monto_presupuesto, monto_ejecutado, cantidad', 'numerical'),
 			array('tipo', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -60,11 +61,12 @@ class PresupuestoImportacion extends CActiveRecord
 			'codigo_ncm_id' => 'Codigo Ncm',
 			'presupuesto_id' => 'Presupuesto',
 			'cantidad' => 'Cantidad',
-			'fecha_llegada' => 'Fecha Llegada',
-			'monto_presupuesto' => 'Monto Presupuesto',
+			'fecha_llegada' => 'Fecha estimada de la importación',
+			'monto_presupuesto' => 'Costo unitario en divisa ',
 			'tipo' => 'Tipo',
 			'monto_ejecutado' => 'Monto Ejecutado',
 			'divisa_id' => 'Divisa',
+			'descripcion' => 'Descripción',
 		);
 	}
 
@@ -94,6 +96,7 @@ class PresupuestoImportacion extends CActiveRecord
 		$criteria->compare('tipo',$this->tipo,true);
 		$criteria->compare('monto_ejecutado',$this->monto_ejecutado,true);
 		$criteria->compare('divisa_id',$this->divisa_id,true);
+		$criteria->compare('descripcion',$this->descripcion,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
