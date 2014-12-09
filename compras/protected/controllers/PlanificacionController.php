@@ -42,7 +42,9 @@ class PlanificacionController extends Controller
 
 	public function actionImportacion() /*Aqui esta vista tratara todo lo que tenga relacion con los datos de CENCOEX.*/
 	{
-		$this->render('importacion');
+		$_401 = $this->GeneralXpartida(402);
+		$this->render('importacion', array('model'=>$_401));
+
 	}
 
 
@@ -70,7 +72,9 @@ class PlanificacionController extends Controller
 		$criteria = new CDbCriteria();
 		$criteria->condition = 'p1=:p1 and p3 = 0 and p2 <> 0';
 		$criteria->params = array(':p1'=>$partida);
+		
 		return Partidas::model()->findAll($criteria);
+
 	}
 
 	public function numeroPartida($partida){
@@ -371,7 +375,7 @@ class PlanificacionController extends Controller
 
 			$generales = $this->GeneralXpartida($tipo->p1);
 		    
-		    $generales_todas = CHtml::listData($generales, function($generales) {
+		    $generales_todas = CHtml::listData($generales, function($generales){
 																return CHtml::encode($generales->partida_id);
 															}, function($generales) {
 																return CHtml::encode($generales->p1.'-'.$generales->p2.' '.$generales->nombre);
