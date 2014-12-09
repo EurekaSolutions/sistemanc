@@ -976,9 +976,10 @@ class PlanificacionController extends Controller
 		$criteria = new CDbCriteria();
 		$criteria->distinct=true;
 		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
-		$criteria->select = 'accion_id';
+		$criteria->select = 'codigo_accion, accion_id, ente_organo_id';
 		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
 		
+
 
 		$this->render('vistaparcial',array(
 			'proyectos' => $proyectos,  'acciones' => $acciones
