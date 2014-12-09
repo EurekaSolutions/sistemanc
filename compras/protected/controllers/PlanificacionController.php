@@ -1148,24 +1148,80 @@ class PlanificacionController extends Controller
 
 
 
-	/*public function montoAccionProyecto($id,$ente_id,$tipo){
-		if($tipo == 'A'){
+	public function montoAccionProyectoBsf($tipo,$id,$ente_id){
+		
 
-		$monto = PresupuestoPartidas::model()->findAllBySql('select sum(monto_presupuesto)  
-from presupuesto_productos p join presupuesto_partidas pr on (p.proyecto_partida_id = pr.presupuesto_partida_id)
-join presupuesto_partida_proyecto py on (pr.presupuesto_partida_id = py.presupuesto_partida_id)
-join proyectos t on (py.proyecto_id = t.proyecto_id)');
+		
+		if($tipo=='P'){	
+		  $sql ='select sum(p.monto_presupuesto) as cantidad
+	             from presupuesto_productos p join presupuesto_partidas pr on (p.proyecto_partida_id = pr.presupuesto_partida_id)
+	             join presupuesto_partida_proyecto py on (pr.presupuesto_partida_id = py.presupuesto_partida_id)
+		         join proyectos t on (py.proyecto_id = t.proyecto_id)
+		         where t.proyecto_id = '.$id.' and pr.ente_organo_id='.$ente_id;
+		}else{
+		  $sql 	='select sum(p.monto_presupuesto) as cantidad 
+				  from presupuesto_productos p 
+				  join presupuesto_partidas pr on (p.proyecto_partida_id = pr.presupuesto_partida_id) 
+				  join presupuesto_partida_acciones py on (pr.presupuesto_partida_id = py.presupuesto_partida_id) 
+				  join acciones t on (py.accion_id = t.accion_id)
+				  where t.accion_id = '.$id.' and pr.ente_organo_id='.$ente_id;
+
+
+		}  
+
+		  $connection=Yii::app()->db;
+	      $command=$connection->createCommand($sql);
+	      $results=$command->queryAll(); 
+
+	     	
+
+			return $results[0]['cantidad'];
+
+	}
+
+
+
+	public function montoAccionProyectoDivisa($tipo,$id,$ente_id,$fecha){
+
+		if ($tipo=='P'){
+			$sql = "select sum(p.monto_presupuesto*p.cantidad*a.tasa) as cantidad 
+					from presupuesto_importacion p 
+					join presupuesto_partidas pr on (p.presupuesto_partida_id = pr.presupuesto_partida_id) 
+					join presupuesto_partida_proyecto py on (pr.presupuesto_partida_id = py.presupuesto_partida_id) 
+					join proyectos t on (py.proyecto_id = t.proyecto_id)
+					join divisas d on ( p.divisa_id =  d.divisa_id)
+					join tasas a on (d.divisa_id = a.divisa_id)
+					where a.fecha_desde <= '$fecha'
+					and a.fecha_hasta >= '$fecha_hasta'
+					and t.proyecto_id = $id and pr.ente_organo_id=$ente_id";
 
 		}else{
-
-			PresupuestoPartida::model()->findAllBySql();
-
+			$sql = "select sum(p.monto_presupuesto*p.cantidad*a.tasa) as cantidad 
+				from presupuesto_importacion p 
+				join presupuesto_partidas pr on (p.presupuesto_partida_id = pr.presupuesto_partida_id) 
+				join presupuesto_partida_acciones py on (pr.presupuesto_partida_id = py.presupuesto_partida_id) 
+				join acciones t on (py.accion_id = t.accion_id)
+				join divisas d on ( p.divisa_id =  d.divisa_id)
+				join tasas a on (d.divisa_id = a.divisa_id)
+				where a.fecha_desde <= '$fecha'
+				and a.fecha_hasta >= '$fecha'
+				and t.accion_id = $id and pr.ente_organo_id=$ente_id";
 		}
 
-		return $monto;
 
 
-	}*/
+
+	   		$connection=Yii::app()->db;
+	      	$command=$connection->createCommand($sql);
+	      	$results=$command->queryAll(); 
+			return $results[0]['cantidad'];
+
+
+	}
+
+
+
+
 
 	// Uncomment the following methods and override them if needed
 	/*
