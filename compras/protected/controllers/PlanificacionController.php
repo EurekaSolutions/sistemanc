@@ -38,7 +38,13 @@ class PlanificacionController extends Controller
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('crearente','misentes'),
 				'users'=>array('@'),
-				'expression' => "Yii::app()->session['organo']==1"
+				//'expression' => "Yii::app()->session['organo']==1"
+			),
+
+			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+				'actions'=>array('importacion'),
+				'users'=>array('*'),
+				
 			),
 			
 			
@@ -50,9 +56,23 @@ class PlanificacionController extends Controller
 
 	public function actionImportacion() /*Aqui esta vista tratara todo lo que tenga relacion con los datos de CENCOEX.*/
 	{
-		$_401 = $this->GeneralXpartida(402);
-		$this->render('importacion', array('model'=>$_401));
-
+		/*$_401 = $this->GeneralXpartida(402);
+		$this->render('importacion', array('model'=>$_401));*/
+		Yii::import('application.extensions.phpmailer.JPhpMailer');
+		$mail = new JPhpMailer;
+		$mail->IsSMTP();
+		$mail->Host = 'correo.snc.gob.ve';
+		$mail->SMTPAuth = true;
+		$mail->SMTPDebug = 2;
+		$mail->Username = 'admin_rnce';
+		$mail->SMTPSecure = 'ssl';
+		$mail->Password = 'GikforewnEd3';
+		$mail->SetFrom('rnce@snc.gob.ve', 'Probando');
+		$mail->Subject = 'PHPMailer Test Subject via smtp, basic with authentication';
+		$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!';
+		$mail->MsgHTML('<h1>JUST A TEST!</h1>');
+		$mail->AddAddress('edgar.leal0@gmail.com', 'John Doe');
+		$mail->Send();
 	}
 
 
@@ -175,7 +195,6 @@ class PlanificacionController extends Controller
 	public function actionCrearente()
 	{
 		$model = new EntesOrganos('crearente');
-		$usuario = new Usuarios('registro');
 
 	    // uncomment the following code to enable ajax-based validation
 	    /*
@@ -192,75 +211,45 @@ class PlanificacionController extends Controller
 	        $model->attributes=$_POST['EntesOrganos'];
 	        $model->creado_por= 'snc';
 	        $model->tipo = 'E';
-	        	$transaction = $model->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
-			try{
-		
-		        if($model->save())
-		        {
-		           $entesAscritos = new EntesAdscritos;
-		           $usuarioActual = Usuarios::model()->findByPk(Yii::app()->user->getId());
-				   
-		           $entesAscritos->padre_id = $usuarioActual->ente_organo_id;
-		           
-		           $entesAscritos->ente_organo_id = $model->ente_organo_id;
-		           $entesAscritos->fecha_desde =  date("Y-m-d");
-		           $entesAscritos->fecha_hasta = "2199-12-31";
+	        if($model->save())
+	        {
+	           $entesAscritos = new EntesAdscritos;
+	           $usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+			   
+	           $entesAscritos->padre_id = $usuario->ente_organo_id;
+	           
+	           $entesAscritos->ente_organo_id = $model->ente_organo_id;
+	           $entesAscritos->fecha_desde =  date("Y-m-d");
+	           $entesAscritos->fecha_hasta = "2199-12-31";
+			   $entesAscritos->save();
 
-		           
-			           $usuario->usuario = $model->correo;
-			           $usuario->correo = $model->correo;
-			           $usuario->contrasena = md5(rand(0,100));
-			           $usuario->repetir_contrasena = $usuario->contrasena;
-			           $usuario->creado_el = date("Y-m-d");
-			           $usuario->actualizado_el = date("Y-m-d");
-			           $usuario->ultima_visita_el = date("Y-m-d");
-			           $usuario->esta_activo = true;
-			           $usuario->esta_deshabilitado = 0;
-			           $usuario->correo_verificado = true;
-			           $usuario->llave_activacion = md5(rand(0,100));
-			           $usuario->ente_organo_id = $model->ente_organo_id;
-			           $usuario->cedula = '1836654';
-			           $usuario->nombre = 'Juan Mendez';
-			           $usuario->cargo = 'Presidente';
-			           $usuario->rol = 'normal';
+			   $crea_usuario = new Usuarios('crearente');
 
-					print_r($usuario);
 
-			          //if($usuario->save())
+			   $crea_usuario->correo = $model->correo;
+			   $crea_usuario->contrasena = md5("1236aA");
+			   $crea_usuario->usuario = $model->correo;
+			   $crea_usuario->creado_el = date("Y-m-d");
+			   $crea_usuario->actualizado_el = date("Y-m-d");
+			   $crea_usuario->rol = 'normal';
+			   $crea_usuario->ente_organo_id = $usuario->ente_organo_id;
+			   $crea_usuario->save();
 
-				   if($entesAscritos->save() && $usuario->save()){
-				   		$transaction->commit();
+			   Yii::app()->user->setFlash('success', "Ente creado con éxito!");
+			   Yii::app()->user->setFlash('notice', "Información de activación fue enviada al correo ". $model->correo);
 
-				   		/*Yii::import('application.modules.usr.controllers.UsrController');
-				   		Yii::import('application.modules.usr.models.RecoveryForm');
-				   		$model = new RecoveryForm();
-				   		$model->correo = 'eurekasolutionsca@gmail.com';
-				   		$model->cedula = '8';
-						UsrController::senMail($model,'recovery');*/
-print_r('Hola');
-
-         			  Yii::app()->user->setFlash('success', "Ente creado con éxito!");
-				   }else $transaction->rollBack();
-
-				   
-				}else $transaction->rollBack();
-
-		    }catch (Exception $e){
-		            $transaction->rollBack();
-		            return false;
-		    }
 			  // $this->redirect(array('view','id'=>$model->producto_id));
-			   //$model = new EntesOrganos('crearente');
+			   $model = new EntesOrganos('crearente');
 
-			    $this->render('crearente',array(
-						'model'=>$model,'usuario'=>$usuario
+			   $this->render('crearente',array(
+						'model'=>$model,
 			   ));
 	            // form inputs are valid, do something here
 	            return;
 	        }
-	    
+	    }
 
-	    $this->render('crearente',array('model'=>$model,'usuario'=>$usuario));
+	    $this->render('crearente',array('model'=>$model));
 
 
 	}
@@ -659,40 +648,8 @@ print_r('Hola');
 	
 	public function actionIndex()   /*Aquí vamos a mostrar la primera vista del excel enviado por Zobeida*/
 	{
-							/*$para      = 'eurekasolutionsca@gmail.com';
-					$titulo    = 'Activación de cuenta';
-					$mensaje   = 'Probando';
-					$cabeceras = 'From: rnce@snc.gob.ve' . "\r\n" .
-					   'Reply-To: rnce@snc.gob.ve' . "\r\n" .
-					   'X-Mailer: PHP/' . phpversion();
 
-					mail($para, $titulo, $mensaje, $cabeceras);*/
-				   		//Yii::import('application.modules.usr.controllers.UsrController');
-				   		//Yii::import('application.modules.usr.models.RecoveryForm');
-	   /*		$model = new RecoveryForm();
-	   		$model->correo = 'eurekasolutionsca@gmail.com';
-	   		$model->cedula = '8';
-			//UsrController::sendMail($model,'recovery');
-
-			list($controlador) = Yii::app()->createController('UsrController');
-			$controlador->sendMail($model,'recovery');*/
-
-		/*Yii::import('application.extensions.phpmailer.JPhpMailer');
-		$mail = new JPhpMailer;
-		$mail->IsSMTP();
-		$mail->Host = 'smpt.gmail.com';
-		$mail->SMTPAuth = true;
-		$mail->Username = 'eurekasolutionsca@gmail.com';
-		$mail->Password = '3ur3k4123';
-		$mail->Port = 465;
-		$mail->SMTPSecure = 'ssl';
-		$mail->SetFrom('eurekasolutionsca@gmail.com', 'yourname');
-		$mail->Subject = 'PHPMailer Test Subject via smtp, basic with authentication';
-		$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!';
-		$mail->MsgHTML('<h1>JUST A TEST!</h1>');
-		$mail->AddAddress('edgar.leal0@gmail.com', 'John Doe');
-		$mail->Send();*/
-
+		
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 
 		$proyectos = $usuario->enteOrgano->proyectos;
@@ -1274,80 +1231,24 @@ print_r('Hola');
 
 
 
-	public function montoAccionProyectoBsf($tipo,$id,$ente_id){
-		
+	/*public function montoAccionProyecto($id,$ente_id,$tipo){
+		if($tipo == 'A'){
 
-		
-		if($tipo=='P'){	
-		  $sql ='select sum(p.monto_presupuesto) as cantidad
-	             from presupuesto_productos p join presupuesto_partidas pr on (p.proyecto_partida_id = pr.presupuesto_partida_id)
-	             join presupuesto_partida_proyecto py on (pr.presupuesto_partida_id = py.presupuesto_partida_id)
-		         join proyectos t on (py.proyecto_id = t.proyecto_id)
-		         where t.proyecto_id = '.$id.' and pr.ente_organo_id='.$ente_id;
-		}else{
-		  $sql 	='select sum(p.monto_presupuesto) as cantidad 
-				  from presupuesto_productos p 
-				  join presupuesto_partidas pr on (p.proyecto_partida_id = pr.presupuesto_partida_id) 
-				  join presupuesto_partida_acciones py on (pr.presupuesto_partida_id = py.presupuesto_partida_id) 
-				  join acciones t on (py.accion_id = t.accion_id)
-				  where t.accion_id = '.$id.' and pr.ente_organo_id='.$ente_id;
-
-
-		}  
-
-		  $connection=Yii::app()->db;
-	      $command=$connection->createCommand($sql);
-	      $results=$command->queryAll(); 
-
-	     	
-
-			return $results[0]['cantidad'];
-
-	}
-
-
-
-	public function montoAccionProyectoDivisa($tipo,$id,$ente_id,$fecha){
-
-		if ($tipo=='P'){
-			$sql = "select sum(p.monto_presupuesto*p.cantidad*a.tasa) as cantidad 
-					from presupuesto_importacion p 
-					join presupuesto_partidas pr on (p.presupuesto_partida_id = pr.presupuesto_partida_id) 
-					join presupuesto_partida_proyecto py on (pr.presupuesto_partida_id = py.presupuesto_partida_id) 
-					join proyectos t on (py.proyecto_id = t.proyecto_id)
-					join divisas d on ( p.divisa_id =  d.divisa_id)
-					join tasas a on (d.divisa_id = a.divisa_id)
-					where a.fecha_desde <= '$fecha'
-					and a.fecha_hasta >= '$fecha_hasta'
-					and t.proyecto_id = $id and pr.ente_organo_id=$ente_id";
+		$monto = PresupuestoPartidas::model()->findAllBySql('select sum(monto_presupuesto)  
+from presupuesto_productos p join presupuesto_partidas pr on (p.proyecto_partida_id = pr.presupuesto_partida_id)
+join presupuesto_partida_proyecto py on (pr.presupuesto_partida_id = py.presupuesto_partida_id)
+join proyectos t on (py.proyecto_id = t.proyecto_id)');
 
 		}else{
-			$sql = "select sum(p.monto_presupuesto*p.cantidad*a.tasa) as cantidad 
-				from presupuesto_importacion p 
-				join presupuesto_partidas pr on (p.presupuesto_partida_id = pr.presupuesto_partida_id) 
-				join presupuesto_partida_acciones py on (pr.presupuesto_partida_id = py.presupuesto_partida_id) 
-				join acciones t on (py.accion_id = t.accion_id)
-				join divisas d on ( p.divisa_id =  d.divisa_id)
-				join tasas a on (d.divisa_id = a.divisa_id)
-				where a.fecha_desde <= '$fecha'
-				and a.fecha_hasta >= '$fecha'
-				and t.accion_id = $id and pr.ente_organo_id=$ente_id";
+
+			PresupuestoPartida::model()->findAllBySql();
+
 		}
 
+		return $monto;
 
 
-
-	   		$connection=Yii::app()->db;
-	      	$command=$connection->createCommand($sql);
-	      	$results=$command->queryAll(); 
-			return $results[0]['cantidad'];
-
-
-	}
-
-
-
-
+	}*/
 
 	// Uncomment the following methods and override them if needed
 	/*

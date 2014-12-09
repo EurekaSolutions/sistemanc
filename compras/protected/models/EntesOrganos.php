@@ -40,6 +40,8 @@ class EntesOrganos extends CActiveRecord
 		return array(
 			array('nombre, tipo, codigo_onapre, rif', 'required'),
 			array('nombre, tipo, codigo_onapre, rif, correo', 'required', 'on' => 'crearente'),
+			array('correo', 'email', 'on' => 'crearente'),
+			array('correo', 'unique', 'className' => 'Usuarios', 'attributeName' => 'usuario', 'message'=>'Este correo ya se encuentra registrado en nuestro repositorio', 'on' => 'crearente'),
 			array('rif', 'match', 'pattern' => '/^(j|J|v|V|e|E|G|g)(-)([0-9]{3,8})(-)([0-9]{1})$/', 'allowEmpty' => false),
 			array('codigo_onapre', 'unique', 'attributeName'=> 'codigo_onapre', 'caseSensitive' => 'false', 'className' => 'EntesOrganos'),
 			array('rif', 'unique', 'attributeName'=> 'rif', 'caseSensitive' => 'false', 'className' => 'EntesOrganos'),

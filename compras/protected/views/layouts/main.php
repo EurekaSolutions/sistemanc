@@ -45,14 +45,14 @@
 						    //array('label' => 'Home', 'url' => '#', 'active' => true),
 						    array('label'=>'Inicio', 'url'=>array('/planificacion/index'), 'visible'=>!Yii::app()->user->isGuest),
 						    //array('label'=>'Partidas', 'url'=>array('/planificacion/partidas'), 'visible'=>!Yii::app()->user->isGuest),
-						    array(
+						   /* array(
 								'label' => 'Productos',  //si el usuario es creado por este sistema
 								'items' => array(
 									array('label' => 'Nacional', 'url' => array('/planificacion/nacional')),
 									array('label' => 'Importado', 'url' => array('/planificacion/importado')),
 									//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 								)
-							),
+							),*/
 						    array('label'=>'Estado de carga', 'url'=>array('/planificacion/vistaparcial'), 'visible'=>!Yii::app()->user->isGuest),
 						    array(
 								'label' => 'Agregar',  //si el usuario es creado por este sistema
@@ -62,8 +62,8 @@
 									array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 								)
 							),
-							array('label'=>'Crear ente', 'url'=>array('/planificacion/crearente'), /*'visible'=>(Yii::app()->session['organo']==1)*/), // si el tipo es ORGANO
-							array('label'=>'Mis entes', 'url'=>array('/planificacion/misentes'), /*'visible'=>(Yii::app()->session['organo']==1)*/), // si el tipo es ORGANO
+							array('label'=>'Crear ente', 'url'=>array('/planificacion/crearente'), 'visible'=>!(Yii::app()->user->isGuest)), // si el tipo es ORGANO Yii::app()->session['organo']==1
+							array('label'=>'Mis entes', 'url'=>array('/planificacion/misentes'), 'visible'=>!(Yii::app()->user->isGuest)), // si el tipo es ORGANO Yii::app()->session['organo']==1
 						   // array('label'=>'Perfil usuario', 'url'=>array('/usr/profile'), 'visible'=>!Yii::app()->user->isGuest),
 						    
 							array('label'=>'Salir ('.Yii::app()->user->name.')', 'url'=>array('/usr/logout'), 'visible'=>!Yii::app()->user->isGuest)
