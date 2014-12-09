@@ -48,7 +48,7 @@ tr.principaltr th {
 		    		<td><?php echo $value->codigo_accion; ?></td>
 		    		<td><?php echo $value->accion->nombre; ?></td>
 		    		<td><?php echo number_format($monto,2,',','.'); ?></td>
-		    		<td><?php echo number_format($valor = rand(0,$monto),2,',','.'); ?></td>
+		    		<td><?php echo number_format($valor = rand(0,0),2,',','.'); ?></td>
 		    		<td><strong><?php echo number_format($monto - $valor,2,',','.');?></strong></td>
 		    	</tr>
 
@@ -78,7 +78,7 @@ tr.principaltr th {
 		    		<td><?php echo $value->codigo; ?></td>
 		    		<td><?php echo $value->nombre; ?></td>
 		    		<td><?php echo number_format($monto,2,',','.'); ?></td>
-		    		<td><?php echo number_format($valor = rand(0,$monto),2,',','.'); ?></td>
+		    		<td><?php echo number_format($valor = rand(0,0),2,',','.'); ?></td>
 		    		<td><strong><?php echo number_format($monto - $valor,2,',','.');?></strong></td>
 		    	</tr>
 		     <?php $mfinal += $monto;

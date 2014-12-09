@@ -64,7 +64,7 @@
 							),
 							array('label'=>'Crear ente', 'url'=>array('/planificacion/crearente'), 'visible'=>(Yii::app()->session['organo']==1)), // si el tipo es ORGANO
 							array('label'=>'Mis entes', 'url'=>array('/planificacion/misentes'), 'visible'=>(Yii::app()->session['organo']==1)), // si el tipo es ORGANO
-						    array('label'=>'Perfil usuario', 'url'=>array('/usr/profile'), 'visible'=>!Yii::app()->user->isGuest),
+						   // array('label'=>'Perfil usuario', 'url'=>array('/usr/profile'), 'visible'=>!Yii::app()->user->isGuest),
 						    
 							array('label'=>'Salir ('.Yii::app()->user->name.')', 'url'=>array('/usr/logout'), 'visible'=>!Yii::app()->user->isGuest)
 					    )
