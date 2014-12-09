@@ -23,7 +23,7 @@ class PlanificacionController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'modal', 'agregarproyecto', 'agregarcentralizada', 'administracion', 'crearente', 'misentes','nacional','importado','eliminarProducto'),
+				'actions'=>array('index','view', 'modal', 'agregarproyecto', 'agregarcentralizada', 'administracion', 'nacional','importado','eliminarProducto'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -34,6 +34,14 @@ class PlanificacionController extends Controller
 				'actions'=>array('admin','delete'),
 				'users'=>array('admin'),
 			),
+
+			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+				'actions'=>array('crearente','misentes'),
+				'users'=>array('@'),
+				'expression' => "Yii::app()->session['organo']==1"
+			),
+			
+			
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),

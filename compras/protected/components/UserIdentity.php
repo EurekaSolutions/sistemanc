@@ -98,6 +98,9 @@ class UserIdentity extends CUserIdentity
             $this->errorMessage='';
             $this->initFromUser($record);
             $record->saveAttributes(array('ultima_visita_el'=>date('Y-m-d H:i:s')));
+
+            if(EntesOrganos::model()->find('ente_organo_id=:ente_organo_id', array(':ente_organo_id' => $record->ente_organo_id))->tipo == "O")
+            	Yii::app()->session['organo'] = 1;
         }
         return $this->getIsAuthenticated();
     }
