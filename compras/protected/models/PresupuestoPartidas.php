@@ -13,6 +13,7 @@
  * @property string $anho
  * @property string $ente_organo_id
  * @property string $fuente_fianciamiento_id
+ * @property string $presupuesto_id
  *
  * The followings are the available model relations:
  * @property PresupuestoProductos[] $presupuestoProductoses
@@ -38,9 +39,10 @@ class PresupuestoPartidas extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('partida_id, monto_presupuestado, fecha_desde, fecha_hasta, anho, ente_organo_id', 'required'),
+			array('partida_id, monto_presupuestado, fecha_desde, anho, ente_organo_id, fuente_fianciamiento_id', 'required'),
 			array('monto_presupuestado', 'length', 'max'=>38),
 			array('tipo', 'length', 'max'=>1),
+			array('fecha_hasta, presupuesto_id', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('presupuesto_partida_id, partida_id, monto_presupuestado, fecha_desde, fecha_hasta, tipo, anho, ente_organo_id', 'safe', 'on'=>'search'),
@@ -62,7 +64,7 @@ class PresupuestoPartidas extends CActiveRecord
 			'proyectoses' => array(self::MANY_MANY, 'Proyectos', 'presupuesto_partida_proyecto(presupuesto_partida_id, proyecto_id)'),
 			'presupuestoPartidaAcciones' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones', 'presupuesto_partida_id'),
 			'presupuestoPartidaProyecto' => array(self::HAS_MANY, 'PresupuestoPartidaProyecto', 'presupuesto_partida_id'),
-			'fuenteFianciamiento' => array(self::BELONGS_TO, 'FuentesFinanciamiento', 'fuente_fianciamiento_id'),
+			'fuenteFinanciamiento' => array(self::BELONGS_TO, 'FuentesFinanciamiento', 'fuente_financiamiento_id'),
 		);
 	}
 
@@ -80,7 +82,8 @@ class PresupuestoPartidas extends CActiveRecord
 			'tipo' => 'Tipo',
 			'anho' => 'Anho',
 			'ente_organo_id' => 'Ente Organo',
-			'fuente_fianciamiento_id' => 'Fuente Fianciamiento',
+			'fuente_financiamiento_id' => 'Fuente Financiamiento',
+			'presupuesto_id' => 'Presupuesto',
 
 		);
 	}
@@ -112,6 +115,7 @@ class PresupuestoPartidas extends CActiveRecord
 		$criteria->compare('anho',$this->anho,true);
 		$criteria->compare('ente_organo_id',$this->ente_organo_id,true);
 		$criteria->compare('fuente_fianciamiento_id',$this->fuente_fianciamiento_id,true);
+		$criteria->compare('presupuesto_id',$this->presupuesto_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

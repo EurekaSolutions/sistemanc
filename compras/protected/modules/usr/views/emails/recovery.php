@@ -1,13 +1,13 @@
 <p>
-	This message contains instructions to perform a password recovery. It was requested on the <?php echo CHtml::link(Yii::app()->name, $siteUrl); ?> website.
-    If you did not perform this request, please ignore this email or contact our administrator.
+	Este mensaje contiene instrucciones para verificar este correo electronico. La solicitud fue realizada a través de la página web <?php echo CHtml::link(Yii::app()->name, $siteUrl); ?>.
+    Si usted no realizo esta solicitud, por favor ignore este correo o pongase en contacto<?php echo CHtml::link('rnce@snc.gob.ve', 'rnce@snc.gob.ve'); ?> (rnce@snc.gob.ve) con el administrador del sitio.
 </p>
-Tu nombre de usuario es <?php echo $usuario; ?>
-<p>To set a new password, open the following link:</p>
+Tu nombre de usuario es <?php //echo Usuarios::model()->findByPk(); ?>
+<p>haz clic aquí para cambiar tu contraseña:</p>
 <p>
 <?php echo CHtml::link($actionUrl, $actionUrl); ?>
 </p>
 <p>
-If the link does not open correctly, try copying it and pasting in the browser's address bar.
+Si el link no abre correctamente, copie y pegue en la barra de direcciones de su navegador preferido.
 </p>
 

@@ -5,7 +5,7 @@
  *
  * The followings are the available columns in table 'public.presupuesto_importacion':
  * @property string $codigo_ncm_id
- * @property string $presupuesto_id
+ * @property string $producto_id
  * @property string $cantidad
  * @property string $fecha_llegada
  * @property string $monto_presupuesto
@@ -13,6 +13,7 @@
  * @property string $monto_ejecutado
  * @property string $divisa_id
  * @property string $descripcion
+ * @property string $presupuesto_partida_id
  */
 class PresupuestoImportacion extends CActiveRecord
 {
@@ -32,12 +33,12 @@ class PresupuestoImportacion extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('codigo_ncm_id, cantidad, fecha_llegada, monto_presupuesto, tipo, divisa_id, descripcion', 'required'),
+			array('codigo_ncm_id, producto_id, cantidad, fecha_llegada, monto_presupuesto, tipo, divisa_id, descripcion', 'required'),
 			array('monto_presupuesto, monto_ejecutado, cantidad', 'numerical'),
 			array('tipo', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('codigo_ncm_id, presupuesto_id, cantidad, fecha_llegada, monto_presupuesto, tipo, monto_ejecutado, divisa_id', 'safe', 'on'=>'search'),
+			array('codigo_ncm_id, presupuesto_id, producto_id, cantidad, fecha_llegada, monto_presupuesto, tipo, monto_ejecutado, divisa_id, presupuesto_partida_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,7 +60,7 @@ class PresupuestoImportacion extends CActiveRecord
 	{
 		return array(
 			'codigo_ncm_id' => 'Codigo Ncm',
-			'presupuesto_id' => 'Presupuesto',
+			'producto_id,' => 'Producto',
 			'cantidad' => 'Cantidad',
 			'fecha_llegada' => 'Fecha estimada de la importación',
 			'monto_presupuesto' => 'Costo unitario en divisa ',
@@ -67,6 +68,7 @@ class PresupuestoImportacion extends CActiveRecord
 			'monto_ejecutado' => 'Monto Ejecutado',
 			'divisa_id' => 'Divisa',
 			'descripcion' => 'Descripción',
+			'presupuesto_partida_id' => 'Presupuesto Partida',
 		);
 	}
 
@@ -89,7 +91,7 @@ class PresupuestoImportacion extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('codigo_ncm_id',$this->codigo_ncm_id,true);
-		$criteria->compare('presupuesto_id',$this->presupuesto_id,true);
+		$criteria->compare('producto_id',$this->producto_id,true);
 		$criteria->compare('cantidad',$this->cantidad,true);
 		$criteria->compare('fecha_llegada',$this->fecha_llegada,true);
 		$criteria->compare('monto_presupuesto',$this->monto_presupuesto,true);
@@ -97,6 +99,7 @@ class PresupuestoImportacion extends CActiveRecord
 		$criteria->compare('monto_ejecutado',$this->monto_ejecutado,true);
 		$criteria->compare('divisa_id',$this->divisa_id,true);
 		$criteria->compare('descripcion',$this->descripcion,true);
+		$criteria->compare('presupuesto_partida_id',$this->presupuesto_partida_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
