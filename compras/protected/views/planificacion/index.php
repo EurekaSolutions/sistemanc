@@ -20,7 +20,6 @@ tr.principaltr th {
 }
 </style>
 <?php $mfinal = 0;
-
  if(isset($usuario->enteOrgano->padre))
  	$padre = $usuario->enteOrgano->padre->padre;
 ?>
