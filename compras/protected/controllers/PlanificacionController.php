@@ -38,7 +38,7 @@ class PlanificacionController extends Controller
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('crearente','misentes'),
 				'users'=>array('@'),
-				//'expression' => "Yii::app()->session['organo']==1"
+				'expression' => "Yii::app()->session['organo']==1"
 			),
 
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
