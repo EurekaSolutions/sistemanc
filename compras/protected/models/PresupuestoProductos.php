@@ -55,7 +55,7 @@ class PresupuestoProductos extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'codigosNcms' => array(self::MANY_MANY, 'CodigosNcm', 'presupuesto_importacion(presupuesto_id, codigo_ncm_id)'),
+			//'codigosNcms' => array(self::MANY_MANY, 'CodigosNcm', 'presupuesto_importacion(presupuesto_id, codigo_ncm_id)'),
 			'producto' => array(self::BELONGS_TO, 'Productos', 'producto_id'),
 			'proyectoPartida' => array(self::BELONGS_TO, 'PresupuestoPartidas', array('proyecto_partida_id'=>'presupuesto_partida_id')),
 			'unidad' => array(self::BELONGS_TO, 'Unidades', 'unidad_id'),

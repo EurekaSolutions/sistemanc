@@ -1016,31 +1016,35 @@ class PlanificacionController extends Controller
 	}
 	public function listaProductosPartida($partidaId, $proyectoActualId)
 	{
+
+		$productos = Partidas::model()->findByPk($partidaId)->productos;
+		$proyecto = Proyectos::model()->findByPk($proyectoActualId);
+
 		$productos = array();
 		
-	/*	foreach (Proyectos::model()->findByPk($proyectoActualId)->presupuestoPartidas as $key => $value) {
+
+		foreach ($proyecto->presupuestoPartidas as $key => $value) {
+			
 			if($value->partida_id == $partidaId)
-				foreach ($value->presupuestoProductos as $key => $producto) {
-						foreach (Partidas::model()->findByPk($partidaId)->productos as $key => $productoPar) {
-							if($productoPar->producto_id != $producto->producto_id)
-								$productos[] = $productoPar;
+			{
+				$prePro = $value->presupuestoProductos; 
+				foreach (Partidas::model()->findByPk($partidaId)->productos as $key => $productoPar) {
+
+					$existe = false;
+						foreach ($prePro as $key => $producto) {
+								if($productoPar->producto_id == $producto->producto_id){ 
+									$existe = true;
+									break;
+								}
 						}
-						
+					if(!$existe)
+						$productos[] = $productoPar;
+								
 				}
-		}
-*/
-		foreach (PresupuestoPartidaProyecto::model()->findAllByAttributes(array('proyecto_id'=>$proyectoActualId)) as $key => $value) {
-			foreach (PresupuestoPartidas::model()->findAllByAttributes(array('presupuesto_partida_id'=>$value->presupuesto_partida_id)) as $key => $value) {
-				if($value->partida_id == $partidaId)
-					foreach (PresupuestoProductos::model()->findAllByAttributes(array('proyecto_partida_id'=>$value->presupuesto_partida_id)) as $key => $producto) {
-						foreach (Partidas::model()->findByPk($partidaId)->productos as $key => $productoPar) {
-							if($productoPar->producto_id != $producto->producto_id)
-								$productos[] = $productoPar;
-						}
-						
-					}
+				break;
 			}
 		}
+
 		return $productos;
 	}
 	public function usuario(){
@@ -1135,7 +1139,7 @@ class PlanificacionController extends Controller
 		}
 				if(isset($_POST['PresupuestoProductos'])){
 						$presuPro->attributes = $_POST['PresupuestoProductos'];
-						$presuPro->tipo = 'N';
+						
 
 						//print_r($presuPro);
 						$presuPartida = new PresupuestoPartidas();
@@ -1154,32 +1158,45 @@ class PlanificacionController extends Controller
 						}
 
 							
+						$presuPro->tipo = 'N';
 						$presuPro->proyecto_partida_id = $presuPartida->presupuesto_partida_id;
 								
 						$presuPro->monto_ejecutado = 0;
 						$presuPro->producto_id = $productoSel->producto_id;
 						/*	if($presupuestoPartida = ->findByAttributes(array('partida_id'=>$partidaSel->partida_id)))
 							$presuPro->proyecto_partida_id = $presupuestoPartida->presupuesto_partida_id;*/
-						
-						//Monto en presupuesto en Bs. del producto
-						$presuPro->monto_presupuesto = floatval($presuPro->costo_unidad) * floatval($presuPro->cantidad);
 
+						$presuPro->monto_presupuesto = 0;
+						if($presuPro->validate()){
+							//Monto en presupuesto en Bs. del producto
+							$presuPro->monto_presupuesto = floatval($presuPro->costo_unidad) * floatval($presuPro->cantidad);
 
-						if($presuPro->validate())
-						{
-							/*if($this->productoExisteProyecto($presuPro->producto_id,$proyectoActual->proyecto_id,$partidaSel->partida_id))
-							{
-								Yii::app()->user->setFlash('error', "El producto ya esta cargado!");
-							}else{*/
-								if($presuPro->save()){
-									$presuPro = new PresupuestoProductos();
-									//$this->redirect(array('/planificacion/partidas'));
-									Yii::app()->user->setFlash('success', "Producto cargado con  éxito!");
-								}else
-								throw new Exception("Error Processing Request", 1);
-							//}
+							// Validando la suma de los productos de la partida
+							$total = $presuPro->monto_presupuesto;
+							if($presuPro->proyectoPartida->presupuestoProductos)
+								foreach ($presuPro->proyectoPartida->presupuestoProductos as $key => $presupuestoProducto) {
+									$total += $presupuestoProducto->monto_presupuesto;
+									
+							}
+
+							if($presuPro->proyectoPartida->monto_presupuestado > $total)
+							{	
+									/*if($this->productoExisteProyecto($presuPro->producto_id,$proyectoActual->proyecto_id,$partidaSel->partida_id))
+									{
+										Yii::app()->user->setFlash('error', "El producto ya esta cargado!");
+									}else{*/
+										if($presuPro->save()){
+											$presuPro = new PresupuestoProductos();
+											//$this->redirect(array('/planificacion/partidas'));
+											Yii::app()->user->setFlash('success', "Producto cargado con  éxito!");
+										}else
+											Yii::app()->user->setFlash('warning', "El producto no se ha podido guardar.");
+										//throw new Exception("Error Processing Request", 1);
+									//}
+								
+							}else
+								Yii::app()->user->setFlash('warning', "No se agrego el producto. La partida lleva cargada un monto en productos de: ".($total-$presuPro->monto_presupuesto)." y el monto presupuestado para esta partida es: ".$presuPro->proyectoPartida->monto_presupuestado);
 						}//else Yii::app()->user->setFlash('Error','error');
-							
 
 				}
 
@@ -1312,6 +1329,7 @@ class PlanificacionController extends Controller
 							$presuImp->monto_ejecutado = 0;
 							$presuImp->producto_id = $productoSel->producto_id;
 							
+							//$presuImp->presupuestoPartida;
 							
 								$transaction = $presuImp->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 								try{

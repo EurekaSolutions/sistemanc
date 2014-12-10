@@ -119,49 +119,6 @@ $this->breadcrumbs=array(
 		); 
 
 	if(isset($productoSel->producto_id)){
-		//print_r($partidas);
-		/* @var TbActiveForm $form */
-	/*	$formp = $this->beginWidget('booster.widgets.TbActiveForm',
-		    array(
-		        'id' => 'partida-form',
-		        'htmlOptions' => array('class' => 'well'), // for inset effect
-		    )
-		);*/
-		//print_r($partidaSel);
-		//echo '<br> '.$partidaSel->partida_id;
-		//echo print_r($partidaSel);
-		//echo count(Partidas::model()->findByPk($partidaSel->partida_id)->productos);
-
-
-		/*$par_productos = PartidaProductos::model()->findAllByAttributes(array('partida_id'=>$partidaSel->partida_id));
-		$productos = array();
-		foreach ($par_productos as $key => $par_producto) {
-			$productos[] = Productos::model()->findByAttributes(array('producto_id'=>$par_producto->producto_id));
-		}*/
-		
-		/*foreach ($productos as $key => $producto) {
-			
-		   echo $formp->textFieldGroup($producto, 'nombre',
-				array(
-					'wrapperHtmlOptions' => array(
-						'class' => 'col-sm-5',
-					),
-					'hint' => 'In addition to freeform text, any HTML5 text-based input appears like so.'
-				)
-			);
-		}*/
-		
-	/*	foreach (Partidas::model()->findByPk($partidaSel->partida_id)->productos as $key => $producto) {
-			
-		   echo $formp->textFieldGroup($producto, 'nombre',
-				array(
-					'wrapperHtmlOptions' => array(
-						'class' => 'col-sm-5',
-					),
-					'hint' => 'In addition to freeform text, any HTML5 text-based input appears like so.'
-				)
-			);
-		}*/
 
 
 	/********************** NACIONAL *****************************/
