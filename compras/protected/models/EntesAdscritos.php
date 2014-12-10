@@ -48,7 +48,7 @@ class EntesAdscritos extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'enteOrgano' => array(self::BELONGS_TO, 'EntesOrganos', 'ente_organo_id'),
-			'padre' => array(self::BELONGS_TO, 'EntesOrganos', 'padre_id'),
+			'padre' => array(self::BELONGS_TO, 'EntesOrganos', array('padre_id'=>'ente_organo_id')),
 		);
 	}
 

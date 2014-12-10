@@ -22,7 +22,7 @@ tr.principaltr th {
 <?php $mfinal = 0;
 
  if(isset($usuario->enteOrgano->enteAdscrito))
- 	$padre = $usuario->enteOrgano->enteAdscrito->padre;
+ 	$padre = $usuario->enteOrgano->padre->padre;
 ?>
 <!--<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>-->
 		<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
