@@ -202,13 +202,24 @@ class PlanificacionController extends Controller
 
 	public function tieneusuario($ente_organo_id)
 	{
-		if(Usuarios::model()->find('ente_organo_id=:ente_organo_id', array(':ente_organo_id'=> $ente_organo_id))->id)
+		if(Usuarios::model()->find('ente_organo_id=:ente_organo_id', array(':ente_organo_id'=> $ente_organo_id)))
 		{
 			return true;
 		}else
 		{
 			return false;
 		}
+	}
+	public function listaEntes()
+	{
+		$misEntesSinUsuario = array();
+		foreach ($this->usuario()->enteOrgano->hijos as $key => $enteAdscrito) {
+		 	if(!$this->tieneusuario($enteAdscrito->ente_organo_id))
+		 	{
+		 		$misEntesSinUsuario[] = $enteAdscrito->enteOrgano;
+		 	}
+		 } 
+		 return $misEntesSinUsuario;
 	}
 
 	public function actionMisentes() 
@@ -226,20 +237,30 @@ class PlanificacionController extends Controller
 	{
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 		
-		$model = New Usuarios();
+		$crea_usuario = New Usuarios('crearente');
 
 		if(isset($_POST['Usuarios']))
 	    {
-	    	if($model->save())
-	    	{
+	    	$crea_usuario->attributes = $_POST['Usuarios'];	   
+			
+			   $crea_usuario->contrasena = md5(rand(0,100));
+			   $crea_usuario->usuario = $crea_usuario->correo;
+			   $crea_usuario->creado_el = date("Y-m-d");
+			   $crea_usuario->llave_activacion = md5(rand(0,100));
+			   $crea_usuario->actualizado_el = date("Y-m-d");
+			   $crea_usuario->rol = 'normal';
 
+	    	if($crea_usuario->save())
+	    	{
+	    		if($this->enviarCorreoRecuperacion($crea_usuario->correo,$crea_usuario->cedula))
+	    			Yii::app()->user->setFlash('success','Usuario creado con éxito.');
+	    		
+	    		//Reiniciando el formulario
+	    		$crea_usuario = new Usuarios('crearente');
 	    	}
 	    }
 
-		$entesadscritos = $usuario->enteOrgano->hijos;
-
-		$this->render('usuariosentes',array(
-						'entes'=>$entesadscritos, 'model' => $model
+		$this->render('usuariosentes',array( 'model' => $crea_usuario
 		));
 	}
 
@@ -639,7 +660,7 @@ class PlanificacionController extends Controller
 
 	}
 
-	public function enviarCorreoRecuperacion($correo,$cedula,$llave_activacion){
+	public function enviarCorreoRecuperacion($correo,$cedula){
 		
 		list($controlador) = Yii::app()->createController('usr/default');
 		if($controlador->Recuperar($correo, $cedula))

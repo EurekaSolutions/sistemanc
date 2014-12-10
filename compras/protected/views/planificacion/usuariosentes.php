@@ -16,9 +16,7 @@
     <h4 style="text-align: center;">CREAR USUARIOS PARA MIS ENTES</h4>
 
 
-    <?php
-    	echo md5('1235aA');
-    ?>
+    
      <?php
         foreach(Yii::app()->user->getFlashes() as $key => $message) {
             echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
@@ -29,17 +27,37 @@
 
     <?php echo $form->errorSummary($model); ?>
 
+
+    <?php 
+        $listaEntes = CHtml::listData($this->listaEntes(),'ente_organo_id', 'nombre');
+
+        echo  $form->dropDownListGroup( $model, 'ente_organo_id',
+            array(
+                'wrapperHtmlOptions' => array(
+                    'class' => 'col-sm-5',
+                ),
+                'label'=>'Seleccione el ente',
+                'widgetOptions' => array(
+
+                    'data' => $listaEntes,// CHtml::listData($productosPartidas, 'producto_id',function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);}),
+                    //'options'=>array($model->proyecto_id => array('selected'=>true)),
+                    'htmlOptions' => array('id'=>'producto','prompt' => 'Seleccionar ente', ),
+                ),
+                'hint' => 'Ente hijo sin usuario.'
+            )
+        ); ?>
+
     <?php echo $form->textFieldGroup($model,'nombre',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>20)))); ?>
 
+     <?php echo $form->textFieldGroup($model,'cedula',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>100)))); ?>
+
     <?php echo $form->textFieldGroup($model,'correo',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>100)))); ?>
-
-    <?php //echo $form->textFieldGroup($model,'tipo',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>100)))); ?>
-
 
     <?php echo $form->textFieldGroup($model,'cargo',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>100)))); ?>
 
 
-    <?php echo $form->textFieldGroup($model,'cedula',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>100)))); ?>
+   
+
 
     <?php //echo $form->textFieldGroup($model,'correo',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>100)))); ?>
     

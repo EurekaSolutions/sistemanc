@@ -54,13 +54,16 @@ class Usuarios extends CActiveRecord
 		return array(
 			array('actualizado_el, repetir_contrasena, nombre,', 'required', 'on'=>'registro, actualizar'),
 
-			array('usuario, contrasena, correo, creado_el,actualizado_el, rol, ente_organo_id', 'required', 'on'=>'crearente'),
+			array('usuario, contrasena, correo, creado_el,actualizado_el, rol, ente_organo_id, nombre, cedula, cargo', 'required', 'on'=>'crearente'),
 
+			//array('usuario', 'unique', 'className' => 'Usuarios', 'attributeName' => 'usuario', 'message'=>'Este usuario ya se encuentra registrado en nuestro repositorio', 'on' => 'crearente'),
+			array('correo', 'unique', 'className' => 'Usuarios', 'attributeName' => 'correo', 'message'=>'Este correo ya se encuentra registrado en nuestro repositorio', 'on' => 'crearente'),
 			array('correo, creado_el, rol, ente_organo_id', 'required', 'on'=>'registro'),
 			array('usuario, contrasena','required','on'=>'registro, login'),
 			//array('codigo_onapre', 'length', 'max'=>20),
 			array('usuario, contrasena, repetir_contrasena', 'length', 'max'=>50),
-			array('correo, llave_activacion, nombre, cedula, cargo', 'length', 'max'=>255),
+			array('correo, llave_activacion, nombre, cargo', 'length', 'max'=>255),
+			array('cedula', 'numerical'),
 			array('correo','email'),
 			array('correo','unique', 'except'=>'update'),
 			array('usuario', 'unique', 'except'=>'register, registro', 'criteria'=>array('condition'=>'usuario_id !=:id ','params'=>array(':id'=>Yii::app()->user->getId())), 'allowEmpty' => false, 'message'=>Yii::t('UsrModule.usr','El nombre de usuario ya existe.')),
@@ -95,11 +98,11 @@ class Usuarios extends CActiveRecord
 
 	public function beforeValidate(){
 		
-		//date_default_timezone_set('America/Caracas');
+/*		//date_default_timezone_set('America/Caracas');
     	$this->actualizado_el = date('d/m/Y h:i:s a', time());
 
     	if($this->isNewRecord)
- 			$this->creado_el = $this->actualizado_el;
+ 			$this->creado_el = $this->actualizado_el;*/
 
  		return parent::beforeValidate();
 	}
