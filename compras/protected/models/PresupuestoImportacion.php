@@ -53,6 +53,7 @@ class PresupuestoImportacion extends CActiveRecord
 			'codigosNcms' => array(self::MANY_MANY, 'CodigosNcm', array('codigo_ncm_id'=>'codigo_ncm_id')),
 			'producto' => array(self::BELONGS_TO, 'Productos', 'producto_id'),
 			'presupuestoPartida' => array(self::BELONGS_TO, 'PresupuestoPartidas', array('presupuesto_partida_id'=>'presupuesto_partida_id')),
+			'divisa' => array(self::BELONGS_TO, 'Divisas', array('divisa_id'=>'divisa_id')),
 		);
 	}
 

@@ -220,7 +220,7 @@ $this->breadcrumbs=array(
 			)
 		); 
 
-		Yii::app()->clientScript->registerScript("cambioDivisa", '$(\'#divisa\').change(function(){$(\'#montoPresupuesto\').parent(\'span\').html(\'$\');})');
+		//Yii::app()->clientScript->registerScript("cambioDivisa", '$(\'#divisa\').change(function(){$(\'#montoPresupuesto\').parent(\'span\').html(\'$\');})');
 		echo $form->dropDownListGroup( $presuImp, 'divisa_id',
 			array(
 				'wrapperHtmlOptions' => array(

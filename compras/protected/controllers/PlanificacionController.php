@@ -1050,7 +1050,22 @@ class PlanificacionController extends Controller
 	public function usuario(){
 		return Usuarios::model()->findByPk(Yii::app()->user->getId());
 	}
-
+ 	
+ 	public function montoCargadoPartida(PresupuestoPartidas $presuPartida){
+			// Validando la suma de los productos de la partida
+ 		$total = 0;
+ 		//Nacionales
+			if($presuPartida->presupuestoProductos)
+				foreach ($presuPartida->presupuestoProductos as $key => $presupuestoProducto) {
+					$total += $presupuestoProducto->monto_presupuesto;	
+				}
+		//Importados
+			if($presuPartida->presupuestoImportacion)
+				foreach ($presuPartida->presupuestoImportacion as $key => $presupuestoImportacion) {
+					$total += ($presupuestoImportacion->monto_presupuesto*$presupuestoImportacion->divisa->tasa->tasa);	
+				}
+ 		return $total;
+ 	}
 	public function actionNacional() /*Aqui van la logica de negocio asociada a cada partida 401, 402, 403, 404 */
 	{
 		$usuario = $this->usuario();
@@ -1172,14 +1187,10 @@ class PlanificacionController extends Controller
 							$presuPro->monto_presupuesto = floatval($presuPro->costo_unidad) * floatval($presuPro->cantidad);
 
 							// Validando la suma de los productos de la partida
-							$total = $presuPro->monto_presupuesto;
-							if($presuPro->proyectoPartida->presupuestoProductos)
-								foreach ($presuPro->proyectoPartida->presupuestoProductos as $key => $presupuestoProducto) {
-									$total += $presupuestoProducto->monto_presupuesto;
-									
-							}
 
-							if($presuPro->proyectoPartida->monto_presupuestado > $total)
+							$total = $this->montoCargadoPartida($presuPartida);
+												
+							if($presuPartida->monto_presupuestado > ($total+$presuPro->monto_presupuesto))
 							{	
 									/*if($this->productoExisteProyecto($presuPro->producto_id,$proyectoActual->proyecto_id,$partidaSel->partida_id))
 									{
@@ -1190,12 +1201,12 @@ class PlanificacionController extends Controller
 											//$this->redirect(array('/planificacion/partidas'));
 											Yii::app()->user->setFlash('success', "Producto cargado con  éxito!");
 										}else
-											Yii::app()->user->setFlash('warning', "El producto no se ha podido guardar.");
+											Yii::app()->user->setFlash('error', "El producto no se ha podido guardar.");
 										//throw new Exception("Error Processing Request", 1);
 									//}
 								
 							}else
-								Yii::app()->user->setFlash('warning', "No se agrego el producto. La partida lleva cargada un monto en productos de: ".($total-$presuPro->monto_presupuesto)." y el monto presupuestado para esta partida es: ".$presuPro->proyectoPartida->monto_presupuestado);
+								Yii::app()->user->setFlash('error', "No se agrego el producto valorado en ".number_format($presuPro->monto_presupuesto,2,',','.')." Bs. La partida lleva cargada un monto en productos de ".number_format($total,2,',','.')." Bs.  y el monto presupuestado para esta partida es de ".number_format($presuPartida->monto_presupuestado,2,',','.').' Bs.');
 						}//else Yii::app()->user->setFlash('Error','error');
 
 				}
@@ -1320,37 +1331,40 @@ class PlanificacionController extends Controller
 					// Producto Importado
 					if(isset($_POST['PresupuestoImportacion']) /*&& isset($_POST['PresupuestoProductos'])*/)
 					{
+						$presuImp->attributes = $_POST['PresupuestoImportacion'];
+	
+						$presuImp->presupuesto_partida_id = $presuPartida->presupuesto_partida_id;
+						$presuImp->monto_ejecutado = 0;
+						$presuImp->producto_id = $productoSel->producto_id;
+						if($presuImp->validate()){
+
+							$total = $this->montoCargadoPartida($presuPartida);
+						//throw new Exception("Error ".$presuImp->divisa->tasa->tasa." Request", 1);
 						
-						//if(isset($_POST['CodigosNcm'])){
-							//$presuImpSel->attributes = $_POST['CodigosNcm'];
+							if($presuPartida->monto_presupuestado > ($total+($presuImp->monto_presupuesto*$presuImp->divisa->tasa->tasa))){	
 
-							$presuImp->attributes = $_POST['PresupuestoImportacion'];
-							$presuImp->presupuesto_partida_id = $presuPartida->presupuesto_partida_id;
-							$presuImp->monto_ejecutado = 0;
-							$presuImp->producto_id = $productoSel->producto_id;
-							
-							//$presuImp->presupuestoPartida;
-							
-								$transaction = $presuImp->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
-								try{
+								
+									$transaction = $presuImp->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
+									try{
 
-										if($presuImp->save())
-										{
-											$transaction->commit();    // committing 
-											$presuImp = new PresupuestoImportacion();
-											Yii::app()->user->setFlash('success', "Producto cargado con  éxito!");
-										}else {
-											Yii::app()->user->setFlash('warning', "No se pudo guardar el producto.");
-											$transaction->rollBack();
-										}
+											if($presuImp->save()){
+												$transaction->commit();    // committing 
+												$presuImp = new PresupuestoImportacion();
+												Yii::app()->user->setFlash('success', "Producto cargado con  éxito!");
+											}else {
+												Yii::app()->user->setFlash('error', "No se pudo guardar el producto.");
+												$transaction->rollBack();
+											}
 
-								}
-		                        catch (Exception $e){
-		                        	Yii::app()->user->setFlash('error', "Hubo un problema. No se guardo el producto. ID:".$e);
-		                            $transaction->rollBack();
-		                        }
-							
-						//}
+									}
+			                        catch (Exception $e){
+			                        	Yii::app()->user->setFlash('error', "Hubo un problema. No se guardo el producto. ID:".$e);
+			                            $transaction->rollBack();
+			                        }
+							}else
+								Yii::app()->user->setFlash('error', "No se agrego el producto valorado en ".number_format($presuImp->monto_presupuesto*$presuImp->divisa->tasa->tasa,2,',','.')." Bs. La partida lleva cargada un monto en productos de ".number_format($total,2,',','.')." Bs.  y el monto presupuestado para esta partida es de ".number_format($presuPartida->monto_presupuestado,2,',','.').' Bs.');
+
+						}
 
 					
 						//$this->guardarPresupuestoProductos($presuPro);

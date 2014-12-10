@@ -46,8 +46,9 @@ class Divisas extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tasa' => array(self::HAS_ONE, 'Tasas', 'divisa_id','condition'=>'t.fecha_desde<\''.date('Y-m-d').'\' AND t.fecha_hasta>\''.date('Y-m-d').'\''),
+			'tasa' => array(self::HAS_ONE, 'Tasas', 'divisa_id','on'=>'tasa.fecha_desde<\''.date('Y-m-d').'\' AND tasa.fecha_hasta>\''.date('Y-m-d').'\''),
 			'tasas' => array(self::HAS_MANY, 'Tasas', 'divisa_id'),
+			'presupuestoImportacion' => array(self::HAS_MANY, 'PresupuestoImportacion', 'divisa_id'),
 			
 		);
 	}
