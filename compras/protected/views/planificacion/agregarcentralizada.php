@@ -4,6 +4,13 @@
 				$( "#Acciones_nombre" ).change(function() {
 					$('#general').html("");
 					$( "#general" ).append( '<option value="">Seleccionar partida general</option>' );
+					$('#especifica').html("");
+					$( "#especifica" ).append( '<option value="">Seleccionar partida especifica</option>' );
+				});
+
+				$( "#partida" ).change(function() {
+					$('#especifica').html("");
+					$( "#especifica" ).append( '<option value="">Seleccionar partida especifica</option>' );
 				});
 			});
 		</script>
@@ -98,7 +105,14 @@
 												'data' => empty($generales_todas)? array() : $generales_todas,
 												
 												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												'htmlOptions' => array('prompt' => 'Seleccionar partida general', 'id' => 'general'
+												'htmlOptions' => array('prompt' => 'Seleccionar partida general', 'id' => 'general', 'ajax' => array(
+													'type'=>'POST', //request type
+													'url'=>CController::createUrl('planificacion/buscarespecfica'), //url to call.
+													//Style: CController::createUrl('currentController/methodToCall')
+													'update'=>'#especifica', //selector to update
+													//'data'=>'js:javascript statement' 
+													//leave out the data key to pass all form values through
+											  )
 
 												),
 											),
@@ -115,7 +129,7 @@
 											'label'=>'Seleccione especifica',
 											'widgetOptions' => array(
 
-												'data' => empty($generales_todas)? array() : $generales_todas,
+												'data' => empty($especificas_todas)? array() : $especificas_todas,
 												
 												//'options'=>array($model->proyecto_id => array('selected'=>true)),
 												'htmlOptions' => array('prompt' => 'Seleccionar partida especifica', 'id' => 'especifica'
