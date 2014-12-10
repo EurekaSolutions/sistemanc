@@ -106,6 +106,26 @@
 										)
 									);
 
+
+								  echo $form->dropDownListGroup($acciones , 'especifica',
+										array(
+											'wrapperHtmlOptions' => array(
+												'class' => 'col-sm-2',
+											),
+											'label'=>'Seleccione especifica',
+											'widgetOptions' => array(
+
+												'data' => empty($generales_todas)? array() : $generales_todas,
+												
+												//'options'=>array($model->proyecto_id => array('selected'=>true)),
+												'htmlOptions' => array('prompt' => 'Seleccionar partida especifica', 'id' => 'especifica'
+
+												),
+											),
+
+										)
+									);
+
 									echo $form->dropDownListGroup($acciones , 'fuente',
 										array(
 											'wrapperHtmlOptions' => array(

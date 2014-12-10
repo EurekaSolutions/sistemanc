@@ -18,6 +18,8 @@ class Acciones extends CActiveRecord
 	public $general;
 	public $monto;
 	public $fuente;
+	public $especifica;
+	public $subespecifica;
 
 	/**
 	 * @return string the associated database table name
@@ -36,7 +38,7 @@ class Acciones extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('nombre', 'required'),
-			array('partida, general, monto, fuente', 'required', 'on' => 'crearaccion'),
+			array('partida, general, monto, fuente, especifica', 'required', 'on' => 'crearaccion'),
 			array('general', 'condinero', 'on'=>'crearaccion'),
 			array('monto', 'numerical', 'integerOnly'=>true, 'min'=>1),
 			array('codigo', 'safe'),
@@ -65,22 +67,25 @@ class Acciones extends CActiveRecord
 
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 
-		$accion = Acciones::model()->find('codigo=:codigo', array(':codigo' => $this->nombre));
+		if($this->nombre)
+		{
+			$accion = Acciones::model()->find('codigo=:codigo', array(':codigo' => $this->nombre));
 
 
-		$presupuestopartidaproyecto = PresupuestoPartidaAcciones::model()->findAll('accion_id=:accion_id and ente_organo_id=:ente_organo_id', array(':accion_id'=>$accion->accion_id, ':ente_organo_id'=>$usuario->ente_organo_id));
+			$presupuestopartidaproyecto = PresupuestoPartidaAcciones::model()->findAll('accion_id=:accion_id and ente_organo_id=:ente_organo_id', array(':accion_id'=>$accion->accion_id, ':ente_organo_id'=>$usuario->ente_organo_id));
 
-		foreach ($presupuestopartidaproyecto as $key => $value) {
-			
-			$value->presupuesto_partida_id;
+			foreach ($presupuestopartidaproyecto as $key => $value) {
+				
+				$value->presupuesto_partida_id;
 
-			$partida = PresupuestoPartidas::model()->find('presupuesto_partida_id=:presupuesto_partida_id and ente_organo_id=:ente_organo_id and tipo=:tipo', array(':ente_organo_id' => $usuario->ente_organo_id, ':presupuesto_partida_id' => $value->presupuesto_partida_id, ':tipo' => 'A'));	
-			
-			if($partida->partida_id == $this->general)
-			{
-				$this->addError($attribute, 'Esta partida ya tiene asignado dinero para esta acción centralizada!');
-				break;
-			}			
+				$partida = PresupuestoPartidas::model()->find('presupuesto_partida_id=:presupuesto_partida_id and ente_organo_id=:ente_organo_id and tipo=:tipo', array(':ente_organo_id' => $usuario->ente_organo_id, ':presupuesto_partida_id' => $value->presupuesto_partida_id, ':tipo' => 'A'));	
+				
+				if($partida->partida_id == $this->general)
+				{
+					$this->addError($attribute, 'Esta partida ya tiene asignado dinero para esta acción centralizada!');
+					break;
+				}			
+			}
 		}
 		//$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;
 		//$criteria->addSearchCondition('t.nombre', $this->nombre);
