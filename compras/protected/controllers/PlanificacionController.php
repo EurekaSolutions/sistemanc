@@ -58,21 +58,7 @@ class PlanificacionController extends Controller
 	{
 		/*$_401 = $this->GeneralXpartida(402);
 		$this->render('importacion', array('model'=>$_401));*/
-		Yii::import('application.extensions.phpmailer.JPhpMailer');
-		$mail = new JPhpMailer;
-		$mail->IsSMTP();
-		$mail->Host = 'correo.snc.gob.ve';
-		$mail->SMTPAuth = true;
-		$mail->SMTPDebug = 2;
-		$mail->Username = 'admin_rnce';
-		$mail->SMTPSecure = 'ssl';
-		$mail->Password = 'GikforewnEd3';
-		$mail->SetFrom('rnce@snc.gob.ve', 'Probando');
-		$mail->Subject = 'PHPMailer Test Subject via smtp, basic with authentication';
-		$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!';
-		$mail->MsgHTML('<h1>JUST A TEST!</h1>');
-		$mail->AddAddress('edgar.leal0@gmail.com', 'John Doe');
-		$mail->Send();
+		$this->enviarCorreoRecuperacion('edgar.leal0@gmail.com','19310524');
 	}
 
 
@@ -678,12 +664,32 @@ class PlanificacionController extends Controller
 
 	}
 
-	public function enviarCorreoRecuperacion($correo,$cedula){
-		list($controlador) = Yii::app()->createController('usr/default');
+	public function enviarCorreoRecuperacion($correo,$cedula,$llave_activacion){
+		/*list($controlador) = Yii::app()->createController('usr/default');
 		if($controlador->Recuperar($correo, $cedula))
 			Yii::app()->user->setFlash('success','Se envio un correo de recuperación al ente registrado.');
 		else
-			Yii::app()->user->setFlash('warning','No se pudo enviar el correo de recuperación al ente registrado.');
+			Yii::app()->user->setFlash('warning','No se pudo enviar el correo de recuperación al ente registrado.');*/
+
+		Yii::import('application.extensions.phpmailer.JPhpMailer');
+		$mail = new JPhpMailer;
+		$mail->IsSMTP();
+		$mail->Host = 'correo.snc.gob.ve';
+		$mail->port = 465;
+		$mail->SMTPSecure = 'tls';
+		$mail->CharSet = 'UTF-8';
+		$mail->SMTPAuth = true;
+		$mail->Username = 'admin_rnce';
+		$mail->Password = 'GikforewnEd3';
+		
+		$mail->SetFrom('rnce@snc.gob.ve', 'RNCE');
+		$mail->Subject = 'Sistema Nacional de Compras del Estado';
+		$mail->AltBody = 'Sistema Nacional de Compras del Estado';
+		$mail->MsgHTML('Aqui vaa la url a crear');
+		$mail->AddAddress('edgar.leal0@gmail.com', 'John Doe');
+		$mail->Send();
+
+		Yii::app()->user->setFlash('success','Se envio un correo de recuperación al ente registrado.');
 	}
 	
 	public function actionIndex()   /*Aquí vamos a mostrar la primera vista del excel enviado por Zobeida*/

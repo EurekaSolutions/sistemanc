@@ -64,7 +64,7 @@ return array(
 				'IsSMTP' => array(),
 				'Host' => 'correo.snc.gob.ve',
 				'Port' => 465,
-				'SMTPSecure' => 'ssl',
+				'SMTPSecure' => 'tls',
 				'SMTPDebug' => 2,
 				'SMTPAuth' => true,
 				'Username' => 'admin_rnce',
@@ -72,7 +72,7 @@ return array(
 				'FromName' => 'Sistema de Compras del Estado',
 				'CharSet' => 'UTF-8',
 				
-				),
+			),
         ),
 	),
 
