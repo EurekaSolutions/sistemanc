@@ -21,7 +21,7 @@ tr.principaltr th {
 </style>
 <?php $mfinal = 0;
 
- if(isset($usuario->enteOrgano->enteAdscrito))
+ if(isset($usuario->enteOrgano->padre))
  	$padre = $usuario->enteOrgano->padre->padre;
 ?>
 <!--<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>-->
