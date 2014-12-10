@@ -173,6 +173,9 @@ class DefaultController extends UsrController
 		$this->redirect(Yii::app()->homeUrl);
 	}
 
+	/**
+	 * Función para uso interno de la aplicación para el envio de correos de recuperación.
+	 */
 	public function Recuperar($correo,$cedula)
 	{
 		/** @var RecoveryForm */

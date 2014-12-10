@@ -12,7 +12,7 @@ $this->breadcrumbs=array(
             echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
         }
     ?>
-    
+
 <?php 
 
 	
@@ -306,9 +306,9 @@ $this->breadcrumbs=array(
 		);
 
 		//echo 'probando';
-		//print_r($presuPros);
+		//print_r($presuImps);
 
-		echo '<h3>Lista de productos </h3>';
+/*		echo '<h3>Lista de productos </h3>';
 		$presuProducto = new PresupuestoProductos();
 		// $gridColumns
 		$gridColumns = array(
@@ -327,7 +327,7 @@ $this->breadcrumbs=array(
 			)
 		);
 
-		/*$gridDataProvider = new CArrayDataProvider($presuPros,array(
+		$gridDataProvider = new CArrayDataProvider($presuImps,array(
 											    'keyField' => 'presupuesto_id',
 											));
 		$this->widget('booster.widgets.TbGridView', array(
@@ -339,7 +339,7 @@ $this->breadcrumbs=array(
 		        'columns' => $gridColumns,
 		    ));*/
 
-		/*foreach ($presuPros as $key => $prepro) {
+		/*foreach ($presuImps as $key => $prepro) {
 			if(isset($prepro)){
 					//$producto = $prepro->producto;
 				 	//echo $producto->nombre;

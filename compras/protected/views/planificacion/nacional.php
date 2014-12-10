@@ -209,17 +209,12 @@ $this->breadcrumbs=array(
 ?>
 
 <?php 
-	$formpc = $this->beginWidget('booster.widgets.TbActiveForm',
-		    array(
-		        'id' => 'partida-form',
-		        'htmlOptions' => array('class' => 'well'), // for inset effect
-		    )
-		);
+
 
 		//echo 'probando';
 		//print_r($presuPros);
 
-		echo '<h3>Lista de productos nacionales</h3>';
+/*		echo '<h3>Lista de productos nacionales</h3>';
 		$presuProducto = new PresupuestoProductos();
 		// $gridColumns
 		$gridColumns = array(
@@ -238,10 +233,11 @@ $this->breadcrumbs=array(
 			)
 		);
 
-		$gridDataProvider = new CArrayDataProvider($presuPros,array(
+		print_r($presuPros);
+		$gridDataProvider = new CArrayDataProvider(array(),array(
 											    'keyField' => 'presupuesto_id',
 											));
-		/*$this->widget('booster.widgets.TbGridView', array(
+		$this->widget('booster.widgets.TbGridView', array(
 		        'type' => 'striped bordered condensed',
 		        'id'=>'presupuesto_id',
 		        'dataProvider' => $gridDataProvider,
@@ -266,7 +262,7 @@ $this->breadcrumbs=array(
 				}
 			}
 		}*/
-	$this->endWidget();
+	
 		/*$this->widget(
 		    'booster.widgets.TbSelect2',
 		    array(
