@@ -27,7 +27,7 @@ class PlanificacionController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('buscarespecfica','create','update','partidas','vistaparcial', 'buscarpartida', 'buscargeneral', 'asignarpartidasproyecto', 'buscargeneralproyecto','buscarNcm', 'buscarpartidasproyecto', 'buscarproductospartida'),
+				'actions'=>array('buscarespecfica', 'buscarespecficap','create','update','partidas','vistaparcial', 'buscarpartida', 'buscargeneral', 'asignarpartidasproyecto', 'buscargeneralproyecto','buscarNcm', 'buscarpartidasproyecto', 'buscarproductospartida'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -431,6 +431,46 @@ class PlanificacionController extends Controller
 		}
 	}
 
+
+	public function actionBuscarespecficap()
+	{
+		$name = "Seleccionar especifica";
+
+		if($_POST['Proyectos']['general'])
+		{
+			$general = Partidas::model()->find('partida_id=:partida_id', array(':partida_id'=>intval($_POST['Proyectos']['general'])));
+			$criteria = new CDbCriteria();
+			$criteria->condition = 'p1=:p1 and p2=:p2 and p3 <> 0 and p4 = 0';
+			$criteria->params = array(':p1'=>$general->p1, ':p2' => $general->p2);
+				
+				//$criteria->addSearchCondition('t.nombre', $busqueda);
+			$especificas = Partidas::model()->findAll($criteria);
+
+			$especificas_lista = CHtml::listData($especificas, function($especificas) {
+																	return CHtml::encode($especificas->partida_id);
+																}, function($especificas) {
+																	return CHtml::encode($especificas->p1.'-'.$especificas->p2.'-'.$especificas->p3. $especificas->nombre);
+																});
+			//return $especificas;
+
+			echo CHtml::tag('option',
+		                   array('value'=>""),CHtml::encode($name),true);
+
+			if($especificas_lista)
+			{
+			    foreach($especificas_lista as $value => $name)
+			    {
+			        echo CHtml::tag('option',
+			                   array('value'=>$value),CHtml::encode($name),true);
+			    }
+			}
+		}else
+		{
+			echo CHtml::tag('option',
+		                   array('value'=>""),CHtml::encode($name),true);
+		}
+	}
+
 	public function actionAgregarcentralizada()
 	{
 		$model = new Acciones('crearaccion');
@@ -659,7 +699,7 @@ class PlanificacionController extends Controller
 	        	$presupuesto_partida = new PresupuestoPartidas;
 	        	$presupuesto_partida_proyecto = new PresupuestoPartidaProyecto;
 
-	        	$presupuesto_partida->partida_id = $model->general;
+	        	$presupuesto_partida->partida_id = $model->especifica;
 	        	$presupuesto_partida->monto_presupuestado = $model->monto;
 	        	$presupuesto_partida->fecha_desde = "1900-01-01";
 	        	$presupuesto_partida->fecha_hasta = "2199-12-31";
@@ -695,6 +735,13 @@ class PlanificacionController extends Controller
 																				return CHtml::encode($generales->p1.'-'.$generales->p2.'-'.$generales->p3.'-'. $generales->nombre);
 																			});
 
+						if($model->general)
+					    {
+					    	$especificas_todas = $this->buscar_especifica($model->general);
+					    	
+					    	$this->render('asignarpartidasproyecto',array(
+							'model'=>$model, 'fuentes' => $fuentes, 'generales_todas' => $generales_todas, 'partidas' => $partidas_principal, 'proyectos' => $proyectos, 'especificas_todas' => $especificas_todas));
+					    }
 						    $this->render('asignarpartidasproyecto',array(
 							'model'=>$model, 'fuentes' => $fuentes, 'generales_todas' => $generales_todas, 'partidas' => $partidas_principal, 'proyectos' => $proyectos
 				   ));

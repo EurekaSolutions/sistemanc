@@ -20,6 +20,8 @@ class Proyectos extends CActiveRecord
 	public $monto;
 	public $fuente;
 	public $nombreid;
+	public $especifica;
+	public $subespecifica;
 
 
 	/**
@@ -39,7 +41,7 @@ class Proyectos extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('nombre, codigo, ente_organo_id', 'required', 'on' => 'create'),
-			array('nombreid, partida, general, monto, fuente', 'required', 'on' => 'creaproyecto'),
+			array('nombreid, partida, general, monto, fuente, especifica', 'required', 'on' => 'creaproyecto'),
 			array('monto', 'numerical', 'integerOnly'=>true, 'min'=>1),
 			array('codigo', 'length', 'max'=>20),
 			array('nombre', 'proyectounico', 'on'=>'create'),
