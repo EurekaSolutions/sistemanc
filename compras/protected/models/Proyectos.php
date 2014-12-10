@@ -71,21 +71,24 @@ class Proyectos extends CActiveRecord
 
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 
-		$proyecto = Proyectos::model()->find('codigo=:codigo', array(':codigo' => $this->nombreid));
+		if($this->nombreid)
+		{
+			$proyecto = Proyectos::model()->find('codigo=:codigo', array(':codigo' => $this->nombreid));
 
 
-		$presupuestopartidaproyecto = PresupuestoPartidaProyecto::model()->findAll('proyecto_id=:proyecto_id', array(':proyecto_id'=>$proyecto->proyecto_id));
+			$presupuestopartidaproyecto = PresupuestoPartidaProyecto::model()->findAll('proyecto_id=:proyecto_id', array(':proyecto_id'=>$proyecto->proyecto_id));
 
-		foreach ($presupuestopartidaproyecto as $key => $value) {
-			
-			$value->presupuesto_partida_id;
-			$partida = PresupuestoPartidas::model()->find('presupuesto_partida_id=:presupuesto_partida_id and ente_organo_id=:ente_organo_id and tipo=:tipo', array(':ente_organo_id' => $usuario->ente_organo_id, ':presupuesto_partida_id' => $value->presupuesto_partida_id, ':tipo' => 'P'));	
-			
-			if($partida->partida_id == $this->general)
-			{
-				$this->addError($attribute, 'Esta partida ya tiene asignado dinero para este proyecto!');
-				break;
-			}			
+			foreach ($presupuestopartidaproyecto as $key => $value) {
+				
+				$value->presupuesto_partida_id;
+				$partida = PresupuestoPartidas::model()->find('presupuesto_partida_id=:presupuesto_partida_id and ente_organo_id=:ente_organo_id and tipo=:tipo', array(':ente_organo_id' => $usuario->ente_organo_id, ':presupuesto_partida_id' => $value->presupuesto_partida_id, ':tipo' => 'P'));	
+				
+				if($partida->partida_id == $this->general)
+				{
+					$this->addError($attribute, 'Esta partida ya tiene asignado dinero para este proyecto!');
+					break;
+				}			
+			}
 		}
 		//$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;
 		//$criteria->addSearchCondition('t.nombre', $this->nombre);
