@@ -64,7 +64,7 @@ return array(
 				'IsSMTP' => array(),
 				'Host' => 'correo.snc.gob.ve',
 				'Port' => 465,
-				'SMTPSecure' => 'tls',
+				'SMTPSecure' => 'ssl',
 				'SMTPDebug' => 2,
 				'SMTPAuth' => true,
 				'Username' => 'admin_rnce',
