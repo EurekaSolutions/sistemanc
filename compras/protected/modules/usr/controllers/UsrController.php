@@ -16,7 +16,8 @@ abstract class UsrController extends CController
 		$mail->AddAddress($model->getIdentity()->getEmail(), $model->getIdentity()->getName());
 		$params = array(
 			'siteUrl' => $this->createAbsoluteUrl('/'),
-			'usuario' => ''//$model->getIdentity()->username,
+			'usuario' => $model->getIdentity()->usuario,
+			'correo' => $model->getIdentity()->correo,
 		);
 		switch($mode) {
 			default: return false;

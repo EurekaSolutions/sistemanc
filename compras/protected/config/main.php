@@ -65,7 +65,7 @@ return array(
 				'Host' => 'correo.snc.gob.ve',
 				'Port' => 465,
 				'SMTPSecure' => 'ssl',
-				'SMTPDebug' => 2,
+				//'SMTPDebug' => 1,
 				'SMTPAuth' => true,
 				'Username' => 'admin_rnce',
 				'Password' => 'GikforewnEd3',

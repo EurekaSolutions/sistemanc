@@ -180,9 +180,9 @@ class DefaultController extends UsrController
 	{
 		/** @var RecoveryForm */
 		$model = $this->module->createFormModel('RecoveryForm');
-	   	$model->correo = 'eurekasolutionsca@gmail.com';
-	   	$model->cedula = '8';
-		if ($this->sendEmail($model, $model->identity->isActive() ? 'recovery' : 'verify'))
+	   	$model->correo = $correo;
+	   	$model->cedula = $cedula;
+		if ($this->sendEmail($model, $model->getIdentity()->isActive() ? 'recovery' : 'verify'))
 			return true;
 		else
 			return false;

@@ -274,7 +274,7 @@ $this->breadcrumbs=array(
 			)
 		);
 
-		echo $form->textFieldGroup($presuImp, 'monto_presupuesto',array('prepend'=>'Bs','widgetOptions'=>array('htmlOptions'=> array('id'=>'montoPresupuesto'))));
+		echo $form->textFieldGroup($presuImp, 'monto_presupuesto',array(/*'prepend'=>'Bs',*/'widgetOptions'=>array('htmlOptions'=> array('id'=>'montoPresupuesto'))));
 		echo $form->textFieldGroup($presuImp, 'cantidad');
 		echo $form->textFieldGroup($presuImp, 'descripcion');
 		

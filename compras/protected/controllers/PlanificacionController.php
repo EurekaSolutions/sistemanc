@@ -58,7 +58,15 @@ class PlanificacionController extends Controller
 	{
 		/*$_401 = $this->GeneralXpartida(402);
 		$this->render('importacion', array('model'=>$_401));*/
-		$this->enviarCorreoRecuperacion('marcospha@gmail.com','18779304');
+		//$this->enviarCorreoRecuperacion('marcospha@gmail.com','18779304');
+/*		list($controlador) = Yii::app()->createController('usr/default');
+		
+		foreach ( Usuarios::model()->findAll() as $key => $usuario) {
+			
+				if($controlador->Recuperar($usuario->correo, $usuario->cedula))
+					echo '<br>Enviado '.$usuario->correo;
+
+		}*/
 	}
 
 

@@ -1,13 +1,15 @@
+
 <p>
-	Este mensaje contiene instrucciones para verificar este correo electronico. La solicitud fue realizada a través de la página web <?php echo CHtml::link(Yii::app()->name, $siteUrl); ?>.
-    Si usted no realizo esta solicitud, por favor ignore este correo o pongase en contacto<?php echo CHtml::link('rnce@snc.gob.ve', 'rnce@snc.gob.ve'); ?> (rnce@snc.gob.ve) con el administrador del sitio.
-</p>
-Tu nombre de usuario es <?php echo $usuario; ?>
-<p>haz clic aquí para cambiar tu contraseña:</p>
-<p>
-<?php echo CHtml::link($actionUrl, $actionUrl); ?>
-</p>
-<p>
-Si el link no abre correctamente, copie y pegue en la barra de direcciones de su navegador preferido.
+Bienvenidos al Sistema de Compras del Estado, le informamos que su usuario (<?php echo $usuario; ?>) ya se encuentra precargado y solo deberá realizar el cambio de su contraseña a través del enlace <?php echo CHtml::link($actionUrl, $actionUrl); ?> para poder ingresar a la aplicación. 
 </p>
 
+<p>
+Una vez creada la contraseña podra acceder a la aplicación haciendo clic <?php echo CHtml::link(Yii::app()->name, $siteUrl); ?>.
+</p>
+<p>
+Para mayor información podrá comunicarse con nosotros a través del 0800-SNCINFO (0800-7624636) y/o el correo electrónico <?php echo CHtml::link( 'rnce@snc.gob.ve', 'rnce@snc.gob.ve')?>.
+</p>
+<strong> Dirección Registro Nacional de Contrataciones del Estado (RNCE)
+Servicio Nacional de Contrataciones (SNC)
+Tlf (0800-SNCINFO)0800-7624636
+<?php echo CHtml::link( 'www.snc.gob.ve', 'www.snc.gob.ve')?></strong>

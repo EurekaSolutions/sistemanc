@@ -1,22 +1,15 @@
-<p>
-	Este mensaje contiene instrucciones para verificar este correo electronico. La solicitud fue realizada a través de la página web <?php echo CHtml::link(Yii::app()->name, $siteUrl); ?>.
-    Si usted no realizo esta solicitud, por favor ignore este correo o pongase en contacto (xxxxx@snc.gob.ve) con el administrador del sitio.
-</p>
-
-<p>haz clic aquí para cambiar tu contraseña:</p>
 
 <p>
-<?php echo CHtml::link($actionUrl, $actionUrl); ?>
+Bienvenidos al Sistema de Compras del Estado, le informamos que su usuario (<?php echo $usuario; ?>) ya se encuentra precargado y solo deberá realizar el cambio de su contraseña a través del enlace <?php echo CHtml::link($actionUrl, $actionUrl); ?> para poder ingresar a la aplicación. 
 </p>
 
 <p>
-Si el link no abre correctamente, copie y pegue en la barra de direcciones de su navegador preferido.
+Una vez creada la contraseña podra acceder a la aplicación haciendo clic <?php echo CHtml::link(Yii::app()->name, $siteUrl); ?>.
 </p>
-
 <p>
-	<h4>Recomendaciones:</h4>
-	<ul>
-		<li>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.</li>
-		<li>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.</li>
-	</ul>
+Para mayor información podrá comunicarse con nosotros a través del 0800-SNCINFO (0800-7624636) y/o el correo electrónico <?php echo CHtml::link( 'rnce@snc.gob.ve', 'rnce@snc.gob.ve')?>.
 </p>
+<strong> Dirección Registro Nacional de Contrataciones del Estado (RNCE)
+Servicio Nacional de Contrataciones (SNC)
+Tlf (0800-SNCINFO)0800-7624636
+<?php echo CHtml::link( 'www.snc.gob.ve', 'www.snc.gob.ve')?></strong>
