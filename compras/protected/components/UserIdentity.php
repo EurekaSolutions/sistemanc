@@ -154,7 +154,7 @@ class UserIdentity extends CUserIdentity
 	{
 		if (($record=$this->getActiveRecord())===null) {
 			return false;
-		}return;
+		}
 		$hashedPassword = Usuarios::model()->hashPassword($contrasena);
 		$usedPassword = new UserUsedPassword;
 		$usedPassword->setAttributes(array(
@@ -222,7 +222,7 @@ class UserIdentity extends CUserIdentity
 	 */
 	public function setAttributes(array $attributes)
 	{
-		$allowedAttributes = array('usuario','correo','codigo_onapre');
+		$allowedAttributes = array('usuario','correo','cedula');
 		foreach($attributes as $name=>$value) {
 			if (in_array($name, $allowedAttributes))
 				$this->$name = $value;

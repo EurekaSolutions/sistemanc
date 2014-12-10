@@ -78,7 +78,11 @@ class Usuarios extends CActiveRecord
 			//array('repetir_contrasena', 'safe'),
 		);
 	}
-
+/*
+	public function getPrimaryKey(){
+		return $this->usuario_id;
+	}
+	*/
 	public function validarCodigo($codigo_onapre){
 		//Como validamos que la institución esta ingresando	 el código que le pertenece?
 		if(empty($this->codigoOnapre->codigo_onapre))
@@ -104,7 +108,7 @@ class Usuarios extends CActiveRecord
     {
     	
 
-        // in this case, we will use the old hashed contrasena.
+/*        // in this case, we will use the old hashed contrasena.
         if(empty($this->contrasena) && empty($this->repetir_contrasena) && !empty($this->contrasena_inicial))
             $this->contrasena=$this->repetir_contrasena=$this->contrasena_inicial;
  		
@@ -116,7 +120,13 @@ class Usuarios extends CActiveRecord
         {
             $this->contrasena = $this->hashPassword( $this->contrasena);
             $this->repetir_contrasena =  $this->hashPassword($this->repetir_contrasena);
-        }
+        }*/
+		if ($this->isNewRecord) {
+			$this->creado_el = date('Y-m-d H:i:s');
+		} else {
+			$this->actualizado_el = date('Y-m-d H:i:s');
+		}
+       			
 
        			
         return parent::beforeSave();
@@ -124,9 +134,9 @@ class Usuarios extends CActiveRecord
 
     public function afterFind()
     {
-        //reset the contrasena to null because we don't want the hash to be shown.
+       //reset the contrasena to null because we don't want the hash to be shown.
         $this->contrasena_inicial = $this->contrasena;
-        $this->contrasena = null;
+        //$this->contrasena = null;
  
         parent::afterFind();
     }
@@ -142,6 +152,9 @@ class Usuarios extends CActiveRecord
     		return true;
     	else
     		return false;
+    	
+		/*require(Yii::getPathOfAlias('usr.extensions').DIRECTORY_SEPARATOR.'password.php');
+		return $this->contrasena !== null && password_verify($contrasena, $this->contrasena);*/
 
     }
 	/**

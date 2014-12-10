@@ -165,7 +165,7 @@ class RecoveryForm extends BasePasswordForm
 	public function login() {
 		$identity = $this->getIdentity();
 
-		$identity->password = $this->newPassword;
+		$identity->contrasena = $identity->password = $this->newPassword;
 		$identity->authenticate();
 		if($identity->getIsAuthenticated()) {
 			return Yii::app()->user->login($identity,0);
