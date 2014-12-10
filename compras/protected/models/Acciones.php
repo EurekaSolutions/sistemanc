@@ -39,7 +39,7 @@ class Acciones extends CActiveRecord
 		return array(
 			array('nombre', 'required'),
 			array('partida, general, monto, fuente, especifica', 'required', 'on' => 'crearaccion'),
-			array('general', 'condinero', 'on'=>'crearaccion'),
+			array('especifica', 'condinero', 'on'=>'crearaccion'),
 			array('monto', 'numerical', 'integerOnly'=>true, 'min'=>1),
 			array('codigo', 'safe'),
 			// The following rule is used by search().
@@ -80,7 +80,7 @@ class Acciones extends CActiveRecord
 
 				$partida = PresupuestoPartidas::model()->find('presupuesto_partida_id=:presupuesto_partida_id and ente_organo_id=:ente_organo_id and tipo=:tipo', array(':ente_organo_id' => $usuario->ente_organo_id, ':presupuesto_partida_id' => $value->presupuesto_partida_id, ':tipo' => 'A'));	
 				
-				if($partida->partida_id == $this->general)
+				if($partida->partida_id == $this->especifica)
 				{
 					$this->addError($attribute, 'Esta partida ya tiene asignado dinero para esta acción centralizada!');
 					break;
