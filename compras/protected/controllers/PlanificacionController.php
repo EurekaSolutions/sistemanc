@@ -579,64 +579,6 @@ class PlanificacionController extends Controller
 		//$this->redirect('asignarpartidasproyecto');
 	}
 
-	public function actionModal() /*Aqui esta vista tratara todo lo que tenga relacion con los datos de CENCOEX.*/
-	{
-
-			//$_401 = array();
-			//$partidas = $this->proyectosPartidas();
-			
-			/*$busqueda = "Gatos";
-			
-			$criteria = new CDbCriteria();
-			$criteria->condition = 'cod_producto <> 0';
-			$criteria->addSearchCondition('t.nombre', $busqueda);
-			
-			$productos = Productos::model()->findAll($criteria);
-
-			foreach ($productos as $key => $value) {
-				
-					Productos::model()->findAll($value->cod_segmento);
-
-			}*/
-
-			
-			//print_r($productos);
-
-			//$partidas = $this->productosPartidas();
-		/*	foreach ($partidas as $key => $partida) {
-
-				$numPartida = $this->numeroPartida($partida);
-
-					if($partida->p2==0) //Partida
-					{
-
-						echo '<h2>Partida '.$numPartida.': '.$partida->nombre.'</h2>';
-						//$this->productosPartidas($partida);
-
-					}elseif($partida->p3==0) //Geeneral
-					{
-						echo '<h3>General '.$numPartida.': '.$partida->nombre.'</h3>';
-						//$this->productosPartidas($partida);
-
-					}elseif($partida->p4==0)//Especifica
-					{
-						echo '<h4>Específica '.$numPartida.': '.$partida->nombre.'id: '.$partida->partida_id.'</h4>';
-						$this->productosPartidas($partida);
-
-					}else//Sub Especifica
-					{	
-						echo '<h5>Sub-Específica '.$numPartida.': <b>'.$partida->nombre.' </b></h5>';
-						$this->productosPartidas($partida);
-					}
-
-
-				//$value->p3==0;
-			}*/
-
-
-		$this->render('modal');
-	}
-
 
 	public function montoAccion(PresupuestoPartidaAcciones $accion){
 
