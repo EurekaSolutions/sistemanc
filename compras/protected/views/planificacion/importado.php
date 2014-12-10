@@ -298,12 +298,6 @@ $this->breadcrumbs=array(
 ?>
 
 <?php 
-	$formpc = $this->beginWidget('booster.widgets.TbActiveForm',
-		    array(
-		        'id' => 'partida-form',
-		        'htmlOptions' => array('class' => 'well'), // for inset effect
-		    )
-		);
 
 		//echo 'probando';
 		//print_r($presuImps);
@@ -355,7 +349,7 @@ $this->breadcrumbs=array(
 				}
 			}
 		}*/
-	$this->endWidget();
+	
 		/*$this->widget(
 		    'booster.widgets.TbSelect2',
 		    array(
