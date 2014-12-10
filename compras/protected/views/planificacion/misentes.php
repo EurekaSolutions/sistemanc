@@ -19,17 +19,20 @@ tr.principaltr th {
 		            <th data-field="conapre">NOMBRE</th>
 		            <th data-field="nombreoue">CODIGO ONAPRE</th>
 		            <th data-field="nombreoue">RIF</th>
+		            <th data-field="nombreoue">TIENE USUARIO</th>
 		        </tr>
 		    </thead>
 		    <tbody>
 					
 						<?php
-							foreach ($model as $key => $value) {
+							foreach ($model as $key => $value) 
+							{
 						?>	
 							<tr class="principaltr">
-								<td><?php echo $value->enteOrgano->nombre?></td>
-								<td><?php echo $value->enteOrgano->codigo_onapre?></td>
-								<td><?php echo $value->enteOrgano->rif?></td>
+								<td><?php echo $value->enteOrgano->nombre; ?></td>
+								<td><?php echo $value->enteOrgano->codigo_onapre; ?></td>
+								<td><?php echo $value->enteOrgano->rif; ?></td>
+								<td><?php echo $this->tieneusuario($value->enteOrgano->ente_organo_id)?"SI":"NO"?></td>
 							</tr>
 						<?php
 							}

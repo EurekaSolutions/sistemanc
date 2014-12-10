@@ -36,7 +36,7 @@ class PlanificacionController extends Controller
 			),
 
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('crearente','misentes'),
+				'actions'=>array('crearente','misentes', 'usuariosentes'),
 				'users'=>array('@'),
 				'expression' => "Yii::app()->session['organo']==1"
 			),
@@ -94,17 +94,6 @@ class PlanificacionController extends Controller
 			return $results[0]['cantidad'];
 	}
 
-
-	public function actionMisentes() 
-	{
-		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
-
-		$entesadscritos = $usuario->enteOrgano->hijos;
-
-		$this->render('misentes',array(
-						'model'=>$entesadscritos,
-		));
-	}
 
 	public function proyectosPartidasParticular($partida)
 	{
@@ -211,6 +200,49 @@ class PlanificacionController extends Controller
 			return $partidas;
 	}
 
+	public function tieneusuario($ente_organo_id)
+	{
+		if(Usuarios::model()->find('ente_organo_id=:ente_organo_id', array(':ente_organo_id'=> $ente_organo_id))->id)
+		{
+			return true;
+		}else
+		{
+			return false;
+		}
+	}
+
+	public function actionMisentes() 
+	{
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+
+		$entesadscritos = $usuario->enteOrgano->hijos;
+
+		$this->render('misentes',array(
+						'model'=>$entesadscritos,
+		));
+	}
+
+	public function actionUsuariosentes()
+	{
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+		
+		$model = New Usuarios();
+
+		if(isset($_POST['Usuarios']))
+	    {
+	    	if($model->save())
+	    	{
+
+	    	}
+	    }
+
+		$entesadscritos = $usuario->enteOrgano->hijos;
+
+		$this->render('usuariosentes',array(
+						'entes'=>$entesadscritos, 'model' => $model
+		));
+	}
+
 	public function actionCrearente()
 	{
 		$model = new EntesOrganos('crearente');
@@ -242,7 +274,7 @@ class PlanificacionController extends Controller
 	           $entesAscritos->fecha_hasta = "2199-12-31";
 			   $entesAscritos->save();
 
-			   $crea_usuario = new Usuarios('crearente');
+			   /*$crea_usuario = new Usuarios('crearente');
 
 
 			   $crea_usuario->correo = $model->correo;
@@ -252,11 +284,12 @@ class PlanificacionController extends Controller
 			   $crea_usuario->actualizado_el = date("Y-m-d");
 			   $crea_usuario->rol = 'normal';
 			   $crea_usuario->ente_organo_id = $usuario->ente_organo_id;
-			   $crea_usuario->save();
+			   $crea_usuario->save();*/
 
 			   Yii::app()->user->setFlash('success', "Ente creado con éxito!");
-			   Yii::app()->user->setFlash('notice', "Información de activación fue enviada al correo ". $model->correo);
+			   Yii::app()->user->setFlash('notice', "Recordando que debe crear usuario a dicho ente ");
 
+			   
 			  // $this->redirect(array('view','id'=>$model->producto_id));
 			   $model = new EntesOrganos('crearente');
 
