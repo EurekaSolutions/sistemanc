@@ -8,7 +8,7 @@
  * 
  * */
 
-		echo '<h3>Lista de productos nacionales</h3>';
+		echo '<h3>Lista de productos nacionales por partida seleccionada: </h3>';
 
 ?>
 

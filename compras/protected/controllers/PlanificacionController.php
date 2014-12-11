@@ -1005,10 +1005,13 @@ class PlanificacionController extends Controller
         }
         //return false;
 	}
+	public  function obtenerCodigoNcmNombre($data,$row=null){
+			return $this->numeroCodigoNcm($data).' - '.$data->nombre; 
+	}
 	public  function obtenerUnidadNombre($data,$row){
 			return $data->unidad->nombre; 
 	}
-	public  function obtenerProductoNombre($data,$row){
+	public  function obtenerProductoNombre($data,$row=null){
 			return $this->numeroProducto($data->producto).' - '.$data->producto->nombre; 
 	}
 	public  function obtenerCostoUnidadNombre($data,$row){
@@ -1314,7 +1317,7 @@ class PlanificacionController extends Controller
 						//Listando todos los productos que ya se han cargado
 						foreach ($presupuestoPartidas as $key => $presupuestoPartida) {
 							if($presupuestoPartida->partida_id == $partidaSel->partida_id)
-								$presuImps[] = $presupuestoPartida->presupuestoImportacion;
+								$presuImps = $presupuestoPartida->presupuestoImportacion;
 						}
 
 					}

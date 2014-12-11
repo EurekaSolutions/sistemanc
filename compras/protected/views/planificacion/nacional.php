@@ -270,15 +270,15 @@ $this->breadcrumbs=array(
 
 			$( "#partida").change(function() {
 				$('#producto').html("");
-				$( "#producto" ).append( '<option value="">Seleccione producto</option>' );
+				$( "#producto" ).append( '<option value="">Seleccionar producto</option>' );
 				$('#datos').html("");
 			});
 
 			$( "#proyecto").change(function() {
 				$('#partida').html("");
-				$( "#partida" ).append( '<option value="">Seleccione partida</option>' );
+				$( "#partida" ).append( '<option value="">Seleccionar partida</option>' );
 				$('#producto').html("");
-				$( "#producto" ).append( '<option value="">Seleccione producto</option>' );
+				$( "#producto" ).append( '<option value="">Seleccionar producto</option>' );
 				$('#datos').html("");
 			});
 		});

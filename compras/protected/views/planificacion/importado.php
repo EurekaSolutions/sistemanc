@@ -235,6 +235,9 @@ $this->breadcrumbs=array(
 
 		//echo 'probando';
 		//print_r($presuImps);
+		
+		//echo count($presuImps);
+		$this->renderPartial('_importado',array('presuImps'=>$presuImps));
 
 /*		echo '<h3>Lista de productos </h3>';
 		$presuProducto = new PresupuestoProductos();
