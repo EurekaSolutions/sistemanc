@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
-	'Partida Productoses'=>array('index'),
-	'Create',
+	'Partida Productos'=>array('index'),
+	'Crear',
 );
 
 $this->menu=array(
@@ -10,7 +10,7 @@ array('label'=>'Manage PartidaProductos','url'=>array('admin')),
 );
 ?>
 
-<h1>Create PartidaProductos</h1>
+<h1>Asociar Partidas Productos</h1>
 <?php
     foreach(Yii::app()->user->getFlashes() as $key => $message) {
         echo '<div class="flash-' . $key . '">' . $message . "</div>\n";

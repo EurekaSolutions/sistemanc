@@ -6,7 +6,7 @@ class PartidaProductosController extends Controller
 	* @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	* using two-column layout. See 'protected/views/layouts/column2.php'.
 	*/
-	public $layout='//layouts/column2';
+	public $layout='//layouts/planificacion';  //public $layout='//layouts/column2';
 
 		/**
 		* @return array action filters
@@ -120,20 +120,14 @@ class PartidaProductosController extends Controller
 						$modeltodos->fecha_hasta  = $model->fecha_hasta;
 						$modeltodos->save();
 					}
-					Yii::app()->user->setFlash('success', "Productos agregado con éxito");
-					$this->render('create',array(
-								'model'=>$model, 'especificas_lista' => $especificas_lista, 'productos' => $lista_productos, 'operacion' => $operacion
-							));
-
+							Yii::app()->user->setFlash('success', "Productos agregado con éxito a la partida seleccionada ");
+					
 					}else
 					{	
 							$model->producto_id=$variable[0];
 							$model->save();
-							Yii::app()->user->setFlash('success', "Producto agregado con éxito");
+							Yii::app()->user->setFlash('success', "Producto agregado con éxito a la partida seleccionada");
 			
-							$this->render('create',array(
-								'model'=>$model, 'especificas_lista' => $especificas_lista, 'productos' => $lista_productos, 'operacion' => $operacion
-							));
 					}
 			}
 			/*if($model->save())

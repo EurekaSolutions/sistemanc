@@ -21,6 +21,14 @@ return array (
     array (
       0 => 'organo',
     ),
+    'assignments' => 
+    array (
+      1234 => 
+      array (
+        'bizRule' => NULL,
+        'data' => NULL,
+      ),
+    ),
   ),
   'organo' => 
   array (
@@ -31,14 +39,6 @@ return array (
     'children' => 
     array (
       0 => 'ente',
-    ),
-    'assignments' => 
-    array (
-      1234 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
     ),
   ),
   'ente' => 

@@ -39,7 +39,7 @@
 
 												'data' => $productos,
 												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												'htmlOptions' => array(/*'prompt' => 'Seleccione producto',*/ 'multiple' => true),
+												'htmlOptions' => array(/*'prompt' => 'Seleccione producto',*/ 'multiple' => true, 'width' => '320px'),
 											)
 										)
 		); 
