@@ -45,11 +45,24 @@ class PartidaProductos extends CActiveRecord
 
 	public function unicotipo($attribute,$params)
 	{
-		if($this->tipo_operacion and $this->partida_id)
+		if($this->tipo_operacion and $this->partida_id and $this->producto_id)
 		{
-			if(PartidaProductos::model()->find('partida_id=:partida_id and tipo_operacion=:tipo_operacion', array(':partida_id' =>$this->partida_id, ':tipo_operacion' =>  $this->tipo_operacion)))
+			$variable = $this->producto_id;
+
+			if(count($variable)!=1)
 			{
-				$this->addError($attribute, 'Este producto ya esta asignado a este tipo de operación!');
+				foreach ($variable as $key) {
+							if(PartidaProductos::model()->find('partida_id=:partida_id and tipo_operacion=:tipo_operacion and producto_id=:producto_id', array(':partida_id' =>$this->partida_id, ':tipo_operacion' =>  $this->tipo_operacion, ':producto_id' => $key)))
+							{
+								$this->addError($attribute, 'Algunos de los productos seleccionados ya estan asignado a este tipo de operación!');
+							}
+						}
+			}else
+			{
+				if(PartidaProductos::model()->find('partida_id=:partida_id and tipo_operacion=:tipo_operacion and producto_id=:producto_id', array(':partida_id' =>$this->partida_id, ':tipo_operacion' =>  $this->tipo_operacion, ':producto_id' => $variable[0])))
+				{
+					$this->addError($attribute, 'EL producto seleccionado ya esta asignado a este tipo de operación!');
+				}
 			}
 		}
 	}

@@ -39,7 +39,7 @@
 
 												'data' => $productos,
 												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												'htmlOptions' => array('prompt' => 'Seleccione producto'),
+												'htmlOptions' => array(/*'prompt' => 'Seleccione producto',*/ 'multiple' => true),
 											)
 										)
 		); 
@@ -54,12 +54,12 @@
 											'wrapperHtmlOptions' => array(
 												'class' => 'col-sm-2',
 											),
-											'label'=>'Seleccione producto',
+											'label'=>'Seleccione operación',
 											'widgetOptions' => array(
 
 												'data' => $operacion,
 												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												'htmlOptions' => array('prompt' => 'Seleccione producto'),
+												'htmlOptions' => array('prompt' => 'Seleccione operación'),
 											)
 										)
 		); ?>
@@ -73,7 +73,7 @@
 	<?php $this->widget('booster.widgets.TbButton', array(
 			'buttonType'=>'submit',
 			'context'=>'primary',
-			'label'=>$model->isNewRecord ? 'Añadir producto a partida' : 'Guardar',
+			'label'=>$model->isNewRecord ? 'Añadir productos a partida' : 'Guardar',
 		)); ?>
 </div>
 

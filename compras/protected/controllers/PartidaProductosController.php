@@ -98,9 +98,46 @@ class PartidaProductosController extends Controller
 
 		if(isset($_POST['PartidaProductos']))
 		{
+
 			$model->attributes=$_POST['PartidaProductos'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->partida_producto_id));
+			$variable = $model->producto_id;
+
+			if($model->validate())
+			{
+				if(count($variable)!=1)
+				{
+							
+					foreach ($variable as $key)
+					{
+						$modeltodos = new PartidaProductos;
+
+						
+
+						$modeltodos->partida_id = $model->partida_id;
+						$modeltodos->producto_id = $key;
+						$modeltodos->tipo_operacion = $model->tipo_operacion;
+						$modeltodos->fecha_desde  = $model->fecha_desde;
+						$modeltodos->fecha_hasta  = $model->fecha_hasta;
+						$modeltodos->save();
+					}
+					Yii::app()->user->setFlash('success', "Productos agregado con éxito");
+					$this->render('create',array(
+								'model'=>$model, 'especificas_lista' => $especificas_lista, 'productos' => $lista_productos, 'operacion' => $operacion
+							));
+
+					}else
+					{	
+							$model->producto_id=$variable[0];
+							$model->save();
+							Yii::app()->user->setFlash('success', "Producto agregado con éxito");
+			
+							$this->render('create',array(
+								'model'=>$model, 'especificas_lista' => $especificas_lista, 'productos' => $lista_productos, 'operacion' => $operacion
+							));
+					}
+			}
+			/*if($model->save())
+				$this->redirect(array('view','id'=>$model->partida_producto_id));*/
 		}
 
 		$this->render('create',array(
