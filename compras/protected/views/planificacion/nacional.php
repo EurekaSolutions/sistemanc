@@ -12,26 +12,7 @@ $this->breadcrumbs=array(
             echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
         }
     ?>
-    <script type="text/javascript">
-		$( document ).ready(function() {
-		//alert("ready!");
-			$( "#proyecto" ).change(function() {
-
-				$('#producto').html("");
-				
-				$( "#producto" ).append( '<option value="">Seleccione partida</option>' );
-				
-				$('#datos').html("");
-				//$( "#especifica" ).append( '<option value="">Seleccionar partida especifica</option>' );
-			});
-
-		/*$( "#partida" ).change(function() {
-			$('#especifica').html("");
-			$( "#especifica" ).append( '<option value="">Seleccionar partida especifica</option>' );
-		});*/
-		});
-	</script>
-
+   
 <?php 
 
 	
@@ -280,3 +261,25 @@ $this->breadcrumbs=array(
 
 
 ?>
+
+ <script type="text/javascript">
+		$( document ).ready(function() {
+			$( "#producto").change(function() {
+				$('#datos').html("");
+			});
+
+			$( "#partida").change(function() {
+				$('#producto').html("");
+				$( "#producto" ).append( '<option value="">Seleccione producto</option>' );
+				$('#datos').html("");
+			});
+
+			$( "#proyecto").change(function() {
+				$('#partida').html("");
+				$( "#partida" ).append( '<option value="">Seleccione partida</option>' );
+				$('#producto').html("");
+				$( "#producto" ).append( '<option value="">Seleccione producto</option>' );
+				$('#datos').html("");
+			});
+		});
+	</script>
