@@ -15,7 +15,7 @@
 <?php foreach ($presuImps as $key => $value) 
 		foreach (PresupuestoImportacion::model()->findAllByAttributes(array('presupuesto_partida_id'=>$value->presupuesto_partida_id,'producto_id'=>$value->producto_id)) as $key => $presuImp){
 
-			echo 'Lista de productos importados asociados al producto nacional: '.$this->obtenerProductoNombre($presuImp);
+			echo 'Lista de codigos arancelarios asociados al producto seleccionado: '.$this->obtenerProductoNombre($presuImp);
 	?>
 		
 		<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
