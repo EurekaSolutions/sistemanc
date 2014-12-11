@@ -25,6 +25,7 @@ class LoginForm extends BasePasswordForm
 	{
 		$rules = array_merge(array(
 			array('username, password', 'filter', 'filter'=>'trim'),
+			array('username', 'filter', 'filter'=>'strtolower'),
 			array('username, password', 'required'),
 			//array('username', 'exist', 'allowEmpty'=>false, 'attributeName'=>'usuario','className'=>'Usuarios', 'message'=>Yii::t('UsrModule.usr','Usuario no existe.')),
 			array('rememberMe', 'boolean'),
@@ -53,7 +54,7 @@ class LoginForm extends BasePasswordForm
 	{
 		if($this->_identity===null) {
 			$userIdentityClass = $this->userIdentityClass;
-			$this->_identity=new $userIdentityClass(strtolower($this->username),$this->password);
+			$this->_identity=new $userIdentityClass(($this->username),$this->password);
 			$this->_identity->authenticate();
 		}
 		return $this->_identity;

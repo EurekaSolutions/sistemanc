@@ -25,6 +25,7 @@ class RecoveryForm extends BasePasswordForm
 	public function rules() {
 		$rules = array_merge($this->getBehaviorRules(), array(
 			array('cedula, usuario, correo', 'filter', 'filter'=>'trim'),
+			array('usuario, correo', 'filter', 'filter'=>'strtolower'),
 			array('cedula, usuario, correo', 'default', 'setOnEmpty'=>true, 'value' => null),
 			array('correo', 'configurarUsuario','on'=>'reset', 'message'=>'No se pudo obtener los datos del usuario'),
 			array('cedula, usuario, correo', 'existingIdentity'),
@@ -54,11 +55,11 @@ class RecoveryForm extends BasePasswordForm
 		}
 
 		// Usuario recuperando/reseteando contraseña
-		$usuario = Usuarios::model()->findByAttributes(array('usuario'=>strtolower($this->usuario)));
+		$usuario = Usuarios::model()->findByAttributes(array('usuario'=>$this->usuario));
 		if(!$usuario)
 			return false;
 		$this->cedula = $usuario->cedula;
-		$this->correo = strtolower($usuario->correo);
+		$this->correo = $usuario->correo;
 
 		return true;
 	}
@@ -86,8 +87,8 @@ class RecoveryForm extends BasePasswordForm
 				throw new CException(Yii::t('UsrModule.usr','The {class} class must implement the {interface} interface.',array('{class}'=>$userIdentityClass, '{interface}'=>'IActivatedIdentity')));
 			}
 			$attributes = array();
-			//if ($this->usuario !== null) $attributes['usuario'] = strtolower($this->usuario);
-			if ($this->correo !== null) $attributes['correo'] = strtolower($this->correo);
+			if ($this->usuario !== null) $attributes['usuario'] = $this->usuario;
+			if ($this->correo !== null) $attributes['correo'] = $this->correo;
 			//if ($this->cedula !== null) $attributes['cedula'] = $this->cedula;
 			if (!empty($attributes))
 				$this->_identity=$userIdentityClass::find($attributes);
@@ -110,7 +111,7 @@ class RecoveryForm extends BasePasswordForm
 			/*if ($this->usuario !== null) {
 				$this->addError('usuario',Yii::t('UsrModule.usr','No user found matching this usuario.'));
 			} else*/if ($this->cedula !== null) {
-				$this->addError('codigo_onapre',Yii::t('UsrModule.usr','Ningún usuario coincide con la cedula indicado.'));
+				$this->addError('codigo_onapre',Yii::t('UsrModule.usr','Ningún usuario coincide con la cedula indicada.'));
 			} elseif ($this->correo !== null) {
 				$this->addError('correo',Yii::t('UsrModule.usr','Ningún usuario coincide con esta dirección de correo electrónico.'));
 			} else {

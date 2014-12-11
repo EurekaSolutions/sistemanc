@@ -60,6 +60,7 @@ class ProfileForm extends BaseUsrForm
 	{
 		return array_merge($this->getBehaviorRules(), array(
 			array('usuario, correo, removePicture', 'filter', 'filter'=>'trim'),
+			array('usuario, correo', 'filter', 'filter'=>'strtolower'),
 			array('usuario, correo, removePicture', 'default', 'setOnEmpty'=>true, 'value' => null),
 			array('verifyCode', 'safe'),
 			array('usuario', 'unique', 'attributeName'=>'usuario','criteria'=>array('condition'=>'usuario_id !=:id ','params'=>array(':id'=>Yii::app()->user->getId())),'className'=>'Usuarios', 'allowEmpty' => false, 'message'=>Yii::t('UsrModule.usr','El nombre de usuario ya existe.')),

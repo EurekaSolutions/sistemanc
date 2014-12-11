@@ -52,6 +52,7 @@ class Usuarios extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('usuario, correo','filter','filter'=>'strtolower'),
 			array('actualizado_el, repetir_contrasena, nombre,', 'required', 'on'=>'registro, actualizar'),
 
 			array('usuario, contrasena, correo, creado_el,actualizado_el, rol, ente_organo_id, nombre, cedula, cargo', 'required', 'on'=>'crearente'),
@@ -104,8 +105,8 @@ class Usuarios extends CActiveRecord
     	if($this->isNewRecord)
  			$this->creado_el = $this->actualizado_el;*/
 
- 		$this->usuario = strtolower($this->usuario);
- 		$this->correo = strtolower($this->correo);
+ 		//$this->usuario = strtolower($this->usuario);
+ 		//$this->correo = strtolower($this->correo);
 
  		return parent::beforeValidate();
 	}
@@ -137,15 +138,6 @@ class Usuarios extends CActiveRecord
        	$this->correo = strtolower($this->correo);
 
         return parent::beforeSave();
-    }
-
-    public function beforeFind()
-    {
-
-        $this->usuario = strtolower($this->usuario);
- 		$this->correo = strtolower($this->correo);
-
-        parent::beforeFind();
     }
 
     public function afterFind()
