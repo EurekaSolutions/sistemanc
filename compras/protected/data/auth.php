@@ -6,6 +6,10 @@ return array (
     'description' => 'Acceso a todo el sistema',
     'bizRule' => '',
     'data' => '',
+    'children' => 
+    array (
+      0 => 'admin',
+    ),
   ),
   'admin' => 
   array (
@@ -13,6 +17,10 @@ return array (
     'description' => 'Funciones básicas de crud de admin',
     'bizRule' => '',
     'data' => '',
+    'children' => 
+    array (
+      0 => 'organo',
+    ),
   ),
   'organo' => 
   array (
@@ -20,6 +28,10 @@ return array (
     'description' => 'Acceso  a las funciones de un organo, como crear ente.',
     'bizRule' => '',
     'data' => '',
+    'children' => 
+    array (
+      0 => 'ente',
+    ),
     'assignments' => 
     array (
       1234 => 

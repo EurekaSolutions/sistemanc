@@ -6,12 +6,18 @@ return array(
     'superadmin' => array (
         'type'=>CAuthItem::TYPE_ROLE,
         'description'=>'Acceso a todo el sistema',
+        'children'=>array(
+            'admin'
+        ),
         'bizRule'=>'',
         'data'=>''
    ),
     'admin' => array (
         'type'=>CAuthItem::TYPE_ROLE,
         'description'=>'Funciones básicas de crud de admin',
+        'children'=>array(
+            'organo'
+        ),
         'bizRule'=>'',
         'data'=>''
    ),
@@ -19,6 +25,9 @@ return array(
     'organo' => array (
         'type'=>CAuthItem::TYPE_ROLE,
         'description'=>'Acceso  a las funciones de un organo, como crear ente.',
+        'children'=>array(
+            'ente'
+        ),
         'bizRule'=>'',
         'data'=>''
     ),
@@ -26,9 +35,6 @@ return array(
     'ente' => array (
         'type'=>CAuthItem::TYPE_ROLE,
         'description'=>'Acceso básico al sistema.',
-        'children'=>array(
-            'reader','commentor'
-        ),
         'bizRule'=>'',
         'data'=>''
    )
