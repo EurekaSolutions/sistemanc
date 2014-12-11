@@ -134,7 +134,7 @@ $this->breadcrumbs=array(
 
 	if(isset($productoSel->producto_id)){
 
-		echo '<div class="flash-notice"><h4> Cargar tantos productos importados como se requiera para este producto.<h4></div>';
+		echo '<div class="flash-notice"><h4> Cargar tantos codigos arancvelarios como se requiera para este producto.<h4></div>';
 
 		echo $form->errorSummary($presuImp);
 
