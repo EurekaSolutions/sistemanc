@@ -27,9 +27,9 @@
 
     <?php //echo $form->errorSummary($model); ?>
 
-    <?php echo $form->textFieldGroup($model,'nombre',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span3','maxlength'=>20)))); ?>
+    <?php echo $form->textFieldGroup($model,'nombre',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span3')))); ?>
 
-    <?php echo $form->textFieldGroup($model,'codigo',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span3','maxlength'=>100)))); ?>
+    <?php echo $form->textFieldGroup($model,'codigo',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span3','maxlength'=>20)))); ?>
 
 
     <div class="well">
