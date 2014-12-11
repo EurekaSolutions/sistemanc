@@ -11,22 +11,27 @@ $this->breadcrumbs=array(
         foreach(Yii::app()->user->getFlashes() as $key => $message) {
             echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
         }
-    ?><script type="text/javascript">
-$( document ).ready(function() {
-//alert("ready!");
-$( "#Acciones_nombre" ).change(function() {
-$('#general').html("");
-$( "#general" ).append( '<option value="">Seleccionar partida general</option>' );
-$('#especifica').html("");
-$( "#especifica" ).append( '<option value="">Seleccionar partida especifica</option>' );
-});
+    ?>
+    <script type="text/javascript">
+		$( document ).ready(function() {
+		//alert("ready!");
+			$( "#proyecto" ).change(function() {
 
-$( "#partida" ).change(function() {
-$('#especifica').html("");
-$( "#especifica" ).append( '<option value="">Seleccionar partida especifica</option>' );
-});
-});
-</script>
+				$('#producto').html("");
+				
+				$( "#producto" ).append( '<option value="">Seleccione partida</option>' );
+				
+				$('#datos').html("");
+				//$( "#especifica" ).append( '<option value="">Seleccionar partida especifica</option>' );
+			});
+
+		/*$( "#partida" ).change(function() {
+			$('#especifica').html("");
+			$( "#especifica" ).append( '<option value="">Seleccionar partida especifica</option>' );
+		});*/
+		});
+	</script>
+
 <?php 
 
 	
@@ -56,12 +61,12 @@ $( "#especifica" ).append( '<option value="">Seleccionar partida especifica</opt
 	//echo $form->dropDownListGroup($model, 'nombre',$proyectos, array('prompt'=>'Seleccionar proyecto','multiple' => 'multiple'));
 	//echo $form->dropDownList($model,'category_id',  array('prompt'=>'Select category','multiple' => 'multiple'));
 		
-		Yii::app()->clientScript->registerScript("cambioProyecto", '
+		/*Yii::app()->clientScript->registerScript("cambioProyecto", '
 				$(\'#proyecto\').change(function(){
 					$(\'#producto\').html("");
 					$( "#producto" ).append( \'<option value="">Seleccionar producto</option>\' );
 
-		})');
+		})');*/
 	 echo $form->dropDownListGroup( $proyectoSel,	'proyecto_id',
 			array(
 				'wrapperHtmlOptions' => array(
