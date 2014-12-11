@@ -71,7 +71,7 @@ class UserIdentity extends CUserIdentity
      */
     public function authenticate()
     {
-        $record = Usuarios::model()->findByAttributes(array('usuario'=>$this->usuario));        	
+        $record = Usuarios::model()->findByAttributes(array('usuario'=>$this->usuario)); 
         $authenticated = $record !== null && $record->verificarContrasena($this->contrasena);
 
         $attempt = new UserLoginAttempt;
@@ -99,8 +99,31 @@ class UserIdentity extends CUserIdentity
             $this->initFromUser($record);
             $record->saveAttributes(array('ultima_visita_el'=>date('Y-m-d H:i:s')));
 
-            if(EntesOrganos::model()->find('ente_organo_id=:ente_organo_id', array(':ente_organo_id' => $record->ente_organo_id))->tipo == "O")
-            	Yii::app()->session['organo'] = 1;
+            $auth=Yii::app()->authManager;
+
+            $role = 'ente';
+            switch ($role->enteOrgano=->tipo) {
+            	case 'S':
+            		$role = 'admin';
+            		break;
+            	case 'O':
+            		$role = 'organo';
+            		break;
+            	case 'E':
+            		$role = 'ente';
+            		break;
+            	default:
+            		# code...
+            		break;
+            }
+
+        	if(!$auth->isAssigned($role,$this->_id))
+	        {
+	            if($auth->assign($role,$this->_id))
+	            {
+	                Yii::app()->authManager->save();
+	            }
+	        } 
         }
         return $this->getIsAuthenticated();
     }

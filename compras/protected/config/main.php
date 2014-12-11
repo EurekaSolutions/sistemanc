@@ -83,6 +83,10 @@ return array(
 			'allowAutoLogin'=>true,
 			'loginUrl' => array('usr/login'),
 		),
+		'authManager'=>array(
+            'class'=>'CPhpAuthManager',
+			//          'authFile' => 'path'                  // only if necessary
+        ),
         'booster' => array(
 		    'class' => 'ext.booster.components.Booster',
 		),

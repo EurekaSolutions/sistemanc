@@ -38,9 +38,13 @@ $this->breadcrumbs=array(
 	$listas = array(!empty($lista_acciones)?'Acciones Centralizadas':null=>$lista_acciones,
 	 				!empty($lista_proyectos)?'Proyectos':null =>$lista_proyectos);
 
-	//echo $form->listBoxGroup($model, 'nombre',$proyectos);
-	//echo $form->dropDownListGroup($model, 'nombre',$proyectos, array('prompt'=>'Seleccionar proyecto','multiple' => 'multiple'));
-	//echo $form->dropDownList($model,'category_id',  array('prompt'=>'Select category','multiple' => 'multiple'));
+/*		Yii::app()->clientScript->registerScript("cambioProyecto", '
+						$(\'#proyecto\').change(function(){
+							if($(\'#producto\').val() != \'\')
+							{
+								location.reload(true);
+							}
+				})');*/
 
 	 echo $form->dropDownListGroup( $proyectoSel,	'proyecto_id',
 			array(
@@ -67,7 +71,6 @@ $this->breadcrumbs=array(
 		); 
 
 ?><?php
-	 //print_r($partidas);
 
 	 	 echo $form->dropDownListGroup( $partidaSel, 'partida_id',
 			array(
@@ -130,6 +133,8 @@ $this->breadcrumbs=array(
 		); 
 
 	if(isset($productoSel->producto_id)){
+
+		echo '<div class="flash-notice"><h4> Cargar tantos productos importados como se requiera para este producto.<h4></div>';
 
 		echo $form->errorSummary($presuImp);
 

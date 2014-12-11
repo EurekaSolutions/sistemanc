@@ -168,6 +168,17 @@ class DefaultController extends UsrController
 	 */
 	public function actionLogout()
 	{
+		$assigned_roles = Yii::app()->authManager->getRoles(Yii::app()->user->id); //obtains all assigned roles for this user id
+	    if(!empty($assigned_roles)) //checks that there are assigned roles
+	    {
+	        $auth=Yii::app()->authManager; //initializes the authManager
+	        foreach($assigned_roles as $n=>$role)
+	        {
+	            if($auth->revoke($n,Yii::app()->user->id)) //remove each assigned role for this user
+	                Yii::app()->authManager->save(); //again always save the result
+	        }
+	    }
+	    
 		if (!Yii::app()->user->isGuest)
 			Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);

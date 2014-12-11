@@ -22,23 +22,32 @@ class PlanificacionController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
+/*			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view', 'modal', 'agregarproyecto', 'agregarcentralizada', 'administracion', 'nacional','importado','eliminarProducto'),
 				'users'=>array('@'),
+				'roles'=>array('organo'),
+			),*/
+			array('allow',  // allow all users to perform 'index' and 'view' actions
+				'actions'=>array('index','view', 'agregarproyecto', 'agregarcentralizada', 'nacional','importado','eliminarProducto'),
+				'users'=>array('@'),
+				'roles'=>array('organo','ente','admin'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('buscarespecfica', 'buscarespecficap','create','update','partidas','vistaparcial', 'buscarpartida', 'buscargeneral', 'asignarpartidasproyecto', 'buscargeneralproyecto','buscarNcm', 'buscarpartidasproyecto', 'buscarproductospartida'),
+				'actions'=>array('index','view', 'agregarproyecto', 'agregarcentralizada', 'nacional','importado','eliminarProducto',
+								 'buscarespecfica', 'buscarespecficap','create','update','partidas','vistaparcial', 'buscarpartida', 'buscargeneral',
+								 'asignarpartidasproyecto', 'buscargeneralproyecto','buscarNcm', 'buscarpartidasproyecto', 'buscarproductospartida'),
 				'users'=>array('@'),
+				'roles'=>array('ente','organo','admin'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin','delete','administracion'),
 				'users'=>array('admin'),
 			),
 
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('crearente','misentes', 'usuariosentes'),
 				'users'=>array('@'),
-				'expression' => "Yii::app()->session['organo']==1"
+				'roles'=>array('organo','admin'),
 			),
 
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -1198,6 +1207,7 @@ class PlanificacionController extends Controller
 									}else{*/
 										if($presuPro->save()){
 											$presuPro = new PresupuestoProductos();
+											$productoSel = new Productos('search');
 											//$this->redirect(array('/planificacion/partidas'));
 											Yii::app()->user->setFlash('success', "Producto cargado con  éxito!");
 										}else
@@ -1206,7 +1216,7 @@ class PlanificacionController extends Controller
 									//}
 								
 							}else
-								Yii::app()->user->setFlash('error', "No se agrego el producto valorado en ".number_format($presuPro->monto_presupuesto,2,',','.')." Bs. La partida lleva cargada un monto en productos de ".number_format($total,2,',','.')." Bs.  y el monto presupuestado para esta partida es de ".number_format($presuPartida->monto_presupuestado,2,',','.').' Bs.');
+								Yii::app()->user->setFlash('notice', "No se agrego el producto valorado en ".number_format($presuPro->monto_presupuesto,2,',','.')." Bs. La partida lleva cargada un monto en productos de ".number_format($total,2,',','.')." Bs.  y el monto presupuestado para esta partida es de ".number_format($presuPartida->monto_presupuestado,2,',','.').' Bs.');
 						}//else Yii::app()->user->setFlash('Error','error');
 
 				}
@@ -1362,7 +1372,7 @@ class PlanificacionController extends Controller
 			                            $transaction->rollBack();
 			                        }
 							}else
-								Yii::app()->user->setFlash('error', "No se agrego el producto valorado en ".number_format($presuImp->monto_presupuesto*$presuImp->divisa->tasa->tasa,2,',','.')." Bs. La partida lleva cargada un monto en productos de ".number_format($total,2,',','.')." Bs.  y el monto presupuestado para esta partida es de ".number_format($presuPartida->monto_presupuestado,2,',','.').' Bs.');
+								Yii::app()->user->setFlash('notice', "No se agrego el producto valorado en ".number_format($presuImp->monto_presupuesto*$presuImp->divisa->tasa->tasa,2,',','.')." Bs. La partida lleva cargada un monto en productos de ".number_format($total,2,',','.')." Bs.  y el monto presupuestado para esta partida es de ".number_format($presuPartida->monto_presupuestado,2,',','.').' Bs.');
 
 						}
 

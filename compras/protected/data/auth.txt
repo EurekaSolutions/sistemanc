@@ -1,0 +1,37 @@
+<?php 
+
+// protected/data/auth.php
+ 
+return array(
+    'superadmin' => array (
+        'type'=>CAuthItem::TYPE_ROLE,
+        'description'=>'Acceso a todo el sistema',
+        'bizRule'=>'',
+        'data'=>''
+   ),
+    'admin' => array (
+        'type'=>CAuthItem::TYPE_ROLE,
+        'description'=>'Funciones básicas de crud de admin',
+        'bizRule'=>'',
+        'data'=>''
+   ),
+ 
+    'organo' => array (
+        'type'=>CAuthItem::TYPE_ROLE,
+        'description'=>'Acceso  a las funciones de un organo, como crear ente.',
+        'bizRule'=>'',
+        'data'=>''
+    ),
+ 
+    'ente' => array (
+        'type'=>CAuthItem::TYPE_ROLE,
+        'description'=>'Acceso básico al sistema.',
+        'children'=>array(
+            'reader','commentor'
+        ),
+        'bizRule'=>'',
+        'data'=>''
+   )
+);
+
+?>

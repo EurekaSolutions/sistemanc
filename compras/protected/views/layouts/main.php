@@ -65,11 +65,20 @@
 							array(
 								'label' => 'Entes',  //si el usuario es creado por este sistema
 								'items' => array(
-									array('label' => 'Crear entes', 'url'=>array('/planificacion/crearente'), 'visible'=>(Yii::app()->session['organo']==1)), // si el tipo es ORGANO Yii::app()->session['organo']==1
-									array('label' => 'Mis entes', 'url'=>array('/planificacion/misentes'), 'visible'=>(Yii::app()->session['organo']==1)), // si el tipo es ORGANO Yii::app()->session['organo']==1
-									array('label' => 'Crear usuarios', 'url'=>array('/planificacion/usuariosentes'), 'visible'=>(Yii::app()->session['organo']==1)), // si el tipo es ORGANO Yii::app()->session['organo']==1
+									array('label' => 'Crear entes', 'url'=>array('/planificacion/crearente'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
+									array('label' => 'Mis entes', 'url'=>array('/planificacion/misentes'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
+									array('label' => 'Crear usuarios', 'url'=>array('/planificacion/usuariosentes'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 									//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
-								), 'visible'=>(Yii::app()->session['organo']==1),
+								), 'visible'=>(Yii::app()->user->checkAccess('organo')),
+							),
+							array(
+								'label' => 'Administrador',
+								'items' => array(
+									array('label' => 'Asociar Proyectos a Partidas', 'url'=>array('/partidaproductos/create'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
+									/*array('label' => 'Mis entes', 'url'=>array('/planificacion/misentes'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
+									array('label' => 'Crear usuarios', 'url'=>array('/planificacion/usuariosentes'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), // si el tipo es ORGANO Yii::app()->session['organo']==1*/
+									),
+								'visible'=>(Yii::app()->user->checkAccess('admin'))
 							),
 						   // array('label'=>'Perfil usuario', 'url'=>array('/usr/profile'), 'visible'=>!Yii::app()->user->isGuest),
 						    
@@ -81,6 +90,7 @@
 	  	  );
 		}
 	 	?>
+
 	<!--</div> -->
 	<?php if(isset($this->breadcrumbs)):?>
 		<?php 	
