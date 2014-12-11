@@ -35,11 +35,25 @@ class PartidaProductos extends CActiveRecord
 		return array(
 			array('partida_id, producto_id, tipo_operacion, fecha_desde, fecha_hasta', 'required'),
 			array('tipo_operacion', 'length', 'max'=>1),
+			array('tipo_operacion', 'unicotipo'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('partida_id, producto_id, tipo_operacion, fecha_desde, fecha_hasta, partida_producto_id', 'safe', 'on'=>'search'),
 		);
 	}
+
+
+	public function unicotipo($attribute,$params)
+	{
+		if($this->tipo_operacion and $this->partida_id)
+		{
+			if(PartidaProductos::model()->find('partida_id=:partida_id and tipo_operacion=:tipo_operacion', array(':partida_id' =>$this->partida_id, ':tipo_operacion' =>  $this->tipo_operacion)))
+			{
+				$this->addError($attribute, 'Este producto ya esta asignado a este tipo de operación!');
+			}
+		}
+	}
+
 
 	/**
 	 * @return array relational rules.
