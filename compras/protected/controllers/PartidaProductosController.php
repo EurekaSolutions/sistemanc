@@ -120,7 +120,7 @@ class PartidaProductosController extends Controller
 						$modeltodos->fecha_hasta  = $model->fecha_hasta;
 						$modeltodos->save();
 					}
-							Yii::app()->user->setFlash('success', "Productos agregado con éxito a la partida seleccionada ");
+							Yii::app()->user->setFlash('success', "Productos agregados con éxito a la partida seleccionada ");
 					
 					}else
 					{	
@@ -129,6 +129,7 @@ class PartidaProductosController extends Controller
 							Yii::app()->user->setFlash('success', "Producto agregado con éxito a la partida seleccionada");
 			
 					}
+					$this->refresh();
 			}
 			/*if($model->save())
 				$this->redirect(array('view','id'=>$model->partida_producto_id));*/
