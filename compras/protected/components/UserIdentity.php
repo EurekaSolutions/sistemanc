@@ -102,7 +102,7 @@ class UserIdentity extends CUserIdentity
             $auth=Yii::app()->authManager;
 
             $role = 'ente';
-            switch ($role->enteOrgano=->tipo) {
+            switch ($record->enteOrgano->tipo) {
             	case 'S':
             		$role = 'admin';
             		break;
