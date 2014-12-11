@@ -11,7 +11,22 @@ $this->breadcrumbs=array(
         foreach(Yii::app()->user->getFlashes() as $key => $message) {
             echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
         }
-    ?>
+    ?><script type="text/javascript">
+$( document ).ready(function() {
+//alert("ready!");
+$( "#Acciones_nombre" ).change(function() {
+$('#general').html("");
+$( "#general" ).append( '<option value="">Seleccionar partida general</option>' );
+$('#especifica').html("");
+$( "#especifica" ).append( '<option value="">Seleccionar partida especifica</option>' );
+});
+
+$( "#partida" ).change(function() {
+$('#especifica').html("");
+$( "#especifica" ).append( '<option value="">Seleccionar partida especifica</option>' );
+});
+});
+</script>
 <?php 
 
 	
@@ -40,7 +55,13 @@ $this->breadcrumbs=array(
 	//echo $form->listBoxGroup($model, 'nombre',$proyectos);
 	//echo $form->dropDownListGroup($model, 'nombre',$proyectos, array('prompt'=>'Seleccionar proyecto','multiple' => 'multiple'));
 	//echo $form->dropDownList($model,'category_id',  array('prompt'=>'Select category','multiple' => 'multiple'));
+		
+		Yii::app()->clientScript->registerScript("cambioProyecto", '
+				$(\'#proyecto\').change(function(){
+					$(\'#producto\').html("");
+					$( "#producto" ).append( \'<option value="">Seleccionar producto</option>\' );
 
+		})');
 	 echo $form->dropDownListGroup( $proyectoSel,	'proyecto_id',
 			array(
 				'wrapperHtmlOptions' => array(
@@ -105,11 +126,16 @@ $this->breadcrumbs=array(
 
 		Yii::app()->clientScript->registerScript("cambioProducto", '
 				$(\'#producto\').change(function(){
+					if($(\'#producto\').val() == \'\')
+					{
+						$(\'#datos\').html("");
+					}
 					$(\'#unidad\').val(\'\');
 					$(\'#costounidad\').val(\'\');
 					$(\'#cantidad\').val(\'\');
 		})');
-
+?>
+<?php
 		 echo  $form->dropDownListGroup( $productoSel, 'producto_id',
 			array(
 				'wrapperHtmlOptions' => array(
@@ -125,7 +151,7 @@ $this->breadcrumbs=array(
 				'hint' => 'Selecciona el producto para añadir.'
 			)
 		); 
-
+		 ?><div id="datos"><?php
 	if(isset($productoSel->producto_id)){
 
 
@@ -164,7 +190,7 @@ $this->breadcrumbs=array(
 			    array('buttonType' => 'submit',/*'url'=>array('/planificacion/nacional','#'=>'pestanas'),*/ 'label' => 'Añadir')
 			);
 		
-
+		?></div><?php 
 	}
 		$this->endWidget();
 		unset($form);
@@ -172,7 +198,8 @@ $this->breadcrumbs=array(
 
 <?php 
 
-
+	//echo count($presuPros);
+	$this->renderPartial('_nacional',array('presuPros'=>$presuPros));
 		//echo 'probando';
 		//print_r($presuPros);
 

@@ -27,7 +27,8 @@ return array(
 		//'booster.',
 		'application.behaviors.ActiveRecordLogableBehavior',
 		'application.modules.usr.controllers.*',
-		'application.modules.usr.models.*'
+		'application.modules.usr.models.*',
+		//'application.extensions.booster.'
 	),
 
 	'modules'=>array(
@@ -108,6 +109,7 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
+			//'connectionString' => 'pgsql:host=10.70.211.34;dbname=sistemanc',
 			'connectionString' => 'pgsql:host=localhost;dbname=sistemanc',
 			'emulatePrepare' => true,
 			'username' => 'eureka',

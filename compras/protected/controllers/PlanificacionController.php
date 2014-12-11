@@ -270,7 +270,7 @@ class PlanificacionController extends Controller
 			   $crea_usuario->creado_el = date("Y-m-d");
 			   $crea_usuario->llave_activacion = md5(rand(0,100));
 			   $crea_usuario->actualizado_el = date("Y-m-d");
-			   $crea_usuario->rol = 'normal';
+			   $crea_usuario->rol = 'ente';
 
 	    	if($crea_usuario->save())
 	    	{
@@ -983,23 +983,27 @@ class PlanificacionController extends Controller
 		}
 
 	}
-	public function actionEliminarProducto($producto){
+	public function actionEliminarProducto($id){
 		
-		$producto = PresupuestoProductos::model()->findByPk($producto);
+		$producto = PresupuestoProductos::model()->findByPk($id);
+		if(!$producto)
+		{
+			return;
+		}
 		$transaction = $producto->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 		 try{
 
 				if($producto->delete())
 				{
 					$transaction->commit();    // committing 
-					return true;
+					//return true;
 				}else $transaction->rollBack();
 		}
         catch (Exception $e){
             $transaction->rollBack();
-            return false;
+            //return false;
         }
-        return false;
+        //return false;
 	}
 	public  function obtenerUnidadNombre($data,$row){
 			return $data->unidad->nombre; 
@@ -1155,7 +1159,7 @@ class PlanificacionController extends Controller
 							//Listando todos los productos que ya se han cargado
 							foreach ($presupuestoPartidas as $key => $presupuestoPartida) {
 								if($presupuestoPartida->partida_id == $partidaSel->partida_id)
-									$presuPros[] = $presupuestoPartida->presupuestoProducto;
+									$presuPros = $presupuestoPartida->presupuestoProductos;
 							}
 						}
 
@@ -1310,7 +1314,7 @@ class PlanificacionController extends Controller
 						//Listando todos los productos que ya se han cargado
 						foreach ($presupuestoPartidas as $key => $presupuestoPartida) {
 							if($presupuestoPartida->partida_id == $partidaSel->partida_id)
-								$presuImps[] = $presupuestoPartida->presupuestoProducto;
+								$presuImps[] = $presupuestoPartida->presupuestoImportacion;
 						}
 
 					}

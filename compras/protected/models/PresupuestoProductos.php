@@ -59,13 +59,13 @@ class PresupuestoProductos extends CActiveRecord
 			'producto' => array(self::BELONGS_TO, 'Productos', 'producto_id'),
 			'proyectoPartida' => array(self::BELONGS_TO, 'PresupuestoPartidas', array('proyecto_partida_id'=>'presupuesto_partida_id')),
 			'unidad' => array(self::BELONGS_TO, 'Unidades', 'unidad_id'),
-			'importado' => array(self::BELONGS_TO, 'PresupuestoImportacion', 'presupuesto_id'),
+			//'importado' => array(self::BELONGS_TO, 'PresupuestoImportacion', 'presupuesto_id'),
 		);
 	}
 
 	public function beforeDelete(){
-	    foreach($this->importado as $c)
-	        $c->delete();
+/*	    foreach($this->importado as $c)
+	        $c->delete();*/
 	    return parent::beforeDelete();
 	}
 	/**

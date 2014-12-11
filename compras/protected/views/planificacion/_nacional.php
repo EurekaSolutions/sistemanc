@@ -8,41 +8,35 @@
  * 
  * */
 
-		 echo $form->dropDownListGroup( $presuPro, 'producto_id',
-			array(
-				'wrapperHtmlOptions' => array(
-					'class' => 'col-sm-5',
-				),
-				'label'=>'Seleccione el producto',
-				'widgetOptions' => array(
-
-					'data' => CHtml::listData($productosPartidas,'producto_id', 
-							function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);}),
-					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array('prompt' => 'Seleccionar producto', /*'multiple' => false,*/ ),
-				),
-				'hint' => 'Selecciona el producto para añadir.'
-			)
-		); 
-
-		
-		echo $form->dropDownListGroup( $presuPro, 'unidad_id',
-			array(
-				'wrapperHtmlOptions' => array(
-					'class' => 'col-sm-5',
-				),
-				'label'=>'Unidad',
-				'widgetOptions' => array(
-
-					'data' => CHtml::listData(Unidades::model()->findAll(),'unidad_id', 'nombre'),
-					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array('prompt' => 'Seleccionar Unidad', /*'multiple' => false,*/ ),
-				),
-				'hint' => 'Selecciona la unidad del producto.'
-			)
-		); 
-		echo  $form->textFieldGroup($presuPro, 'costo_unidad',array('prepend'=>'Bs'));
-		echo  $form->textFieldGroup($presuPro, 'cantidad');
-
+		echo '<h3>Lista de productos nacionales</h3>';
 
 ?>
+
+		<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
+		    <thead>
+		        <tr class="principaltr">
+		            <th data-field="producto">Producto</th>
+		            <th data-field="unidad">Unidad</th>
+		            <th data-field="costo Unidad">Costo Unidad</th>
+		            <th data-field="cantidad">Cantidad</th>
+		            <th data-field="total">Total</th>
+		           <!--  <th data-field="total">Acción</th> -->
+		        </tr>
+		    </thead>
+		    <tbody>
+		    <?php foreach ($presuPros as $key => $presuPro) {
+		    	# code...
+		    ?>
+		    	<tr class="principaltr">
+
+		    		<td><?php echo $presuPro->producto->nombre;?></td>
+		    		<td><?php echo $presuPro->unidad->nombre;?></td>
+		    		<td><?php echo number_format($presuPro->costo_unidad,2,',','.').' Bs.';?></td>
+		    		<td><?php echo $presuPro->cantidad;?></td>
+		    		<td><?php echo number_format($presuPro->costo_unidad*$presuPro->cantidad,2,',','.').' Bs.';?></td>
+		    		<!-- <td><?php //echo CHtml::link('Eliminar',Yii::app()->createAbsoluteUrl('/planificacion/eliminarProducto',array('id'=>$presuPro->presupuesto_id)));?></td> -->
+
+		    	</tr>
+		    <?php }?>
+		    </tbody>
+		</table>

@@ -89,6 +89,14 @@ class PresupuestoPartidas extends CActiveRecord
 		);
 	}
 
+	public function beforeDelete(){
+	    foreach($this->presupuestoProductos as $c)
+	        $c->delete();
+	    foreach($this->presupuestoImportacion as $c)
+	        $c->delete();
+	    return parent::beforeDelete();
+	}
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
