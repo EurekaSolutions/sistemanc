@@ -20,8 +20,8 @@ class UserIdentity extends CUserIdentity
 	const ERROR_USER_INACTIVE=1001;
 	const ERROR_USER_LOCKED=1002;
 
-    const MAX_FAILED_LOGIN_ATTEMPTS = 5;
-    const LOGIN_ATTEMPTS_COUNT_SECONDS = 1800;
+    const MAX_FAILED_LOGIN_ATTEMPTS = 10;
+    const LOGIN_ATTEMPTS_COUNT_SECONDS = 600;
 
     public $usuario = null;
     public $contrasena = null;
@@ -34,9 +34,9 @@ class UserIdentity extends CUserIdentity
 
 	public function __construct($usuario,$contrasena)
 	{
-	   $this->usuario = $usuario;
+	   $this->usuario = strtolower($usuario);
 	   $this->contrasena = $contrasena;
-	   parent::__construct($usuario,$contrasena);
+	   parent::__construct($this->usuario,$contrasena);
 	}
 
 	protected static function createFromUser(Usuarios $user)
@@ -50,8 +50,8 @@ class UserIdentity extends CUserIdentity
 	{
 		$this->_activeRecord = $user;
 		$this->_id = $user->getPrimaryKey();
-		$this->username = $this->usuario = $user->usuario;
-		$this->correo = $user->correo;
+		$this->username = $this->usuario = strtolower($user->usuario);
+		$this->correo = strtolower($user->correo);
 		//$this->firstName = $user->firstname;
 		$this->cedula = $user->cedula;
 	}
@@ -71,7 +71,7 @@ class UserIdentity extends CUserIdentity
      */
     public function authenticate()
     {
-        $record = Usuarios::model()->findByAttributes(array('usuario'=>$this->usuario));        	
+        $record = Usuarios::model()->findByAttributes(array('usuario'=>strtolower($this->usuario)));        	
         $authenticated = $record !== null && $record->verificarContrasena($this->contrasena);
 
         $attempt = new UserLoginAttempt;
@@ -225,7 +225,10 @@ class UserIdentity extends CUserIdentity
 		$allowedAttributes = array('usuario','correo','cedula');
 		foreach($attributes as $name=>$value) {
 			if (in_array($name, $allowedAttributes))
-				$this->$name = $value;
+				if($name == 'correo' || $name == 'usuario')
+					$this->$name = strtolower($value);
+				else
+					$this->$name = $value;
 		}
 		return true;
 	}
@@ -254,6 +257,8 @@ class UserIdentity extends CUserIdentity
      */
 	public static function find(array $attributes)
 	{
+		if(isset($attributes['usuario'])) $attributes['usuario'] = strtolower($attributes['usuario']);
+		if(isset($attributes['correo'])) $attributes['correo'] = strtolower($attributes['correo']);
 		$records = Usuarios::model()->findAllByAttributes($attributes);
         if (count($records)!==1) {
             return null;

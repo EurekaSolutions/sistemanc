@@ -102,6 +102,14 @@ $this->breadcrumbs=array(
 ?>
 
 <?php 
+
+		Yii::app()->clientScript->registerScript("cambioProducto", '
+				$(\'#producto\').change(function(){
+					$(\'#unidad\').val(\'\');
+					$(\'#costounidad\').val(\'\');
+					$(\'#cantidad\').val(\'\');
+		})');
+
 		 echo  $form->dropDownListGroup( $productoSel, 'producto_id',
 			array(
 				'wrapperHtmlOptions' => array(
@@ -134,19 +142,16 @@ $this->breadcrumbs=array(
 				),
 				'label'=>'Unidad',
 				'widgetOptions' => array(
-
 					'data' => CHtml::listData(Unidades::model()->findAll(),'unidad_id', 'nombre'),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array('prompt' => 'Seleccionar Unidad', /*'multiple' => false,*/ ),
+					'htmlOptions' => array('id'=>'unidad', 'prompt' => 'Seleccionar Unidad', /*'multiple' => false,*/ ),
 				),
 				'hint' => 'Selecciona la unidad del producto.'
 			)
 		); 
-		echo  $form->textFieldGroup($presuPro, 'costo_unidad',array('prepend'=>'Bs'));
-		echo  $form->textFieldGroup($presuPro, 'cantidad');
+		echo  $form->textFieldGroup($presuPro, 'costo_unidad',array('prepend'=>'Bs','widgetOptions'=>array('htmlOptions'=>array('id'=>'costounidad'))));
+		echo  $form->textFieldGroup($presuPro, 'cantidad',array('widgetOptions'=>array('htmlOptions'=>array('id'=>'cantidad'))));
 
-
-		/********************** IMPORTADO *****************************/
 
 		echo $form->hiddenField($presuPro,'tipo',array('id'=>'tipoPro'));
 

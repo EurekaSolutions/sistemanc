@@ -1190,7 +1190,7 @@ class PlanificacionController extends Controller
 
 							$total = $this->montoCargadoPartida($presuPartida);
 												
-							if($presuPartida->monto_presupuestado > ($total+$presuPro->monto_presupuesto))
+							if($presuPartida->monto_presupuestado >= ($total+$presuPro->monto_presupuesto))
 							{	
 									/*if($this->productoExisteProyecto($presuPro->producto_id,$proyectoActual->proyecto_id,$partidaSel->partida_id))
 									{
@@ -1251,7 +1251,7 @@ class PlanificacionController extends Controller
 		{
 			$proyectoSel->attributes = $_POST['Proyectos'];
 			// Para el manejo del dropdown de acciones y proyectos
-			print_r($_POST['Proyectos']['proyecto_id']);
+			//print_r($_POST['Proyectos']['proyecto_id']);
 				if(!empty($_POST['Proyectos']['proyecto_id'])){
 
 					
@@ -1328,6 +1328,7 @@ class PlanificacionController extends Controller
 								$presuPartida = $presupuestoPartida;
 					}
 
+					//if()
 					// Producto Importado
 					if(isset($_POST['PresupuestoImportacion']) /*&& isset($_POST['PresupuestoProductos'])*/)
 					{
@@ -1341,9 +1342,8 @@ class PlanificacionController extends Controller
 							$total = $this->montoCargadoPartida($presuPartida);
 						//throw new Exception("Error ".$presuImp->divisa->tasa->tasa." Request", 1);
 						
-							if($presuPartida->monto_presupuestado > ($total+($presuImp->monto_presupuesto*$presuImp->divisa->tasa->tasa))){	
+							if(@($presuPartida->monto_presupuestado >= ($total+($presuImp->monto_presupuesto*$presuImp->divisa->tasa->tasa)))){	
 
-								
 									$transaction = $presuImp->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 									try{
 

@@ -104,6 +104,9 @@ class Usuarios extends CActiveRecord
     	if($this->isNewRecord)
  			$this->creado_el = $this->actualizado_el;*/
 
+ 		$this->usuario = strtolower($this->usuario);
+ 		$this->correo = strtolower($this->correo);
+
  		return parent::beforeValidate();
 	}
 
@@ -129,9 +132,10 @@ class Usuarios extends CActiveRecord
 		} else {
 			$this->actualizado_el = date('Y-m-d H:i:s');
 		}
-       			
 
-       			
+       	$this->usuario = strtolower($this->usuario);
+       	$this->correo = strtolower($this->correo);
+
         return parent::beforeSave();
     }
 
@@ -140,7 +144,10 @@ class Usuarios extends CActiveRecord
        //reset the contrasena to null because we don't want the hash to be shown.
         $this->contrasena_inicial = $this->contrasena;
         //$this->contrasena = null;
- 
+
+        $this->usuario = strtolower($this->usuario);
+ 		$this->correo = strtolower($this->correo);
+
         parent::afterFind();
     }
     

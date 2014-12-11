@@ -53,7 +53,7 @@ class LoginForm extends BasePasswordForm
 	{
 		if($this->_identity===null) {
 			$userIdentityClass = $this->userIdentityClass;
-			$this->_identity=new $userIdentityClass($this->username,$this->password);
+			$this->_identity=new $userIdentityClass(strtolower($this->username),$this->password);
 			$this->_identity->authenticate();
 		}
 		return $this->_identity;
