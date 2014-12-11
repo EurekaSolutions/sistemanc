@@ -254,8 +254,6 @@ class UserIdentity extends CUserIdentity
      */
 	public static function find(array $attributes)
 	{
-		/*if(isset($attributes['usuario'])) $attributes['usuario'] = strtolower($attributes['usuario']);
-		if(isset($attributes['correo'])) $attributes['correo'] = strtolower($attributes['correo']);*/
 		$records = Usuarios::model()->findAllByAttributes($attributes);
         if (count($records)!==1) {
             return null;
