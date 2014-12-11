@@ -86,7 +86,7 @@ class RecoveryForm extends BasePasswordForm
 				throw new CException(Yii::t('UsrModule.usr','The {class} class must implement the {interface} interface.',array('{class}'=>$userIdentityClass, '{interface}'=>'IActivatedIdentity')));
 			}
 			$attributes = array();
-			if ($this->usuario !== null) $attributes['usuario'] = strtolower($this->usuario);
+			//if ($this->usuario !== null) $attributes['usuario'] = strtolower($this->usuario);
 			if ($this->correo !== null) $attributes['correo'] = strtolower($this->correo);
 			//if ($this->cedula !== null) $attributes['cedula'] = $this->cedula;
 			if (!empty($attributes))

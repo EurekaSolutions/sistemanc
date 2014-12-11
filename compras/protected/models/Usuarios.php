@@ -139,6 +139,15 @@ class Usuarios extends CActiveRecord
         return parent::beforeSave();
     }
 
+    public function beforeFind()
+    {
+
+        $this->usuario = strtolower($this->usuario);
+ 		$this->correo = strtolower($this->correo);
+
+        parent::beforeFind();
+    }
+
     public function afterFind()
     {
        //reset the contrasena to null because we don't want the hash to be shown.
