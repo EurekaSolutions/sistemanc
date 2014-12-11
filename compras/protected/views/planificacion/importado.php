@@ -134,7 +134,7 @@ $this->breadcrumbs=array(
 
 	if(isset($productoSel->producto_id)){
 
-		echo '<div class="flash-notice"><h4> Cargar tantos codigos arancvelarios como se requiera para este producto.<h4></div>';
+		echo '<div class="flash-notice"><h4> Cargar tantos codigos arancelarios como se requiera para el producto seleccionado<h4></div>';
 
 		echo $form->errorSummary($presuImp);
 
@@ -196,10 +196,11 @@ $this->breadcrumbs=array(
 				'widgetOptions' => array(
 					'htmlOptions'=> array('id'=>'fecha'),
 					'options' => array(
-						'format' => 'dd-mm-yyyy',
+						'format' => 'yyyy-m-d',
 						'language' => 'es',
 					),
 				),
+
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
 				), 

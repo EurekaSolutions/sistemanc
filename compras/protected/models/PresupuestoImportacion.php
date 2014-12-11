@@ -35,6 +35,7 @@ class PresupuestoImportacion extends CActiveRecord
 		return array(
 			array('codigo_ncm_id, producto_id, cantidad, fecha_llegada, monto_presupuesto, tipo, divisa_id, descripcion', 'required'),
 			array('monto_presupuesto, monto_ejecutado, cantidad', 'numerical'),
+			array('codigo_ncm_id', 'codigoNcmUnico'),
 			array('tipo', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -57,6 +58,19 @@ class PresupuestoImportacion extends CActiveRecord
 		);
 	}
 
+	public function codigoNcmUnico($attribute,$params)
+	{
+		if($this->presupuesto_partida_id and $this->codigo_ncm_id and $this->producto_id)
+		{
+				
+				if($this->find('presupuesto_partida_id=:presupuesto_partida_id AND codigo_ncm_id=:codigo_ncm_id AND producto_id=:producto_id', 
+						array(':presupuesto_partida_id' =>$this->presupuesto_partida_id, ':codigo_ncm_id' =>  $this->codigo_ncm_id, ':producto_id' => $this->producto_id)))
+				{
+					$this->addError($attribute, 'El código arancelario ya se encuentra asociado al producto seleccionado!');
+				}
+			
+		}
+	}
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */

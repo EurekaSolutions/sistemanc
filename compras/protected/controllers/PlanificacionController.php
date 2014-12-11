@@ -1006,7 +1006,7 @@ class PlanificacionController extends Controller
         //return false;
 	}
 	public  function obtenerCodigoNcmNombre($data,$row=null){
-			return $this->numeroCodigoNcm($data).' - '.$data->nombre; 
+			return $this->numeroCodigoNcm($data).' - '.$data->descripcion_ncm; 
 	}
 	public  function obtenerUnidadNombre($data,$row){
 			return $data->unidad->nombre; 
@@ -1290,7 +1290,7 @@ class PlanificacionController extends Controller
 						$proyectoActual = Proyectos::model()->findByPk($proyectoSel->proyecto_id);
 						$partidas = $this->partidasProyecto($proyectoSel->proyecto_id);
 
-						//Todas los Presupuesto Partidas del proyecto seleccionado
+						//Todos los Presupuesto Partidas del proyecto seleccionado
 						$presupuestoPartidas = $proyectoActual->presupuestoPartidas;
 					
 					}
@@ -1310,16 +1310,16 @@ class PlanificacionController extends Controller
 						//$productosPartidas = Partidas::model()->findByPk($partidaSel->partida_id)->productos;
 						
 						// Producto Nacional
-						if(isset($_POST['Productos']) && !empty($_POST['Productos']['producto_id']))
+						if(isset($_POST['Productos']) && !empty($_POST['Productos']['producto_id'])){
 							$productoSel->attributes = $_POST['Productos'];
-
-
-						//Listando todos los productos que ya se han cargado
-						foreach ($presupuestoPartidas as $key => $presupuestoPartida) {
-							if($presupuestoPartida->partida_id == $partidaSel->partida_id)
-								$presuImps = $presupuestoPartida->presupuestoImportacion;
+						
+							//Listando todos los productos que ya se han cargado
+							foreach ($presupuestoPartidas as $key => $presupuestoPartida) 
+								if($presupuestoPartida->partida_id == $partidaSel->partida_id){
+									$presuImps = $presupuestoPartida->presupuestoImportacion;
+								}
+		
 						}
-
 					}
 
 
@@ -1328,8 +1328,7 @@ class PlanificacionController extends Controller
 
 
 		}
-
-					
+		
 					$presuPartida = new PresupuestoPartidas();
 					if(!empty($accionSel->accion_id)){
 						foreach ( PresupuestoPartidasAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {

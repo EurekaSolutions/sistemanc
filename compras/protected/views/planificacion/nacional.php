@@ -175,17 +175,22 @@ $this->breadcrumbs=array(
 			    'booster.widgets.TbButton',
 			    array('buttonType' => 'submit',/*'url'=>array('/planificacion/nacional','#'=>'pestanas'),*/ 'label' => 'Añadir')
 			);
-		
+
+		$this->renderPartial('_nacional',array('presuPros'=>$presuPros));
+
 		?></div><?php 
 	}
 		$this->endWidget();
 		unset($form);
+
+		
+
 ?>
 
 <?php 
 
 	//echo count($presuPros);
-	$this->renderPartial('_nacional',array('presuPros'=>$presuPros));
+	
 		//echo 'probando';
 		//print_r($presuPros);
 
