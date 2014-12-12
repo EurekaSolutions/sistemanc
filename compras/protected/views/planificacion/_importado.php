@@ -8,7 +8,7 @@
  * 
  * */
 
-		echo '<h3>Lista de productos importados</h3>';
+		
 
 ?>
 
@@ -18,6 +18,7 @@
 
 				
 if(isset($presuImps[0])){
+			echo '<h3>Lista de productos importados</h3>';
 				$criteria = new CDbCriteria();
 				$criteria->distinct=true;
 				//$criteria->group= 't.producto_id, t.presupuesto_partida_id'; 		//Tambien sirve
@@ -49,7 +50,7 @@ if(isset($presuImps[0])){
 		    <?php 
 
 		    	foreach (PresupuestoImportacion::model()->findAllByAttributes(array('producto_id'=>$presuImp->producto_id,'presupuesto_partida_id'=>$presuImp->presupuesto_partida_id)) as $key => $presIm) {
-		    	# code...
+		    		
 		    ?>
 		    	<tr class="principaltr">
 

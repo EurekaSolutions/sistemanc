@@ -83,7 +83,7 @@ $this->breadcrumbs=array(
 					//'name'=>'partida',
 					'data' =>CHtml::listData($partidas,'partida_id', function($partida){ return CHtml::encode($this->numeroPartida($partida).' - '.$partida->nombre);}),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array('id'=>'partida', 'prompt' => 'Seleccionar Partida', //'onChange'=>'submit','submit' => array('/planificacion/importado','#'=>'partida') 
+					'htmlOptions' => array('id'=>'partida', 'prompt' => 'Seleccionar partida', //'onChange'=>'submit','submit' => array('/planificacion/importado','#'=>'partida') 
 										'ajax' => array(	
 												'type'=>'POST', //request type
 												'url'=>CController::createUrl('planificacion/buscarproductospartida'), //url to call.
@@ -134,6 +134,7 @@ $this->breadcrumbs=array(
 
 	if(isset($productoSel->producto_id)){
 
+	?><div id="datos"><?php
 		echo '<div class="flash-notice"><h4> Cargar tantos codigos arancelarios como se requiera para el producto seleccionado<h4></div>';
 
 		echo $form->errorSummary($presuImp);
@@ -225,8 +226,9 @@ $this->breadcrumbs=array(
 			    'booster.widgets.TbButton',
 			    array('buttonType' => 'submit',/*'url'=>array('/planificacion/importado','#'=>'pestanas'),*/ 'label' => 'Añadir')
 			);
+		$this->renderPartial('_importado',array('presuImps'=>$presuImps));
 		
-
+		?></div><?php 
 	}
 		$this->endWidget();
 		unset($form);
@@ -234,11 +236,7 @@ $this->breadcrumbs=array(
 
 <?php 
 
-		//echo 'probando';
-		//print_r($presuImps);
 		
-		//echo count($presuImps);
-		$this->renderPartial('_importado',array('presuImps'=>$presuImps));
 
 /*		echo '<h3>Lista de productos </h3>';
 		$presuProducto = new PresupuestoProductos();
@@ -311,3 +309,26 @@ $this->breadcrumbs=array(
 
 
 ?>
+
+
+ <script type="text/javascript">
+		$( document ).ready(function() {
+			$("#producto").change(function() {
+				$('#datos').html("");
+			});
+
+			$( "#partida").change(function() {
+				$('#producto').html("");
+				$( "#producto" ).append( '<option value="">Seleccionar producto</option>' );
+				$('#datos').html("");
+			});
+
+			$( "#proyecto").change(function() {
+				$('#partida').html("");
+				$( "#partida" ).append( '<option value="">Seleccionar partida</option>' );
+				$('#producto').html("");
+				$( "#producto" ).append( '<option value="">Seleccionar producto</option>' );
+				$('#datos').html("");
+			});
+		});
+	</script>

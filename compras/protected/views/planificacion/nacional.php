@@ -137,9 +137,9 @@ $this->breadcrumbs=array(
 				'hint' => 'Selecciona el producto para añadir.'
 			)
 		); 
-		 ?><div id="datos"><?php
+		
 	if(isset($productoSel->producto_id)){
-
+ ?><div id="datos"><?php
 
 	/********************** NACIONAL *****************************/
 		

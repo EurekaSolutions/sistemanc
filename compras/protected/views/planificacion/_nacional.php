@@ -11,7 +11,7 @@
 		echo '<h3>Lista de productos nacionales por partida seleccionada: </h3>';
 
 ?>
-
+	<?php if(isset($presuPros[0])){ ?>
 		<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
 		    <thead>
 		        <tr class="principaltr">
@@ -25,7 +25,6 @@
 		    </thead>
 		    <tbody>
 		    <?php foreach ($presuPros as $key => $presuPro) {
-		    	# code...
 		    ?>
 		    	<tr class="principaltr">
 
@@ -40,3 +39,4 @@
 		    <?php }?>
 		    </tbody>
 		</table>
+		<?php } ?>
