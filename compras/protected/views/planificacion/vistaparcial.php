@@ -3,7 +3,7 @@
 
 $this->breadcrumbs=array(
 	'Planificacion'=>array('/planificacion'),
-	'Vistaparcial',
+	'Estado de carga',
 );
 
 ?>
@@ -24,10 +24,10 @@ tr.principaltr th {
 <?php $mfinal = 0; ?>
 <!--<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>-->
 		
-		<h3 style="text-align: center;">ESTADO DE CARGA</h3><br>
+		<h4 style="text-align: center;">ESTADO DE CARGA</h4><br>
 
 
-		<h4 style="text-align: center;">ACCIONES CENTRALIZADAS</h4><br>
+		<h3 style="text-align: center;">ACCIONES CENTRALIZADAS</h3><br>
 
 		<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
 		    <thead>
