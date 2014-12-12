@@ -79,39 +79,6 @@ class PlanificacionController extends Controller
 	}
 
 
-	public function montoAccionProyectoDivisa($tipo,$id,$ente_id,$fecha){
-
-		if ($tipo=='P'){
-			$sql = "select sum(p.monto_presupuesto*p.cantidad*a.tasa) as cantidad 
-					from presupuesto_importacion p 
-					join presupuesto_partidas pr on (p.presupuesto_partida_id = pr.presupuesto_partida_id) 
-					join presupuesto_partida_proyecto py on (pr.presupuesto_partida_id = py.presupuesto_partida_id) 
-					join proyectos t on (py.proyecto_id = t.proyecto_id)
-					join divisas d on ( p.divisa_id =  d.divisa_id)
-					join tasas a on (d.divisa_id = a.divisa_id)
-					where a.fecha_desde <= '$fecha'
-					and a.fecha_hasta >= '$fecha_hasta'
-					and t.proyecto_id = $id and pr.ente_organo_id=$ente_id";
-
-		}else{
-			$sql = "select sum(p.monto_presupuesto*p.cantidad*a.tasa) as cantidad 
-				from presupuesto_importacion p 
-				join presupuesto_partidas pr on (p.presupuesto_partida_id = pr.presupuesto_partida_id) 
-				join presupuesto_partida_acciones py on (pr.presupuesto_partida_id = py.presupuesto_partida_id) 
-				join acciones t on (py.accion_id = t.accion_id)
-				join divisas d on ( p.divisa_id =  d.divisa_id)
-				join tasas a on (d.divisa_id = a.divisa_id)
-				where a.fecha_desde <= '$fecha'
-				and a.fecha_hasta >= '$fecha'
-				and t.accion_id = $id and pr.ente_organo_id=$ente_id";
-		}
-	   		$connection=Yii::app()->db;
-	      	$command=$connection->createCommand($sql);
-	      	$results=$command->queryAll(); 
-			return $results[0]['cantidad'];
-	}
-
-
 	public function proyectosPartidasParticular($partida)
 	{
 		$criteria = new CDbCriteria();
@@ -1419,6 +1386,7 @@ class PlanificacionController extends Controller
 			'proyectos' => $proyectos,  'acciones' => $acciones
 		));
 
+		
 	}
 
 	public function actionVistaresumen()  /*Aquí mostramos la vista del usuario cuando ya guardo TODOS los datos*/

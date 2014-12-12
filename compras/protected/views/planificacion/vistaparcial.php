@@ -27,7 +27,7 @@ tr.principaltr th {
 		<h4 style="text-align: center;">ESTADO DE CARGA</h4><br>
 
 
-		<h3 style="text-align: center;">ACCIONES CENTRALIZADAS</h3><br>
+		<h4 style="text-align: center;">ACCIONES CENTRALIZADAS</h4><br>
 
 		<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
 		    <thead>
@@ -42,6 +42,14 @@ tr.principaltr th {
 		    <tbody>
 			 <?php   foreach ($acciones as $key => $value) { 
 			 				$monto = $this->montoAccion($value);
+			 
+
+			 		$valor = 0;
+
+					foreach ($value->presupuestoPartidas as $key => $accionmonto) {
+						$valor += $this->montoCargadoPartida($accionmonto);
+					}
+
 			 ?>
 		
 		    	<tr class="principaltr">
@@ -73,12 +81,21 @@ tr.principaltr th {
 		    <tbody>
 
 			<?php  foreach ($proyectos as $key => $value){ 
-						$monto = $this->montoProyecto($value);?> 
+						$monto = $this->montoProyecto($value);
+
+
+					$valor = 0;
+
+					foreach ($value->presupuestoPartidas as $key => $proyectomonto) {
+						$valor += $this->montoCargadoPartida($proyectomonto);
+					}
+
+			?> 
 		    	<tr class="principaltr">
 		    		<td><?php echo $value->codigo; ?></td>
 		    		<td><?php echo $value->nombre; ?></td>
 		    		<td><?php echo number_format($monto,2,',','.'); ?></td>
-		    		<td><?php echo number_format($valor = rand(0,0),2,',','.'); ?></td>
+		    		<td><?php echo number_format($valor,2,',','.'); ?></td>
 		    		<td><strong><?php echo number_format($monto - $valor,2,',','.');?></strong></td>
 		    	</tr>
 		     <?php $mfinal += $monto;
