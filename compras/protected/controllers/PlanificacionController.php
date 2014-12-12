@@ -818,6 +818,9 @@ class PlanificacionController extends Controller
 
 
 	}
+	public function accionId($id){
+		return intval(substr( $id, 1));
+	}
 	/**
 	*Busca la lista de partidas de la acción
 	*@param integer $id
@@ -825,18 +828,11 @@ class PlanificacionController extends Controller
 	**/
 	public function partidasAccion($id){
 
-		$proyectoActual = Proyectos::model()->findByPk($id);
-		//print_r($proyectoActual);
-
-		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
-
-		$presupuestoPartidaAcciones = new PresupuestoPartidaAcciones();
-		$presupuestoPartidaAcciones->accion_id = $id;
-		$presupuestoPartidaAcciones->ente_organo_id = $usuario->ente_organo_id;
+		$presupuestoPartidaAcciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$id, 'ente_organo_id'=>$this->usuario()->ente_organo_id) );
 
 		$partidas =array();
-		foreach ($presupuestoPartidaAcciones->presupuestoPartidas as $key => $prePar) {
-			$partidas[$keys] = $prePar->partida;
+		foreach ($presupuestoPartidaAcciones as $key => $prePar) {
+			$partidas[$key] = $prePar->presupuestoPartida->partida;
 		}
 		return $partidas;
 	}
@@ -900,7 +896,9 @@ class PlanificacionController extends Controller
 
 			if(strstr($_POST['Proyectos']['proyecto_id'], 'a'))
 			{//Es un id de accion
-				$accionId = intval(explode('a', $_POST['Proyectos']['proyecto_id']));
+
+				$accionId = $this->accionId($_POST['Proyectos']['proyecto_id']);
+
 				$partidas = $this->partidasAccion($accionId);
 			}else{//Es un id de proyecto
 				$proyectoSel = Proyectos::model()->findByPk($_POST['Proyectos']['proyecto_id'] );
@@ -930,12 +928,18 @@ class PlanificacionController extends Controller
 		 echo CHtml::tag('option',
 		                   array('value'=>""),CHtml::encode($name),true);
 
+
+
 		if(isset($_POST['Proyectos']) and !empty($_POST['Proyectos']['proyecto_id']))
-		{
+		{	
+			if(isset($_GET['t']))
+		 		$tipo = $_GET['t'];
+
 			$productosPartidas = array();
+
 			if(isset($_POST['Partidas']) && !empty($_POST['Partidas']['partida_id'])){
 
-				$productosPartidas = $this->listaProductosPartida($_POST['Partidas']['partida_id'], $_POST['Proyectos']['proyecto_id']); // Partidas::model()->findByPk($_POST['Partidas']['partida_id'])->productos;
+				$productosPartidas = $this->listaProductosPartida($_POST['Partidas']['partida_id'], $_POST['Proyectos']['proyecto_id'], $tipo); // Partidas::model()->findByPk($_POST['Partidas']['partida_id'])->productos;
 			}
 		   
 		    $productosPartidass = CHtml::listData($productosPartidas, 'producto_id', 
@@ -997,20 +1001,37 @@ class PlanificacionController extends Controller
 			}
 		return false;
 	}
-	public function listaProductosPartida($partidaId, $proyectoActualId)
+	public function listaProductosPartida($partidaId, $proyectoActualId, $tipo)
 	{
 
-		$productos = Partidas::model()->findByPk($partidaId)->productos;
-		$proyecto = Proyectos::model()->findByPk($proyectoActualId);
+		if(strstr($proyectoActualId, 'a'))
+		{//Es un id de accion
+			
+			$accionId = $this->accionId($proyectoActualId);
 
-		$productos = array();
+			//$productos = $this->partidasAccion($accionId);
+
+			foreach( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionId,'ente_organo_id'=>$this->usuario()->ente_organo_id)) as $key => $value) {
+			 	//if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
+			 	//Todos los presupuestos partidas de la Acción seleccionada
+			 	$presupuestoPartidas[] = $value->presupuestoPartida;
+			}
+		}else{
 		
+			$proyecto = Proyectos::model()->findByPk($proyectoActualId);
 
-		foreach ($proyecto->presupuestoPartidas as $key => $value) {
+			$presupuestoPartidas = $proyecto->presupuestoPartidas;
+		}
+		
+		$productos = array();
+		foreach ($presupuestoPartidas as $key => $value) {
 			
 			if($value->partida_id == $partidaId)
 			{
-				$prePro = $value->presupuestoProductos; 
+				if($tipo == 'n')
+					$prePro = $value->presupuestoProductos; 
+				else
+					$prePro = $value->presupuestoImportacion;
 				foreach (Partidas::model()->findByPk($partidaId)->productos as $key => $productoPar) {
 
 					$existe = false;
@@ -1030,6 +1051,7 @@ class PlanificacionController extends Controller
 
 		return $productos;
 	}
+
 	public function usuario(){
 		return Usuarios::model()->findByPk(Yii::app()->user->getId());
 	}
@@ -1096,11 +1118,11 @@ class PlanificacionController extends Controller
 					// Verificando si el id pasado es de una acción o un proyecto
 					if(strstr($proyectoSel->proyecto_id, 'a'))
 					{
-						$accionSel->accion_id = intval(explode('a', $proyectoSel->proyecto_id));
+						$accionSel->accion_id = $this->accionId($proyectoSel->proyecto_id);
 						
 						$partidas = $this->partidasAccion($accionSel->accion_id);
 
-						foreach( PresupuestoPartidasAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
+						foreach( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
 						 	//if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
 						 	//Todos los presupuestos partidas de la Acción seleccionada
 						 		$presupuestoPartidas[] = $value->presupuestoPartida;
@@ -1123,7 +1145,7 @@ class PlanificacionController extends Controller
 							$partidaSel->attributes = $_POST['Partidas'];
 							//$presuPros = Proyectos::model()->findAllByAttributes(array('proyecto_id'=>attributeValue), condition, array('key'=>value))
 
-							$productosPartidas = $this->listaProductosPartida($partidaSel->partida_id, $proyectoSel->proyecto_id); //Partidas::model()->findByPk($partidaSel->partida_id)->productos;
+							$productosPartidas = $this->listaProductosPartida($partidaSel->partida_id, $proyectoSel->proyecto_id, 'n'); //Partidas::model()->findByPk($partidaSel->partida_id)->productos;
 							$productosPartidas = CHtml::listData($productosPartidas, 'producto_id', 
                                                         function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);});
 	
@@ -1149,7 +1171,7 @@ class PlanificacionController extends Controller
 						//print_r($presuPro);
 						$presuPartida = new PresupuestoPartidas();
 						if(!empty($accionSel->accion_id)){
-							foreach ( PresupuestoPartidasAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
+							foreach ( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
 							 	if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
 							 		$presuPartida = $value->presupuestoPartida;
 							 }
@@ -1249,11 +1271,11 @@ class PlanificacionController extends Controller
 					// Verificando si el id pasado es de una acción o un proyecto
 					if(strstr($proyectoSel->proyecto_id, 'a'))
 					{
-						$accionSel->accion_id = intval(explode('a', $proyectoSel->proyecto_id));
+						$accionSel->accion_id = $this->accionId($proyectoSel->proyecto_id);
 						
 						$partidas = $this->partidasAccion($accionSel->accion_id);
 
-						foreach ( PresupuestoPartidasAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
+						foreach ( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
 						 	//if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
 						 	//Todos los presupuestos partidas de la Acción seleccionada
 						 		$presupuestoPartidas[] = $value->presupuestoPartida;
@@ -1277,7 +1299,7 @@ class PlanificacionController extends Controller
 						$partidaSel->attributes = $_POST['Partidas'];
 						//$presuPros = Proyectos::model()->findAllByAttributes(array('proyecto_id'=>attributeValue), condition, array('key'=>value))
 
-						$productosPartidas = $productosPartidas = $this->listaProductosPartida($partidaSel->partida_id, $proyectoSel->proyecto_id); //Partidas::model()->findByPk($partidaSel->partida_id)->productos;
+						$productosPartidas = $productosPartidas = $this->listaProductosPartida($partidaSel->partida_id, $proyectoSel->proyecto_id, 'i'); //Partidas::model()->findByPk($partidaSel->partida_id)->productos;
 						$productosPartidas = CHtml::listData($productosPartidas, 'producto_id', 
 			                                        function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);});
 					
@@ -1305,7 +1327,7 @@ class PlanificacionController extends Controller
 		
 					$presuPartida = new PresupuestoPartidas();
 					if(!empty($accionSel->accion_id)){
-						foreach ( PresupuestoPartidasAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
+						foreach ( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
 						 	if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
 						 		$presuPartida = $value->presupuestoPartida;
 						 }

@@ -53,7 +53,7 @@ class PresupuestoPartidaAcciones extends CActiveRecord
 			'accion' => array(self::BELONGS_TO, 'Acciones', 'accion_id'),
 			'enteOrgano' => array(self::BELONGS_TO, 'EntesOrganos', 'ente_organo_id'),
 			'presupuestoPartidas' => array(self::HAS_MANY, 'PresupuestoPartidas', array('presupuesto_partida_id'=>'presupuesto_partida_id')),
-			'presupuestoPartida' => array(self::HAS_ONE, 'PresupuestoPartidas', array('presupuesto_partida_id'=>'presupuesto_partida_id')),
+			'presupuestoPartida' => array(self::BELONGS_TO, 'PresupuestoPartidas', array('presupuesto_partida_id'=>'presupuesto_partida_id')),
 		);
 	}
 

@@ -91,7 +91,7 @@ $this->breadcrumbs=array(
 					'htmlOptions' => array('id'=>'partida', 'prompt' => 'Seleccionar partida', //'onChange'=>'submit','submit' => array('/planificacion/nacional','#'=>'partida') 
 										'ajax' => array(	
 												'type'=>'POST', //request type
-												'url'=>CController::createUrl('planificacion/buscarproductospartida'), //url to call.
+												'url'=>CController::createUrl('planificacion/buscarproductospartida',array('t'=>'n')), //url to call.
 												//Style: CController::createUrl('currentController/methodToCall')
 												'update'=>'#producto', //selector to update
 												//'data'=>'js:javascript statement' 
