@@ -138,7 +138,7 @@ $this->breadcrumbs=array(
 			)
 		); 
 		
-	if(isset($productoSel->producto_id)){
+	if(!empty($productoSel->producto_id)){
  ?><div id="datos"><?php
 
 	/********************** NACIONAL *****************************/
@@ -156,7 +156,7 @@ $this->breadcrumbs=array(
 				'widgetOptions' => array(
 					'data' => CHtml::listData(Unidades::model()->findAll(),'unidad_id', 'nombre'),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array('id'=>'unidad', 'prompt' => 'Seleccionar Unidad', /*'multiple' => false,*/ ),
+					'htmlOptions' => array('id'=>'unidad', 'prompt' => 'Seleccionar unidad', /*'multiple' => false,*/ ),
 				),
 				'hint' => 'Selecciona la unidad del producto.'
 			)

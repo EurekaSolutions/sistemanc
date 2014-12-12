@@ -132,7 +132,7 @@ $this->breadcrumbs=array(
 			)
 		); 
 
-	if(isset($productoSel->producto_id)){
+	if(!empty($productoSel->producto_id)){
 
 	?><div id="datos"><?php
 		echo '<div class="flash-notice"><h4> Cargar tantos codigos arancelarios como se requiera para el producto seleccionado<h4></div>';
