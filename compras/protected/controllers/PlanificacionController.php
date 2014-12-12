@@ -1078,7 +1078,7 @@ class PlanificacionController extends Controller
 		//Importados
 			if($presuPartida->presupuestoImportacion)
 				foreach ($presuPartida->presupuestoImportacion as $key => $presupuestoImportacion) {
-					$total += ($presupuestoImportacion->monto_presupuesto*$presupuestoImportacion->divisa->tasa->tasa);	
+					$total += ($presupuestoImportacion->cantidad*$presupuestoImportacion->monto_presupuesto*$presupuestoImportacion->divisa->tasa->tasa);
 				}
  		return $total;
  	}

@@ -8,10 +8,12 @@
  * 
  * */
 
-		echo '<h3>Lista de productos nacionales por partida seleccionada: </h3>';
-
+		
 ?>
-	<?php if(isset($presuPros[0])){ ?>
+	<?php if(isset($presuPros[0])){ 
+		echo '<h3>Lista de productos nacionales por partida seleccionada: </h3>';
+	?>
+
 		<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
 		    <thead>
 		        <tr class="principaltr">

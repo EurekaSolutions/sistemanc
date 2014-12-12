@@ -3,7 +3,7 @@
 
 $this->breadcrumbs=array(
 	'Planificacion'=>array('/planificacion'),
-	'Partidas',
+	'Producto Importado'/*=>array('/planificacion/importado')*/,
 );
 ?>
 
