@@ -1066,7 +1066,13 @@ class PlanificacionController extends Controller
 	public function usuario(){
 		return Usuarios::model()->findByPk(Yii::app()->user->getId());
 	}
- 	
+
+ 	/**
+ 	 * Función que suma el total de monto cargado de una partida
+ 	 * 
+ 	 * @param PresupuestoPartidas $presuPartida
+ 	 * @return float $total
+ 	 * */
  	public function montoCargadoPartida(PresupuestoPartidas $presuPartida){
 			// Validando la suma de los productos de la partida
  		$total = 0;
@@ -1082,6 +1088,7 @@ class PlanificacionController extends Controller
 				}
  		return $total;
  	}
+
 	public function actionNacional() /*Aqui van la logica de negocio asociada a cada partida 401, 402, 403, 404 */
 	{
 		$usuario = $this->usuario();
@@ -1126,7 +1133,7 @@ class PlanificacionController extends Controller
 						
 						$partidas = $this->partidasAccion($accionSel->accion_id);
 
-						foreach ( PresupuestoPartidasAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
+						foreach( PresupuestoPartidasAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
 						 	//if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
 						 	//Todos los presupuestos partidas de la Acción seleccionada
 						 		$presupuestoPartidas[] = $value->presupuestoPartida;
