@@ -1303,7 +1303,7 @@ class PlanificacionController extends Controller
 						$partidaSel->attributes = $_POST['Partidas'];
 						//$presuPros = Proyectos::model()->findAllByAttributes(array('proyecto_id'=>attributeValue), condition, array('key'=>value))
 
-						$productosPartidas = Partidas::model()->findByPk($partidaSel->partida_id)->productos;
+						$productosPartidas = $productosPartidas = $this->listaProductosPartida($partidaSel->partida_id, $proyectoSel->proyecto_id); //Partidas::model()->findByPk($partidaSel->partida_id)->productos;
 						$productosPartidas = CHtml::listData($productosPartidas, 'producto_id', 
 			                                        function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);});
 					

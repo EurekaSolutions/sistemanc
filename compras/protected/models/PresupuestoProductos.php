@@ -40,6 +40,7 @@ class PresupuestoProductos extends CActiveRecord
 		return array(
 			array('producto_id, unidad_id, costo_unidad, cantidad, monto_presupuesto, tipo, monto_ejecutado, proyecto_partida_id', 'required'),
 			array('costo_unidad, monto_presupuesto, monto_ejecutado', 'length', 'max'=>38),
+			array('cantidad, costo_unidad, monto_presupuesto, monto_ejecutado', 'numerical'),
 			array('tipo', 'length', 'max'=>60),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
