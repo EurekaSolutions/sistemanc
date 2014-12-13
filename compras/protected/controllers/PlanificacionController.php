@@ -1239,11 +1239,21 @@ class PlanificacionController extends Controller
 						if(isset($_POST['Partidas']) && !empty($_POST['Partidas']['partida_id'])){
 							$partidaSel->attributes = $_POST['Partidas'];
 							//$presuPros = Proyectos::model()->findAllByAttributes(array('proyecto_id'=>attributeValue), condition, array('key'=>value))
-
-							$productosPartidas = $this->listaProductosPartida($partidaSel->partida_id, $proyectoSel->proyecto_id, 'n'); //Partidas::model()->findByPk($partidaSel->partida_id)->productos;
-							$productosPartidas = CHtml::listData($productosPartidas, 'producto_id', 
-                                                        function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);});
 	
+							$presuPartida = new PresupuestoPartidas();
+							if(!empty($accionSel->accion_id)){
+								foreach ( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
+								 	if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
+								 		$presuPartida = $value->presupuestoPartida;
+								 }
+							}
+
+							if(isset($proyectoActual))
+							{
+								foreach ($proyectoActual->presupuestoPartidas as $key => $presupuestoPartida) 
+									if($presupuestoPartida->partida_id == $partidaSel->partida_id)
+										$presuPartida = $presupuestoPartida;
+							}
 							
 							// Producto Nacional
 							if(isset($_POST['Productos']))
@@ -1262,23 +1272,6 @@ class PlanificacionController extends Controller
 				if(isset($_POST['PresupuestoProductos'])){
 						$presuPro->attributes = $_POST['PresupuestoProductos'];
 						
-
-						//print_r($presuPro);
-						$presuPartida = new PresupuestoPartidas();
-						if(!empty($accionSel->accion_id)){
-							foreach ( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
-							 	if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
-							 		$presuPartida = $value->presupuestoPartida;
-							 }
-						}
-
-						if(isset($proyectoActual))
-						{
-							foreach ($proyectoActual->presupuestoPartidas as $key => $presupuestoPartida) 
-								if($presupuestoPartida->partida_id == $partidaSel->partida_id)
-									$presuPartida = $presupuestoPartida;
-						}
-
 							
 						$presuPro->tipo = 'N';
 						$presuPro->proyecto_partida_id = $presuPartida->presupuesto_partida_id;
@@ -1316,8 +1309,13 @@ class PlanificacionController extends Controller
 							}else
 								Yii::app()->user->setFlash('notice', "No se agrego el producto valorado en ".number_format($presuPro->monto_presupuesto,2,',','.')." Bs. La partida lleva cargada un monto en productos de ".number_format($total,2,',','.')." Bs.  y el monto presupuestado para esta partida es de ".number_format($presuPartida->monto_presupuestado,2,',','.').' Bs.');
 						}//else Yii::app()->user->setFlash('Error','error');
-
 				}
+
+			if(/*!empty($partidaSel->partida_id) &&*/ !empty($proyectoSel->proyecto_id)){
+				$productosPartidas = $this->listaProductosPartida($partidaSel->partida_id, $proyectoSel->proyecto_id, 'n'); //Partidas::model()->findByPk($partidaSel->partida_id)->productos;
+				$productosPartidas = CHtml::listData($productosPartidas, 'producto_id', 
+				                                 function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);});
+			}
 
 		$this->render('nacional', array('usuario'=>$usuario,'proyectoSel'=>$proyectoSel,'accionSel'=>$accionSel,
 			'partidas'=>$partidas, 'partidaSel'=>$partidaSel,'productoSel'=>$productoSel,'presuPros'=>$presuPros,
@@ -1393,11 +1391,22 @@ class PlanificacionController extends Controller
 					if(isset($_POST['Partidas']) && !empty($_POST['Partidas']['partida_id'])){
 						$partidaSel->attributes = $_POST['Partidas'];
 						//$presuPros = Proyectos::model()->findAllByAttributes(array('proyecto_id'=>attributeValue), condition, array('key'=>value))
+						
+						$presuPartida = new PresupuestoPartidas();
+						if(!empty($accionSel->accion_id)){
+							foreach ( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
+							 	if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
+							 		$presuPartida = $value->presupuestoPartida;
+							 }
+						}
 
-						$productosPartidas = $productosPartidas = $this->listaProductosPartida($partidaSel->partida_id, $proyectoSel->proyecto_id, 'i'); //Partidas::model()->findByPk($partidaSel->partida_id)->productos;
-						$productosPartidas = CHtml::listData($productosPartidas, 'producto_id', 
-			                                        function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);});
-					
+						if(isset($proyectoActual))
+						{
+							foreach ($proyectoActual->presupuestoPartidas as $key => $presupuestoPartida) 
+								if($presupuestoPartida->partida_id == $partidaSel->partida_id)
+									$presuPartida = $presupuestoPartida;
+						}
+
 						//$productosPartidas = Partidas::model()->findByPk($partidaSel->partida_id)->productos;
 						
 						// Producto Nacional
@@ -1413,32 +1422,14 @@ class PlanificacionController extends Controller
 						}
 					}
 
-
-					
 				}
 
-
 		}
-		
-					$presuPartida = new PresupuestoPartidas();
-					if(!empty($accionSel->accion_id)){
-						foreach ( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
-						 	if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
-						 		$presuPartida = $value->presupuestoPartida;
-						 }
-					}
 
-					if(isset($proyectoActual))
-					{
-						foreach ($proyectoActual->presupuestoPartidas as $key => $presupuestoPartida) 
-							if($presupuestoPartida->partida_id == $partidaSel->partida_id)
-								$presuPartida = $presupuestoPartida;
-					}
-
-					//if()
 					// Producto Importado
 					if(isset($_POST['PresupuestoImportacion']) /*&& isset($_POST['PresupuestoProductos'])*/)
 					{
+
 						$presuImp->attributes = $_POST['PresupuestoImportacion'];
 	
 						$presuImp->presupuesto_partida_id = $presuPartida->presupuesto_partida_id;
@@ -1473,10 +1464,13 @@ class PlanificacionController extends Controller
 
 						}
 
-					
 						//$this->guardarPresupuestoProductos($presuPro);
 					}
-
+			if(/*!empty($partidaSel->partida_id) &&*/ !empty($proyectoSel->proyecto_id)){
+				$productosPartidas = $this->listaProductosPartida($partidaSel->partida_id, $proyectoSel->proyecto_id, 'n'); //Partidas::model()->findByPk($partidaSel->partida_id)->productos;
+				$productosPartidas = CHtml::listData($productosPartidas, 'producto_id', 
+				                                 function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);});
+			}
 
 		$this->render('importado', array('usuario'=>$usuario,'proyectoSel'=>$proyectoSel,'accionSel'=>$accionSel,
 			'partidas'=>$partidas, 'partidaSel'=>$partidaSel,'productoSel'=>$productoSel,'presuImps'=>$presuImps,
