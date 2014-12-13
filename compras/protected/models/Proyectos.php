@@ -42,7 +42,7 @@ class Proyectos extends CActiveRecord
 		return array(
 			array('nombre, codigo, ente_organo_id', 'required', 'on' => 'create'),
 			array('nombreid, partida, general, monto, fuente, especifica', 'required', 'on' => 'creaproyecto'),
-			array('monto', 'numerical', 'integerOnly'=>true, 'min'=>1),
+			array('monto', 'numerical', 'integerOnly'=>false, 'min'=>1),
 			array('codigo', 'length', 'max'=>20),
 			array('nombre', 'proyectounico', 'on'=>'create'),
 			array('especifica', 'condinero', 'on'=>'creaproyecto'),

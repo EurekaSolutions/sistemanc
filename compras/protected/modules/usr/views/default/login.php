@@ -78,6 +78,7 @@ $this->pageTitle = Yii::app()->name.' - '.$title;
 
 <div style=" text-align: justify">
 	<br/><br/><br/>
-	Se informa a los Órganos y Entes responsables de reportar información en la aplicación electrónica de Compras del Estado, que la misma entrará en funcionamiento el día <strong>Miércoles  10/12/2014</strong>. Esto, en virtud que en este momento el Servicio Nacional de Contrataciones se encuentra consolidando la información correspondiente a la totalidad de los organismos del Estado, con el fin de asegurar un proceso de carga exitoso y que permita garantizar calidad en la información .
+	Se informa a los usuarios del Módulo de Plan de Compras del Estado, que el Servicio Nacional de Contrataciones trabajara los días Sábado 13/12/2014 y Domingo 14/12/2014, en el horario 9:00 AM - 3:00 PM. Los invitamos a consultar cualquier inquietud al 0800SNCINFO y por la dirección de correo electrónico rnce@snc.gob.ve
+<br><br><strong>Asimismo, se les  informa a los órganos y entes, que la fecha tope de la carga ha sido extendida hasta el día 19/12/2014.</strong>
 </div>
 </div>

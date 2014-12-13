@@ -17,7 +17,6 @@ return array(
 	// path aliases
     'aliases' => array(
         'booster' => realpath(__DIR__ . '/../extensions/booster'), // change this if necessary
-        //'usr' => realpath(__DIR__.'/../modules/usr'),
     ),
 
 	// autoloading model and component classes
@@ -26,21 +25,18 @@ return array(
 		'application.components.*',
 		//'booster.',
 		'application.behaviors.ActiveRecordLogableBehavior',
-		'application.modules.usr.controllers.*',
-		'application.modules.usr.models.*',
-		//'application.extensions.booster.'
 	),
 
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
 		
-		'gii'=>array(
+		/*'gii'=>array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'rnc',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 			'generatorPaths' => array('booster.gii'),
-		),	
+		),*/	
 		'usr'=>array(
 			'registrationEnabled'=>false,
 			'captcha'=>true,
@@ -66,7 +62,7 @@ return array(
 				'Host' => 'correo.snc.gob.ve',
 				'Port' => 465,
 				'SMTPSecure' => 'ssl',
-				//'SMTPDebug' => 1,
+				//'SMTPDebug' => 2,
 				'SMTPAuth' => true,
 				'Username' => 'admin_rnce',
 				'Password' => 'GikforewnEd3',

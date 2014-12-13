@@ -137,14 +137,14 @@ class PlanificacionController extends Controller
 	public function obtenerAccionesCentralizadas()
 	{
 
-		$search_values = array('1000' => 1000, '2000' => 2000, '3000' => 3000, '7000' => 7000);
+		$search_values = array('1001' => 1001, '2001' => 2001, '2002' => 2002, '2003' => 2003);
 		//$match = addcslashes($match, '000');
 		//$match = "000";
 		
 		$criteria = new CDbCriteria();
 		
-		$criteria->condition = 'codigo=:_1000 OR codigo=:_2000 OR codigo=:_3000 OR codigo=:_7000';
-		$criteria->params = array(':_1000'=>$search_values['1000'],':_2000'=>$search_values['2000'], ':_3000'=>$search_values['3000'], ':_7000'=>$search_values['7000']);
+		$criteria->condition = 'codigo=:_1001 OR codigo=:_2001 OR codigo=:_2002 OR codigo=:_2003';
+		$criteria->params = array(':_1001'=>$search_values['1001'],':_2001'=>$search_values['2001'], ':_2002'=>$search_values['2002'], ':_2003'=>$search_values['2003']);
 
 		$AccionesValidas = Acciones::model()->findAll($criteria);
 
@@ -168,7 +168,7 @@ class PlanificacionController extends Controller
 			$criteria->compare('t.p1',403, FALSE,  "OR");
 			$criteria->compare('t.p1',404, FALSE , "OR"); 
 
-		}elseif($tipo=="1000")
+		}elseif($tipo=="1001")
 		{	
 			$criteria->compare('t.p1',401);
 

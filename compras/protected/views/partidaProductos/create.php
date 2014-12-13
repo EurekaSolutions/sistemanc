@@ -10,7 +10,7 @@ array('label'=>'Manage PartidaProductos','url'=>array('admin')),
 );
 ?>
 
-<h1>Asociar Partidas Productos</h1>
+<h1>Asociar Productos a Partidas</h1>
 <?php
     foreach(Yii::app()->user->getFlashes() as $key => $message) {
         echo '<div class="flash-' . $key . '">' . $message . "</div>\n";

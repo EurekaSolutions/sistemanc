@@ -77,7 +77,7 @@ class PartidaProductosController extends Controller
 		$especificas_lista = CHtml::listData($especificas, function($especificas) {
 																	return CHtml::encode($especificas->partida_id);
 																}, function($especificas) {
-																	return CHtml::encode($especificas->p1.'-'.$especificas->p2.'-'.$especificas->p3.' '.$especificas->nombre);
+																	return CHtml::encode($especificas->p1.'-'.$especificas->p2.'-'.$especificas->p3.'-'.$especificas->p4.' '.$especificas->nombre);
 																});
 
 
