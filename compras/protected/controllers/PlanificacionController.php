@@ -593,7 +593,7 @@ class PlanificacionController extends Controller
 			        	
 				}
 		        catch (Exception $e){
-		        	Yii::app()->user->setFlash('success', "No se pudo guardar la acción centralizada.");
+		        	Yii::app()->user->setFlash('error', "No se pudo guardar la acción centralizada.");
 		            $transaction->rollBack();
 		            //return false;
 		        }
@@ -776,7 +776,7 @@ class PlanificacionController extends Controller
 
 	        $model->nombre = $nombre_proyecto->nombre;
 	        
-	        $model->setScenario(!empty($model->subespecifica) ? 'creaproyectose' : 'crearproyecto');
+	        $model->setScenario(!empty($model->subespecifica) ? 'creaproyectose' : 'creaproyecto');
 
 	        if($model->validate())
 	        {
@@ -816,7 +816,7 @@ class PlanificacionController extends Controller
 
 				}
 		        catch (Exception $e){
-		        	Yii::app()->user->setFlash('success', "No se pudo guardar la asigacion de la partida.");
+		        	Yii::app()->user->setFlash('error', "No se pudo guardar la asigacion de la partida.");
 		            $transaction->rollBack();
 		        }
 
