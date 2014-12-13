@@ -41,6 +41,7 @@ class Proyectos extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('nombre, codigo, ente_organo_id', 'required', 'on' => 'create'),
+			array('codigo', 'unique', 'attributeName'=> 'codigo', 'caseSensitive' => 'false', 'className' => 'Proyectos', 'on' => 'create'),
 			array('nombreid, partida, general, monto, fuente, especifica', 'required', 'on' => 'creaproyecto, creaproyectose'),
 			array('monto', 'numerical', 'integerOnly'=>false, 'min'=>1),
 			array('codigo', 'length', 'max'=>20),
