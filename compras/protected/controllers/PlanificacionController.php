@@ -557,8 +557,6 @@ class PlanificacionController extends Controller
 	        	$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 	        	$presupuesto_partida = new PresupuestoPartidas;
 	        	$presupuesto_partida_acciones = new PresupuestoPartidaAcciones;
-	        	print_r($model);
-	        	//return;
 	        	$presupuesto_partida->partida_id = !empty($model->subespecifica) ? $model->subespecifica : $model->especifica;
 	        	$presupuesto_partida->monto_presupuestado = $model->monto;
 	        	$presupuesto_partida->fecha_desde = "1900-01-01";
@@ -567,23 +565,35 @@ class PlanificacionController extends Controller
 	        	$presupuesto_partida->anho = date("Y");
 	        	$presupuesto_partida->ente_organo_id= $usuario->ente_organo_id;
 	        	$presupuesto_partida->fuente_fianciamiento_id = $model->fuente;
-	        	
-	        	if($presupuesto_partida->save())
-	        	{
-	        		$accion = Acciones::model()->find('codigo=:codigo', array(':codigo'=>$model->nombre));
-		        	$presupuesto_partida_acciones->accion_id = $accion->accion_id;
-		        	$presupuesto_partida_acciones->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
-		        	$presupuesto_partida_acciones->ente_organo_id = $usuario->ente_organo_id;
-		        	$presupuesto_partida_acciones->codigo_accion = $model->nombre;
+	     	
+	        	$transaction = $presupuesto_partida->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
+				 try{
+			        	if($presupuesto_partida->save())
+			        	{
+			        		$accion = Acciones::model()->find('codigo=:codigo', array(':codigo'=>$model->nombre));
+				        	$presupuesto_partida_acciones->accion_id = $accion->accion_id;
+				        	$presupuesto_partida_acciones->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
+				        	$presupuesto_partida_acciones->ente_organo_id = $usuario->ente_organo_id;
+				        	$presupuesto_partida_acciones->codigo_accion = $model->nombre;
 
-		        	if($presupuesto_partida_acciones->save())
-		        	{
-		        		Yii::app()->user->setFlash('success', "Acción centralizada creada con éxito!");
-		        		$model = new Acciones('crearaccion');
-		        	}
+				        	if($presupuesto_partida_acciones->save())
+				        	{
+				        		$transaction->commit();    // committing 
+				        		Yii::app()->user->setFlash('success', "Acción centralizada creada con éxito!");
+				        		
+				        		$model = new Acciones('crearaccion');
 
-		        	//$this->refresh();
-	        	}
+				        	}else throw new Exception("Error Processing Request", 1);
+
+			        	}else throw new Exception("Error Processing Request", 1);
+			        	
+				}
+		        catch (Exception $e){
+		        	Yii::app()->user->setFlash('success', "No se pudo guardar la acción centralizada.");
+		            $transaction->rollBack();
+		            //return false;
+		        }
+
 
 	        }else
 	        {
@@ -777,21 +787,33 @@ class PlanificacionController extends Controller
 	        	$presupuesto_partida->anho = date("Y");
 	        	$presupuesto_partida->ente_organo_id= $usuario->ente_organo_id;
 	        	$presupuesto_partida->fuente_fianciamiento_id = $model->fuente;
-	        	
-	        	if($presupuesto_partida->save())
-	        	{
-	        		//$accion = Acciones::model()->find('codigo=:codigo', array(':codigo'=>$model->nombre));
-		        	$presupuesto_partida_proyecto->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
-		        	$presupuesto_partida_proyecto->proyecto_id = $nombre_proyecto->proyecto_id;
 
-		        	if($presupuesto_partida_proyecto->save())
+				$transaction = $presupuesto_partida->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
+				try{
+
+		        	if($presupuesto_partida->save())
 		        	{
-		        		 Yii::app()->user->setFlash('success', 'Partida asignada con éxito!');
-		        		 $model = new Proyectos('creaproyecto');
-		        	}
+		        		//$accion = Acciones::model()->find('codigo=:codigo', array(':codigo'=>$model->nombre));
+			        	$presupuesto_partida_proyecto->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
+			        	$presupuesto_partida_proyecto->proyecto_id = $nombre_proyecto->proyecto_id;
 
-		        	//$this->refresh();
-	        	}			  
+			        	if($presupuesto_partida_proyecto->save())
+			        	{
+			        		$transaction->commit();    // committing 
+			        		 Yii::app()->user->setFlash('success', 'Partida asignada con éxito!');
+			        		 $model = new Proyectos('creaproyecto');
+
+				       	}else throw new Exception("Error Processing Request", 1);
+
+			        }else throw new Exception("Error Processing Request", 1);
+
+				}
+		        catch (Exception $e){
+		        	Yii::app()->user->setFlash('success', "No se pudo guardar la asigacion de la partida.");
+		            $transaction->rollBack();
+		        }
+
+			  
 	        }else
 		    {
 		    	if($model->partida)
