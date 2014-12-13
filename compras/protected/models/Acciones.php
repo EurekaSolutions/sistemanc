@@ -39,7 +39,7 @@ class Acciones extends CActiveRecord
 		return array(
 			array('nombre', 'required'),
 			array('partida, general, monto, fuente, especifica', 'required', 'on' => 'crearaccion'),
-			array('especifica, subespecifica', 'condinero', 'partida_id'=> !empty($this->$subespecifica) ? $this->$subespecifica:$this->$especifica 'on'=>'crearaccion'),
+			array('especifica, subespecifica', 'condinero', 'partida_id'=> !empty($this->subespecifica) ? $this->subespecifica:$this->especifica, 'on'=>'crearaccion'),
 
 			array('monto', 'numerical', 'integerOnly'=>false, 'min'=>1),
 			array('codigo', 'safe'),
@@ -83,7 +83,7 @@ class Acciones extends CActiveRecord
 				
 				if($partida->partida_id == $params['partida_id'])
 				{
-					if(!empty($this->$subespecifica))
+					if(!empty($this->subespecifica))
 						$partida = $attribute['subespecifica'];
 					else
 						$partida = $attribute['especifica'];
