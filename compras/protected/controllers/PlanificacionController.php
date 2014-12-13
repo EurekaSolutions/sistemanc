@@ -769,6 +769,7 @@ class PlanificacionController extends Controller
 	    {
 
 	        $model->attributes=$_POST['Proyectos'];
+	        $model->subespecifica = $_POST['Proyectos']['subespecifica'];
 	        $model->ente_organo_id = $usuario->ente_organo_id;
 	        $model->codigo = $model->nombreid;
 
@@ -784,7 +785,7 @@ class PlanificacionController extends Controller
 	        	$presupuesto_partida = new PresupuestoPartidas;
 	        	$presupuesto_partida_proyecto = new PresupuestoPartidaProyecto;
 
-	        	$presupuesto_partida->partida_id = $model->subespecifica ? $model->subespecifica : $model->especifica;
+	        	$presupuesto_partida->partida_id = !empty($model->subespecifica) ? $model->subespecifica : $model->especifica;
 	        	$presupuesto_partida->monto_presupuestado = $model->monto;
 	        	$presupuesto_partida->fecha_desde = "1900-01-01";
 	        	$presupuesto_partida->fecha_hasta = "2199-12-31";

@@ -92,7 +92,7 @@ class Proyectos extends CActiveRecord
 			foreach ($presupuestopartidaproyecto as $key => $value) {
 				
 				$value->presupuesto_partida_id;
-				if($partida = PresupuestoPartidas::model()->find('presupuesto_partida_id=:presupuesto_partida_id and ente_organo_id=:ente_organo_id and tipo=:tipo', array(':ente_organo_id' => $usuario->ente_organo_id, ':presupuesto_partida_id' => $value->presupuesto_partida_id, ':tipo' => 'P')))	
+				if($partida = PresupuestoPartidas::model()->find('presupuesto_partida_id=:presupuesto_partida_id and ente_organo_id=:ente_organo_id and tipo=:tipo', array(':ente_organo_id' => $usuario->ente_organo_id, ':presupuesto_partida_id' => $value->presupuesto_partida_id, ':tipo' => 'P')))
 				
 				if($partida->partida_id == $this->$attribute)
 				{
