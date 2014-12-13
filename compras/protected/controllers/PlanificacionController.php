@@ -787,7 +787,7 @@ class PlanificacionController extends Controller
 		        	if($presupuesto_partida_proyecto->save())
 		        	{
 		        		 Yii::app()->user->setFlash('success', 'Partida asignada con éxito!');
-		        		 $model = new Proyecto('creaproyecto');
+		        		 $model = new Proyectos('creaproyecto');
 		        	}
 
 		        	//$this->refresh();
