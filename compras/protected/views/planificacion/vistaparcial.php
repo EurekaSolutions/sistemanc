@@ -40,24 +40,25 @@ tr.principaltr th {
 		        </tr>
 		    </thead>
 		    <tbody>
-			 <?php   foreach ($acciones as $key => $value) { 
-			 				$monto = $this->montoAccion($value);
-			 
+		<?php foreach ($acciones as $key => $accion) { 
+			 		$monto = $this->montoAccion($accion);
 
-			 		$valor = 0;
+			 		$accionOrgano = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accion->accion_id, 'ente_organo_id'=>$this->usuario()->ente_organo_id));
 
-			 		print_r($acciones);
-			 		//echo '<br><br>/n';
-					foreach ($value->presupuestoPartidas as $key => $accionmonto) {
-						//print_r($accionmonto);
-						//echo '<br><br>\n';
-						//$valor += $this->montoCargadoPartida($accionmonto);
-					}
-			 ?>
+			 		//print_r($accionOrgano);
+			 		//echo count($accionOrgano);
+			 		echo count($accionOrgano);
+					$valor = 0;
+
+					foreach ($accionOrgano as $key => $presupuestoPartidaAccion) 
+						foreach ($presupuestoPartidaAccion->presupuestoPartidas as $key => $presupuestoPartida) 
+							$valor += $this->montoCargadoPartida($presupuestoPartida);
+
+		 ?>
 		
 		    	<tr class="principaltr">
-		    		<td><?php echo $value->codigo_accion; ?></td>
-		    		<td><?php echo $value->accion->nombre; ?></td>
+		    		<td><?php echo $accion->codigo_accion; ?></td>
+		    		<td><?php echo $accion->accion->nombre; ?></td>
 		    		<td><?php echo number_format($monto,2,',','.'); ?></td>
 		    		<td><?php echo number_format($valor,2,',','.'); ?></td>
 		    		<td><strong><?php echo number_format($monto - $valor,2,',','.');?></strong></td>
