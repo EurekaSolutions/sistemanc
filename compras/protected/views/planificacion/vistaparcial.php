@@ -46,8 +46,12 @@ tr.principaltr th {
 
 			 		$valor = 0;
 
+			 		print_r($acciones);
+			 		//echo '<br><br>/n';
 					foreach ($value->presupuestoPartidas as $key => $accionmonto) {
-						$valor += $this->montoCargadoPartida($accionmonto);
+						//print_r($accionmonto);
+						//echo '<br><br>\n';
+						//$valor += $this->montoCargadoPartida($accionmonto);
 					}
 			 ?>
 		

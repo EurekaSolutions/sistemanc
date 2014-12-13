@@ -81,7 +81,7 @@ class PlanificacionController extends Controller
 	
 	public function actionBuscarsubespecficap()
 	{
-		$name = "Seleccionar subespecifica";
+		$name = "Seleccionar partida subespecifica";
 
 		if($_POST['Proyectos']['especifica'])
 		{
@@ -123,14 +123,14 @@ class PlanificacionController extends Controller
 
 	public function actionBuscarsubespecfica()
 	{
-		$name = "Seleccionar subespecifica";
+		$name = "Seleccionar partida subespecifica";
 
 		if($_POST['Acciones']['especifica'])
 		{
-			$general = Partidas::model()->find('partida_id=:partida_id', array(':partida_id'=>intval($_POST['Acciones']['especifica'])));
+			$especifica = Partidas::model()->find('partida_id=:partida_id', array(':partida_id'=>intval($_POST['Acciones']['especifica'])));
 			$criteria = new CDbCriteria();
 			$criteria->condition = 'p1=:p1 and p2=:p2 and p3=:p3 and p4 <> 0';
-			$criteria->params = array(':p1'=>$general->p1, ':p2' => $general->p2, ':p3' => $general->p3);
+			$criteria->params = array(':p1'=>$especifica->p1, ':p2' => $especifica->p2, ':p3' => $especifica->p3);
 				
 				//$criteria->addSearchCondition('t.nombre', $busqueda);
 			$subespecificas = Partidas::model()->findAll($criteria);
@@ -557,8 +557,9 @@ class PlanificacionController extends Controller
 	        	$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 	        	$presupuesto_partida = new PresupuestoPartidas;
 	        	$presupuesto_partida_acciones = new PresupuestoPartidaAcciones;
-	        	print_r($model->subespecifica);
-	        	$presupuesto_partida->partida_id = $model->subespecifica ? $model->subespecifica : $model->especifica;
+	        	print_r($model);
+	        	//return;
+	        	$presupuesto_partida->partida_id = !empty($model->subespecifica) ? $model->subespecifica : $model->especifica;
 	        	$presupuesto_partida->monto_presupuestado = $model->monto;
 	        	$presupuesto_partida->fecha_desde = "1900-01-01";
 	        	$presupuesto_partida->fecha_hasta = "2199-12-31";
@@ -578,9 +579,10 @@ class PlanificacionController extends Controller
 		        	if($presupuesto_partida_acciones->save())
 		        	{
 		        		Yii::app()->user->setFlash('success', "Acción centralizada creada con éxito!");
+		        		$model = new Acciones('crearaccion');
 		        	}
 
-		        	$this->refresh();
+		        	//$this->refresh();
 	        	}
 
 	        }else
@@ -627,10 +629,10 @@ class PlanificacionController extends Controller
 	        		$this->render('agregarcentralizada',array('acciones'=>$model, 'accionestodas' => $accionestodas, 'fuentes' => $fuentes));
 	        	}
 	        }
-	    }else
-	    {
-	    	$this->render('agregarcentralizada',array('acciones'=>$model, 'accionestodas' => $accionestodas, 'fuentes' => $fuentes));
 	    }
+	    
+	    	$this->render('agregarcentralizada',array('acciones'=>$model, 'accionestodas' => $accionestodas, 'fuentes' => $fuentes));
+	    
 		
 	}
 
@@ -759,7 +761,8 @@ class PlanificacionController extends Controller
 	        $nombre_proyecto = Proyectos::model()->find('codigo=:codigo and ente_organo_id=:ente_organo_id', array(':codigo' => $model->codigo, ':ente_organo_id' => $usuario->ente_organo_id));
 
 	        $model->nombre = $nombre_proyecto->nombre;
-
+	        //print_r($model);
+	        //return;
 	        if($model->validate())
 	        {
 
@@ -784,9 +787,10 @@ class PlanificacionController extends Controller
 		        	if($presupuesto_partida_proyecto->save())
 		        	{
 		        		 Yii::app()->user->setFlash('success', 'Partida asignada con éxito!');
+		        		 $model = new Proyecto('creaproyecto');
 		        	}
 
-		        	$this->refresh();
+		        	//$this->refresh();
 	        	}			  
 	        }else
 		    {
