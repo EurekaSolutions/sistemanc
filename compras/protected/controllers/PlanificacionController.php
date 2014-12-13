@@ -776,7 +776,7 @@ class PlanificacionController extends Controller
 
 	        $model->nombre = $nombre_proyecto->nombre;
 	        
-	        $model->setScenario($model->subespecifica ? 'creaproyecto' : 'crearproyectose');
+	        $model->setScenario(!empty($model->subespecifica) ? 'creaproyectose' : 'crearproyecto');
 
 	        if($model->validate())
 	        {
