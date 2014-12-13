@@ -38,8 +38,12 @@ class Acciones extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('nombre', 'required'),
-			array('partida, general, monto, fuente, especifica', 'required', 'on' => 'crearaccion'),
-			array('especifica', 'condinero', 'on'=>'crearaccion'),
+			array('partida, general, monto, fuente', 'required', 'on' => 'crearaccionesp, crearaccionsub'),
+			array('especifica', 'required', 'on'=>'crearaccionesp'),
+			array('especifica', 'condinero', 'partida'=>$this->especifica, 'on'=>'crearaccionesp'),
+			array('subespecifica', 'required', 'on'=>'crearaccionsub'),
+			array('subespecifica', 'condinero', 'partida'=>$this->subespecifica, 'on'=>'crearaccionsub'),
+
 			array('monto', 'numerical', 'integerOnly'=>false, 'min'=>1),
 			array('codigo', 'safe'),
 			// The following rule is used by search().
