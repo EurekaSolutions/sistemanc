@@ -69,6 +69,20 @@ class PresupuestoPartidas extends CActiveRecord
 		);
 	}
 
+	// Delete cascade / Borrado en cascada
+	public function beforeDelete(){
+
+		// Eliminando en cascada todos los productos nacionales correspondientes a esta partida
+		foreach ($this->presupuestoProductos as $key => $c) 
+			$c->delete();
+
+		// Eliminando en cascada todos los productos importados correspondientes a esta partida
+		foreach ($this->presupuestoImportacion as $key => $c) 
+			$c->delete();
+
+		parent::beforeDelete();
+	}
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */

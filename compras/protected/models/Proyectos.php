@@ -66,6 +66,13 @@ class Proyectos extends CActiveRecord
 		);
 	}
 
+	// Delete cascade / Borrado en cascada
+	public function beforeDelete(){
+	    foreach($this->presupuestoPartidaProyecto as $c)
+	        	$c->delete();
+	    return parent::beforeDelete();
+	}
+
 	public function condinero($attribute,$params)
 	{
 		

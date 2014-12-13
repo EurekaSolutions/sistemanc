@@ -57,6 +57,19 @@ class PresupuestoPartidaAcciones extends CActiveRecord
 		);
 	}
 
+	// Eliminar la acción de un ente, dado el id de la acción y el id del ente u organo
+	public function eliminarAccion($accionId, $enteOrganoId){
+		$this->deleteAllByAttributes(array('accion_id'=>$accionId, 'ente_organo_id'=>$enteOrgano));
+	}
+
+	// Delete cascade / Borrado en cascada
+	public function beforeDelete(){
+	    foreach($this->presupuestoPartidas as $c)
+	        $c->delete();
+	    return parent::beforeDelete();
+	}
+
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
