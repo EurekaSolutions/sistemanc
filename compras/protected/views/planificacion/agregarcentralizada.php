@@ -6,11 +6,15 @@
 					$( "#general" ).append( '<option value="">Seleccionar partida general</option>' );
 					$('#especifica').html("");
 					$( "#especifica" ).append( '<option value="">Seleccionar partida especifica</option>' );
+					$('#subespecifica').html("");
+					$( "#subespecifica" ).append( '<option value="">Seleccionar partida subespecifica</option>' );
 				});
 
 				$( "#partida" ).change(function() {
 					$('#especifica').html("");
 					$( "#especifica" ).append( '<option value="">Seleccionar partida especifica</option>' );
+					$('#subespecifica').html("");
+					$( "#subespecifica" ).append( '<option value="">Seleccionar partida subespecifica</option>' );
 				});
 			});
 		</script>
@@ -132,7 +136,35 @@
 												'data' => empty($especificas_todas)? array() : $especificas_todas,
 												
 												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												'htmlOptions' => array('prompt' => 'Seleccionar partida especifica', 'id' => 'especifica'
+												'htmlOptions' => array('prompt' => 'Seleccionar partida especifica', 'id' => 'especifica', 'ajax' => array(
+													'type'=>'POST', //request type
+													'url'=>CController::createUrl('planificacion/buscarsubespecfica'), //url to call.
+													//Style: CController::createUrl('currentController/methodToCall')
+													'update'=>'#subespecifica', //selector to update
+													//'data'=>'js:javascript statement' 
+													//leave out the data key to pass all form values through
+											  )
+
+												),
+											),
+
+										)
+									);
+
+
+								  echo $form->dropDownListGroup($acciones , 'subespecifica',
+										array(
+											'wrapperHtmlOptions' => array(
+												'class' => 'col-sm-2',
+											),
+											'label'=>'Seleccione especifica',
+											'hint' => '<b>Seleccione en caso de que aplique</b>',
+											'widgetOptions' => array(
+
+												'data' => array(),
+												
+												//'options'=>array($model->proyecto_id => array('selected'=>true)),
+												'htmlOptions' => array('prompt' => 'Seleccionar partida subespecifica', 'id' => 'subespecifica'
 
 												),
 											),

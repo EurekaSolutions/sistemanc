@@ -28,7 +28,7 @@ class PlanificacionController extends Controller
 				'roles'=>array('organo'),
 			),*/
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'agregarproyecto', 'agregarcentralizada', 'nacional','importado','eliminarProducto'),
+				'actions'=>array('index','view', 'Buscarsubespecficap', 'Buscarsubespecfica', 'agregarproyecto', 'agregarcentralizada', 'nacional','importado','eliminarProducto'),
 				'users'=>array('@'),
 				'roles'=>array('organo','ente','admin'),
 			),
@@ -78,6 +78,88 @@ class PlanificacionController extends Controller
 		}*/
 	}
 
+	
+	public function actionBuscarsubespecficap()
+	{
+		$name = "Seleccionar subespecifica";
+
+		if($_POST['Proyectos']['especifica'])
+		{
+			$general = Partidas::model()->find('partida_id=:partida_id', array(':partida_id'=>intval($_POST['Proyectos']['especifica'])));
+			$criteria = new CDbCriteria();
+			$criteria->condition = 'p1=:p1 and p2=:p2 and p3=:p3 and p4 <> 0';
+			$criteria->params = array(':p1'=>$general->p1, ':p2' => $general->p2, ':p3' => $general->p3);
+				
+				//$criteria->addSearchCondition('t.nombre', $busqueda);
+			$subespecificas = Partidas::model()->findAll($criteria);
+
+			$especificas_lista = CHtml::listData($subespecificas, function($subespecificas) {
+																	return CHtml::encode($subespecificas->partida_id);
+																}, function($subespecificas) {
+																	return CHtml::encode($subespecificas->p1.'-'.$subespecificas->p2.'-'.$subespecificas->p3.'-'.$subespecificas->p4.' '.$subespecificas->nombre);
+																});
+			//return $especificas;
+
+			echo CHtml::tag('option',
+		                   array('value'=>""),CHtml::encode($name),true);
+
+			if($especificas_lista)
+			{
+			    foreach($especificas_lista as $value => $name)
+			    {
+			        echo CHtml::tag('option',
+			                   array('value'=>$value),CHtml::encode($name),true);
+			    }
+			}
+		}else
+		{
+			echo CHtml::tag('option',
+		                   array('value'=>""),CHtml::encode($name),true);
+		}
+	}
+
+
+
+
+	public function actionBuscarsubespecfica()
+	{
+		$name = "Seleccionar subespecifica";
+
+		if($_POST['Acciones']['especifica'])
+		{
+			$general = Partidas::model()->find('partida_id=:partida_id', array(':partida_id'=>intval($_POST['Acciones']['especifica'])));
+			$criteria = new CDbCriteria();
+			$criteria->condition = 'p1=:p1 and p2=:p2 and p3=:p3 and p4 <> 0';
+			$criteria->params = array(':p1'=>$general->p1, ':p2' => $general->p2, ':p3' => $general->p3);
+				
+				//$criteria->addSearchCondition('t.nombre', $busqueda);
+			$subespecificas = Partidas::model()->findAll($criteria);
+
+			$especificas_lista = CHtml::listData($subespecificas, function($subespecificas) {
+																	return CHtml::encode($subespecificas->partida_id);
+																}, function($subespecificas) {
+																	return CHtml::encode($subespecificas->p1.'-'.$subespecificas->p2.'-'.$subespecificas->p3.'-'.$subespecificas->p4.' '.$subespecificas->nombre);
+																});
+			//return $especificas;
+
+			echo CHtml::tag('option',
+		                   array('value'=>""),CHtml::encode($name),true);
+
+			if($especificas_lista)
+			{
+			    foreach($especificas_lista as $value => $name)
+			    {
+			        echo CHtml::tag('option',
+			                   array('value'=>$value),CHtml::encode($name),true);
+			    }
+			}
+		}else
+		{
+			echo CHtml::tag('option',
+		                   array('value'=>""),CHtml::encode($name),true);
+		}
+	}
+
 
 	public function proyectosPartidasParticular($partida)
 	{
@@ -89,10 +171,19 @@ class PlanificacionController extends Controller
 
 	public function GeneralXpartida($partida)
 	{
-		$criteria = new CDbCriteria();
-		$criteria->condition = 'p1=:p1 and p3 = 0 and p2 <> 0';
-		$criteria->params = array(':p1'=>$partida);
-		
+		if($partida == '401')
+		{	
+			$criteria = new CDbCriteria();
+			$criteria->condition = 'p1=:p1 and p3 = 0 and p2 = 7';
+			$criteria->params = array(':p1'=>$partida);
+
+		}else
+		{
+			$criteria = new CDbCriteria();
+			$criteria->condition = 'p1=:p1 and p3 = 0 and p2 <> 0';
+			$criteria->params = array(':p1'=>$partida);
+		}
+
 		return Partidas::model()->findAll($criteria);
 
 	}
@@ -466,8 +557,8 @@ class PlanificacionController extends Controller
 	        	$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 	        	$presupuesto_partida = new PresupuestoPartidas;
 	        	$presupuesto_partida_acciones = new PresupuestoPartidaAcciones;
-
-	        	$presupuesto_partida->partida_id = $model->especifica;
+	        	print_r($model->subespecifica);
+	        	$presupuesto_partida->partida_id = $model->subespecifica ? $model->subespecifica : $model->especifica;
 	        	$presupuesto_partida->monto_presupuestado = $model->monto;
 	        	$presupuesto_partida->fecha_desde = "1900-01-01";
 	        	$presupuesto_partida->fecha_hasta = "2199-12-31";
@@ -675,7 +766,7 @@ class PlanificacionController extends Controller
 	        	$presupuesto_partida = new PresupuestoPartidas;
 	        	$presupuesto_partida_proyecto = new PresupuestoPartidaProyecto;
 
-	        	$presupuesto_partida->partida_id = $model->especifica;
+	        	$presupuesto_partida->partida_id = $model->subespecifica ? $model->subespecifica : $model->especifica;
 	        	$presupuesto_partida->monto_presupuestado = $model->monto;
 	        	$presupuesto_partida->fecha_desde = "1900-01-01";
 	        	$presupuesto_partida->fecha_hasta = "2199-12-31";
