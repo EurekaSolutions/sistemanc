@@ -157,7 +157,7 @@
 											'wrapperHtmlOptions' => array(
 												'class' => 'col-sm-2',
 											),
-											'label'=>'Seleccione especifica',
+											'label'=>'Seleccione sub especifica',
 											'hint' => '<b>Seleccione en caso de que aplique</b>',
 											'widgetOptions' => array(
 

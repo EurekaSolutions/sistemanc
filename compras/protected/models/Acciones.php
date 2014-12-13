@@ -38,8 +38,9 @@ class Acciones extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('nombre', 'required'),
-			array('partida, general, monto, fuente, especifica', 'required', 'on' => 'crearaccion'),
-			array('especifica, subespecifica', 'condinero', 'partida_id'=> !empty($this->subespecifica) ? $this->subespecifica:$this->especifica, 'on'=>'crearaccion'),
+			array('partida, general, monto, fuente, especifica', 'required', 'on' => 'crearaccion, crearaccionse'),
+			array('especifica, subespecifica', 'partidaAsignada', 'on'=>'crearaccion'),
+			array('subespecifica', 'partidaAsignada', 'on'=>'crearaccionse'),
 
 			array('monto', 'numerical', 'integerOnly'=>false, 'min'=>1),
 			array('codigo', 'safe'),
@@ -61,7 +62,7 @@ class Acciones extends CActiveRecord
 		);
 	}
 
-	public function condinero($attribute,$params)
+	public function partidaAsignada($attribute,$params)
 	{
 		
 		$criteria = new CDbCriteria();
@@ -81,14 +82,11 @@ class Acciones extends CActiveRecord
 
 				$partida = PresupuestoPartidas::model()->find('presupuesto_partida_id=:presupuesto_partida_id and ente_organo_id=:ente_organo_id and tipo=:tipo', array(':ente_organo_id' => $usuario->ente_organo_id, ':presupuesto_partida_id' => $value->presupuesto_partida_id, ':tipo' => 'A'));	
 				
-				if($partida->partida_id == $params['partida_id'])
+				if($partida->partida_id == $this->$attribute)
 				{
-					if(!empty($this->subespecifica))
-						$partida = $attribute['subespecifica'];
-					else
-						$partida = $attribute['especifica'];
+					$this->addError($attribute, 'Esta partida ya tiene asignado dinero para esta acción centralizada!');//$partida = $attribute['especifica'];
 					
-					$this->addError($partida, 'Esta partida ya tiene asignado dinero para esta acción centralizada!');
+					
 					break;
 				}			
 			}

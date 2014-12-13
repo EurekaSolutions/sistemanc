@@ -551,6 +551,8 @@ class PlanificacionController extends Controller
 
 	        $model->attributes=$_POST['Acciones'];
 
+	        $model->setScenario(!empty($model->subespecifica) ? 'crearaccionse' : 'crearaccion');
+
 	        if($model->validate())
 	        {
 	        	//return;
@@ -565,6 +567,8 @@ class PlanificacionController extends Controller
 	        	$presupuesto_partida->anho = date("Y");
 	        	$presupuesto_partida->ente_organo_id= $usuario->ente_organo_id;
 	        	$presupuesto_partida->fuente_fianciamiento_id = $model->fuente;
+
+	        	$presupuesto_partida_acciones->setScenario($model->scenario);
 	     	
 	        	$transaction = $presupuesto_partida->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 				 try{
@@ -771,8 +775,9 @@ class PlanificacionController extends Controller
 	        $nombre_proyecto = Proyectos::model()->find('codigo=:codigo and ente_organo_id=:ente_organo_id', array(':codigo' => $model->codigo, ':ente_organo_id' => $usuario->ente_organo_id));
 
 	        $model->nombre = $nombre_proyecto->nombre;
-	        //print_r($model);
-	        //return;
+	        
+	        $model->setScenario($model->subespecifica ? 'creaproyecto' : 'crearproyectose');
+
 	        if($model->validate())
 	        {
 
@@ -787,6 +792,8 @@ class PlanificacionController extends Controller
 	        	$presupuesto_partida->anho = date("Y");
 	        	$presupuesto_partida->ente_organo_id= $usuario->ente_organo_id;
 	        	$presupuesto_partida->fuente_fianciamiento_id = $model->fuente;
+
+	        	$presupuesto_partida_proyecto->setScenario($model->scenario);
 
 				$transaction = $presupuesto_partida->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 				try{

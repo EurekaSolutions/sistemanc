@@ -41,11 +41,12 @@ class Proyectos extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('nombre, codigo, ente_organo_id', 'required', 'on' => 'create'),
-			array('nombreid, partida, general, monto, fuente, especifica', 'required', 'on' => 'creaproyecto'),
+			array('nombreid, partida, general, monto, fuente, especifica', 'required', 'on' => 'creaproyecto, creaproyectose'),
 			array('monto', 'numerical', 'integerOnly'=>false, 'min'=>1),
 			array('codigo', 'length', 'max'=>20),
 			array('nombre', 'proyectounico', 'on'=>'create'),
-			array('especifica', 'condinero', 'on'=>'creaproyecto'),
+			array('especifica', 'partidaAsignada', 'on'=>'creaproyecto'),
+			array('subespecifica', 'partidaAsignada', 'on'=>'creaproyectose'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('proyecto_id, nombre, codigo, ente_organo_id', 'safe', 'on'=>'search'),
@@ -73,7 +74,7 @@ class Proyectos extends CActiveRecord
 	    return parent::beforeDelete();
 	}
 
-	public function condinero($attribute,$params)
+	public function partidaAsignada($attribute,$params)
 	{
 		
 		$criteria = new CDbCriteria();
@@ -92,7 +93,7 @@ class Proyectos extends CActiveRecord
 				$value->presupuesto_partida_id;
 				$partida = PresupuestoPartidas::model()->find('presupuesto_partida_id=:presupuesto_partida_id and ente_organo_id=:ente_organo_id and tipo=:tipo', array(':ente_organo_id' => $usuario->ente_organo_id, ':presupuesto_partida_id' => $value->presupuesto_partida_id, ':tipo' => 'P'));	
 				
-				if($partida->partida_id == $this->especifica)
+				if($partida->partida_id == $this->$attribute)
 				{
 					$this->addError($attribute, 'Esta partida ya tiene asignado dinero para este proyecto!');
 					break;
