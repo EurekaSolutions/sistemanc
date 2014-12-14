@@ -68,9 +68,9 @@ class PresupuestoProductos extends CActiveRecord
 
 	public function unicoProducto($attribute, $params)
 	{
-		if($this->producto_id and $this->proyecto_id)
+		if($this->producto_id and $this->proyecto_partida_id)
 		{
-			if($this->find('producto_id=:producto_id and proyecto_id=:proyecto_id', array(':producto_id'=>$this->producto_id, ':proyecto_id'=>$this->proyecto_id)))
+			if($this->find('producto_id=:producto_id and proyecto_partida_id=:proyecto_partida_id', array(':producto_id'=>$this->producto_id, ':proyecto_partida_id'=>$this->proyecto_partida_id)))
 			{
 				$this->addError($this->producto_id, 'Este producto ya se encuentra asignado a este proyeco!');//$partida = $attribute['especifica'];
 			}
