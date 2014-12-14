@@ -35,7 +35,7 @@ class PlanificacionController extends Controller
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('index','view', 'agregarproyecto', 'agregarcentralizada', 'nacional','importado','eliminarProducto','eliminarProductoImportado',
 								 'buscarespecfica', 'buscarespecficap','create','update','partidas','vistaparcial', 'buscarpartida', 'buscargeneral',
-								 'asignarpartidasproyecto', 'buscargeneralproyecto','buscarNcm', 'buscarpartidasproyecto', 'buscarproductospartida'),
+								 'asignarpartidasproyecto', 'buscargeneralproyecto','buscarNcm', 'buscarpartidasproyecto', 'buscarproductospartida', 'Eliminaraccion', 'Eliminarproyecto', 'Eliminarpartidas'),
 				'users'=>array('@'),
 				'roles'=>array('ente'),
 			),
@@ -61,6 +61,23 @@ class PlanificacionController extends Controller
 				'users'=>array('*'),
 			),
 		);
+	}
+
+
+
+	public function actionEliminaraccion()
+	{
+		$this->render('eliminaraccion');
+	}
+
+	public function actionEliminarproyecto()
+	{
+		$this->render('eliminarproyecto');
+	}
+
+	public function actionEliminarpartidas()
+	{
+		$this->render('eliminarpartidas');
 	}
 
 	public function actionImportacion() /*Aqui esta vista tratara todo lo que tenga relacion con los datos de CENCOEX.*/

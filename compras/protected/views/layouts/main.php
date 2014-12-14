@@ -63,6 +63,14 @@
 								)
 							),
 							array(
+								'label' => 'Eliminar',  //si el usuario es creado por este sistema
+								'items' => array(
+									array('label' => 'Eliminar proyecto', 'url' => array('/planificacion/eliminarproyecto')),
+									array('label' => 'Eliminar acción centralizada', 'url' => array('/planificacion/eliminaraccion')),
+									array('label'=>  'Eliminar partidas', 'url'=>array('/planificacion/eliminarpartidas'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
+								)
+							),
+							array(
 								'label' => 'Entes',  //si el usuario es creado por este sistema
 								'items' => array(
 									array('label' => 'Crear entes', 'url'=>array('/planificacion/crearente'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
