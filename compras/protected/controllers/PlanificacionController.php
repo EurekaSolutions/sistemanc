@@ -866,7 +866,7 @@ class PlanificacionController extends Controller
 				   ));
 						}
 		    }
-	    }
+	    }else
 		
 		$this->render('asignarpartidasproyecto',array(
 						'model'=>$model, 'fuentes' => $fuentes, 'partidas' => $partidas_principal, 'proyectos' => $proyectos

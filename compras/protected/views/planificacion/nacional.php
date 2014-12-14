@@ -196,7 +196,7 @@ $this->breadcrumbs=array(
 		//echo 'probando';
 		//print_r($presuPros);
 
-	/*	echo '<h3>Lista de productos nacionales</h3>';
+		echo '<h3>Lista de productos nacionales</h3>';
 		$presuProducto = new PresupuestoProductos();
 		// $gridColumns
 		$gridColumns = array(
@@ -209,8 +209,9 @@ $this->breadcrumbs=array(
 			array(
 				'htmlOptions' => array('nowrap'=>'nowrap'),
 				'class'=>'booster.widgets.TbButtonColumn',
+				'template'=>'{delete}',
 				//'viewButtonUrl'=>null,
-				'updateButtonUrl'=>null,
+				//'updateButtonUrl'=>null,
 				'deleteButtonUrl'=>'Yii::app()->createUrl("planificacion/eliminarProducto", array("id"=>$data->presupuesto_id))',
 			)
 		);
@@ -226,7 +227,7 @@ $this->breadcrumbs=array(
 		        'template' => "{items}",
 		        //'filter' => $presuProducto->search(),
 		        'columns' => $gridColumns,
-		    ));*/
+		    ));
 
 		/*foreach ($presuPros as $key => $prepro) {
 			if(isset($prepro)){
