@@ -1126,8 +1126,23 @@ class PlanificacionController extends Controller
     	}
         //return false;
 	}
+	public function obtenerTotalProducto($data,$row){
+		return $data->monto_presupuesto*$data->cantidad*$data->divisa->tasa->tasa;
+	}
+	public function obtenerTipoImportacion($data,$row){
+		return $data->tipo == 'corpovex'? 'Corpovex' : 'Licitacion Internacional';
+	}
+	public function obtenerDivisa($data,$row){
+		return $data->divisa->abreviatura;
+	}
+	public function totalProducto($data, $row){
+		return $data->monto_presupuesto;
+	}
 	public  function obtenerCodigoNcmNombre($data,$row=null){
+		if(isset($data->descripcion_ncm))
 			return $this->numeroCodigoNcm($data).' - '.$data->descripcion_ncm; 
+		else
+			return $this->numeroCodigoNcm($data->codigosNcms).' - '.$data->codigosNcms->descripcion_ncm;
 	}
 	public  function obtenerUnidadNombre($data,$row){
 			return $data->unidad->nombre; 

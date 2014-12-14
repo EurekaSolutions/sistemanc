@@ -205,11 +205,13 @@ $this->breadcrumbs=array(
 			array('name'=>'unidad_id', 'header'=>'Unidad','value'=>array($this,'obtenerUnidadNombre')),
 			array('name'=>'costo_unidad', 'header'=>'Costo Unidad', 'value'=>array($this,'obtenerCostoUnidadNombre')),
 			array('name'=>'cantidad', 'header'=>'Cantidad'),
+			array(/*'name'=>'cantidad',*/ 'header'=>'Total Bs.', 'value'=>array($this,'totalProducto')),
 			//array('name'=>'tipo', 'header'=>'Tipo de Compra'),
 			array(
 				'htmlOptions' => array('nowrap'=>'nowrap'),
 				'class'=>'booster.widgets.TbButtonColumn',
-				'template'=>'{delete}',
+				'template'=>'{delete}', // {view} {update}
+				'deleteConfirmation'=>"js:'El producto'+$(this).parent().parent().children(':first-child').text()+' será borrado! Continuar?'",
 				//'viewButtonUrl'=>null,
 				//'updateButtonUrl'=>null,
 				'deleteButtonUrl'=>'Yii::app()->createUrl("planificacion/eliminarProducto", array("id"=>$data->presupuesto_id))',
@@ -229,22 +231,6 @@ $this->breadcrumbs=array(
 		        'columns' => $gridColumns,
 		    ));
 
-		/*foreach ($presuPros as $key => $prepro) {
-			if(isset($prepro)){
-					//$producto = $prepro->producto;
-				 	//echo $producto->nombre;
-				 	print_r($prepro);
-
-				 if($prepro->tipo == 'N')
-				 {
-				 	$this->renderPartial('_nacional',array('form'=>$formpc,'presuPro'=>$prepro, 'productosPartidas'=>$productosPartidas));
-
-				}elseif($prepro->tipo == 'I')
-				{
-					$this->renderPartial('_internacional',array('form'=>$formpc,'presuPro'=>$prepro, 'productosPartidas'=>$productosPartidas));
-				}
-			}
-		}*/
 	
 		/*$this->widget(
 		    'booster.widgets.TbSelect2',
