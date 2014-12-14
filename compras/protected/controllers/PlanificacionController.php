@@ -566,7 +566,7 @@ class PlanificacionController extends Controller
 	        	$presupuesto_partida->tipo = "A";
 	        	$presupuesto_partida->anho = date("Y");
 	        	$presupuesto_partida->ente_organo_id= $usuario->ente_organo_id;
-	        	$presupuesto_partida->fuente_fianciamiento_id = $model->fuente;
+	        	//$presupuesto_partida->fuente_fianciamiento_id = $model->fuente;
 
 	        	$presupuesto_partida_acciones->setScenario($model->scenario);
 	     	
@@ -574,6 +574,14 @@ class PlanificacionController extends Controller
 				 try{
 			        	if($presupuesto_partida->save())
 			        	{
+			        		
+			        		foreach ($model->fuente as $key => $value) {
+			        			$fuentep = new FuentePresupuesto;
+				        		$fuentep->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
+				        		$fuentep->fuente_id = $value;
+				        		$fuentep->save();
+			        		}
+			        			
 			        		$accion = Acciones::model()->find('codigo=:codigo', array(':codigo'=>$model->nombre));
 				        	$presupuesto_partida_acciones->accion_id = $accion->accion_id;
 				        	$presupuesto_partida_acciones->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
@@ -593,7 +601,8 @@ class PlanificacionController extends Controller
 			        	
 				}
 		        catch (Exception $e){
-		        	Yii::app()->user->setFlash('error', "No se pudo guardar la acción centralizada.");
+		        	//echo 
+		        	Yii::app()->user->setFlash('error', $e);
 		            $transaction->rollBack();
 		            //return false;
 		        }
@@ -792,7 +801,7 @@ class PlanificacionController extends Controller
 	        	$presupuesto_partida->tipo = "P";
 	        	$presupuesto_partida->anho = date("Y");
 	        	$presupuesto_partida->ente_organo_id= $usuario->ente_organo_id;
-	        	$presupuesto_partida->fuente_fianciamiento_id = $model->fuente;
+	        	//$presupuesto_partida->fuente_fianciamiento_id = $model->fuente;
 
 	        	$presupuesto_partida_proyecto->setScenario($model->scenario);
 
@@ -801,6 +810,15 @@ class PlanificacionController extends Controller
 
 		        	if($presupuesto_partida->save())
 		        	{
+
+		        		foreach ($model->fuente as $key => $value) {
+			        			$fuentep = new FuentePresupuesto;
+				        		$fuentep->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
+				        		$fuentep->fuente_id = $value;
+				        		$fuentep->save();
+			        		}
+
+			        		
 		        		//$accion = Acciones::model()->find('codigo=:codigo', array(':codigo'=>$model->nombre));
 			        	$presupuesto_partida_proyecto->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
 			        	$presupuesto_partida_proyecto->proyecto_id = $nombre_proyecto->proyecto_id;

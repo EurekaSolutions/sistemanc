@@ -165,17 +165,18 @@
                                     );
 
 
-                                    echo $form->dropDownListGroup($model , 'fuente',
+                                   echo $form->dropDownListGroup($model , 'fuente',
                                         array(
                                             'wrapperHtmlOptions' => array(
                                                 'class' => 'col-sm-2',
                                             ),
                                             'label'=>'Fuente de financiamiento',
+                                            'hint' => 'Seleccione la cantidad de fuentes que apliquen',
                                             'widgetOptions' => array(
 
                                                 'data' => $fuentes,
                                                 //'options'=>array($model->proyecto_id => array('selected'=>true)),
-                                                'htmlOptions' => array('prompt' => 'Seleccionar la fuente de financiamiento'),
+                                                'htmlOptions' => array(/*'prompt' => 'Seleccionar la fuente de financiamiento',*/ 'multiple' => true),
                                             )
                                         )
                                     ); 

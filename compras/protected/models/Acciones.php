@@ -86,7 +86,6 @@ class Acciones extends CActiveRecord
 				{
 					$this->addError($attribute, 'Esta partida ya tiene asignado dinero para esta acción centralizada!');//$partida = $attribute['especifica'];
 					
-					
 					break;
 				}			
 			}
