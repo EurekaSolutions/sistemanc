@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.3.2
 -- Dumped by pg_dump version 9.3.2
--- Started on 2014-12-13 22:02:48
+-- Started on 2014-12-13 22:19:32
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -49,7 +49,7 @@ CREATE SEQUENCE fuente_presupuesto_id_seq
 ALTER TABLE public.fuente_presupuesto_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2059 (class 0 OID 0)
+-- TOC entry 2057 (class 0 OID 0)
 -- Dependencies: 212
 -- Name: fuente_presupuesto_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -63,39 +63,6 @@ ALTER SEQUENCE fuente_presupuesto_id_seq OWNED BY fuente_presupuesto.id;
 --
 
 ALTER TABLE ONLY fuente_presupuesto ALTER COLUMN id SET DEFAULT nextval('fuente_presupuesto_id_seq'::regclass);
-
-
---
--- TOC entry 2054 (class 0 OID 276565)
--- Dependencies: 213
--- Data for Name: fuente_presupuesto; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY fuente_presupuesto (id, fuente_id, presupuesto_partida_id) FROM stdin;
-1	9	100058
-2	10	100058
-3	15	100059
-4	16	100059
-5	17	100059
-6	18	100059
-7	1	100060
-8	10	100060
-9	16	100060
-10	18	100060
-11	1	100061
-12	9	100061
-13	13	100061
-14	15	100061
-\.
-
-
---
--- TOC entry 2060 (class 0 OID 0)
--- Dependencies: 212
--- Name: fuente_presupuesto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('fuente_presupuesto_id_seq', 14, true);
 
 
 --
@@ -141,7 +108,7 @@ ALTER TABLE ONLY fuente_presupuesto
     ADD CONSTRAINT fk_presupuesto_fk FOREIGN KEY (presupuesto_partida_id) REFERENCES presupuesto_partidas(presupuesto_partida_id);
 
 
--- Completed on 2014-12-13 22:02:48
+-- Completed on 2014-12-13 22:19:32
 
 --
 -- PostgreSQL database dump complete
