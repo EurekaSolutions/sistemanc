@@ -30,13 +30,13 @@ return array(
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
 		
-		/*'gii'=>array(
+		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'rnc',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 			'generatorPaths' => array('booster.gii'),
-		),*/	
+		),
 		'usr'=>array(
 			'registrationEnabled'=>false,
 			'captcha'=>true,
