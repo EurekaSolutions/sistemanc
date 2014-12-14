@@ -30,14 +30,14 @@ class PlanificacionController extends Controller
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view', 'Buscarsubespecficap', 'Buscarsubespecfica', 'agregarproyecto', 'agregarcentralizada', 'nacional','importado','eliminarProducto'),
 				'users'=>array('@'),
-				'roles'=>array('organo','ente','admin'),
+				'roles'=>array('ente'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('index','view', 'agregarproyecto', 'agregarcentralizada', 'nacional','importado','eliminarProducto',
 								 'buscarespecfica', 'buscarespecficap','create','update','partidas','vistaparcial', 'buscarpartida', 'buscargeneral',
 								 'asignarpartidasproyecto', 'buscargeneralproyecto','buscarNcm', 'buscarpartidasproyecto', 'buscarproductospartida'),
 				'users'=>array('@'),
-				'roles'=>array('ente','organo','admin'),
+				'roles'=>array('ente'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete','administracion'),
@@ -47,7 +47,7 @@ class PlanificacionController extends Controller
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('crearente','misentes', 'usuariosentes'),
 				'users'=>array('@'),
-				'roles'=>array('organo','admin'),
+				'roles'=>array('organo'),
 			),
 
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -1488,7 +1488,7 @@ class PlanificacionController extends Controller
 							$total = $this->montoCargadoPartida($presuPartida);
 						//throw new Exception("Error ".$presuImp->divisa->tasa->tasa." Request", 1);
 						
-							if(@($presuPartida->monto_presupuestado >= ($total+($presuImp->monto_presupuesto*$presuImp->divisa->tasa->tasa)))){	
+							if(@($presuPartida->monto_presupuestado >= ($total+($presuImp->monto_presupuesto*$presuImp->divisa->tasa->tasa*$presuImp->cantidad)))){	
 
 									$transaction = $presuImp->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 									try{
@@ -1508,7 +1508,7 @@ class PlanificacionController extends Controller
 			                            $transaction->rollBack();
 			                        }
 							}else
-								Yii::app()->user->setFlash('notice', "No se agrego el producto valorado en ".number_format($presuImp->monto_presupuesto*$presuImp->divisa->tasa->tasa,2,',','.')." Bs. La partida lleva cargada un monto en productos de ".number_format($total,2,',','.')." Bs.  y el monto presupuestado para esta partida es de ".number_format($presuPartida->monto_presupuestado,2,',','.').' Bs.');
+								Yii::app()->user->setFlash('notice', "No se agrego el producto valorado en ".number_format($presuImp->monto_presupuesto*$presuImp->divisa->tasa->tasa*$presuImp->cantidad,2,',','.')." Bs. La partida lleva cargada un monto en productos de ".number_format($total,2,',','.')." Bs.  y el monto presupuestado para esta partida es de ".number_format($presuPartida->monto_presupuestado,2,',','.').' Bs.');
 
 						}
 

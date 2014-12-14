@@ -178,7 +178,7 @@ $this->breadcrumbs=array(
 			    array('buttonType' => 'submit',/*'url'=>array('/planificacion/nacional','#'=>'pestanas'),*/ 'label' => 'Añadir')
 			);
 
-		$this->renderPartial('_nacional',array('presuPros'=>$presuPros));
+		//$this->renderPartial('_nacional',array('presuPros'=>$presuPros));
 
 		?></div><?php 
 	}
@@ -196,7 +196,7 @@ $this->breadcrumbs=array(
 		//echo 'probando';
 		//print_r($presuPros);
 
-/*		echo '<h3>Lista de productos nacionales</h3>';
+	/*	echo '<h3>Lista de productos nacionales</h3>';
 		$presuProducto = new PresupuestoProductos();
 		// $gridColumns
 		$gridColumns = array(
@@ -211,12 +211,12 @@ $this->breadcrumbs=array(
 				'class'=>'booster.widgets.TbButtonColumn',
 				//'viewButtonUrl'=>null,
 				'updateButtonUrl'=>null,
-				'deleteButtonUrl'=>'Yii::app()->createUrl("planificacion/eliminarProducto", array("id"=>$data->id))',
+				'deleteButtonUrl'=>'Yii::app()->createUrl("planificacion/eliminarProducto", array("id"=>$data->presupuesto_id))',
 			)
 		);
 
-		print_r($presuPros);
-		$gridDataProvider = new CArrayDataProvider(array(),array(
+		//print_r($presuPros);
+		$gridDataProvider = new CArrayDataProvider($presuPros,array(
 											    'keyField' => 'presupuesto_id',
 											));
 		$this->widget('booster.widgets.TbGridView', array(

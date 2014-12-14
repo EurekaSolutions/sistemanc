@@ -58,7 +58,7 @@ class PresupuestoProductos extends CActiveRecord
 		return array(
 			//'codigosNcms' => array(self::MANY_MANY, 'CodigosNcm', 'presupuesto_importacion(presupuesto_id, codigo_ncm_id)'),
 			'producto' => array(self::BELONGS_TO, 'Productos', 'producto_id'),
-			'proyectoPartida' => array(self::BELONGS_TO, 'PresupuestoPartidas', array('proyecto_partida_id'=>'presupuesto_partida_id')),
+			'proyectoPartida' => array(self::BELONGS_TO, 'PresupuestoPartidas', array('presupuesto_partida_id'=>'proyecto_partida_id')),
 			'unidad' => array(self::BELONGS_TO, 'Unidades', 'unidad_id'),
 			//'importado' => array(self::BELONGS_TO, 'PresupuestoImportacion', 'presupuesto_id'),
 		);
