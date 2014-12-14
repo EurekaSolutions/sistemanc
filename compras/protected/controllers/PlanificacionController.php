@@ -1104,19 +1104,23 @@ class PlanificacionController extends Controller
 		{
 			return;
 		}
-		$transaction = $producto->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
-		 try{
+		$usuario = $this->usuario();
+		if($producto->proyectoPartida->ente_organo_id == $usuario->ente_organo_id)
+		{
+			$transaction = $producto->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
+			 try{
 
-				if($producto->delete())
-				{
-					$transaction->commit();    // committing 
-					//return true;
-				}else $transaction->rollBack();
-		}
-        catch (Exception $e){
-            $transaction->rollBack();
-            //return false;
-        }
+					if($producto->delete())
+					{
+						$transaction->commit();    // committing 
+						//return true;
+					}else $transaction->rollBack();
+			}
+	        catch (Exception $e){
+	            $transaction->rollBack();
+	            //return false;
+	        }
+    	}
         //return false;
 	}
 	public  function obtenerCodigoNcmNombre($data,$row=null){
