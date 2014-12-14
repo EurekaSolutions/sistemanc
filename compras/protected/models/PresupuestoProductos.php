@@ -42,6 +42,7 @@ class PresupuestoProductos extends CActiveRecord
 			array('costo_unidad, monto_presupuesto, monto_ejecutado', 'length', 'max'=>38),
 			array('cantidad, costo_unidad, monto_presupuesto, monto_ejecutado', 'numerical'),
 			array('tipo', 'length', 'max'=>60),
+			array('producto_id', 'unicoProducto'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('presupuesto_id, producto_id, unidad_id, costo_unidad, cantidad, monto_presupuesto, tipo, monto_ejecutado, proyecto_partida_id', 'safe', 'on'=>'search'),
@@ -62,6 +63,18 @@ class PresupuestoProductos extends CActiveRecord
 			'unidad' => array(self::BELONGS_TO, 'Unidades', 'unidad_id'),
 			//'importado' => array(self::BELONGS_TO, 'PresupuestoImportacion', 'presupuesto_id'),
 		);
+	}
+
+
+	public function unicoProducto($attribute, $params)
+	{
+		if($this->producto_id and $this->proyecto_id)
+		{
+			if($this->find('producto_id=:producto_id and proyecto_id=:proyecto_id', array(':producto_id'=>$this->producto_id, ':proyecto_id'=>$this->proyecto_id)))
+			{
+				$this->addError($this->producto_id, 'Este producto ya se encuentra asignado a este proyeco!');//$partida = $attribute['especifica'];
+			}
+		}
 	}
 
 	public function beforeDelete(){
