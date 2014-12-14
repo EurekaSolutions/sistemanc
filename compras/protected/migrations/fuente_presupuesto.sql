@@ -31,7 +31,7 @@ CREATE TABLE fuente_presupuesto (
 );
 
 
-ALTER TABLE public.fuente_presupuesto OWNER TO postgres;
+ALTER TABLE public.fuente_presupuesto OWNER TO eureka;
 
 --
 -- TOC entry 212 (class 1259 OID 276563)
@@ -46,7 +46,7 @@ CREATE SEQUENCE fuente_presupuesto_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.fuente_presupuesto_id_seq OWNER TO postgres;
+ALTER TABLE public.fuente_presupuesto_id_seq OWNER TO eureka;
 
 --
 -- TOC entry 2057 (class 0 OID 0)
