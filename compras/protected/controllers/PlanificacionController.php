@@ -843,7 +843,7 @@ class PlanificacionController extends Controller
 	        }else
 		    {
 		    	if($model->partida)
-			    		{
+			    {
 			    			$tipo = Partidas::model()->findByPk($model->partida);
 
 							$generales = $this->GeneralXpartida($tipo->p1);
@@ -860,13 +860,16 @@ class PlanificacionController extends Controller
 					    	
 					    	$this->render('asignarpartidasproyecto',array(
 							'model'=>$model, 'fuentes' => $fuentes, 'generales_todas' => $generales_todas, 'partidas' => $partidas_principal, 'proyectos' => $proyectos, 'especificas_todas' => $especificas_todas));
+							
 					    }
-						    $this->render('asignarpartidasproyecto',array(
-							'model'=>$model, 'fuentes' => $fuentes, 'generales_todas' => $generales_todas, 'partidas' => $partidas_principal, 'proyectos' => $proyectos
-				   ));
-						}
+
+					    Yii::app()->end();
+						
+							$this->render('asignarpartidasproyecto',array('model'=>$model, 'fuentes' => $fuentes, 'generales_todas' => $generales_todas, 'partidas' => $partidas_principal, 'proyectos' => $proyectos));
+						Yii::app()->end();
+				}
 		    }
-	    }else
+	    }
 		
 		$this->render('asignarpartidasproyecto',array(
 						'model'=>$model, 'fuentes' => $fuentes, 'partidas' => $partidas_principal, 'proyectos' => $proyectos
