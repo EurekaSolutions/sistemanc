@@ -1,4 +1,4 @@
-<?php 
+	<?php 
 /**
  * 
  * presuPro
@@ -9,7 +9,7 @@
  * */
 
 		
-			echo '<h3>Lista de productos importados </h3>';
+			
 		
 		// $gridColumns
 		$gridColumns = array(
@@ -18,34 +18,45 @@
 			array('name'=>'divisa_id', 'header'=>'Divisa','value'=>array($this,'obtenerDivisa')),
 			array('name'=>'tipo', 'header'=>'Tipo Importación','value'=>array($this,'obtenerTipoImportacion')),
 			array('name'=>'fecha_llegada', 'header'=>'Fecha estimada importación',),
-			array('name'=>'monto_presupuesto', 'header'=>'Costo unitario de la divisa','value'=>array($this,'obtenerCostoUnitarioDivisa')),
+			array('name'=>'monto_presupuesto', 'header'=>'Costo unitario en divisa','value'=>array($this,'obtenerCostoUnitarioDivisa')),
 			array('name'=>'cantidad', 'header'=>'Cantidad'),
 			array('name'=>'descripcion', 'header'=>'Descripción'),
 			array('header'=>'Total Bs.', 'value'=>array($this,'obtenerTotalProducto')),
 
-			//array('name'=>'cantidad', 'header'=>'Cantidad'),
-			//array('name'=>'tipo', 'header'=>'Tipo de Compra'),
 			array(
 				'htmlOptions' => array('nowrap'=>'nowrap'),
 				'class'=>'booster.widgets.TbButtonColumn',
 				'template'=>'{delete}',
-				'buttons'=>array('delete'=>array(
-								 'ajax' => array(
-												'type'=>'POST', //request type
-												//'url'=>CController::createUrl('planificacion/eliminarProductoImportado', array("ppid"=>$data->presupuesto_partida_id,"pid"=>$data->producto_id,"cn"=>$data->codigo_ncm_id)), //url to call.
-												//Style: CController::createUrl('currentController/methodToCall')
-												'update'=>'#listaProductosImportados', //selector to update
-												//'data'=>'js:javascript statement' 
-												//leave out the data key to pass all form values through
-										  ),
-					)),
-				'deleteConfirmation'=>"js:'El producto con codigo arancelario '+$(this).parent().parent().children(':first-child').text()+' será borrado! Continuar?'",
-				'viewButtonUrl'=>null,
-				'updateButtonUrl'=>null,
+				/*'buttons'=>array(
+					'delete'=>array(
+						'url'=>'Yii::app()->createUrl("/planificacion/eliminarProductoImportado", array("ppid"=>$data->presupuesto_partida_id,"pid"=>$data->producto_id,"cn"=>$data->codigo_ncm_id))',
+						'options' => array(
+							'confirm'=>"js:'¿El producto con codigo arancelario '+$(this).parent().parent().children(':first-child').text()+' será borrado! ¿Continuar?'",
+							'ajax' => array(
+											'type' => 'GET',											
+											'url'=>'js:$(this).attr("href")',
+											'update'=>'#listaProductosImportados',
+											'success' => 'js:function(data) { $.fn.yiiGridView.update("my-grid")}')
+						),
+					),
+				),*/
+				'id'=>'',
+				'deleteButtonOptions'=>array(
+							'confirm' => '¿Está seguro que desea eliminar este código arancelario?',
+							'ajax' => array(
+											'type' => 'GET',											
+											'url'=>'js:$(this).attr("href")',
+											'update'=>'#listaProductosImportados',
+											//'success' => 'js:function(data) { $.fn.yiiGridView.update("my-grid")}'
+											)
+						),
+				'deleteConfirmation'=>"js:'¿El producto con codigo arancelario '+$(this).parent().parent().children(':nth-child(2)').text()+' será borrado! ¿Continuar?'",
+				//'viewButtonUrl'=>null,
+				//'updateButtonUrl'=>null,
 				'deleteButtonUrl'=>'Yii::app()->createUrl("/planificacion/eliminarProductoImportado", array("ppid"=>$data->presupuesto_partida_id,"pid"=>$data->producto_id,"cn"=>$data->codigo_ncm_id))',
 			)
 		);
-
+	
 		$gridDataProvider = new CArrayDataProvider($presuImps,array(
 											    'keyField' => false,
 											   /*     'sort'=>array(
@@ -58,9 +69,10 @@
 												        'pageVar'=>'custom-page-selector', //page selector
 												    ),*/
 											));
+
 		$this->widget('booster.widgets.TbExtendedGridView', array(
 		        'type' => 'striped bordered condensed',
-		        'id'=>'listaProductosImportados',
+		        'id'=>'listaProductos',
 		        'updateSelector'=>'custom-page-selector', //update selector
 		        'dataProvider' => $gridDataProvider,
 		        'template' => "{pager}{items}{pager}",
@@ -103,6 +115,7 @@ if(isset($presuImps[0])){
 		            <th data-field="cantidad">Cantidad</th>
 		            <th data-field="descripcion">Descripción</th>
 		            <th data-field="totalbs">Total Bs.</th>
+		            <th data-field="accion">Accion</th>
 		        </tr>
 		    </thead>
 		    <tbody>
@@ -121,6 +134,9 @@ if(isset($presuImps[0])){
 					<td><?php echo $presIm->cantidad; ?></td>
 					<td><?php echo $presIm->descripcion; ?></td>
 		    		<td><?php echo number_format($presIm->monto_presupuesto*$presIm->cantidad*$presIm->divisa->tasa->tasa,2,',','.');?></td>
+		    		<td><?php echo CHtml::link('Eliminar',Yii::app()->createAbsoluteUrl('/planificacion/eliminarProductoImportado',
+		    			array('ppid'=>$presIm->presupuesto_partida_id,'pid'=>$presIm->producto_id,'cn'=>$presIm->codigo_ncm_id)),
+		    		array('onClick'=>"eliminar('".$this->obtenerCodigoNcmNombre($presIm->codigosNcms)."');"));?></td>
 		    		
 
 		    	</tr>
@@ -131,4 +147,25 @@ if(isset($presuImps[0])){
 		<?php 
 	}
 }
- ?> -->
+
+ ?> 
+
+
+<script type="text/javascript" charset="utf-8">
+					function eliminar(id){
+						if(confirm("¿Esta seguro que desea eliminar el codigo arancelario "+id+"?")){
+						window.location.href='clientes.php?idbo='+id;
+						}
+						$.ajax({ type: 'POST', 
+								url: 'buscar.php', 
+								dataType: "html", 
+								data: { direc : 3	}, 
+								beforeSend: function () { 
+								//$('#otro').text("cargando"); }, 
+								success : function(data){ json = data }, 
+								error : function(XMLHttpRequest, textStatus, errorThrown) { }, 
+								complete : function() { $('#').html(json);	} 
+						});
+					}
+
+					</script> -->

@@ -1108,17 +1108,45 @@ class PlanificacionController extends Controller
 			$codigoNcmId = Yii::app()->getRequest()->getQuery('cn');
 		//}
 
-/*			$producto = PresupuestoImportacion::model()->findByAttributes(array('presupuesto_partida_id'=>$presuPartidaId,'producto_id'=>$productoId,'codigo_ncm_id'=>$codigoNcmId));
+			$producto = PresupuestoImportacion::model()->findByAttributes(array('presupuesto_partida_id'=>$presuPartidaId,'producto_id'=>$productoId,'codigo_ncm_id'=>$codigoNcmId));
 
-			if(!$producto)
-				return;
-			
-			
-			if($producto->presupuestoPartida->ente_organo_id == $this->usuario()->ente_organo_id)
+			if(!empty($producto))			
+				if($producto->presupuestoPartida->ente_organo_id == $this->usuario()->ente_organo_id)
+				{
+					$transaction = $producto->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
+					 try{
+							//$producto->scenario = 'eliminararancelario';
+							if($producto->delete())
+							{
+								$transaction->commit();    // committing 
+								//return true;
+							}else $transaction->rollBack();
+					}
+			        catch (Exception $e){
+			            $transaction->rollBack();
+			            //return false;
+			        }
+		    	}
+
+	    $presuImps = array();
+	    if(!empty($presuPartidaId))	
+	    	$presuImps = PresupuestoImportacion::model()->findAllByAttributes(array('presupuesto_partida_id'=>$presuPartidaId));
+
+		echo $this->renderPartial('_importado',array('presuImps'=>$presuImps),false);	
+	}
+
+	public function actionEliminarProducto(){
+	
+		$id = Yii::app()->getRequest()->getQuery('id');
+		$producto = PresupuestoProductos::model()->findByPk($id);
+		
+		
+		if(!empty($producto))
+			if($producto->proyectoPartida->ente_organo_id == $this->usuario()->ente_organo_id)
 			{
 				$transaction = $producto->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 				 try{
-						//$producto->scenario = 'eliminararancelario';
+
 						if($producto->delete())
 						{
 							$transaction->commit();    // committing 
@@ -1127,41 +1155,15 @@ class PlanificacionController extends Controller
 				}
 		        catch (Exception $e){
 		            $transaction->rollBack();
-		            //return false;
 		        }
 	    	}
-*/
-	    $presuImps = array();
-	    if(!empty($presuPartidaId))	
-	    	$presuImps = PresupuestoImportacion::model()->findAllByAttributes(array('presupuesto_partida_id'=>$presuPartidaId));
 
-		return $this->renderPartial('_importado',array('presuImps'=>$presuImps),true);
+	    $presuPros = array();
+	    if(!empty($producto))	
+	    	$presuPros = PresupuestoProductos::model()->findAllByAttributes(array('proyecto_partida_id'=>$producto->proyecto_partida_id));
 
-	}
-	public function actionEliminarProducto($id){
-		return 'Hola';
-		$producto = PresupuestoProductos::model()->findByPk($id);
-		if(!$producto)
-			return;
-		
+		echo $this->renderPartial('_nacional',array('presuPros'=>$presuPros),false);
 
-		if($producto->proyectoPartida->ente_organo_id == $this->usuario()->ente_organo_id)
-		{
-			$transaction = $producto->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
-			 try{
-
-					if($producto->delete())
-					{
-						$transaction->commit();    // committing 
-						//return true;
-					}else $transaction->rollBack();
-			}
-	        catch (Exception $e){
-	            $transaction->rollBack();
-	            //return false;
-	        }
-    	}
-        //return false;
 	}
 	public function obtenerCostoUnitarioDivisa($data,$row){
 		return number_format($data->monto_presupuesto,2,',','.');	
@@ -1528,8 +1530,8 @@ class PlanificacionController extends Controller
 								if($presupuestoPartida->partida_id == $partidaSel->partida_id){
 									$presuImps = $presupuestoPartida->presupuestoImportacion;
 								}
-								$this->render('_importado',array('presuImps'=>$presuImps));
-								Yii::app()->end();
+								//$this->render('_importado',array('presuImps'=>$presuImps));
+								//Yii::app()->end();
 		
 						}
 					}

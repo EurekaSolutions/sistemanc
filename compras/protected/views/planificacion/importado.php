@@ -226,7 +226,11 @@ $this->breadcrumbs=array(
 			    'booster.widgets.TbButton',
 			    array('buttonType' => 'submit',/*'url'=>array('/planificacion/importado','#'=>'pestanas'),*/ 'label' => 'Añadir')
 			);
+		echo '<h3>Lista de productos importados </h3>';
+		?> <div id='listaProductosImportados'>
+				<?php
 		$this->renderPartial('_importado',array('presuImps'=>$presuImps));
+		?></div><?php 
 		
 		?></div><?php 
 	}

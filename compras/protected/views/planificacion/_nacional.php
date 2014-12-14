@@ -7,8 +7,7 @@
  * 
  * 
  * */
-/*
-		echo '<h3>Lista de productos nacionales por partida seleccionada: </h3>';
+
 		//$presuProducto = ;
 		// $gridColumns
 		$gridColumns = array(
@@ -16,8 +15,8 @@
 			array('name'=>'producto_id', 'header'=>'Producto','value'=>array($this,'obtenerProductoNombre')),
 			array('name'=>'unidad_id', 'header'=>'Unidad','value'=>array($this,'obtenerUnidadNombre')),
 			array('name'=>'costo_unidad', 'header'=>'Costo Unidad', 'value'=>array($this,'obtenerCostoUnidadNombre')),
-			array('name'=>'cantidad', 'header'=>'Cantidad',),
-			array(/ 'header'=>'Total Bs.', 'value'=>array($this,'totalProducto'),),
+			array('name'=>'cantidad', 'header'=>'Cantidad', /*'footer'=>'Total Hours'*/),
+			array(/*'name'=>'cantidad',*/ 'header'=>'Total Bs.', 'value'=>array($this,'totalProducto'),/*'class'=>'booster.widgets.TbTotalSumColumn'*/),
 			//array('name'=>'tipo', 'header'=>'Tipo de Compra'),			    
 
 			array(
@@ -25,9 +24,17 @@
 	
 				'class'=>'booster.widgets.TbButtonColumn',
 				'template'=>'{delete}', // {view} {update}
-				'deleteConfirmation'=>"js:'El producto '+$(this).parent().parent().children(':first-child').text()+' será borrado! Continuar?'",
+				//'deleteConfirmation'=>"js:'El producto '+$(this).parent().parent().children(':first-child').text()+' será borrado! Continuar?'",
 				//'viewButtonUrl'=>null,
 				//'updateButtonUrl'=>null,
+				'deleteButtonOptions'=>array('confirm'=>'¿Está seguro que desea eliminar este producto?',
+					'ajax'=>array(
+								'type' => 'GET',											
+								'url'=>'js:$(this).attr("href")',
+								'update'=>'#listaProductosNacionales',
+								//'success' => 'js:function(data) { $.fn.yiiGridView.update("my-grid")}'
+						),
+					),
 				'deleteButtonUrl'=>'Yii::app()->createUrl("/planificacion/eliminarProducto", array("id"=>$data->presupuesto_id))',
 			)
 		);
@@ -35,7 +42,15 @@
 		
 		$gridDataProvider = new CArrayDataProvider($presuPros,array(
 											    'keyField' => 'presupuesto_id',		  		         
-						
+											/*    'sort'=>array(
+												        'attributes'=>array(
+												             'producto_id','unidad_id','costo_unidad','cantidad'
+												        ),
+												    ),
+												'pagination'=>array(
+												        'pageSize'=>2,
+												        'pageVar'=>'custom-page-selector', //page selector
+												    ),*/
 											));
 		$this->widget('booster.widgets.TbExtendedGridView', array(
 		        'type' => 'striped bordered condensed',
@@ -46,9 +61,9 @@
 		        //'filter' => new PresupuestoProductos(),
 		        'columns' => $gridColumns, 
 
-		    ));*/
+		    ));
 
-?>
+?><!-- 
 	 <?php if(isset($presuPros[0])){ 
 		echo '<h3>Lista de productos nacionales por partida seleccionada: </h3>';
 	?>
@@ -61,11 +76,11 @@
 		            <th data-field="costo Unidad">Costo Unidad Bs.</th>
 		            <th data-field="cantidad">Cantidad</th>
 		            <th data-field="total">Total Bs.</th>
-		           <th data-field="total">Acción</th>
+		           	<th data-field="total">Acción</th>
 		        </tr>
 		    </thead>
 		    <tbody>
-		    <?php foreach ($presuPros as $key => $presuPro) {
+		    <?php /*foreach ($presuPros as $key => $presuPro) {
 		    ?>
 		    	<tr class="principaltr">
 	
@@ -78,7 +93,7 @@
 		    		array('onClick'=>"eliminar('".$this->obtenerProductoNombre($presuPro)."');"));?></td>
 	
 		    	</tr>
-		    <?php }?>
+		    <?php }*/?>
 		    </tbody>
 		</table>
 		<?php } ?> 
@@ -90,4 +105,4 @@
 						window.location.href='clientes.php?idbo='+id;
 					}
 					}
-					</script>
+					</script> -->

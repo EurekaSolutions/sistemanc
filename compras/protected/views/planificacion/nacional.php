@@ -178,7 +178,11 @@ $this->breadcrumbs=array(
 			    array('buttonType' => 'submit',/*'url'=>array('/planificacion/nacional','#'=>'pestanas'),*/ 'label' => 'Añadir')
 			);
 
+		echo '<h3>Lista de productos nacionales por partida seleccionada: </h3>';
+		?> <div id='listaProductosNacionales'>
+				<?php
 		$this->renderPartial('_nacional',array('presuPros'=>$presuPros));
+		?></div><?php 
 
 		?></div><?php 
 	}
