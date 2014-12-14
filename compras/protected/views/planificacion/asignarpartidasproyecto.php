@@ -36,7 +36,7 @@
                                 $partidas_principal = CHtml::listData($partidas, function($partidas) {
                                                                 return CHtml::encode($partidas->partida_id);
                                                             }, function($partidas) {
-                                                                return CHtml::encode($partidas->p1.'-'. $partidas->nombre);
+                                                                return CHtml::encode($partidas->p1.' - '. $partidas->nombre);
                                                             });
 
                                 $fuentes = CHtml::listData($fuentes, 'fuente_financiamiento_id', 'nombre');

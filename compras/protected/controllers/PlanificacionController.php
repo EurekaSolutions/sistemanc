@@ -476,7 +476,7 @@ class PlanificacionController extends Controller
 			$especificas_lista = CHtml::listData($especificas, function($especificas) {
 																	return CHtml::encode($especificas->partida_id);
 																}, function($especificas) {
-																	return CHtml::encode($especificas->p1.'-'.$especificas->p2.'-'.$especificas->p3. $especificas->nombre);
+																	return CHtml::encode($especificas->p1.'-'.$especificas->p2.'-'.$especificas->p3.' '.$especificas->nombre);
 																});
 			//return $especificas;
 
@@ -516,7 +516,7 @@ class PlanificacionController extends Controller
 			$especificas_lista = CHtml::listData($especificas, function($especificas) {
 																	return CHtml::encode($especificas->partida_id);
 																}, function($especificas) {
-																	return CHtml::encode($especificas->p1.'-'.$especificas->p2.'-'.$especificas->p3. $especificas->nombre);
+																	return CHtml::encode($especificas->p1.'-'.$especificas->p2.'-'.$especificas->p3.' '.$especificas->nombre);
 																});
 			//return $especificas;
 
@@ -851,7 +851,7 @@ class PlanificacionController extends Controller
 						    $generales_todas = CHtml::listData($generales, function($generales) {
 																				return CHtml::encode($generales->partida_id);
 																			}, function($generales) {
-																				return CHtml::encode($generales->p1.'-'.$generales->p2.'-'.$generales->p3.'-'. $generales->nombre);
+																				return CHtml::encode($generales->p1.'-'.$generales->p2.'-'.$generales->p3.'- '. $generales->nombre);
 																			});
 
 						if($model->general)
