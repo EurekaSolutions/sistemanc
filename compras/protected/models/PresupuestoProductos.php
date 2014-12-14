@@ -40,7 +40,8 @@ class PresupuestoProductos extends CActiveRecord
 		return array(
 			array('producto_id, unidad_id, costo_unidad, cantidad, monto_presupuesto, tipo, monto_ejecutado, proyecto_partida_id', 'required'),
 			array('costo_unidad, monto_presupuesto, monto_ejecutado', 'length', 'max'=>38),
-			array('cantidad, costo_unidad, monto_presupuesto, monto_ejecutado', 'numerical'),
+			array('costo_unidad, monto_presupuesto, monto_ejecutado', 'numerical'),
+			array('cantidad', 'numerical', 'integerOnly'=>true, 'min'=>1),
 			array('tipo', 'length', 'max'=>60),
 			array('producto_id', 'unicoProducto'),
 			// The following rule is used by search().

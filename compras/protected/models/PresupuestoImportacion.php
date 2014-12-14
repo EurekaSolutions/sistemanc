@@ -34,7 +34,8 @@ class PresupuestoImportacion extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('codigo_ncm_id, producto_id, cantidad, fecha_llegada, monto_presupuesto, tipo, divisa_id, descripcion', 'required'),
-			array('monto_presupuesto, monto_ejecutado, cantidad', 'numerical'),
+			array('monto_presupuesto, monto_ejecutado', 'numerical'),
+			array('cantidad', 'numerical', 'integerOnly'=>true, 'min'=>1),
 			array('codigo_ncm_id', 'codigoNcmUnico'),
 			array('tipo', 'length', 'max'=>100),
 			// The following rule is used by search().
