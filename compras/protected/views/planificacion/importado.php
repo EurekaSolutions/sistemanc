@@ -236,46 +236,8 @@ $this->breadcrumbs=array(
 
 <?php 
 
-		
 
-		echo '<h3>Lista de productos </h3>';
-		$presuProducto = new PresupuestoProductos();
-		// $gridColumns
-		$gridColumns = array(
-			//array('name'=>'id', 'header'=>'#', 'htmlOptions'=>array('style'=>'width: 60px')),
-			array('name'=>'codigo_ncm_id', 'header'=>'Producto Importado','value'=>array($this,'obtenerCodigoNcmNombre')),
-			array('name'=>'divisa_id', 'header'=>'Divisa','value'=>array($this,'obtenerDivisa')),
-			array('name'=>'tipo', 'header'=>'Tipo Importación','value'=>array($this,'obtenerTipoImportacion')),
-			array('name'=>'fecha_llegada', 'header'=>'Fecha estimada de la importación'),
-			array('name'=>'monto_presupuesto', 'header'=>'Costo unitario de la divisa'),
-			array('name'=>'cantidad', 'header'=>'Cantidad'),
-			array('name'=>'descripcion', 'header'=>'Descripción'),
-			array('header'=>'Total Bs.', 'value'=>array($this,'obtenerTotalProducto')),
 
-			//array('name'=>'cantidad', 'header'=>'Cantidad'),
-			//array('name'=>'tipo', 'header'=>'Tipo de Compra'),
-			array(
-				'htmlOptions' => array('nowrap'=>'nowrap'),
-				'class'=>'booster.widgets.TbButtonColumn',
-				'template'=>'{delete}',
-				'deleteConfirmation'=>"js:'El producto con codigo arancelario '+$(this).parent().parent().children(':first-child').text()+' será borrado! Continuar?'",
-				'viewButtonUrl'=>null,
-				'updateButtonUrl'=>null,
-				'deleteButtonUrl'=>'Yii::app()->createUrl("planificacion/eliminarProductoImportado", array("ppid"=>$data->presupuesto_partida_id,"pid"=>$data->producto_id,"cn"=>$data->codigo_ncm_id))',
-			)
-		);
-
-		$gridDataProvider = new CArrayDataProvider($presuImps,array(
-											    'keyField' => 'presupuesto_partida_id',
-											));
-		$this->widget('booster.widgets.TbGridView', array(
-		        'type' => 'striped bordered condensed',
-		        'id'=>'presupuesto_partida_id',
-		        'dataProvider' => $gridDataProvider,
-		        'template' => "{items}",
-		        //'filter' => $presuProducto->search(),
-		        'columns' => $gridColumns,
-		    ));
 
 		/*foreach ($presuImps as $key => $prepro) {
 			if(isset($prepro)){

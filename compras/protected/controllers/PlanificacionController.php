@@ -33,7 +33,7 @@ class PlanificacionController extends Controller
 				'roles'=>array('ente'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','view', 'agregarproyecto', 'agregarcentralizada', 'nacional','importado','eliminarProducto',
+				'actions'=>array('index','view', 'agregarproyecto', 'agregarcentralizada', 'nacional','importado','eliminarProducto','eliminarProductoImportado',
 								 'buscarespecfica', 'buscarespecficap','create','update','partidas','vistaparcial', 'buscarpartida', 'buscargeneral',
 								 'asignarpartidasproyecto', 'buscargeneralproyecto','buscarNcm', 'buscarpartidasproyecto', 'buscarproductospartida'),
 				'users'=>array('@'),
@@ -1100,15 +1100,52 @@ class PlanificacionController extends Controller
 		}
 
 	}
+	public function actionEliminarProductoImportado(){
+
+		//if (isset($_GET['ppid']) && isset($_GET['pid']) && isset($_GET['cn'])  ){
+			$presuPartidaId = Yii::app()->getRequest()->getQuery('ppid');
+			$productoId = Yii::app()->getRequest()->getQuery('pid');
+			$codigoNcmId = Yii::app()->getRequest()->getQuery('cn');
+		//}
+
+/*			$producto = PresupuestoImportacion::model()->findByAttributes(array('presupuesto_partida_id'=>$presuPartidaId,'producto_id'=>$productoId,'codigo_ncm_id'=>$codigoNcmId));
+
+			if(!$producto)
+				return;
+			
+			
+			if($producto->presupuestoPartida->ente_organo_id == $this->usuario()->ente_organo_id)
+			{
+				$transaction = $producto->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
+				 try{
+						//$producto->scenario = 'eliminararancelario';
+						if($producto->delete())
+						{
+							$transaction->commit();    // committing 
+							//return true;
+						}else $transaction->rollBack();
+				}
+		        catch (Exception $e){
+		            $transaction->rollBack();
+		            //return false;
+		        }
+	    	}
+*/
+	    $presuImps = array();
+	    if(!empty($presuPartidaId))	
+	    	$presuImps = PresupuestoImportacion::model()->findAllByAttributes(array('presupuesto_partida_id'=>$presuPartidaId));
+
+		return $this->renderPartial('_importado',array('presuImps'=>$presuImps),true);
+
+	}
 	public function actionEliminarProducto($id){
-		
+		return 'Hola';
 		$producto = PresupuestoProductos::model()->findByPk($id);
 		if(!$producto)
-		{
 			return;
-		}
-		$usuario = $this->usuario();
-		if($producto->proyectoPartida->ente_organo_id == $usuario->ente_organo_id)
+		
+
+		if($producto->proyectoPartida->ente_organo_id == $this->usuario()->ente_organo_id)
 		{
 			$transaction = $producto->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 			 try{
@@ -1126,8 +1163,11 @@ class PlanificacionController extends Controller
     	}
         //return false;
 	}
+	public function obtenerCostoUnitarioDivisa($data,$row){
+		return number_format($data->monto_presupuesto,2,',','.');	
+	}
 	public function obtenerTotalProducto($data,$row){
-		return $data->monto_presupuesto*$data->cantidad*$data->divisa->tasa->tasa;
+		return number_format($data->monto_presupuesto*$data->cantidad*$data->divisa->tasa->tasa,2,',','.');
 	}
 	public function obtenerTipoImportacion($data,$row){
 		return $data->tipo == 'corpovex'? 'Corpovex' : 'Licitacion Internacional';
@@ -1136,7 +1176,7 @@ class PlanificacionController extends Controller
 		return $data->divisa->abreviatura;
 	}
 	public function totalProducto($data, $row){
-		return $data->monto_presupuesto;
+		return number_format($data->monto_presupuesto,2,',','.');
 	}
 	public  function obtenerCodigoNcmNombre($data,$row=null){
 		if(isset($data->descripcion_ncm))
@@ -1381,7 +1421,7 @@ class PlanificacionController extends Controller
 						}//else Yii::app()->user->setFlash('Error','error');
 				}
 
-			if(/*!empty($partidaSel->partida_id) &&*/ !empty($proyectoSel->proyecto_id)){
+			if(!empty($partidaSel->partida_id) && !empty($proyectoSel->proyecto_id)){
 				$productosPartidas = $this->listaProductosPartida($partidaSel->partida_id, $proyectoSel->proyecto_id, 'n'); //Partidas::model()->findByPk($partidaSel->partida_id)->productos;
 				$productosPartidas = CHtml::listData($productosPartidas, 'producto_id', 
 				                                 function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);});
@@ -1488,6 +1528,8 @@ class PlanificacionController extends Controller
 								if($presupuestoPartida->partida_id == $partidaSel->partida_id){
 									$presuImps = $presupuestoPartida->presupuestoImportacion;
 								}
+								$this->render('_importado',array('presuImps'=>$presuImps));
+								Yii::app()->end();
 		
 						}
 					}
@@ -1536,7 +1578,7 @@ class PlanificacionController extends Controller
 
 						//$this->guardarPresupuestoProductos($presuPro);
 					}
-			if(/*!empty($partidaSel->partida_id) &&*/ !empty($proyectoSel->proyecto_id)){
+			if(!empty($partidaSel->partida_id) && !empty($proyectoSel->proyecto_id)){
 				$productosPartidas = $this->listaProductosPartida($partidaSel->partida_id, $proyectoSel->proyecto_id, 'n'); //Partidas::model()->findByPk($partidaSel->partida_id)->productos;
 				$productosPartidas = CHtml::listData($productosPartidas, 'producto_id', 
 				                                 function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);});

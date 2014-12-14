@@ -178,7 +178,7 @@ $this->breadcrumbs=array(
 			    array('buttonType' => 'submit',/*'url'=>array('/planificacion/nacional','#'=>'pestanas'),*/ 'label' => 'Añadir')
 			);
 
-		//$this->renderPartial('_nacional',array('presuPros'=>$presuPros));
+		$this->renderPartial('_nacional',array('presuPros'=>$presuPros));
 
 		?></div><?php 
 	}
@@ -196,40 +196,6 @@ $this->breadcrumbs=array(
 		//echo 'probando';
 		//print_r($presuPros);
 
-		echo '<h3>Lista de productos nacionales</h3>';
-		$presuProducto = new PresupuestoProductos();
-		// $gridColumns
-		$gridColumns = array(
-			//array('name'=>'id', 'header'=>'#', 'htmlOptions'=>array('style'=>'width: 60px')),
-			array('name'=>'producto_id', 'header'=>'Producto','value'=>array($this,'obtenerProductoNombre')),
-			array('name'=>'unidad_id', 'header'=>'Unidad','value'=>array($this,'obtenerUnidadNombre')),
-			array('name'=>'costo_unidad', 'header'=>'Costo Unidad', 'value'=>array($this,'obtenerCostoUnidadNombre')),
-			array('name'=>'cantidad', 'header'=>'Cantidad'),
-			array(/*'name'=>'cantidad',*/ 'header'=>'Total Bs.', 'value'=>array($this,'totalProducto')),
-			//array('name'=>'tipo', 'header'=>'Tipo de Compra'),
-			array(
-				'htmlOptions' => array('nowrap'=>'nowrap'),
-				'class'=>'booster.widgets.TbButtonColumn',
-				'template'=>'{delete}', // {view} {update}
-				'deleteConfirmation'=>"js:'El producto'+$(this).parent().parent().children(':first-child').text()+' será borrado! Continuar?'",
-				//'viewButtonUrl'=>null,
-				//'updateButtonUrl'=>null,
-				'deleteButtonUrl'=>'Yii::app()->createUrl("planificacion/eliminarProducto", array("id"=>$data->presupuesto_id))',
-			)
-		);
-
-		//print_r($presuPros);
-		$gridDataProvider = new CArrayDataProvider($presuPros,array(
-											    'keyField' => 'presupuesto_id',
-											));
-		$this->widget('booster.widgets.TbGridView', array(
-		        'type' => 'striped bordered condensed',
-		        'id'=>'presupuesto_id',
-		        'dataProvider' => $gridDataProvider,
-		        'template' => "{items}",
-		        //'filter' => $presuProducto->search(),
-		        'columns' => $gridColumns,
-		    ));
 
 	
 		/*$this->widget(

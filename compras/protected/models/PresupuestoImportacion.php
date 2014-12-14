@@ -58,6 +58,14 @@ class PresupuestoImportacion extends CActiveRecord
 			'divisa' => array(self::BELONGS_TO, 'Divisas', array('divisa_id'=>'divisa_id')),
 		);
 	}
+	
+	public function beforeDelete(){
+		// Eliminar todos los codigos arancelarios del producto
+		if(!$this->scenario == 'eliminarproducto')
+	    	foreach($this->findAllByAttributes(array('presupuesto_partida_id'=>$this->presupuesto_partida_id,'producto_id'=>$this->producto_id)) as $c)
+	        	$c->delete();
+	    return parent::beforeDelete();
+	}
 
 	public function codigoNcmUnico($attribute,$params)
 	{
