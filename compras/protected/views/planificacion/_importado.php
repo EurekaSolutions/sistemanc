@@ -29,6 +29,16 @@
 				'htmlOptions' => array('nowrap'=>'nowrap'),
 				'class'=>'booster.widgets.TbButtonColumn',
 				'template'=>'{delete}',
+				'buttons'=>array('delete'=>array(
+								 'ajax' => array(
+												'type'=>'POST', //request type
+												//'url'=>CController::createUrl('planificacion/eliminarProductoImportado', array("ppid"=>$data->presupuesto_partida_id,"pid"=>$data->producto_id,"cn"=>$data->codigo_ncm_id)), //url to call.
+												//Style: CController::createUrl('currentController/methodToCall')
+												'update'=>'#listaProductosImportados', //selector to update
+												//'data'=>'js:javascript statement' 
+												//leave out the data key to pass all form values through
+										  ),
+					)),
 				'deleteConfirmation'=>"js:'El producto con codigo arancelario '+$(this).parent().parent().children(':first-child').text()+' será borrado! Continuar?'",
 				'viewButtonUrl'=>null,
 				'updateButtonUrl'=>null,
@@ -37,7 +47,7 @@
 		);
 
 		$gridDataProvider = new CArrayDataProvider($presuImps,array(
-											    'keyField' => 'presupuesto_partida_id',
+											    'keyField' => false,
 											   /*     'sort'=>array(
 												        'attributes'=>array(
 												             'producto_id',
