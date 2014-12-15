@@ -30,7 +30,7 @@
 					),
 				),*/
 				'deleteButtonOptions'=>array(
-							'confirm' => '¿Está seguro que desea eliminar este proyecto? Recuerde que al eliminarlo, todas las partidas y productos asociados con el mismo se eliminaran.',
+							'confirm' => '¿Está seguro que desea eliminar este proyecto? Recuerde que al eliminarlo, todas las partidas y productos asociados se eliminaran.',
 							'ajax' => array(
 											'type' => 'GET',											
 											'url'=>'js:$(this).attr("href")',
@@ -52,10 +52,10 @@
 												             'producto_id',
 												        ),
 												    ),*/
-												'pagination'=>false,/*array(
-												        'pageSize'=>3,
+												'pagination'=>/*false,*/array(
+												        'pageSize'=>15,
 												        'pageVar'=>'custom-page-selector', //page selector
-												    ),*/
+												    ),
 											));
 
 		$this->widget('booster.widgets.TbExtendedGridView', array(
@@ -64,7 +64,7 @@
 		        'updateSelector'=>'custom-page-selector', //update selector
 		        'dataProvider' => $gridDataProvider,
 		        'template' => "{pager}{items}{pager}",
-		        //'class'=>'CLinkPager',
+		        'pager'=>array('class'=>'CLinkPager'),
 		        //'filter' => $presuImps[0],
 		        'columns' => $gridColumns,
 		    ));	

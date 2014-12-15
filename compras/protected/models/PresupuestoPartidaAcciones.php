@@ -59,7 +59,10 @@ class PresupuestoPartidaAcciones extends CActiveRecord
 
 	// Eliminar la acción de un ente, dado el id de la acción y el id del ente u organo
 	public function eliminarAccion($accionId, $enteOrganoId){
-		$this->deleteAllByAttributes(array('accion_id'=>$accionId, 'ente_organo_id'=>$enteOrgano));
+		if($this->deleteAllByAttributes(array('accion_id'=>$accionId, 'ente_organo_id'=>$enteOrgano)));
+			return true;
+		else 
+			return false;
 	}
 
 	// Delete cascade / Borrado en cascada
