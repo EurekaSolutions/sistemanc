@@ -84,12 +84,12 @@ class PresupuestoPartidas extends CActiveRecord
 		// Eliminando las fuentes de financiamientos asociadas a la partida
 		foreach ($this->fuenteFinanciamientos as $key => $c) 
 			$c->delete();
-
+/*
 		foreach ($this->presupuestoPartidaProyecto as $key => $c) 
 			$c->delete();
 
 		foreach ($this->presupuestoPartidaAcciones as $key => $c) 
-			$c->delete();
+			$c->delete();*/
 		
 
 		parent::beforeDelete();
