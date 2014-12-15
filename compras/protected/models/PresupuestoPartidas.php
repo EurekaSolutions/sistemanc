@@ -70,7 +70,8 @@ class PresupuestoPartidas extends CActiveRecord
 	}
 
 	// Delete cascade / Borrado en cascada
-	public function beforeDelete(){
+	public function beforeDelete()
+	{
 
 		// Eliminando en cascada todos los productos nacionales correspondientes a esta partida
 		foreach ($this->presupuestoProductos as $key => $c) 
