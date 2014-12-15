@@ -192,12 +192,15 @@ class PlanificacionController extends Controller
 					 	$presupuestoPartidas[] = $value->presupuestoPartida;
 					}
 				}else{
-					$selId = $presuPartida->presupuestoPartidaProyecto->proyecto->proyecto_id;
+					
+					
+					$selId = $presuPartida->presupuestoPartidaProyecto[0]->proyecto_id;
+					
 					$proyectoActual = Proyectos::model()->findByPk($selId);
 						
 					//Todas los Presupuesto Partidas del proyecto seleccionado
 					$presupuestoPartidas = $proyectoActual->presupuestoPartidas;
-					print_r($presupuestoPartida);
+					
 				}
 				$transaction = $presuPartida->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 				 try{
