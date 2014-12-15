@@ -52,10 +52,10 @@
 												             'producto_id',
 												        ),
 												    ),*/
-												'pagination'=>/*false,*/array(
+												'pagination'=>false,/*array(
 												        'pageSize'=>15,
 												        'pageVar'=>'custom-page-selector', //page selector
-												    ),
+												    ),*/
 											));
 
 		$this->widget('booster.widgets.TbExtendedGridView', array(

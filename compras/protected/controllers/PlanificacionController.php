@@ -90,24 +90,25 @@ class PlanificacionController extends Controller
 		$acciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$id, 'ente_organo_id'=>$usuario->ente_organo_id));
 		
 		if(!empty($acciones))
-		{
-
-				
+		{		
 
 				$transaction = Yii::app()->db->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
-				foreach ($acciones as $key => $value) {
-				
+						
 					try{
-						if(($value->delete()))
-						{
-							$transaction->commit();    // committing 
-							//return true;
-						}else $transaction->rollBack();
+						foreach ($acciones as $key => $value) {
+							if(($value->delete()))
+							{
+								$transaction->commit();    // committing 
+								//return true;
+							}else {
+								$transaction->rollBack();
+								break;
+							}
+						}
 					}catch (Exception $e){
 					   $transaction->rollBack();
 					}
-
-				}									
+													
 		}
 
 	    $acciones = array();

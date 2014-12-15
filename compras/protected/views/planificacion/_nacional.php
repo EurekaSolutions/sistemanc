@@ -46,8 +46,8 @@
 												        'attributes'=>array(
 												             'producto_id','unidad_id','costo_unidad','cantidad'
 												        ),
-												    ),
-												'pagination'=>array(
+												    ),*/
+												'pagination'=>false,/*array(
 												        'pageSize'=>2,
 												        'pageVar'=>'custom-page-selector', //page selector
 												    ),*/
