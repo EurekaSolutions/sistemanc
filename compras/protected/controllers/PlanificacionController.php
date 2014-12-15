@@ -186,13 +186,12 @@ class PlanificacionController extends Controller
 //PresupuestoPartidaAcciones::model()->findByAttributes(array('presupuesto_partida_id' => $id, 'ente_organo_id' => $usuario->ente_organo_id))
 				if($presuPartida->tipo=='A'){
 					$selId = PresupuestoPartidaAcciones::model()->findByAttributes(array('presupuesto_partida_id' => $id, 'ente_organo_id' => $usuario->ente_organo_id))->accion_id;
-					foreach( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$SelId,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
+					foreach( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$selId,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
 					 	//if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
 					 	//Todos los presupuestos partidas de la Acción seleccionada
 					 	$presupuestoPartidas[] = $value->presupuestoPartida;
 					}
 				}else{
-					
 					
 					$selId = $presuPartida->presupuestoPartidaProyecto[0]->proyecto_id;
 					
@@ -281,6 +280,8 @@ class PlanificacionController extends Controller
 					echo '<br>Enviado '.$usuario->correo;
 
 		}*/
+
+		$this->render('importacion');
 	}
 
 	
