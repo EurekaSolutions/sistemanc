@@ -29,7 +29,7 @@ class PlanificacionController extends Controller
 			),*/
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view', 'Buscarsubespecficap', 'Buscarsubespecfica', 'agregarproyecto', 'agregarcentralizada', 'nacional','importado','eliminarProducto',
-					'eliminaProyecto', 'eliminarProductoImportado', 'eliminaAccion', 'elimnaPartida'),
+					'eliminaProyecto', 'eliminarProductoImportado', 'eliminaAccion', 'eliminaPartida'),
 				'users'=>array('@'),
 				'roles'=>array('ente'),
 			),
@@ -126,46 +126,100 @@ class PlanificacionController extends Controller
 		
 	}
 
+	public function actionEliminarpartidas()
+	{
+		$usuario = $this->usuario();
+		$proyectoSel = new Proyectos('search');
+		$accionSel = new Acciones('search');
+
+		//Todos los Presupuesto Partidas de un Proyecto o una accción
+		$presupuestoPartidas = array();
+
+		if(isset($_POST['Proyectos']) /*&& isset($_POST['Acciones'])*/)
+		{
+			$proyectoSel->attributes = $_POST['Proyectos'];
+			// Para el manejo del dropdown de acciones y proyectos
+			//print_r($_POST['Proyectos']['proyecto_id']);
+				if(!empty($_POST['Proyectos']['proyecto_id'])){
+
+					
+					// Verificando si el id pasado es de una acción o un proyecto
+					if(strstr($proyectoSel->proyecto_id, 'a'))
+					{
+						$accionSel->accion_id = $this->accionId($proyectoSel->proyecto_id);
+						
+						$partidas = $this->partidasAccion($accionSel->accion_id);
+
+						foreach( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
+						 	//if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
+						 	//Todos los presupuestos partidas de la Acción seleccionada
+						 		$presupuestoPartidas[] = $value->presupuestoPartida;
+						}
+
+					}else{
+
+						$proyectoActual = Proyectos::model()->findByPk($proyectoSel->proyecto_id);
+						$partidas = $this->partidasProyecto($proyectoSel->proyecto_id);
+
+						//Todas los Presupuesto Partidas del proyecto seleccionado
+						$presupuestoPartidas = $proyectoActual->presupuestoPartidas;
+					
+					}
+				}
+			}
+		$this->render('eliminarpartidas',array('proyectoSel'=>$proyectoSel,'presupuestoPartidas'=>$presupuestoPartidas, 'usuario' => $usuario));
+	}
+
 	public function actionEliminaPartida()
 	{
 		$usuario = $this->usuario();
+		
 		$id = Yii::app()->getRequest()->getQuery('id');
 
-		$acciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$id, 'ente_organo_id'=>$usuario->ente_organo_id));
-		
-		if(!empty($acciones))
-		{		
+		$presuPartida = PresupuestoPartidas::model()->findByPk($id);
 
-				$transaction = Yii::app()->db->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
-						
-					try{
-						foreach ($acciones as $key => $value) {
-							if(($value->delete()))
-							{
-								$transaction->commit();    // committing 
-								//return true;
-							}else {
-								$transaction->rollBack();
-								break;
-							}
-						}
-					}catch (Exception $e){
-					   $transaction->rollBack();
+		$presupuestoPartidas = array();
+
+		if(!empty($presuPartida))
+			if($presuPartida->ente_organo_id == $usuario->ente_organo_id)
+			{
+//PresupuestoPartidaAcciones::model()->findByAttributes(array('presupuesto_partida_id' => $id, 'ente_organo_id' => $usuario->ente_organo_id))
+				if($presuPartida->tipo=='A'){
+					$selId = PresupuestoPartidaAcciones::model()->findByAttributes(array('presupuesto_partida_id' => $id, 'ente_organo_id' => $usuario->ente_organo_id))->accion_id;
+					foreach( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$SelId,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
+					 	//if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
+					 	//Todos los presupuestos partidas de la Acción seleccionada
+					 	$presupuestoPartidas[] = $value->presupuestoPartida;
 					}
-													
-		}
+				}else{
+					$selId = $presuPartida->presupuestoPartidaProyecto->proyecto->proyecto_id;
+					$proyectoActual = Proyectos::model()->findByPk($selId);
+						
+					//Todas los Presupuesto Partidas del proyecto seleccionado
+					$presupuestoPartidas = $proyectoActual->presupuestoPartidas;
+					print_r($presupuestoPartida);
+				}
+				$transaction = $presuPartida->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
+				 try{
 
-	    $acciones = array();
+						if($presuPartida->delete())
+						{
+							$transaction->commit();    // committing 
+							//return true;
+						}else $transaction->rollBack();
+				}
+		        catch (Exception $e){
+		            $transaction->rollBack();
+		        }
+	    	}
+
+	   
 	    
-	    	
-    	$criteria = new CDbCriteria();
-		$criteria->distinct=true;
-		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
-		$criteria->select = 'accion_id, codigo_accion, ente_organo_id';
-		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
+/*	    if(!empty($presuPartida))
+			$presuPartidas=PresupuestoPartida::model()->findAll($criteria);*/
 
 	    	
-	    echo $this->renderPartial('_eliminapartida',array('partidas'=>$acciones),false);
+	    echo $this->renderPartial('_eliminarpartida',array('presupuestoPartidas'=>$presupuestoPartidas),false);
 
 		
 	}
@@ -209,10 +263,7 @@ class PlanificacionController extends Controller
 		$this->render('eliminarproyecto',array('proyectos'=>$proyectos));
 	}
 
-	public function actionEliminarpartidas()
-	{
-		$this->render('eliminarpartidas');
-	}
+	
 
 	public function actionImportacion() /*Aqui esta vista tratara todo lo que tenga relacion con los datos de CENCOEX.*/
 	{
@@ -1316,6 +1367,12 @@ class PlanificacionController extends Controller
 		echo $this->renderPartial('_nacional',array('presuPros'=>$presuPros),false);
 
 	}
+
+	public function obtenerNombrePartida($data,$row)
+	{
+		return $this->numeroPartida($data->partida).' - '.$data->partida->nombre;
+	}
+
 	public function obtenerCostoUnitarioDivisa($data,$row){
 		return number_format($data->monto_presupuesto,2,',','.');	
 	}
@@ -1333,7 +1390,9 @@ class PlanificacionController extends Controller
 	{
 		return $data->accion->nombre;	
 	}
-
+	public function totalPartida($data, $row){
+		return number_format($data->monto_presupuestado,2,',','.');
+	}
 	public function totalProducto($data, $row){
 		return number_format($data->monto_presupuesto,2,',','.');
 	}
