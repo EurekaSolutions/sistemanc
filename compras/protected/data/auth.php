@@ -42,47 +42,7 @@ return array (
     ),
     'assignments' => 
     array (
-      1260 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
-      1281 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
-      1271 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
-      1265 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
-      1277 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
-      1280 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
-      1279 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
-      1278 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
-      1264 => 
+      1259 => 
       array (
         'bizRule' => NULL,
         'data' => NULL,
