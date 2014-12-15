@@ -63,9 +63,9 @@ class PresupuestoPartidas extends CActiveRecord
 			'presupuestoProducto' => array(self::HAS_ONE, 'PresupuestoProductos', 'proyecto_partida_id'),
 			'partida' => array(self::BELONGS_TO, 'Partidas', array('partida_id'=>'partida_id')),
 			'proyectoses' => array(self::MANY_MANY, 'Proyectos', 'presupuesto_partida_proyecto(presupuesto_partida_id, proyecto_id)'),
-			'presupuestoPartidaAcciones' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones', 'presupuesto_partida_id'),
+			'presupuestoPartidaAcciones' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones',  'presupuesto_partida_id'),
 			'presupuestoPartidaProyecto' => array(self::HAS_MANY, 'PresupuestoPartidaProyecto', 'presupuesto_partida_id'),
-			'fuenteFinanciamientos' => array(self::HAS_MANY, 'FuentesFinanciamiento', 'fuente_financiamiento_id'),
+			'fuenteFinanciamientos' => array(self::HAS_MANY, 'FuentePresupuesto', 'presupuesto_partida_id'),
 		);
 	}
 
@@ -75,21 +75,26 @@ class PresupuestoPartidas extends CActiveRecord
 
 		// Eliminando en cascada todos los productos nacionales correspondientes a esta partida
 		foreach ($this->presupuestoProductos as $c) 
-			$c->delete();
+			if(!$c->delete()) throw new Exception("No se pudo eliminar el presupuesto_producto con ID: ".$c->presupuesto_id, 1);
 
 		// Eliminando en cascada todos los productos importados correspondientes a esta partida
 		foreach ($this->presupuestoImportacion as $c) 
-			$c->delete();
+			if(!$c->delete()) throw new Exception("No se pudo eliminar el presupuesto_importacion con ID: ".$c->presupuesto_partida_id, 1);
 
 		// Eliminando las fuentes de financiamientos asociadas a la partida
 		foreach ($this->fuenteFinanciamientos as $c) 
-			$c->delete();
+			if(!$c->delete()) throw new Exception("No se pudo eliminar la fuente_presupuesto con ID: ".$c->id, 1);
+			
 
-		foreach ($this->presupuestoPartidaProyecto as $c) 
-			$c->delete();
+		foreach ($this->presupuestoPartidaProyecto as $c) {
+			$c->setScenario('cascadaPartida');		// Esto para evitar que me intente eliminar despues de borrarse el mismo
+			if(!$c->delete()) throw new Exception("No se pudo eliminar la relación presupuestoPartidaProyecto con ID: ".$c->presupuesto_partida_id, 1);
+		}
 
-		foreach ($this->presupuestoPartidaAcciones as $c) 
-			$c->delete();
+		foreach ($this->presupuestoPartidaAcciones as $c) {
+			$c->setScenario('cascadaPartida');		// Esto para evitar que me intente eliminar despues de borrarse el mismo
+			if(!$c->delete()) throw new Exception("No se pudo eliminar la relación presupuestoPartidaAcciones con ID: ".$c->presupuesto_partida_id, 1);
+		}
 		
 
 		return parent::beforeDelete();

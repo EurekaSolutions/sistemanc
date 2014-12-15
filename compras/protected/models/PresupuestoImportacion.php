@@ -86,7 +86,7 @@ class PresupuestoImportacion extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'codigo_ncm_id' => 'Codigo Ncm',
+			'codigo_ncm_id' => 'Código arancelario',
 			'producto_id,' => 'Producto',
 			'cantidad' => 'Cantidad',
 			'fecha_llegada' => 'Fecha estimada de la importación',

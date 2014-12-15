@@ -67,8 +67,9 @@ class PresupuestoPartidaAcciones extends CActiveRecord
 
 	// Delete cascade / Borrado en cascada
 	public function afterDelete(){
-	    foreach($this->presupuestoPartidas as $c)
-	        $c->delete();
+		if($this->scenario != 'cascadaPartida')
+	    	foreach($this->presupuestoPartidas as $c)
+	        	$c->delete();
 	    return parent::afterDelete();
 	}
 

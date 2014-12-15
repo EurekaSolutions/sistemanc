@@ -41,7 +41,7 @@ class PlanificacionController extends Controller
 				'roles'=>array('ente'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','administracion'),
+				'actions'=>array('admin','delete','administracion','importacion'),
 				'users'=>array('admin'),
 			),
 
@@ -147,11 +147,8 @@ class PlanificacionController extends Controller
 					if(strstr($proyectoSel->proyecto_id, 'a'))
 					{
 						$accionSel->accion_id = $this->accionId($proyectoSel->proyecto_id);
-						
-						$partidas = $this->partidasAccion($accionSel->accion_id);
 
 						foreach( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
-						 	//if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
 						 	//Todos los presupuestos partidas de la Acción seleccionada
 						 		$presupuestoPartidas[] = $value->presupuestoPartida;
 						}
@@ -159,7 +156,6 @@ class PlanificacionController extends Controller
 					}else{
 
 						$proyectoActual = Proyectos::model()->findByPk($proyectoSel->proyecto_id);
-						$partidas = $this->partidasProyecto($proyectoSel->proyecto_id);
 
 						//Todas los Presupuesto Partidas del proyecto seleccionado
 						$presupuestoPartidas = $proyectoActual->presupuestoPartidas;
@@ -180,45 +176,48 @@ class PlanificacionController extends Controller
 
 		$presupuestoPartidas = array();
 
+
 		if(!empty($presuPartida))
 			if($presuPartida->ente_organo_id == $usuario->ente_organo_id)
 			{
 //PresupuestoPartidaAcciones::model()->findByAttributes(array('presupuesto_partida_id' => $id, 'ente_organo_id' => $usuario->ente_organo_id))
-				if($presuPartida->tipo=='A'){
-					$selId = PresupuestoPartidaAcciones::model()->findByAttributes(array('presupuesto_partida_id' => $id, 'ente_organo_id' => $usuario->ente_organo_id))->accion_id;
+
+				$transaction = $presuPartida->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
+				try{
+				 	//echo 'Entre';
+						if(//PresupuestoPartidas::model()->deleteByPk($id)) 
+						$presuPartida->delete())
+						{//echo "Hola ";
+							$transaction->commit();    // committing 
+							//return true;
+						}else{ 
+							echo 'Error';
+							 //echo CHtml::errorSummary($presuPartida->getErrors());
+							$transaction->rollBack();}
+					//print_r($presuPartida);
+				}
+		        catch (Exception $e){
+		        	echo 'Excepción capturada: '.$e;
+		            $transaction->rollBack();
+		        }	
+
+		       	if(!empty($presuPartida->presupuestoPartidaAcciones)){
+
+					$selId = $presuPartida->presupuestoPartidaAcciones[0]->accion_id;
 					foreach( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$selId,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
-					 	//if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
 					 	//Todos los presupuestos partidas de la Acción seleccionada
 					 	$presupuestoPartidas[] = $value->presupuestoPartida;
 					}
 				}else{
-					
+
 					$selId = $presuPartida->presupuestoPartidaProyecto[0]->proyecto_id;
 					
 					$proyectoActual = Proyectos::model()->findByPk($selId);
 						
 					//Todas los Presupuesto Partidas del proyecto seleccionado
 					$presupuestoPartidas = $proyectoActual->presupuestoPartidas;
-					
 				}
-				$transaction = $presuPartida->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
-				 try{
-
-						if($presuPartida->delete())
-						{
-							$transaction->commit();    // committing 
-							//return true;
-						}else $transaction->rollBack();
-				}
-		        catch (Exception $e){
-		            $transaction->rollBack();
-		        }
 	    	}
-
-	   
-	    
-/*	    if(!empty($presuPartida))
-			$presuPartidas=PresupuestoPartida::model()->findAll($criteria);*/
 
 	    	
 	    echo $this->renderPartial('_eliminarpartida',array('presupuestoPartidas'=>$presupuestoPartidas),false);
@@ -231,10 +230,11 @@ class PlanificacionController extends Controller
 		$id = Yii::app()->getRequest()->getQuery('id');
 		$proyecto = Proyectos::model()->findByPk($id);
 		
-		$usuario = $this->usuario()->ente_organo_id;
+		$usuario = $this->usuario();
+ 		$proyectos = array();
 
 		if(!empty($proyecto))
-			if($proyecto->ente_organo_id == $usuario)
+			if($proyecto->ente_organo_id == $usuario->ente_organo_id)
 			{
 				$transaction = $proyecto->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 				 try{
@@ -248,11 +248,10 @@ class PlanificacionController extends Controller
 		        catch (Exception $e){
 		            $transaction->rollBack();
 		        }
-	    	}
-
-	    $proyectos = array();
-	    if(!empty($proyecto))	
-	    	$proyectos = Proyectos::model()->findAllByAttributes(array('ente_organo_id'=>$usuario));
+ 	
+		    	$proyectos = Proyectos::model()->findAllByAttributes(array('ente_organo_id'=>$usuario->ente_organo_id));
+	    	}   
+	   
 
 		echo $this->renderPartial('_eliminarproyecto',array('proyectos'=>$proyectos),false);
 	}
@@ -1313,6 +1312,7 @@ class PlanificacionController extends Controller
 			$productoId = Yii::app()->getRequest()->getQuery('pid');
 			$codigoNcmId = Yii::app()->getRequest()->getQuery('cn');
 		//}
+			$presuImps = array();
 
 			$producto = PresupuestoImportacion::model()->findByAttributes(array('presupuesto_partida_id'=>$presuPartidaId,'producto_id'=>$productoId,'codigo_ncm_id'=>$codigoNcmId));
 
@@ -1331,13 +1331,12 @@ class PlanificacionController extends Controller
 			        catch (Exception $e){
 			            $transaction->rollBack();
 			            //return false;
-			        }
+			        } 
+
+			        if(!empty($presuPartidaId))	
+	    				$presuImps = PresupuestoImportacion::model()->findAllByAttributes(array('presupuesto_partida_id'=>$presuPartidaId));
 		    	}
-
-	    $presuImps = array();
-	    if(!empty($presuPartidaId))	
-	    	$presuImps = PresupuestoImportacion::model()->findAllByAttributes(array('presupuesto_partida_id'=>$presuPartidaId));
-
+		    	
 		echo $this->renderPartial('_importado',array('presuImps'=>$presuImps),false);	
 	}
 
@@ -1346,7 +1345,8 @@ class PlanificacionController extends Controller
 		$id = Yii::app()->getRequest()->getQuery('id');
 		$producto = PresupuestoProductos::model()->findByPk($id);
 		
-		
+		$presuPros = array();
+
 		if(!empty($producto))
 			if($producto->proyectoPartida->ente_organo_id == $this->usuario()->ente_organo_id)
 			{
@@ -1362,11 +1362,12 @@ class PlanificacionController extends Controller
 		        catch (Exception $e){
 		            $transaction->rollBack();
 		        }
+	    		
+	    		$presuPros = PresupuestoProductos::model()->findAllByAttributes(array('proyecto_partida_id'=>$producto->proyecto_partida_id));
 	    	}
 
-	    $presuPros = array();
-	    if(!empty($producto))	
-	    	$presuPros = PresupuestoProductos::model()->findAllByAttributes(array('proyecto_partida_id'=>$producto->proyecto_partida_id));
+	    
+	    
 
 		echo $this->renderPartial('_nacional',array('presuPros'=>$presuPros),false);
 
