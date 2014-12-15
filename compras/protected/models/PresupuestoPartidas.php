@@ -74,15 +74,15 @@ class PresupuestoPartidas extends CActiveRecord
 	{
 
 		// Eliminando en cascada todos los productos nacionales correspondientes a esta partida
-		foreach ($this->presupuestoProductos as $key => $c) 
+		foreach ($this->presupuestoProductos as $c) 
 			$c->delete();
 
 		// Eliminando en cascada todos los productos importados correspondientes a esta partida
-		foreach ($this->presupuestoImportacion as $key => $c) 
+		foreach ($this->presupuestoImportacion as $c) 
 			$c->delete();
 
 		// Eliminando las fuentes de financiamientos asociadas a la partida
-		foreach ($this->fuenteFinanciamientos as $key => $c) 
+		foreach ($this->fuenteFinanciamientos as  $c) 
 			$c->delete();
 /*
 		foreach ($this->presupuestoPartidaProyecto as $key => $c) 
@@ -92,7 +92,7 @@ class PresupuestoPartidas extends CActiveRecord
 			$c->delete();*/
 		
 
-		parent::beforeDelete();
+		return parent::beforeDelete();
 	}
 
 	/**
