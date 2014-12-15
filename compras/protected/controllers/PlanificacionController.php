@@ -29,7 +29,7 @@ class PlanificacionController extends Controller
 			),*/
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view', 'Buscarsubespecficap', 'Buscarsubespecfica', 'agregarproyecto', 'agregarcentralizada', 'nacional','importado','eliminarProducto',
-					'eliminaProyecto', 'eliminarProductoImportado',),
+					'eliminaProyecto', 'eliminarProductoImportado', 'eliminaAccion'),
 				'users'=>array('@'),
 				'roles'=>array('ente'),
 			),
@@ -68,7 +68,61 @@ class PlanificacionController extends Controller
 
 	public function actionEliminaraccion()
 	{
-		$this->render('eliminaraccion');
+		
+		//PresupuestoPartidaAcciones::model()->findByAttributes(array('ente_organo_id' => $this->usuario()->ente_organo_id));
+		$usuario = $this->usuario();
+
+		$criteria = new CDbCriteria();
+		$criteria->distinct=true;
+		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
+		$criteria->select = 'accion_id, codigo_accion, ente_organo_id';
+		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
+
+		$this->render('eliminaraccion', array('model' => $acciones, 'usuario' => $usuario));
+
+	}
+
+	public function actionEliminaAccion()
+	{
+		$usuario = $this->usuario();
+		$id = Yii::app()->getRequest()->getQuery('id');
+
+		$acciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$id, 'ente_organo_id'=>$usuario->ente_organo_id));
+		
+		if(!empty($acciones))
+		{
+
+				
+
+				$transaction = Yii::app()->db->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
+				foreach ($acciones as $key => $value) {
+				
+					try{
+						if(($value->delete()))
+						{
+							$transaction->commit();    // committing 
+							//return true;
+						}else $transaction->rollBack();
+					}catch (Exception $e){
+					   $transaction->rollBack();
+					}
+
+				}									
+		}
+
+	    $acciones = array();
+	    
+	    	
+    	$criteria = new CDbCriteria();
+		$criteria->distinct=true;
+		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
+		$criteria->select = 'accion_id, codigo_accion, ente_organo_id';
+		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
+
+	    	
+	    echo $this->renderPartial('_eliminaraccion',array('acciones'=>$acciones),false);
+
+		
 	}
 
 	public function actionEliminaProyecto(){
@@ -1229,6 +1283,12 @@ class PlanificacionController extends Controller
 	public function obtenerDivisa($data,$row){
 		return $data->divisa->abreviatura;
 	}
+
+	public function obtenerNombreAccion($data,$row)
+	{
+		return $data->accion->nombre;	
+	}
+
 	public function totalProducto($data, $row){
 		return number_format($data->monto_presupuesto,2,',','.');
 	}
@@ -1694,6 +1754,8 @@ class PlanificacionController extends Controller
 			}		
 		return $productos;
 	}
+
+
 
 
 
