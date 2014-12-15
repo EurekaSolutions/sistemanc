@@ -46,10 +46,10 @@ class PresupuestoPartidaProyecto extends CActiveRecord
 	}
 
 	// Delete cascade / Borrado en cascada
-	public function beforeDelete(){
+	public function afterDelete(){
 	    foreach($this->presupuestoPartida as $c)
 	        $c->delete();
-	    return parent::beforeDelete();
+	    return parent::afterDelete();
 	}
 
 	/**

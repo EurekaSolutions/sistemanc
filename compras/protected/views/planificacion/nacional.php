@@ -40,16 +40,7 @@ $this->breadcrumbs=array(
 	$listas = array(!empty($lista_acciones)?'Acciones Centralizadas':null=>$lista_acciones,
 	 				!empty($lista_proyectos)?'Proyectos':null =>$lista_proyectos);
 
-	//echo $form->listBoxGroup($model, 'nombre',$proyectos);
-	//echo $form->dropDownListGroup($model, 'nombre',$proyectos, array('prompt'=>'Seleccionar proyecto','multiple' => 'multiple'));
-	//echo $form->dropDownList($model,'category_id',  array('prompt'=>'Select category','multiple' => 'multiple'));
-		
-		/*Yii::app()->clientScript->registerScript("cambioProyecto", '
-				$(\'#proyecto\').change(function(){
-					$(\'#producto\').html("");
-					$( "#producto" ).append( \'<option value="">Seleccionar producto</option>\' );
 
-		})');*/
 	 echo $form->dropDownListGroup( $proyectoSel,	'proyecto_id',
 			array(
 				'wrapperHtmlOptions' => array(
