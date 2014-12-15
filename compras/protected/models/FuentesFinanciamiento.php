@@ -45,7 +45,7 @@ class FuentesFinanciamiento extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'presupuestoPartidases' => array(self::HAS_MANY, 'PresupuestoPartidas', 'fuente_fianciamiento_id'),
+			'presupuestoPartidas' => array(self::HAS_MANY, 'FuentePresupuesto', array('fuente_fianciamiento_id'=>'fuente_id')),
 		);
 	}
 
