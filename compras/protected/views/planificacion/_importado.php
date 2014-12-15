@@ -63,8 +63,8 @@
 												        'attributes'=>array(
 												             'producto_id',
 												        ),
-												    ),
-												'pagination'=>array(
+												    ),*/
+												'pagination'=>false,/*array(
 												        'pageSize'=>3,
 												        'pageVar'=>'custom-page-selector', //page selector
 												    ),*/

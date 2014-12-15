@@ -28,14 +28,15 @@ class PlanificacionController extends Controller
 				'roles'=>array('organo'),
 			),*/
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'Buscarsubespecficap', 'Buscarsubespecfica', 'agregarproyecto', 'agregarcentralizada', 'nacional','importado','eliminarProducto'),
+				'actions'=>array('index','view', 'Buscarsubespecficap', 'Buscarsubespecfica', 'agregarproyecto', 'agregarcentralizada', 'nacional','importado','eliminarProducto',
+					'eliminaProyecto', 'eliminarProductoImportado',),
 				'users'=>array('@'),
 				'roles'=>array('ente'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','view', 'agregarproyecto', 'agregarcentralizada', 'nacional','importado','eliminarProducto','eliminarProductoImportado',
-								 'buscarespecfica', 'buscarespecficap','create','update','partidas','vistaparcial', 'buscarpartida', 'buscargeneral',
-								 'asignarpartidasproyecto', 'buscargeneralproyecto','buscarNcm', 'buscarpartidasproyecto', 'buscarproductospartida', 'Eliminaraccion', 'Eliminarproyecto', 'Eliminarpartidas'),
+				'actions'=>array('index','view', 'agregarproyecto', 'agregarcentralizada', 'nacional','importado', 'buscarespecfica', 'buscarespecficap',
+								'create','update','partidas','vistaparcial', 'buscarpartida', 'buscargeneral', 'asignarpartidasproyecto', 'buscargeneralproyecto',
+								'buscarNcm', 'buscarpartidasproyecto', 'buscarproductospartida', 'eliminaraccion', 'eliminarproyecto', 'eliminarpartidas'),
 				'users'=>array('@'),
 				'roles'=>array('ente'),
 			),
@@ -70,9 +71,43 @@ class PlanificacionController extends Controller
 		$this->render('eliminaraccion');
 	}
 
+	public function actionEliminaProyecto(){
+
+		$id = Yii::app()->getRequest()->getQuery('id');
+		$proyecto = Proyectos::model()->findByPk($id);
+		
+		$usuario = $this->usuario()->ente_organo_id;
+
+		if(!empty($proyecto))
+			if($proyecto->ente_organo_id == $usuario)
+			{
+				$transaction = $proyecto->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
+				 try{
+
+						if($proyecto->delete())
+						{
+							$transaction->commit();    // committing 
+							//return true;
+						}else $transaction->rollBack();
+				}
+		        catch (Exception $e){
+		            $transaction->rollBack();
+		        }
+	    	}
+
+	    $proyectos = array();
+	    if(!empty($proyecto))	
+	    	$proyectos = Proyectos::model()->findAllByAttributes(array('ente_organo_id'=>$usuario));
+
+		echo $this->renderPartial('_eliminarproyecto',array('proyectos'=>$proyectos),false);
+	}
+
 	public function actionEliminarproyecto()
 	{
-		$this->render('eliminarproyecto');
+		$proyectos = Proyectos::model()->findAllByAttributes(array('ente_organo_id'=>$this->usuario()->ente_organo_id));
+
+
+		$this->render('eliminarproyecto',array('proyectos'=>$proyectos));
 	}
 
 	public function actionEliminarpartidas()
@@ -1210,7 +1245,7 @@ class PlanificacionController extends Controller
 			return $this->numeroProducto($data->producto).' - '.$data->producto->nombre; 
 	}
 	public  function obtenerCostoUnidadNombre($data,$row){
-			return number_format($data->costo_unidad,2,',','.').' Bs.'; 
+			return number_format($data->costo_unidad,2,',','.'); 
 	}
 	public function productoExisteProyecto($presuProId,$proyectoActualId,$partidaId){
 

@@ -14,8 +14,8 @@
 			//array('name'=>'id', 'header'=>'#', 'htmlOptions'=>array('style'=>'width: 60px')),
 			array('name'=>'producto_id', 'header'=>'Producto','value'=>array($this,'obtenerProductoNombre')),
 			array('name'=>'unidad_id', 'header'=>'Unidad','value'=>array($this,'obtenerUnidadNombre')),
-			array('name'=>'costo_unidad', 'header'=>'Costo Unidad', 'value'=>array($this,'obtenerCostoUnidadNombre')),
-			array('name'=>'cantidad', 'header'=>'Cantidad', /*'footer'=>'Total Hours'*/),
+			array('name'=>'costo_unidad', 'header'=>'Costo Unidad Bs.', 'value'=>array($this,'obtenerCostoUnidadNombre')),
+			array('name'=>'cantidad', 'header'=>'Cantidad', /*'footer'=>'Suma total'*/),
 			array(/*'name'=>'cantidad',*/ 'header'=>'Total Bs.', 'value'=>array($this,'totalProducto'),/*'class'=>'booster.widgets.TbTotalSumColumn'*/),
 			//array('name'=>'tipo', 'header'=>'Tipo de Compra'),			    
 
