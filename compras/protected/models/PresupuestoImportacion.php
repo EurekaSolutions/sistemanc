@@ -67,6 +67,14 @@ class PresupuestoImportacion extends CActiveRecord
 	    return parent::beforeDelete();
 	}
 
+/*	public function behaviors()
+	{
+	    return array(
+	        'ActiveRecordLogableBehavior'=>
+	            'application.behaviors.ActiveRecordLogableBehavior',
+	    );
+	}*/
+	
 	public function codigoNcmUnico($attribute,$params)
 	{
 		if($this->presupuesto_partida_id and $this->codigo_ncm_id and $this->producto_id)

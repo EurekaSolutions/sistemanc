@@ -73,7 +73,15 @@ class EntesOrganos extends CActiveRecord
 			'accionesUni' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones', 'ente_organo_id', 'select'=>'DISTINCT(accion_id)'),
 		);
 	}
-
+	
+	public function behaviors()
+	{
+	    return array(
+	        'ActiveRecordLogableBehavior'=>
+	            'application.behaviors.ActiveRecordLogableBehavior',
+	    );
+	}
+	
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */

@@ -83,6 +83,15 @@ class PresupuestoProductos extends CActiveRecord
 	        $c->delete();*/
 	    return parent::beforeDelete();
 	}
+
+	public function behaviors()
+	{
+	    return array(
+	        'ActiveRecordLogableBehavior'=>
+	            'application.behaviors.ActiveRecordLogableBehavior',
+	    );
+	}
+	
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */

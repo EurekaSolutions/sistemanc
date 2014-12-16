@@ -73,7 +73,14 @@ class PresupuestoPartidaAcciones extends CActiveRecord
 	    return parent::afterDelete();
 	}
 
-
+/*	public function behaviors()
+	{
+	    return array(
+	        'ActiveRecordLogableBehavior'=>
+	            'application.behaviors.ActiveRecordLogableBehavior',
+	    );
+	}*/
+	
 
 	/**
 	 * @return array customized attribute labels (name=>label)

@@ -74,7 +74,14 @@ class Proyectos extends CActiveRecord
 	        	$c->delete();
 	    return parent::beforeDelete();
 	}
-
+	public function behaviors()
+	{
+	    return array(
+	        'ActiveRecordLogableBehavior'=>
+	            'application.behaviors.ActiveRecordLogableBehavior',
+	    );
+	}
+	
 	public function partidaAsignada($attribute,$params)
 	{
 		

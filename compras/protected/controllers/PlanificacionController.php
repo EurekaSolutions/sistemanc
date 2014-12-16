@@ -184,17 +184,13 @@ class PlanificacionController extends Controller
 
 				$transaction = $presuPartida->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 				try{
-				 	//echo 'Entre';
 						if(//PresupuestoPartidas::model()->deleteByPk($id)) 
 						$presuPartida->delete())
-						{//echo "Hola ";
+						{
 							$transaction->commit();    // committing 
-							//return true;
 						}else{ 
-							echo 'Error';
-							 //echo CHtml::errorSummary($presuPartida->getErrors());
-							$transaction->rollBack();}
-					//print_r($presuPartida);
+							$transaction->rollBack();
+						}
 				}
 		        catch (Exception $e){
 		        	echo 'Excepción capturada: '.$e;
@@ -1336,7 +1332,7 @@ class PlanificacionController extends Controller
 			        if(!empty($presuPartidaId))	
 	    				$presuImps = PresupuestoImportacion::model()->findAllByAttributes(array('presupuesto_partida_id'=>$presuPartidaId));
 		    	}
-		    	
+
 		echo $this->renderPartial('_importado',array('presuImps'=>$presuImps),false);	
 	}
 

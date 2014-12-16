@@ -51,7 +51,15 @@ class EntesAdscritos extends CActiveRecord
 			'padre' => array(self::BELONGS_TO, 'EntesOrganos', array('padre_id'=>'ente_organo_id')),
 		);
 	}
-
+	
+	public function behaviors()
+	{
+	    return array(
+	        'ActiveRecordLogableBehavior'=>
+	            'application.behaviors.ActiveRecordLogableBehavior',
+	    );
+	}
+	
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
