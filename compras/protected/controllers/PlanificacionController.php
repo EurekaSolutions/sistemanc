@@ -1398,10 +1398,13 @@ class PlanificacionController extends Controller
 		return number_format($data->monto_presupuesto,2,',','.');
 	}
 	public  function obtenerCodigoNcmNombre($data,$row=null){
-		if(isset($data->descripcion_ncm))
-			return $this->numeroCodigoNcm($data).' - '.$data->descripcion_ncm; 
+		if(!($data instanceof CodigosNcm))
+			$data = $data->codigosNcms;
+
+		if($data->codigo_ncm_nivel_1 != '0')
+			return $this->numeroCodigoNcm($data).' - '.$data->descripcion_ncm;
 		else
-			return $this->numeroCodigoNcm($data->codigosNcms).' - '.$data->codigosNcms->descripcion_ncm;
+			return 'NO APLICA';
 	}
 	public  function obtenerUnidadNombre($data,$row){
 			return $data->unidad->nombre; 
@@ -1766,6 +1769,10 @@ class PlanificacionController extends Controller
 						$presuImp->presupuesto_partida_id = $presuPartida->presupuesto_partida_id;
 						$presuImp->monto_ejecutado = 0;
 						$presuImp->producto_id = $productoSel->producto_id;
+						$par = Partidas::model()->findByPk($partidaSel->partida_id);
+						if($par->p1 =='403') // Servicios
+							$presuImp->codigo_ncm_id =  CodigosNcm::model()->findByAttributes(array('codigo_ncm_nivel_1'=>'0'))->codigo_ncm_id;
+
 						if($presuImp->validate()){
 
 							$total = $this->montoCargadoPartida($presuPartida);
@@ -1787,7 +1794,7 @@ class PlanificacionController extends Controller
 
 									}
 			                        catch (Exception $e){
-			                        	Yii::app()->user->setFlash('error', "Hubo un problema. No se guardo el producto. ID:".$e);
+			                        	Yii::app()->user->setFlash('error', "No se guardo el producto."/* ID:".$e*/);
 			                            $transaction->rollBack();
 			                        }
 							}else

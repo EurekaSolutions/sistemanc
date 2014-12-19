@@ -97,7 +97,7 @@ class PresupuestoImportacion extends CActiveRecord
 			'codigo_ncm_id' => 'Código arancelario',
 			'producto_id,' => 'Producto',
 			'cantidad' => 'Cantidad',
-			'fecha_llegada' => 'Fecha estimada de la importación',
+			'fecha_llegada' => 'Fecha de compra',
 			'monto_presupuesto' => 'Costo unitario en divisa ',
 			'tipo' => 'Tipo',
 			'monto_ejecutado' => 'Monto Ejecutado',

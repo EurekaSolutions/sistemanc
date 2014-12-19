@@ -138,7 +138,9 @@ $this->breadcrumbs=array(
 		echo '<div class="flash-notice"><h4> Cargar tantos codigos arancelarios como se requiera para el producto seleccionado<h4></div>';
 
 		echo $form->errorSummary($presuImp);
-
+		
+		$par = Partidas::model()->findByPk($partidaSel->partida_id);
+		if(!($par->p1 == '403'))
 		echo $form->dropDownListGroup( $presuImp, 'codigo_ncm_id',
 			array(
 				'wrapperHtmlOptions' => array(
@@ -205,7 +207,7 @@ $this->breadcrumbs=array(
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
 				), 
-				'hint' => 'Fecha de llegada estimada del producto.',
+				'hint' => 'Fecha de compra de la importación.',
 				'prepend' => '<i class="glyphicon glyphicon-calendar"></i>'
 			)
 		);

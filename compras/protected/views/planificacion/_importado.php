@@ -17,7 +17,7 @@
 			array('name'=>'codigo_ncm_id', 'header'=>'Producto Importado','value'=>array($this,'obtenerCodigoNcmNombre')),
 			array('name'=>'divisa_id', 'header'=>'Divisa','value'=>array($this,'obtenerDivisa')),
 			array('name'=>'tipo', 'header'=>'Tipo Importación','value'=>array($this,'obtenerTipoImportacion')),
-			array('name'=>'fecha_llegada', 'header'=>'Fecha estimada importación',),
+			array('name'=>'fecha_llegada', 'header'=>'Fecha de compra importación',),
 			array('name'=>'monto_presupuesto', 'header'=>'Costo unitario en divisa','value'=>array($this,'obtenerCostoUnitarioDivisa')),
 			array('name'=>'cantidad', 'header'=>'Cantidad'),
 			array('name'=>'descripcion', 'header'=>'Descripción'),
