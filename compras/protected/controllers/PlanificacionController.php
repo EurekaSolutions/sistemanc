@@ -1468,7 +1468,7 @@ class PlanificacionController extends Controller
 									break;
 								}
 						}
-					if(!$existe)
+					if(!$existe || $tipo == 'i')
 						$productos[] = $productoPar;
 								
 				}
@@ -1590,13 +1590,6 @@ class PlanificacionController extends Controller
 							// Producto Nacional
 							if(isset($_POST['Productos']))
 								$productoSel->attributes = $_POST['Productos'];
-
-
-							//Listando todos los productos que ya se han cargado
-							foreach ($presupuestoPartidas as $key => $presupuestoPartida) {
-								if($presupuestoPartida->partida_id == $partidaSel->partida_id)
-									$presuPros = $presupuestoPartida->presupuestoProductos;
-							}
 						}
 
 				}
@@ -1643,7 +1636,14 @@ class PlanificacionController extends Controller
 						}//else Yii::app()->user->setFlash('Error','error');
 				}
 
+			// Recargando listas
 			if(!empty($partidaSel->partida_id) && !empty($proyectoSel->proyecto_id)){
+
+				//Listando todos los productos que ya se han cargado
+				foreach ($presupuestoPartidas as $key => $presupuestoPartida) {
+					if($presupuestoPartida->partida_id == $partidaSel->partida_id)
+						$presuPros = $presupuestoPartida->presupuestoProductos;
+				}
 				$productosPartidas = $this->listaProductosPartida($partidaSel->partida_id, $proyectoSel->proyecto_id, 'n'); //Partidas::model()->findByPk($partidaSel->partida_id)->productos;
 				$productosPartidas = CHtml::listData($productosPartidas, 'producto_id', 
 				                                 function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);});
@@ -1742,18 +1742,14 @@ class PlanificacionController extends Controller
 						//$productosPartidas = Partidas::model()->findByPk($partidaSel->partida_id)->productos;
 						
 						// Producto Nacional
-						if(isset($_POST['Productos']) && !empty($_POST['Productos']['producto_id'])){
+						if(isset($_POST['Productos']) && !empty($_POST['Productos']['producto_id']))
 							$productoSel->attributes = $_POST['Productos'];
 						
-							//Listando todos los productos que ya se han cargado
-							foreach ($presupuestoPartidas as $key => $presupuestoPartida) 
-								if($presupuestoPartida->partida_id == $partidaSel->partida_id){
-									$presuImps = $presupuestoPartida->presupuestoImportacion;
-								}
+
 								//$this->render('_importado',array('presuImps'=>$presuImps));
 								//Yii::app()->end();
 		
-						}
+						
 					}
 
 				}
@@ -1804,8 +1800,16 @@ class PlanificacionController extends Controller
 
 						//$this->guardarPresupuestoProductos($presuPro);
 					}
+
+			//Recargando listas
 			if(!empty($partidaSel->partida_id) && !empty($proyectoSel->proyecto_id)){
-				$productosPartidas = $this->listaProductosPartida($partidaSel->partida_id, $proyectoSel->proyecto_id, 'n'); //Partidas::model()->findByPk($partidaSel->partida_id)->productos;
+
+				//Listando todos los productos que ya se han cargado
+				foreach ($presupuestoPartidas as $key => $presupuestoPartida) 
+					if($presupuestoPartida->partida_id == $partidaSel->partida_id){
+						$presuImps = $presupuestoPartida->presupuestoImportacion;
+					}
+				$productosPartidas = $this->listaProductosPartida($partidaSel->partida_id, $proyectoSel->proyecto_id, 'i'); //Partidas::model()->findByPk($partidaSel->partida_id)->productos;
 				$productosPartidas = CHtml::listData($productosPartidas, 'producto_id', 
 				                                 function($producto){ return CHtml::encode($this->numeroProducto($producto).' - '.$producto->nombre);});
 			}

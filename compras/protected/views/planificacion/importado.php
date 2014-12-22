@@ -149,7 +149,7 @@ $this->breadcrumbs=array(
 				'label'=>'Código arancelario',
 				'widgetOptions' => array(
 
-					'data' => CHtml::listData(CodigosNcm::model()->findAll($this->condicionVersion()),
+					'data' => CHtml::listData(CodigosNcm::model()->findAll($this->condicionVersion().'AND codigo_ncm_nivel_1!=\'0\''),
 						'codigo_ncm_id', function($codigo){ return CHtml::encode($this->numeroCodigoNcm($codigo).' - '.$codigo->descripcion_ncm);}),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
 					'htmlOptions' => array('id'=>'ncmnivel2', 'prompt' => 'Seleccionar codigo arancelario',  /*'multiple' => false,*/ ),
@@ -192,6 +192,7 @@ $this->breadcrumbs=array(
 		); 
 
 
+		$ahno = Presupuestos::model()->findByAttributes(array('activo'=>true))->ahno;
  		echo $form->datePickerGroup(
 			$presuImp,
 			'fecha_llegada',
@@ -201,6 +202,8 @@ $this->breadcrumbs=array(
 					'options' => array(
 						'format' => 'yyyy-m-d',
 						'language' => 'es',
+						'startDate'=>$ahno.'-01-01',
+						'endDate'=>$ahno.'-12-31'
 					),
 				),
 
