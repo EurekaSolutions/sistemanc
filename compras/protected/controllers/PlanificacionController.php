@@ -1790,7 +1790,7 @@ class PlanificacionController extends Controller
 
 									}
 			                        catch (Exception $e){
-			                        	Yii::app()->user->setFlash('error', "No se guardo el producto."/* ID:".$e*/);
+			                        	Yii::app()->user->setFlash('error', "No se guardo el producto o servicio."/* ID:".$e*/);
 			                            $transaction->rollBack();
 			                        }
 							}else
