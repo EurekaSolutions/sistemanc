@@ -30,13 +30,13 @@ return array(
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
 		
-		'gii'=>array(
+		/*'gii'=>array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'rnc',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 			'generatorPaths' => array('booster.gii'),
-		),
+		),*/	
 		'usr'=>array(
 			'registrationEnabled'=>false,
 			'captcha'=>true,
@@ -54,8 +54,8 @@ return array(
 			),
 			'mailerConfig'=>array(
 				'SetLanguage' => array('es'),
-				'SetFrom' => array('rnce@snc.gob.ve', 'Administrator'),
-				'AddReplyTo' => array('rnce@snc.gob.ve','Administrator'),
+				'SetFrom' => array('admin_rnce@snc.gob.ve', 'RNCE Sistema Automatizado'),
+				'AddReplyTo' => array('rnce@snc.gob.ve','Registro Nacional De Contrataciones del Estado'),
 				'IsMail' => array(),
 				// SMTP options
 				'IsSMTP' => array(),
@@ -66,7 +66,7 @@ return array(
 				'SMTPAuth' => true,
 				'Username' => 'admin_rnce',
 				'Password' => 'GikforewnEd3',
-				'FromName' => 'Sistema de Compras del Estado',
+				'FromName' => 'RNCE Sistema Automatizado',
 				'CharSet' => 'UTF-8',
 				
 			),
@@ -105,8 +105,7 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			//'connectionString' => 'pgsql:host=10.70.211.34;dbname=sistemanc',
-			'connectionString' => 'pgsql:host=localhost;dbname=sistemanc',
+			'connectionString' => 'pgsql:host=10.70.211.34;dbname=sistemanc',
 			'emulatePrepare' => true,
 			'username' => 'eureka',
 			'password' => 'eureka',
