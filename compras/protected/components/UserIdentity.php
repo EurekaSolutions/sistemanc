@@ -187,7 +187,7 @@ class UserIdentity extends CUserIdentity
 		), false);
 		return $usedPassword->save() && $record->saveAttributes(array(
 			'contrasena'=>$hashedPassword,
-			//'password_set_on'=>date('d-m-Y H:i:s'),
+			//'password_set_on'=>date('Y-m-d H:i:s'),
 		));
 	}
 
