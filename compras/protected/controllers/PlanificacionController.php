@@ -84,10 +84,16 @@ class PlanificacionController extends Controller
 	}
 
 	public function actionModificarcorreo()
-	{	
-		$usuarios = new Usuarios;
-		$entesUsuarios = $usuarios->enteOrgano->nombre;
-		$this->render('modificarcorreo', array('model', $entesUsuarios));
+	{
+		$usuarios = Usuarios::model()->findAll();
+		
+		$lista_usuarios = CHtml::listData($usuarios, function($usuario) {
+														return CHtml::encode($usuario->usuario_id);
+													}, function($usuario) {
+														return CHtml::encode($usuario->enteOrgano->nombre);
+													});
+		
+		$this->render('modificarcorreo',array('lista_usuarios'=>$lista_usuarios));
 	}
 
 	public function actionEliminaAccion()
