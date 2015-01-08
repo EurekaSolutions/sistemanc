@@ -17,9 +17,9 @@
 								    )
 								);
 
-								echo $form->errorSummary($usuarios);
+								echo $form->errorSummary($usuario);
 
-								 echo $form->dropDownListGroup($usuarios , 'nombre',
+								 echo $form->dropDownListGroup($usuario , 'usuario_id',
 										array(
 											'wrapperHtmlOptions' => array(
 												'class' => 'col-sm-2',
@@ -56,7 +56,7 @@
 						$this->widget('booster.widgets.TbButton', array(
 			            	'buttonType'=>'submit',
 			            	'context'=>'primary',
-			            	'label'=>$usuarios->isNewRecord ? 'Cambiar correo' : 'Cambiar correo',
+			            	'label'=>$usuario->isNewRecord ? 'Cambiar correo' : 'Cambiar correo',
 			        	)); 
 
 

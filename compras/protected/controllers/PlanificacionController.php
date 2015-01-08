@@ -95,15 +95,16 @@ class PlanificacionController extends Controller
 														return CHtml::encode($usuario->enteOrgano->nombre);
 													});
 		
-		$this->render('modificarcorreo',array('lista_usuarios'=>$lista_usuarios, 'usuarios' => $model));
+		$this->render('modificarcorreo',array('lista_usuarios'=>$lista_usuarios, 'usuario' => $model));
 	}
 
 	public function actionBuscarcorreo()
 	{
-		if($_POST['Usuarios']['nombre'])
+		if($_POST['Usuarios']['usuario_id'])
 		{
-			$usuarios = Usuarios::model()->findAllByAttributes(array('ente_organo_id'=>$_POST['Usuarios']['nombre']));
+			$usuarios = Usuarios::model()->findAllByAttributes(array('usuario_id'=>$_POST['Usuarios']['usuario_id']));
 			print_r($usuarios);
+
 		}
 	}
 
