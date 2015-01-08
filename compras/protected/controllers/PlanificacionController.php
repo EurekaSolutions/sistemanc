@@ -107,8 +107,19 @@ class PlanificacionController extends Controller
 	    		
 	    		if($usuarios->save())
 	    		{
+	    			Yii::app()->user->setFlash('success','Correo asignado con éxito.');
+
 	    			if($this->enviarCorreoRecuperacion($usuarios->correo, $usuarios->cedula);)
-	    				Yii::app()->user->setFlash('success','Correo asignado con éxito.');
+	    			{
+	    				Yii::app()->user->setFlash('success','Correo de recuperación enviado al usuario con éxito.');
+	    			}else
+	    			{
+	    				Yii::app()->user->setFlash('error','Hubo un error enviando el correo de recuperación.');
+	    			}
+	    				
+	    		}else
+	    		{
+	    			Yii::app()->user->setFlash('error','Hubo un problema asignando el correo.');
 	    		}
 	    		
 	    	}
