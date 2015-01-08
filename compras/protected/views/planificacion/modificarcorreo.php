@@ -24,12 +24,12 @@
 											'wrapperHtmlOptions' => array(
 												'class' => 'col-sm-2',
 											),
-											'label'=>'Seleccione',
+											'label'=>'Seleccione Ente u Organo',
 											'widgetOptions' => array(
 
 												'data' => $lista_usuarios,
 												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												'htmlOptions' => array('prompt' => 'Seleccione'),
+												//'htmlOptions' => array('prompt' => 'Seleccione'),
 											)
 										)
 									); 
