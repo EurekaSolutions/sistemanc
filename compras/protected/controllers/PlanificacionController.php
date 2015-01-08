@@ -41,7 +41,7 @@ class PlanificacionController extends Controller
 				'roles'=>array('ente'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','administracion','importacion', 'modificarcorreo', 'buscarcorreo'),
+				'actions'=>array('admin','delete','administracion','importacion', 'modificarcorreo'),
 				'users'=>array('@'),
 				'roles'=>array('admin'),
 			),
@@ -95,10 +95,21 @@ class PlanificacionController extends Controller
 														return CHtml::encode($usuario->enteOrgano->nombre);
 													});
 		
+		if(isset($_POST['Usuarios']))
+		{
+
+	    	if($model->validate())
+	    	{
+	    		if($this->enviarCorreoRecuperacion($crea_usuario->correo,$crea_usuario->cedula))
+	    			Yii::app()->user->setFlash('success','Correo asignado con éxito.');
+	    		
+	    	}
+		}
+
 		$this->render('modificarcorreo',array('lista_usuarios'=>$lista_usuarios, 'usuario' => $model));
 	}
 
-	public function actionBuscarcorreo()
+	/*public function actionBuscarcorreo()
 	{
 		if($_POST['Usuarios']['usuario_id'])
 		{
@@ -106,7 +117,7 @@ class PlanificacionController extends Controller
 			print_r($usuarios);
 
 		}
-	}
+	}*/
 
 	public function actionEliminaAccion()
 	{

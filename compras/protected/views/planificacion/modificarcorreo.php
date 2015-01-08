@@ -1,5 +1,5 @@
 <div>
-			<h4 style="text-align: center;">MOFICIAR CORREO A USUARIOS</h4><br>				
+			<h4 style="text-align: center;">MODIFICAR CORREO A USUARIOS</h4><br>				
 				  	
 
 			   <?php 
@@ -12,12 +12,12 @@
 								/** @var TbActiveForm $form */
 								$form = $this->beginWidget('booster.widgets.TbActiveForm',
 								    array(
-								        'id' => 'agregarcentralizada-form',
+								        'id' => 'usuarios-form',
 								        'htmlOptions' => array('class' => 'well'), // for inset effect
 								    )
 								);
 
-								echo $form->errorSummary($usuario);
+								//echo $form->errorSummary($usuario);
 
 								 echo $form->dropDownListGroup($usuario , 'usuario_id',
 										array(
@@ -29,17 +29,12 @@
 
 												'data' => $lista_usuarios,
 												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												'htmlOptions' => array('prompt' => 'Seleccione', 'ajax' => array(
-													'type'=>'POST', //request type
-													'url'=>CController::createUrl('planificacion/buscarcorreo'), //url to call.
-													//Style: CController::createUrl('currentController/methodToCall')
-													'update'=>'#partida', //selector to update
-													//'data'=>'js:javascript statement' 
-													//leave out the data key to pass all form values through
-											  )),
+												'htmlOptions' => array('prompt' => 'Seleccione'),
 											)
 										)
 									); 
+
+								 echo $form->textFieldGroup($usuario,'correo',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span3'))));
 
 								// echo CHtml::dropDownList('partida','', array());
 
