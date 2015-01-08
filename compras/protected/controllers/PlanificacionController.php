@@ -100,13 +100,13 @@ class PlanificacionController extends Controller
 			$model->attributes = $_POST['Usuarios'];
 
 	    	if($model->validate(array('correo','usuario_id')))
-	    	{echo 'hola';
+	    	{
 	    		$usuarios = Usuarios::model()->findByAttributes(array('usuario_id'=>$_POST['Usuarios']['usuario_id']));
 
 	    		$usuarios->usuario = strtolower($model->correo);
 	    		$usuarios->correo = strtolower($model->correo);
 	    		
-	    		if($usuarios->save())
+	    		if($usuarios->save(false))
 	    		{
 	    			Yii::app()->user->setFlash('success','Correo asignado con éxito.');
 
@@ -120,6 +120,7 @@ class PlanificacionController extends Controller
 	    				
 	    		}else
 	    		{
+	    			print_r($usuarios->getErrors());
 	    			Yii::app()->user->setFlash('error','Hubo un problema asignando el correo.');
 	    		}
 	    		
