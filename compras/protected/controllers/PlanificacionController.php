@@ -99,9 +99,10 @@ class PlanificacionController extends Controller
 		{
 			$model->attributes = $_POST['Usuarios'];
 
-	    	if($model->validate())
-	    	{
-	    		$usuarios = Usuarios::model()->findAllByAttributes(array('usuario_id'=>$_POST['Usuarios']['usuario_id']));
+	    	if($model->validate(array('correo','usuario_id')))
+	    	{echo 'hola';
+	    		$usuarios = Usuarios::model()->findByAttributes(array('usuario_id'=>$_POST['Usuarios']['usuario_id']));
+
 	    		$usuarios->usuario = strtolower($model->correo);
 	    		$usuarios->correo = strtolower($model->correo);
 	    		
@@ -109,7 +110,7 @@ class PlanificacionController extends Controller
 	    		{
 	    			Yii::app()->user->setFlash('success','Correo asignado con éxito.');
 
-	    			if($this->enviarCorreoRecuperacion($usuarios->correo, $usuarios->cedula);)
+	    			if($this->enviarCorreoRecuperacion($usuarios->correo, $usuarios->cedula))
 	    			{
 	    				Yii::app()->user->setFlash('success','Correo de recuperación enviado al usuario con éxito.');
 	    			}else
