@@ -42,7 +42,8 @@ class PlanificacionController extends Controller
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete','administracion','importacion', 'modificarcorreo'),
-				'users'=>array('admin'),
+				'users'=>array('@'),
+				'roles'=>array('admin'),
 			),
 
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -83,8 +84,10 @@ class PlanificacionController extends Controller
 	}
 
 	public function actionModificarcorreo()
-	{
-		$this->render('modificarcorreo');
+	{	
+		$usuarios = new Usuarios;
+		$entesUsuarios = $usuarios->enteOrgano->nombre;
+		$this->render('modificarcorreo', array('model', $entesUsuarios));
 	}
 
 	public function actionEliminaAccion()
