@@ -41,7 +41,7 @@ class PlanificacionController extends Controller
 				'roles'=>array('ente'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','administracion','importacion', 'modificarcorreo'),
+				'actions'=>array('admin','delete','administracion','importacion', 'modificarcorreo', 'buscarcorreo'),
 				'users'=>array('@'),
 				'roles'=>array('admin'),
 			),
@@ -85,6 +85,8 @@ class PlanificacionController extends Controller
 
 	public function actionModificarcorreo()
 	{
+		$model = new Usuarios;
+
 		$usuarios = Usuarios::model()->findAll();
 		
 		$lista_usuarios = CHtml::listData($usuarios, function($usuario) {
@@ -93,7 +95,16 @@ class PlanificacionController extends Controller
 														return CHtml::encode($usuario->enteOrgano->nombre);
 													});
 		
-		$this->render('modificarcorreo',array('lista_usuarios'=>$lista_usuarios));
+		$this->render('modificarcorreo',array('lista_usuarios'=>$lista_usuarios, 'usuarios' => $model));
+	}
+
+	public function actionBuscarcorreo()
+	{
+		if($_POST['Usuarios']['nombre'])
+		{
+			$usuarios = Usuarios::model()->findAllByAttributes(array('ente_organo_id'=>$_POST['Usuarios']['nombre']));
+			print_r($usuarios);
+		}
 	}
 
 	public function actionEliminaAccion()
