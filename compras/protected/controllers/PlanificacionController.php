@@ -97,7 +97,8 @@ class PlanificacionController extends Controller
 		
 		if(isset($_POST['Usuarios']))
 		{
-
+			$model->attributes = $_POST['Usuarios'];
+			
 	    	if($model->validate())
 	    	{
 	    		if($this->enviarCorreoRecuperacion($crea_usuario->correo,$crea_usuario->cedula))
