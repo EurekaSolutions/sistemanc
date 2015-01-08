@@ -56,6 +56,7 @@ class Usuarios extends CActiveRecord
 			array('actualizado_el, repetir_contrasena, nombre,', 'required', 'on'=>'registro, actualizar'),
 
 			array('usuario, contrasena, correo, creado_el,actualizado_el, rol, ente_organo_id, nombre, cedula, cargo', 'required', 'on'=>'crearente'),
+			array('correo','required'),
 
 			//array('usuario', 'unique', 'className' => 'Usuarios', 'attributeName' => 'usuario', 'message'=>'Este usuario ya se encuentra registrado en nuestro repositorio', 'on' => 'crearente'),
 			array('correo', 'unique', 'className' => 'Usuarios', 'attributeName' => 'correo', 'message'=>'Este correo ya se encuentra registrado en nuestro repositorio', 'on' => 'crearente'),
