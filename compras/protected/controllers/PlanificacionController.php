@@ -41,7 +41,7 @@ class PlanificacionController extends Controller
 				'roles'=>array('ente'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','administracion','importacion', 'modificarcorreo'),
+				'actions'=>array('admin','delete','administracion','importacion', 'modificarcorreo', 'cargamasiva'),
 				'users'=>array('@'),
 				'roles'=>array('admin'),
 			),
@@ -81,6 +81,88 @@ class PlanificacionController extends Controller
 
 		$this->render('eliminaraccion', array('model' => $acciones, 'usuario' => $usuario));
 
+	}
+
+	public function actioncargamasiva()
+	{
+		if($_POST)
+		{
+			$uploads_dir = './images';
+			$tmp_name = $_FILES["archivo"]["tmp_name"];
+			//$name = $_FILES["archivo"]["name"];
+		
+			if(move_uploaded_file($tmp_name, "$uploads_dir/test.csv"))
+			{
+				$fila = 1;
+				if (($gestor = fopen("$uploads_dir/test.csv", "r")) !== FALSE) {
+				    while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE) {
+				        $numero = count($datos);
+				        //echo "<p> $numero de campos en la línea $fila: <br /></p>\n";
+				      
+				        if($fila!=1)
+				        {
+
+				        	$ente = new EntesOrganos;
+				        	$usuario = new Usuarios;
+
+				        	$ente->nombre = utf8_encode($datos[5]);
+				        	$ente->tipo = "O";
+				        	$ente->rif = utf8_encode($datos[6]);
+				        	$ente->creado_por = "snc";
+				        	
+				        	if($ente->save(false))
+				        	{
+
+				        	
+				        	   	$usuario->usuario = utf8_encode(trim($datos[4]));
+					        	$usuario->correo = utf8_encode(trim($datos[4]));
+					        	$usuario->contrasena = md5(rand(0,100));
+							    $usuario->creado_el = date("Y-m-d");
+							    $usuario->llave_activacion = md5(rand(0,100));
+							    $usuario->actualizado_el = date("Y-m-d");
+							    $usuario->rol = 'normal';
+							    $usuario->ente_organo_id = $ente->ente_organo_id;
+
+							    if($usuario->save(false))
+							    {
+							    	$this->enviarCorreoRecuperacion($usuario->usuario, '1234567');
+
+							    }else
+							    {
+							    	echo "Error usuario";
+							    }
+
+						    }else
+						    {
+						    	echo "Error ente";
+						    }
+
+						    /*Aquí enviamos el correo*/
+
+						    //$this->enviarCorreoRecuperacion($usuario->usuario, '1234567');
+
+					        /*
+					            echo 'Estado: '.$datos[1] . "<br />\n";
+					            echo 'Nombre: '.$datos[2] . "<br />\n";
+					            echo 'Apellido: '.$datos[3] . "<br />\n";
+					            echo 'Correo: '.$datos[4] . "<br />\n";
+					            echo 'Alcaldia/Gobernacion: '.$datos[5] . "<br />\n";
+					            echo 'Rif: '.$datos[6] . "<br />\n";
+					        */
+
+					        
+				    	}
+				        $fila++;
+				    }
+				    fclose($gestor);
+				}
+			}
+
+		}else
+		{
+			$this->render('cargamasiva');	
+		}
+		
 	}
 
 	public function actionModificarcorreo()

@@ -1,5 +1,5 @@
 --
--- PostgreSQL database dump
+-- eurekaQL database dump
 --
 
 SET statement_timeout = 0;
@@ -34,13 +34,13 @@ CREATE EXTENSION IF NOT EXISTS adminpack WITH SCHEMA pg_catalog;
 -- Name: EXTENSION adminpack; Type: COMMENT; Schema: -; Owner: 
 --
 
-COMMENT ON EXTENSION adminpack IS 'administrative functions for PostgreSQL';
+COMMENT ON EXTENSION adminpack IS 'administrative functions for eurekaQL';
 
 
 SET search_path = public, pg_catalog;
 
 --
--- Name: enum_caja; Type: TYPE; Schema: public; Owner: postgres
+-- Name: enum_caja; Type: TYPE; Schema: public; Owner: eureka
 --
 
 CREATE TYPE enum_caja AS ENUM (
@@ -49,10 +49,10 @@ CREATE TYPE enum_caja AS ENUM (
 );
 
 
-ALTER TYPE public.enum_caja OWNER TO postgres;
+ALTER TYPE public.enum_caja OWNER TO eureka;
 
 --
--- Name: enum_gastos; Type: TYPE; Schema: public; Owner: postgres
+-- Name: enum_gastos; Type: TYPE; Schema: public; Owner: eureka
 --
 
 CREATE TYPE enum_gastos AS ENUM (
@@ -69,10 +69,10 @@ CREATE TYPE enum_gastos AS ENUM (
 );
 
 
-ALTER TYPE public.enum_gastos OWNER TO postgres;
+ALTER TYPE public.enum_gastos OWNER TO eureka;
 
 --
--- Name: enum_inventario; Type: TYPE; Schema: public; Owner: postgres
+-- Name: enum_inventario; Type: TYPE; Schema: public; Owner: eureka
 --
 
 CREATE TYPE enum_inventario AS ENUM (
@@ -88,10 +88,10 @@ CREATE TYPE enum_inventario AS ENUM (
 );
 
 
-ALTER TYPE public.enum_inventario OWNER TO postgres;
+ALTER TYPE public.enum_inventario OWNER TO eureka;
 
 --
--- Name: enum_islr; Type: TYPE; Schema: public; Owner: postgres
+-- Name: enum_islr; Type: TYPE; Schema: public; Owner: eureka
 --
 
 CREATE TYPE enum_islr AS ENUM (
@@ -101,10 +101,10 @@ CREATE TYPE enum_islr AS ENUM (
 );
 
 
-ALTER TYPE public.enum_islr OWNER TO postgres;
+ALTER TYPE public.enum_islr OWNER TO eureka;
 
 --
--- Name: enum_iva_otros; Type: TYPE; Schema: public; Owner: postgres
+-- Name: enum_iva_otros; Type: TYPE; Schema: public; Owner: eureka
 --
 
 CREATE TYPE enum_iva_otros AS ENUM (
@@ -115,10 +115,10 @@ CREATE TYPE enum_iva_otros AS ENUM (
 );
 
 
-ALTER TYPE public.enum_iva_otros OWNER TO postgres;
+ALTER TYPE public.enum_iva_otros OWNER TO eureka;
 
 --
--- Name: enum_meses; Type: TYPE; Schema: public; Owner: postgres
+-- Name: enum_meses; Type: TYPE; Schema: public; Owner: eureka
 --
 
 CREATE TYPE enum_meses AS ENUM (
@@ -137,10 +137,10 @@ CREATE TYPE enum_meses AS ENUM (
 );
 
 
-ALTER TYPE public.enum_meses OWNER TO postgres;
+ALTER TYPE public.enum_meses OWNER TO eureka;
 
 --
--- Name: enum_otros_activos; Type: TYPE; Schema: public; Owner: postgres
+-- Name: enum_otros_activos; Type: TYPE; Schema: public; Owner: eureka
 --
 
 CREATE TYPE enum_otros_activos AS ENUM (
@@ -149,10 +149,10 @@ CREATE TYPE enum_otros_activos AS ENUM (
 );
 
 
-ALTER TYPE public.enum_otros_activos OWNER TO postgres;
+ALTER TYPE public.enum_otros_activos OWNER TO eureka;
 
 --
--- Name: enum_sector; Type: TYPE; Schema: public; Owner: postgres
+-- Name: enum_sector; Type: TYPE; Schema: public; Owner: eureka
 --
 
 CREATE TYPE enum_sector AS ENUM (
@@ -161,10 +161,10 @@ CREATE TYPE enum_sector AS ENUM (
 );
 
 
-ALTER TYPE public.enum_sector OWNER TO postgres;
+ALTER TYPE public.enum_sector OWNER TO eureka;
 
 --
--- Name: enum_tipo_propiedad; Type: TYPE; Schema: public; Owner: postgres
+-- Name: enum_tipo_propiedad; Type: TYPE; Schema: public; Owner: eureka
 --
 
 CREATE TYPE enum_tipo_propiedad AS ENUM (
@@ -173,7 +173,7 @@ CREATE TYPE enum_tipo_propiedad AS ENUM (
 );
 
 
-ALTER TYPE public.enum_tipo_propiedad OWNER TO postgres;
+ALTER TYPE public.enum_tipo_propiedad OWNER TO eureka;
 
 SET default_tablespace = '';
 
@@ -4964,16 +4964,16 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: postgres
+-- Name: public; Type: ACL; Schema: -; Owner: eureka
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
+REVOKE ALL ON SCHEMA public FROM eureka;
+GRANT ALL ON SCHEMA public TO eureka;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
--- PostgreSQL database dump complete
+-- eurekaQL database dump complete
 --
 
