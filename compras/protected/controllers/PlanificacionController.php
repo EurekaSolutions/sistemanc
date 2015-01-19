@@ -183,16 +183,16 @@ class PlanificacionController extends Controller
 
 	    	if($model->validate(array('correo','usuario_id')))
 	    	{
-	    		$usuarios = Usuarios::model()->findByAttributes(array('usuario_id'=>$_POST['Usuarios']['usuario_id']));
+	    		$usuario = Usuarios::model()->findByAttributes(array('usuario_id'=>$_POST['Usuarios']['usuario_id']));
 
-	    		$usuarios->usuario = strtolower($model->correo);
-	    		$usuarios->correo = strtolower($model->correo);
+	    		$usuario->usuario = strtolower($model->correo);
+	    		$usuario->correo = strtolower($model->correo);
 	    		
-	    		if($usuarios->save(false))
+	    		if($usuario->save(false))
 	    		{
 	    			Yii::app()->user->setFlash('success','Correo asignado con éxito.');
 
-	    			$this->enviarCorreoRecuperacion($usuarios->correo, $usuarios->cedula);
+	    			$this->enviarCorreoRecuperacion($usuario->correo, $usuario->cedula);
 	    				
 	    		}else
 	    		{
