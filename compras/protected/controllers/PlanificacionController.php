@@ -116,6 +116,7 @@ class PlanificacionController extends Controller
 				        	
 				        	   	$usuario->usuario = utf8_encode(trim($datos[4]));
 					        	$usuario->correo = utf8_encode(trim($datos[4]));
+					        	$usuario->nombre = utf8_encode(trim($datos[2]).' '.trim($datos[3]));
 					        	$usuario->contrasena = md5(rand(0,100));
 							    $usuario->creado_el = date("Y-m-d");
 							    $usuario->llave_activacion = md5(rand(0,100));
