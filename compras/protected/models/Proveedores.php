@@ -7,9 +7,10 @@
  * @property integer $id
  * @property string $rif
  * @property string $razon_social
+ * @property string $fecha
  *
  * The followings are the available model relations:
- * @property FacturasProveedores[] $facturasProveedores
+ * @property Facturas[] $facturases
  */
 class Proveedores extends CActiveRecord
 {
@@ -29,14 +30,14 @@ class Proveedores extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('rif, razon_social', 'required'),
+			array('rif, razon_social, fecha', 'required'),
 			array('rif', 'length', 'max'=>10),
-			array('rif', 'unique'),
+						array('rif', 'unique'),
 			array('rif', 'match', 'pattern' => '/^(j|J|v|V|e|E|g|G)([0-9]{8,8})([0-9]{1})$/', 'allowEmpty'=>false,'message'=>'El formato del rif no es válido. Debe ser de la siguiente manera: J123456789'),
 			array('razon_social', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, rif, razon_social', 'safe', 'on'=>'search'),
+			array('id, rif, razon_social, fecha', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,7 +49,7 @@ class Proveedores extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'facturasProveedores' => array(self::HAS_MANY, 'FacturasProveedores', 'proveedor_id'),
+			'facturases' => array(self::HAS_MANY, 'Facturas', 'proveedor_id'),
 		);
 	}
 
@@ -59,8 +60,9 @@ class Proveedores extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'rif' => 'RIF',
+			'rif' => 'Rif',
 			'razon_social' => 'Razon Social',
+			'fecha' => 'Fecha',
 		);
 	}
 
@@ -85,6 +87,7 @@ class Proveedores extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('rif',$this->rif,true);
 		$criteria->compare('razon_social',$this->razon_social,true);
+		$criteria->compare('fecha',$this->fecha,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

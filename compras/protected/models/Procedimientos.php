@@ -7,9 +7,10 @@
  * @property integer $id
  * @property string $num_contrato
  * @property integer $anho
+ * @property string $fecha
  *
  * The followings are the available model relations:
- * @property FacturasProcedimientos[] $facturasProcedimientoses
+ * @property Facturas[] $facturases
  */
 class Procedimientos extends CActiveRecord
 {
@@ -29,12 +30,12 @@ class Procedimientos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('num_contrato, anho', 'required'),
+			array('num_contrato, anho, fecha', 'required'),
 			array('anho', 'numerical', 'integerOnly'=>true),
 			array('num_contrato', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, num_contrato, anho', 'safe', 'on'=>'search'),
+			array('id, num_contrato, anho, fecha', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,7 +47,7 @@ class Procedimientos extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'facturasProcedimientoses' => array(self::HAS_MANY, 'FacturasProcedimientos', 'procedimiento_id'),
+			'facturases' => array(self::HAS_MANY, 'Facturas', 'procedimiento_id'),
 		);
 	}
 
@@ -59,6 +60,7 @@ class Procedimientos extends CActiveRecord
 			'id' => 'ID',
 			'num_contrato' => 'Num Contrato',
 			'anho' => 'Anho',
+			'fecha' => 'Fecha',
 		);
 	}
 
@@ -83,6 +85,7 @@ class Procedimientos extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('num_contrato',$this->num_contrato,true);
 		$criteria->compare('anho',$this->anho);
+		$criteria->compare('fecha',$this->fecha,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

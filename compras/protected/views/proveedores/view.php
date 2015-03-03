@@ -22,5 +22,6 @@ $this->menu=array(
 		'id',
 		'rif',
 		'razon_social',
+		'fecha',
 ),
 )); ?>

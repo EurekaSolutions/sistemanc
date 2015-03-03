@@ -71,6 +71,15 @@
 								)
 							),
 							array(
+								'label' => 'Rendición de cuentas',  //si el usuario es creado por este sistema
+								'items' => array(
+									array('label' => 'Proveedores', 'url' => array('/proveedores/index')),
+									array('label' => 'Procedimientos', 'url' => array('/procedimientos/index')),
+									array('label'=>  'Facturas', 'url'=>array('/facturas/index'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
+								),
+								//'visible'=>AQUI COLOCAR CONDICIÓN DE SI ESTA EN LA FECHA DE RENDICION DE CUENTA DEL TRIMESTRE PASADO),
+							),
+							array(
 								'label' => 'Entes',  //si el usuario es creado por este sistema
 								'items' => array(
 									array('label' => 'Crear entes', 'url'=>array('/planificacion/crearente'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1

@@ -46,6 +46,7 @@ return false;
 		'id',
 		'rif',
 		'razon_social',
+		'fecha',
 array(
 'class'=>'booster.widgets.TbButtonColumn',
 ),

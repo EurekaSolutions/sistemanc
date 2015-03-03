@@ -10,10 +10,12 @@
  * @property string $costo_unitario
  * @property integer $cantidad_adquirida
  * @property integer $iva_id
+ * @property string $fecha
  *
  * The followings are the available model relations:
  * @property Productos $producto
  * @property Iva $iva
+ * @property Facturas $factura
  */
 class FacturasProductos extends CActiveRecord
 {
@@ -33,12 +35,12 @@ class FacturasProductos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('factura_id, producto_id, costo_unitario', 'required'),
+			array('factura_id, producto_id, costo_unitario, fecha', 'required'),
 			array('factura_id, producto_id, cantidad_adquirida, iva_id', 'numerical', 'integerOnly'=>true),
 			array('costo_unitario', 'length', 'max'=>38),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, factura_id, producto_id, costo_unitario, cantidad_adquirida, iva_id', 'safe', 'on'=>'search'),
+			array('id, factura_id, producto_id, costo_unitario, cantidad_adquirida, iva_id, fecha', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,6 +54,7 @@ class FacturasProductos extends CActiveRecord
 		return array(
 			'producto' => array(self::BELONGS_TO, 'Productos', 'producto_id'),
 			'iva' => array(self::BELONGS_TO, 'Iva', 'iva_id'),
+			'factura' => array(self::BELONGS_TO, 'Facturas', 'factura_id'),
 		);
 	}
 
@@ -67,6 +70,7 @@ class FacturasProductos extends CActiveRecord
 			'costo_unitario' => 'Costo Unitario',
 			'cantidad_adquirida' => 'Cantidad Adquirida',
 			'iva_id' => 'Iva',
+			'fecha' => 'Fecha',
 		);
 	}
 
@@ -94,6 +98,7 @@ class FacturasProductos extends CActiveRecord
 		$criteria->compare('costo_unitario',$this->costo_unitario,true);
 		$criteria->compare('cantidad_adquirida',$this->cantidad_adquirida);
 		$criteria->compare('iva_id',$this->iva_id);
+		$criteria->compare('fecha',$this->fecha,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

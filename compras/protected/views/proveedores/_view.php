@@ -12,5 +12,9 @@
 	<?php echo CHtml::encode($data->razon_social); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('fecha')); ?>:</b>
+	<?php echo CHtml::encode($data->fecha); ?>
+	<br />
+
 
 </div>

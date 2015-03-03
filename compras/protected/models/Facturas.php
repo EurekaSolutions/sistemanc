@@ -9,12 +9,12 @@
  * @property integer $anho
  * @property integer $proveedor_id
  * @property integer $procedimiento_id
+ * @property string $fecha
  *
  * The followings are the available model relations:
+ * @property FacturasProductos[] $facturasProductoses
  * @property Proveedores $proveedor
  * @property Procedimientos $procedimiento
- * @property FacturasProcedimientos[] $facturasProcedimientoses
- * @property FacturasProveedores[] $facturasProveedores
  */
 class Facturas extends CActiveRecord
 {
@@ -34,12 +34,12 @@ class Facturas extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('num_factura, proveedor_id, procedimiento_id', 'required'),
+			array('num_factura, proveedor_id, procedimiento_id, fecha', 'required'),
 			array('anho, proveedor_id, procedimiento_id', 'numerical', 'integerOnly'=>true),
 			array('num_factura', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, num_factura, anho, proveedor_id, procedimiento_id', 'safe', 'on'=>'search'),
+			array('id, num_factura, anho, proveedor_id, procedimiento_id, fecha', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,10 +51,9 @@ class Facturas extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'facturasProductoses' => array(self::HAS_MANY, 'FacturasProductos', 'factura_id'),
 			'proveedor' => array(self::BELONGS_TO, 'Proveedores', 'proveedor_id'),
 			'procedimiento' => array(self::BELONGS_TO, 'Procedimientos', 'procedimiento_id'),
-			'facturasProcedimientoses' => array(self::HAS_MANY, 'FacturasProcedimientos', 'factura_id'),
-			'facturasProveedores' => array(self::HAS_MANY, 'FacturasProveedores', 'factura_id'),
 		);
 	}
 
@@ -69,6 +68,7 @@ class Facturas extends CActiveRecord
 			'anho' => 'Anho',
 			'proveedor_id' => 'Proveedor',
 			'procedimiento_id' => 'Procedimiento',
+			'fecha' => 'Fecha',
 		);
 	}
 
@@ -95,6 +95,7 @@ class Facturas extends CActiveRecord
 		$criteria->compare('anho',$this->anho);
 		$criteria->compare('proveedor_id',$this->proveedor_id);
 		$criteria->compare('procedimiento_id',$this->procedimiento_id);
+		$criteria->compare('fecha',$this->fecha,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
