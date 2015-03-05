@@ -10,28 +10,32 @@
 	<?php echo $form->textFieldGroup($model,'num_factura',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
 
 	<?php echo $form->textFieldGroup($model,'anho',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
-
+<div class="form-group">
 	<?php 	
 		$list = CHtml::listData(Proveedores::model()->findAll(), 'id', 'razon_social');
 
+		echo CHtml::label('Seleccionar Proveedor', 'Proveedor');
+		echo "<br>";
 		$this->widget(
 		    'booster.widgets.TbSelect2',
 		    array(
-		        'asDropDownList' => false,
+		        'asDropDownList' => true,
 		        'model' => $model,
+		        
 		        'attribute' => 'proveedor_id',
 		        //'name' => 'proveedor_id',
 		        'data' => $list,
+		        'htmlOptions'=>array('id'=>'Proveedor',),
 		        'options' => array(
-		            'tags' => array('proveedores'),
+		            //'tags' => array('proveedores'),
 		            'placeholder' => 'Proveedores',
 		            'width' => '40%',
 		            'tokenSeparators' => array(',', ' ')
 		        )
 		    )
-		,true);
+		);
 	?>
-		<?php echo $form->dropDownListGroup(
+		<?php /*echo $form->dropDownListGroup(
 			$model,
 			'proveedor_id',
 			array(
@@ -43,20 +47,29 @@
 					'htmlOptions' => array(),
 				)
 			)
-		); ?>
+		);*/ ?>
 	<?php //echo $form->textFieldGroup($model,'proveedor_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
-
+	</div>
+		
+	
+<div class="form-group">
 	<?php 	
 		$list = CHtml::listData(Procedimientos::model()->findAll(), 'id', 'num_contrato');
+	
 
+		echo CHtml::label('Seleccionar Procedimeinto', 'Procedimeinto');	
+		echo "<br>";
 		$this->widget(
 		    'booster.widgets.TbSelect2',
 		    array(
-		        'asDropDownList' => false,
-		        'name' => 'procedimiento_id',
+		        'asDropDownList' => true,
+		        'model' => $model,
+		         'attribute' => 'procedimiento_id',
+		        //'name' => 'procedimiento_id',
 		        'data' => $list,
+		        'htmlOptions'=>array('id'=>'Procedimeinto',),
 		        'options' => array(
-		            'tags' => array('procedimientos'),
+		            //'tags' => array('procedimientos'),
 		            'placeholder' => 'Procedimientos',
 		            'width' => '40%',
 		            'tokenSeparators' => array(',', ' ')
@@ -64,7 +77,7 @@
 		    )
 		);
 	?>
-		<?php echo $form->dropDownListGroup(
+		<?php /*echo $form->dropDownListGroup(
 			$model,
 			'procedimiento_id',
 			array(
@@ -76,7 +89,9 @@
 					'htmlOptions' => array(),
 				)
 			)
-		); ?>
+		);*/ ?>
+
+	</div>
 	<?php //echo $form->textFieldGroup($model,'procedimiento_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
 	<?php echo $form->textFieldGroup($model,'fecha',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
