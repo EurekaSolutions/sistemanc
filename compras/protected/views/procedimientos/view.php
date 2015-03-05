@@ -23,5 +23,6 @@ $this->menu=array(
 		'num_contrato',
 		'anho',
 		'fecha',
+		'tipo',
 ),
 )); ?>

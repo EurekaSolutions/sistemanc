@@ -47,6 +47,7 @@ return false;
 		'num_contrato',
 		'anho',
 		'fecha',
+		'tipo',
 array(
 'class'=>'booster.widgets.TbButtonColumn',
 ),
