@@ -16,5 +16,9 @@
 	<?php echo CHtml::encode($data->fecha); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('ente_organo_id')); ?>:</b>
+	<?php echo CHtml::encode($data->ente_organo_id); ?>
+	<br />
+
 
 </div>

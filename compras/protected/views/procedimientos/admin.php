@@ -48,6 +48,7 @@ return false;
 		'anho',
 		'fecha',
 		'tipo',
+		'ente_organo_id',
 array(
 'class'=>'booster.widgets.TbButtonColumn',
 ),

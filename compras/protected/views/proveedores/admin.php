@@ -47,6 +47,7 @@ return false;
 		'rif',
 		'razon_social',
 		'fecha',
+		'ente_organo_id',
 array(
 'class'=>'booster.widgets.TbButtonColumn',
 ),

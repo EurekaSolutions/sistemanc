@@ -10,11 +10,14 @@
  * @property integer $proveedor_id
  * @property integer $procedimiento_id
  * @property string $fecha
+ * @property string $fecha_factura
+ * @property integer $ente_organo_id
  *
  * The followings are the available model relations:
  * @property FacturasProductos[] $facturasProductoses
- * @property Proveedores $proveedor
  * @property Procedimientos $procedimiento
+ * @property Proveedores $proveedor
+ * @property EntesOrganos $enteOrgano
  */
 class Facturas extends CActiveRecord
 {
@@ -34,12 +37,13 @@ class Facturas extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('num_factura, proveedor_id, procedimiento_id', 'required'),
-			array('anho, proveedor_id, procedimiento_id', 'numerical', 'integerOnly'=>true),
+			array('num_factura, proveedor_id, procedimiento_id, ente_organo_id', 'required'),
+			array('anho, proveedor_id, procedimiento_id, ente_organo_id', 'numerical', 'integerOnly'=>true),
 			array('num_factura', 'length', 'max'=>255),
+			array('fecha_factura', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, num_factura, anho, proveedor_id, procedimiento_id, fecha', 'safe', 'on'=>'search'),
+			array('id, num_factura, anho, proveedor_id, procedimiento_id, fecha, fecha_factura, ente_organo_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,8 +56,9 @@ class Facturas extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'facturasProductoses' => array(self::HAS_MANY, 'FacturasProductos', 'factura_id'),
-			'proveedor' => array(self::BELONGS_TO, 'Proveedores', 'proveedor_id'),
 			'procedimiento' => array(self::BELONGS_TO, 'Procedimientos', 'procedimiento_id'),
+			'proveedor' => array(self::BELONGS_TO, 'Proveedores', 'proveedor_id'),
+			'enteOrgano' => array(self::BELONGS_TO, 'EntesOrganos', 'ente_organo_id'),
 		);
 	}
 
@@ -69,6 +74,8 @@ class Facturas extends CActiveRecord
 			'proveedor_id' => 'Proveedor',
 			'procedimiento_id' => 'Procedimiento',
 			'fecha' => 'Fecha',
+			'fecha_factura' => 'Fecha Factura',
+			'ente_organo_id' => 'Ente Organo',
 		);
 	}
 
@@ -96,6 +103,8 @@ class Facturas extends CActiveRecord
 		$criteria->compare('proveedor_id',$this->proveedor_id);
 		$criteria->compare('procedimiento_id',$this->procedimiento_id);
 		$criteria->compare('fecha',$this->fecha,true);
+		$criteria->compare('fecha_factura',$this->fecha_factura,true);
+		$criteria->compare('ente_organo_id',$this->ente_organo_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

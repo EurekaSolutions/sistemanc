@@ -24,5 +24,6 @@ $this->menu=array(
 		'anho',
 		'fecha',
 		'tipo',
+		'ente_organo_id',
 ),
 )); ?>

@@ -23,5 +23,6 @@ $this->menu=array(
 		'rif',
 		'razon_social',
 		'fecha',
+		'ente_organo_id',
 ),
 )); ?>

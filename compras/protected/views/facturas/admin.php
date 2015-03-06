@@ -51,6 +51,7 @@ return false;
 		'fecha',
 		/*
 		'fecha_factura',
+		'ente_organo_id',
 		*/
 array(
 'class'=>'booster.widgets.TbButtonColumn',

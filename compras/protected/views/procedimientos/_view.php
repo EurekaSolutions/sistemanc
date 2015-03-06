@@ -20,5 +20,9 @@
 	<?php echo CHtml::encode($data->tipo); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('ente_organo_id')); ?>:</b>
+	<?php echo CHtml::encode($data->ente_organo_id); ?>
+	<br />
+
 
 </div>
