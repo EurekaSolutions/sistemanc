@@ -31,7 +31,7 @@ class Procedimientos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('num_contrato, anho, fecha, tipo', 'required'),
+			array('num_contrato, anho, tipo', 'required'),
 			array('anho', 'numerical', 'integerOnly'=>true),
 			array('num_contrato, tipo', 'length', 'max'=>255),
 			// The following rule is used by search().

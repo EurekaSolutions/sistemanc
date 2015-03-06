@@ -49,6 +49,9 @@ return false;
 		'proveedor_id',
 		'procedimiento_id',
 		'fecha',
+		/*
+		'fecha_factura',
+		*/
 array(
 'class'=>'booster.widgets.TbButtonColumn',
 ),

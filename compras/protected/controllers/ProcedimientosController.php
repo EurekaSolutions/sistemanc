@@ -28,15 +28,18 @@ class ProcedimientosController extends Controller
 		return array(
 		array('allow',  // allow all users to perform 'index' and 'view' actions
 			'actions'=>array('index','view'),
-			'users'=>array('*'),
+			//'users'=>array('*'),
+			'roles'=>array('ente'),
 		),
 		array('allow', // allow authenticated user to perform 'create' and 'update' actions
 			'actions'=>array('create','update'),
 			'users'=>array('@'),
+			'roles'=>array('ente'),
 		),
 		array('allow', // allow admin user to perform 'admin' and 'delete' actions
 			'actions'=>array('admin','delete'),
-			'users'=>array('admin'),
+			//'users'=>array('admin'),
+			'roles'=>array('ente'),
 		),
 		array('deny',  // deny all users
 			'users'=>array('*'),
@@ -127,10 +130,11 @@ class ProcedimientosController extends Controller
 		*/
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Procedimientos');
+/*		$dataProvider=new CActiveDataProvider('Procedimientos');
 			$this->render('index',array(
 			'dataProvider'=>$dataProvider,
-		));
+		));*/
+		$this->redirect(array('procedimientos/admin'));
 	}
 
 	/**

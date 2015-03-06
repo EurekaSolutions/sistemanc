@@ -34,7 +34,7 @@ class Facturas extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('num_factura, proveedor_id, procedimiento_id, fecha', 'required'),
+			array('num_factura, proveedor_id, procedimiento_id', 'required'),
 			array('anho, proveedor_id, procedimiento_id', 'numerical', 'integerOnly'=>true),
 			array('num_factura', 'length', 'max'=>255),
 			// The following rule is used by search().

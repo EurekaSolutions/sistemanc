@@ -30,7 +30,7 @@ class Proveedores extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('rif, razon_social, fecha', 'required'),
+			array('rif, razon_social', 'required'),
 			array('rif', 'length', 'max'=>10),
 						array('rif', 'unique'),
 			array('rif', 'match', 'pattern' => '/^(j|J|v|V|e|E|g|G)([0-9]{8,8})([0-9]{1})$/', 'allowEmpty'=>false,'message'=>'El formato del rif no es válido. Debe ser de la siguiente manera: J123456789'),

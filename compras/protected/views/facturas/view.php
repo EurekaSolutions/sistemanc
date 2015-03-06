@@ -25,5 +25,6 @@ $this->menu=array(
 		'proveedor_id',
 		'procedimiento_id',
 		'fecha',
+		'fecha_factura',
 ),
 )); ?>

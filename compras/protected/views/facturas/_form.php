@@ -9,7 +9,27 @@
 
 	<?php echo $form->textFieldGroup($model,'num_factura',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
 
-	<?php echo $form->textFieldGroup($model,'anho',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
+	<?php //echo $form->textFieldGroup($model,'fecha_factura',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
+
+	<?php echo $form->datePickerGroup(
+		$model,
+		'fecha_factura',
+		array(
+			'widgetOptions' => array(
+				'options' => array(
+					'language' => 'es',
+				),
+			),
+			'wrapperHtmlOptions' => array(
+				'class' => 'col-sm-5',
+			),
+			'hint' => 'Click inside! This is a super cool date field.',
+			'prepend' => '<i class="glyphicon glyphicon-calendar"></i>'
+		)
+	); ?>
+
+	<?php //echo $form->textFieldGroup($model,'anho',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
+
 <div class="form-group">
 	<?php 	
 		$list = CHtml::listData(Proveedores::model()->findAll(), 'id', 'razon_social');
@@ -35,6 +55,8 @@
 		    )
 		);
 	?>
+
+
 		<?php /*echo $form->dropDownListGroup(
 			$model,
 			'proveedor_id',
@@ -94,7 +116,9 @@
 	</div>
 	<?php //echo $form->textFieldGroup($model,'procedimiento_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
-	<?php echo $form->textFieldGroup($model,'fecha',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
+	<?php //echo $form->textFieldGroup($model,'fecha',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
+
+
 
 <div class="form-actions">
 	<?php $this->widget('booster.widgets.TbButton', array(

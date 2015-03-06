@@ -36,7 +36,7 @@ class FacturasController extends Controller
 		),
 		array('allow', // allow admin user to perform 'admin' and 'delete' actions
 			'actions'=>array('admin','delete'),
-			'users'=>array('admin'),
+			//'users'=>array('admin'),
 		),
 		array('deny',  // deny all users
 			'users'=>array('*'),
@@ -127,10 +127,12 @@ class FacturasController extends Controller
 		*/
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Facturas');
+/*		$dataProvider=new CActiveDataProvider('Facturas');
 			$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
+*/
+	    $this->redirect(array('facturas/admin'));
 	}
 
 	/**

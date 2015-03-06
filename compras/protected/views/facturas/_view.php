@@ -24,5 +24,9 @@
 	<?php echo CHtml::encode($data->fecha); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('fecha_factura')); ?>:</b>
+	<?php echo CHtml::encode($data->fecha_factura); ?>
+	<br />
+
 
 </div>
