@@ -5,11 +5,11 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-array('label'=>'List Procedimientos','url'=>array('index')),
-array('label'=>'Manage Procedimientos','url'=>array('admin')),
+//array('label'=>'Lista de Procedimientos','url'=>array('index')),
+array('label'=>'Administrar Procedimientos','url'=>array('admin')),
 );
 ?>
 
-<h1>Create Procedimientos</h1>
+<h1>Registrar Procedimiento</h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

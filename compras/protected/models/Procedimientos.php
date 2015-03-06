@@ -62,7 +62,7 @@ class Procedimientos extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'num_contrato' => 'Num Contrato',
+			'num_contrato' => 'Número de Contrato',
 			'anho' => 'Anho',
 			'fecha' => 'Fecha',
 			'tipo' => 'Tipo',

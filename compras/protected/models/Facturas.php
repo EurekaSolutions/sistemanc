@@ -69,7 +69,7 @@ class Facturas extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'num_factura' => 'Num Factura',
+			'num_factura' => 'Número de Factura',
 			'anho' => 'Anho',
 			'proveedor_id' => 'Proveedor',
 			'procedimiento_id' => 'Procedimiento',

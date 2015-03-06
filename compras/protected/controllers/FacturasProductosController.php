@@ -131,7 +131,7 @@ class FacturasProductosController extends Controller
 			$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));*/
-		$this->redirect(array('facturasProductos/admin'));
+		$this->redirect(array('facturasProductos/create'));
 	}
 
 	/**

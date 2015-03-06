@@ -23,8 +23,8 @@ return false;
 ");
 ?>
 
-<h1>Manage Facturas Productoses</h1>
-
+<h1> Administrar Productos por facturas</h1>
+<!-- 
 <p>
 	You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>
 		&lt;&gt;</b>
@@ -36,7 +36,7 @@ return false;
 	<?php $this->renderPartial('_search',array(
 	'model'=>$model,
 )); ?>
-</div><!-- search-form -->
+</div> --><!-- search-form -->
 
 <?php $this->widget('booster.widgets.TbGridView',array(
 'id'=>'facturas-productos-grid',
