@@ -37,7 +37,7 @@ class FacturasProductos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('factura_id, producto_id, costo_unitario, presupuesto_partida_id', 'required'),
+			array('factura_id, producto_id, costo_unitario, cantidad_adquirida, iva_id, presupuesto_partida_id', 'required'),
 			array('factura_id, producto_id, cantidad_adquirida, iva_id, presupuesto_partida_id', 'numerical', 'integerOnly'=>true),
 			array('costo_unitario', 'length', 'max'=>38),
 			// The following rule is used by search().
