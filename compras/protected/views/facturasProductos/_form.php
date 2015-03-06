@@ -150,16 +150,40 @@
 
 	<?php echo $form->textFieldGroup($model,'iva_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
-	<?php echo $form->textFieldGroup($model,'fecha',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
-
-	
+	<?php //echo $form->textFieldGroup($model,'fecha',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
 <div class="form-actions">
 	<?php $this->widget('booster.widgets.TbButton', array(
 			'buttonType'=>'submit',
 			'context'=>'primary',
-			'label'=>$model->isNewRecord ? 'Añadir' : 'Save',
+			'label'=>$model->isNewRecord ? 'Añadir producto a factura' : 'Save',
 		)); ?>
 </div>
 
+<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
+		    <thead>
+		        <tr class="principaltr">
+		            <th data-field="conapre">Producto</th>
+		            <th data-field="nombreoue">Costo unitario</th>
+		            <th data-field="tipo">Cantidad adquirida</th>
+		            <th data-field="oadscripcion">iva</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		    	<tr class="principaltr">
+		    		<td>53.10.16.02 - Camisas de hombre</td>
+		    		<td>350</td>
+		    		<td>20</td>
+		    		<td>12</td>
+		    	</tr>
+		    </tbody>
+		</table>
+
+<div class="form-actions">
+	<?php $this->widget('booster.widgets.TbButton', array(
+			'buttonType'=>'submit',
+			'context'=>'primary',
+			'label'=>$model->isNewRecord ? 'Guardar' : 'Save',
+		)); ?>
+</div>
 <?php $this->endWidget(); ?>
