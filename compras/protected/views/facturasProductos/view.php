@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-		'Facturas Productoses'=>array('index'),
+		'Facturas Productos'=>array('index'),
 		$model->id,
 	);
 
