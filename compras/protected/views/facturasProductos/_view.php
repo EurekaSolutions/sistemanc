@@ -28,5 +28,11 @@
 	<?php echo CHtml::encode($data->fecha); ?>
 	<br />
 
+	<?php /*
+	<b><?php echo CHtml::encode($data->getAttributeLabel('presupuesto_partida_id')); ?>:</b>
+	<?php echo CHtml::encode($data->presupuesto_partida_id); ?>
+	<br />
+
+	*/ ?>
 
 </div>

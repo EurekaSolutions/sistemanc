@@ -11,11 +11,13 @@
  * @property integer $cantidad_adquirida
  * @property integer $iva_id
  * @property string $fecha
+ * @property integer $presupuesto_partida_id
  *
  * The followings are the available model relations:
- * @property Productos $producto
- * @property Iva $iva
  * @property Facturas $factura
+ * @property Iva $iva
+ * @property Productos $producto
+ * @property PresupuestoPartidas $presupuestoPartida
  */
 class FacturasProductos extends CActiveRecord
 {
@@ -35,12 +37,12 @@ class FacturasProductos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('factura_id, producto_id, costo_unitario, fecha', 'required'),
-			array('factura_id, producto_id, cantidad_adquirida, iva_id', 'numerical', 'integerOnly'=>true),
+			array('factura_id, producto_id, costo_unitario, presupuesto_partida_id', 'required'),
+			array('factura_id, producto_id, cantidad_adquirida, iva_id, presupuesto_partida_id', 'numerical', 'integerOnly'=>true),
 			array('costo_unitario', 'length', 'max'=>38),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, factura_id, producto_id, costo_unitario, cantidad_adquirida, iva_id, fecha', 'safe', 'on'=>'search'),
+			array('id, factura_id, producto_id, costo_unitario, cantidad_adquirida, iva_id, presupuesto_partida_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,9 +54,10 @@ class FacturasProductos extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'producto' => array(self::BELONGS_TO, 'Productos', 'producto_id'),
-			'iva' => array(self::BELONGS_TO, 'Iva', 'iva_id'),
 			'factura' => array(self::BELONGS_TO, 'Facturas', 'factura_id'),
+			'iva' => array(self::BELONGS_TO, 'Iva', 'iva_id'),
+			'producto' => array(self::BELONGS_TO, 'Productos', 'producto_id'),
+			'presupuestoPartida' => array(self::BELONGS_TO, 'PresupuestoPartidas', 'presupuesto_partida_id'),
 		);
 	}
 
@@ -71,6 +74,7 @@ class FacturasProductos extends CActiveRecord
 			'cantidad_adquirida' => 'Cantidad Adquirida',
 			'iva_id' => 'Iva',
 			'fecha' => 'Fecha',
+			'presupuesto_partida_id' => 'Presupuesto Partida',
 		);
 	}
 
@@ -99,6 +103,7 @@ class FacturasProductos extends CActiveRecord
 		$criteria->compare('cantidad_adquirida',$this->cantidad_adquirida);
 		$criteria->compare('iva_id',$this->iva_id);
 		$criteria->compare('fecha',$this->fecha,true);
+		$criteria->compare('presupuesto_partida_id',$this->presupuesto_partida_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

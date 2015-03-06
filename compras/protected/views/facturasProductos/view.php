@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-		'Facturas Productos'=>array('index'),
+		'Facturas Productoses'=>array('index'),
 		$model->id,
 	);
 
@@ -26,5 +26,6 @@ $this->menu=array(
 		'cantidad_adquirida',
 		'iva_id',
 		'fecha',
+		'presupuesto_partida_id',
 ),
 )); ?>

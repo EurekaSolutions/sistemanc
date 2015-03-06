@@ -51,6 +51,7 @@ return false;
 		'iva_id',
 		/*
 		'fecha',
+		'presupuesto_partida_id',
 		*/
 array(
 'class'=>'booster.widgets.TbButtonColumn',

@@ -1,15 +1,15 @@
 <?php
 $this->breadcrumbs=array(
 	'Facturas Productos'=>array('index'),
-	'Create',
+	'Crear',
 );
 
 $this->menu=array(
-array('label'=>'Listar Productos por factura','url'=>array('index')),
-array('label'=>'Administrar Productos por factura','url'=>array('admin')),
+array('label'=>'Listar Productos de facturas','url'=>array('index')),
+array('label'=>'Administrar Productos en facturas','url'=>array('admin')),
 );
 ?>
 
-<h1>Agregar productos a factura</h1>
+<h1>Asociar Productos a facturas</h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
