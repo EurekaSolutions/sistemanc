@@ -69,9 +69,15 @@ class ProcedimientosController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
+		
+
 		if(isset($_POST['Procedimientos']))
 		{
 			$model->attributes=$_POST['Procedimientos'];
+			$model->anho = date("Y");
+			$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+			$model->ente_organo_id = $usuario->ente_organo_id;
+			
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}

@@ -70,6 +70,10 @@ class ProveedoresController extends Controller
 		if(isset($_POST['Proveedores']))
 		{
 			$model->attributes=$_POST['Proveedores'];
+			$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+			
+			$model->ente_organo_id = $usuario->ente_organo_id;
+
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
