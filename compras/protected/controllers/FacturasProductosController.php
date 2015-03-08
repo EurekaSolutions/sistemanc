@@ -27,7 +27,7 @@ class FacturasProductosController extends Controller
 	{
 		return array(
 		array('allow',  // allow all users to perform 'index' and 'view' actions
-			'actions'=>array('index','view','buscarProductosPartida'),
+			'actions'=>array('index','view','buscarProductosPartida', 'filaProducto','buscarProductosFactura'),
 			'users'=>array('*'),
 		),
 		array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -45,90 +45,153 @@ class FacturasProductosController extends Controller
 	}
 
 	/**
+	* Busqueda de la lista de productos según la partida.
+	*/
+	public function actionBuscarProductosFactura()
+	{
+		if(!empty($_POST['FacturasProductos']['factura_id'])){
+			$model=new FacturasProductos;
+			
+			 $this->widget('booster.widgets.TbGridView',array(
+									'id'=>'facturas-productos-grid',
+									'dataProvider'=>$model->buscarProductosFactura($_POST['FacturasProductos']['factura_id']),
+									'filter'=>$model,
+									'columns'=>array(
+											//'id',
+											//'factura_id',
+											array('name'=>'producto_id', 'value'=>'$data->producto->etiquetaProducto()'),
+											array('name' => 'costo_unitario', 'value'=>'number_format($data->costo_unitario,2)'),
+											'cantidad_adquirida',
+											array('name'=>'iva_id','value'=>'$data->iva->etiquetaPorcentaje()'),
+											/*
+											'fecha',
+											'presupuesto_partida_id',
+											*/
+										array(
+										'class'=>'booster.widgets.TbButtonColumn',
+											//'template'=>'{view}{update}<br>{delete}',
+										),
+									),
+							));
+				} 
+	}
+
+	/**
+	* Busqueda de la lista de productos según la partida.
+	*/
+	public function actionBuscarProductosPartida()
+	{
+		if(!empty($_POST['FacturasProductos']['presupuesto_partida_id']))
+			PresupuestoPartidas::model()->findByPk($_POST['FacturasProductos']['presupuesto_partida_id'])->partida->listaProductos();
+	}
+
+	/**
 	* Displays a particular model.
 	* @param integer $id the ID of the model to be displayed
 	*/
 	public function actionFilaProducto()
 	{
-		echo '<div class="form-group">';
-		$list = CHtml::listData(PresupuestoPartidas::model()->findAllByAttributes(array('ente_organo_id'=>Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->ente_organo_id)), 
-			'partida_id', function($presuPartida){ return $presuPartida->partida->etiquetaPartida();});
+		$model=new FacturasProductos;
 
-		echo CHtml::label('Seleccionar partida', 'partida');
-		echo "<br>";
-		$this->widget(
-		    'booster.widgets.TbSelect2',
-		    array(
-		        'asDropDownList' => true,
-		        'model' => $model,
-		        
-		        'attribute' => 'presupuesto_partida_id',
-		        //'name' => 'factura_id',
-		        'data' => $list,
-		        'htmlOptions'=>array('id'=>'partida',
-							'ajax' => array(
-									'type'=>'POST', //request type
-									'url'=>CController::createUrl('facturasProductos/buscarProductosPartida'), //url to call.
-									//Style: CController::createUrl('currentController/methodToCall')
-									'update'=>'#producto', //selector to update
-									//'data'=>'js:javascript statement' 
-									//leave out the data key to pass all form values through
-							  )),
-		        'options' => array(
-		            //'tags' => array('proveedores'),
-		            'placeholder' => 'Partida',
-		            'width' => '40%',
-		            'tokenSeparators' => array(',', ' ')
-		        )
-		    )
-		);
-		echo '</div>';
+		//echo '<tr>';
 
-		echo '<div class="form-group">';
+			$form=$this->beginWidget('booster.widgets.TbActiveForm',array(
+				'id'=>'facturas-productos-fila',
+				'enableAjaxValidation'=>false,
+			)); 
+				//echo '<div id="retorno">';
+				echo '<td>';
 
-		echo CHtml::label('Seleccionar producto', 'producto');
-		echo "<br>";
-		$this->widget(
-		    'booster.widgets.TbSelect2',
-		    array(
-		        'asDropDownList' => true,
-		        'model' => $model,
-		        
-		        'attribute' => 'producto_id',
-		        //'name' => 'factura_id',
-		        'data' => array(),
-		        'htmlOptions'=>array('id'=>'producto',),
-		        'options' => array(
-		            //'tags' => array('proveedores'),
-		            'placeholder' => 'Producto',
-		            'width' => '40%',
-		            'tokenSeparators' => array(',', ' ')
-		        )
-		    )
-		);
-		echo '</div>';
-/*
-		echo $form->textFieldGroup($model,'costo_unitario',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>38))));
+					echo '<div class="form-group">';
+					$list = CHtml::listData(PresupuestoPartidas::model()->findAllByAttributes(array('ente_organo_id'=>Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->ente_organo_id)), 
+						'partida_id', function($presuPartida){ return $presuPartida->partida->etiquetaPartida();});
 
-		echo $form->textFieldGroup($model,'cantidad_adquirida',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5'))));
+					echo CHtml::label('Seleccionar partida', 'partida');
+					echo "<br>";
+					$this->widget(
+					    'booster.widgets.TbSelect2',
+					    array(
+					        'asDropDownList' => true,
+					        'model' => $model,
+					        
+					        'attribute' => 'presupuesto_partida_id',
+					        //'name' => 'factura_id',
+					        'data' => $list,
+					        'htmlOptions'=>array('id'=>'partida',
+										'ajax' => array(
+												'type'=>'POST', //request type
+												'url'=>CController::createUrl('facturasProductos/buscarProductosPartida'), //url to call.
+												//Style: CController::createUrl('currentController/methodToCall')
+												'update'=>'#producto', //selector to update
+												//'data'=>'js:javascript statement' 
+												//leave out the data key to pass all form values through
+										  )),
+					        'options' => array(
+					            //'tags' => array('proveedores'),
+					            'placeholder' => 'Partida',
+					            'width' => '40%',
+					            'tokenSeparators' => array(',', ' ')
+					        )
+					    )
+					);
+					echo '</div>';
+				echo '</td>';
+
+				echo '<td>';
+
+					echo '<div class="form-group">';
+
+					echo CHtml::label('Seleccionar producto', 'producto');
+					echo "<br>";
+					$this->widget(
+					    'booster.widgets.TbSelect2',
+					    array(
+					        'asDropDownList' => true,
+					        'model' => $model,
+					        
+					        'attribute' => 'producto_id',
+					        //'name' => 'factura_id',
+					        'data' => array(),
+					        'htmlOptions'=>array('id'=>'producto',),
+					        'options' => array(
+					            //'tags' => array('proveedores'),
+					            'placeholder' => 'Producto',
+					            'width' => '40%',
+					            'tokenSeparators' => array(',', ' ')
+					        )
+					    )
+					);
+					echo '</div>';
+				echo '</td>';
+				
+				echo '<td>';
+					echo $form->textFieldGroup($model,'costo_unitario',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>38))));
+				echo '</td>';
+
+				echo '<td>';
+					echo $form->textFieldGroup($model,'cantidad_adquirida',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5'))));
+				echo '</td>';
 
 
-
-		$list = CHtml::listData(Iva::model()->findAll(), 'id', 'porcentaje');
-		echo $form->dropDownListGroup(
-					$model,
-					'iva_id',
-					array(
-						'wrapperHtmlOptions' => array(
-							'class' => 'col-sm-5',
-						),
-						'widgetOptions' => array(
-							'data' => $list,
-							'htmlOptions' => array(),
-						)
-					)
-				);*/
-
+				echo '<td>';
+					$list = CHtml::listData(Iva::model()->findAll(), 'id', 'porcentaje');
+					echo $form->dropDownListGroup(
+								$model,
+								'iva_id',
+								array(
+									'wrapperHtmlOptions' => array(
+										'class' => 'col-sm-5',
+									),
+									'widgetOptions' => array(
+										'data' => $list,
+										'htmlOptions' => array(),
+									)
+								)
+							);
+				echo '</td>';
+				echo '</div>';
+	 		$this->endWidget(); 
+ 	//echo '</tr>';
 	}
 
 	/**
@@ -157,7 +220,10 @@ class FacturasProductosController extends Controller
 		{
 			$model->attributes=$_POST['FacturasProductos'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				//$this->redirect(array('view','id'=>$model->id));
+				$this->render('create',array(
+					'model'=>$model,
+		));
 		}
 
 		$this->render('create',array(
@@ -209,14 +275,6 @@ class FacturasProductosController extends Controller
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
-	/**
-	* Busqueda de la lista de productos según la partida.
-	*/
-	public function actionBuscarProductosPartida()
-	{
-		if(!empty($_POST['FacturasProductos']['presupuesto_partida_id']))
-			Partidas::model()->findByPk($_POST['FacturasProductos']['presupuesto_partida_id'])->listaProductos();
-	}
 
 	/**
 	* Lists all models.

@@ -57,7 +57,7 @@ class FacturasProductos extends CActiveRecord
 			'factura' => array(self::BELONGS_TO, 'Facturas', 'factura_id'),
 			'iva' => array(self::BELONGS_TO, 'Iva', 'iva_id'),
 			'producto' => array(self::BELONGS_TO, 'Productos', 'producto_id'),
-			'presupuestoPartida' => array(self::BELONGS_TO, 'PresupuestoPartidas', 'presupuesto_partida_id'),
+			'presupuestoPartida' => array(self::BELONGS_TO, 'PresupuestoPartidas', array('presupuesto_partida_id'=>'presupuesto_partida_id')),
 		);
 	}
 
@@ -99,11 +99,37 @@ class FacturasProductos extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('factura_id',$this->factura_id);
 		$criteria->compare('producto_id',$this->producto_id);
-		$criteria->compare('costo_unitario',$this->costo_unitario,true);
+		$criteria->compare('costo_unitario',$this->costo_unitario);
 		$criteria->compare('cantidad_adquirida',$this->cantidad_adquirida);
 		$criteria->compare('iva_id',$this->iva_id);
-		$criteria->compare('fecha',$this->fecha,true);
+		$criteria->compare('fecha',$this->fecha);
 		$criteria->compare('presupuesto_partida_id',$this->presupuesto_partida_id);
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+
+	/**
+	 * Retrieves a list of models based on the current search/filter conditions.
+	 *
+	 * Typical usecase:
+	 * - Initialize the model fields with values from filter form.
+	 * - Execute this method to get CActiveDataProvider instance which will filter
+	 * models according to data in model fields.
+	 * - Pass data provider to CGridView, CListView or any similar widget.
+	 *
+	 * @return CActiveDataProvider the data provider that can return the models
+	 * based on the search/filter conditions.
+	 */
+	public function buscarProductosFactura($factura_id)
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		
+		$criteria->compare('factura_id',$factura_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
