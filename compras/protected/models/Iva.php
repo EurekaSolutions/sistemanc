@@ -30,7 +30,7 @@ class Iva extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('tipo, porcentaje, fecha', 'required'),
+			array('tipo, porcentaje', 'required'),
 			array('tipo', 'length', 'max'=>255),
 			array('porcentaje', 'length', 'max'=>38),
 			// The following rule is used by search().
@@ -62,6 +62,14 @@ class Iva extends CActiveRecord
 			'porcentaje' => 'Porcentaje',
 			'fecha' => 'Fecha',
 		);
+	}
+
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
+	public function etiquetaPorcentaje()
+	{
+		return number_format($this->porcentaje,2).'%'; 
 	}
 
 	/**

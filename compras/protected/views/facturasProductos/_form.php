@@ -3,7 +3,7 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-<p class="help-block">Fields with <span class="required">*</span> are required.</p>
+<p class="help-block">Los campos con <span class="required">*</span> son obligatorios.</p>
 
 <?php echo $form->errorSummary($model); ?>
 
@@ -13,7 +13,7 @@
 	<?php 	
 		$list = CHtml::listData(Facturas::model()->findAll(), 'id', 'num_factura');
 
-		echo CHtml::label('Seleccionar Factura', 'Factura');
+		echo CHtml::label('Seleccionar factura', 'Factura');
 		echo "<br>";
 		$this->widget(
 		    'booster.widgets.TbSelect2',
@@ -24,7 +24,15 @@
 		        'attribute' => 'factura_id',
 		        //'name' => 'factura_id',
 		        'data' => $list,
-		        'htmlOptions'=>array('id'=>'Factura',),
+		        'htmlOptions'=>array('id'=>'Factura',
+    /*			 'ajax' => array(
+									'type'=>'POST', //request type
+									'url'=>CController::createUrl('planificacion/buscarpartidasproyecto'), //url to call.
+									//Style: CController::createUrl('currentController/methodToCall')
+									'update'=>'#lista_productos', //selector to update
+									//'data'=>'js:javascript statement' 
+									//leave out the data key to pass all form values through
+							  )*/),
 		        'options' => array(
 		            //'tags' => array('proveedores'),
 		            'placeholder' => 'Factura',
@@ -35,30 +43,17 @@
 		);
 	?>
 
-
-		<?php /*echo $form->dropDownListGroup(
-			$model,
-			'proveedor_id',
-			array(
-				'wrapperHtmlOptions' => array(
-					'class' => 'col-sm-5',
-				),
-				'widgetOptions' => array(
-					'data' => $list,
-					'htmlOptions' => array(),
-				)
-			)
-		);*/ ?>
-	<?php //echo $form->textFieldGroup($model,'proveedor_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 	</div>
 
 	<?php //echo $form->textFieldGroup($model,'presupuesto_partida_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
 	<div class="form-group">
 	<?php 	
-		$list = CHtml::listData(Facturas::model()->findAll(), 'id', 'num_factura');
+	
+		$list = CHtml::listData(PresupuestoPartidas::model()->findAllByAttributes(array('ente_organo_id'=>Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->ente_organo_id)), 
+			'partida_id', function($presuPartida){ return $presuPartida->partida->etiquetaPartida();});
 
-		echo CHtml::label('Seleccionar Partida', 'Partida');
+		echo CHtml::label('Seleccionar partida', 'partida');
 		echo "<br>";
 		$this->widget(
 		    'booster.widgets.TbSelect2',
@@ -69,7 +64,15 @@
 		        'attribute' => 'presupuesto_partida_id',
 		        //'name' => 'factura_id',
 		        'data' => $list,
-		        'htmlOptions'=>array('id'=>'Partida',),
+		        'htmlOptions'=>array('id'=>'partida',
+							'ajax' => array(
+									'type'=>'POST', //request type
+									'url'=>CController::createUrl('facturasProductos/buscarProductosPartida'), //url to call.
+									//Style: CController::createUrl('currentController/methodToCall')
+									'update'=>'#producto', //selector to update
+									//'data'=>'js:javascript statement' 
+									//leave out the data key to pass all form values through
+							  )),
 		        'options' => array(
 		            //'tags' => array('proveedores'),
 		            'placeholder' => 'Partida',
@@ -79,32 +82,17 @@
 		    )
 		);
 	?>
-
-
-		<?php /*echo $form->dropDownListGroup(
-			$model,
-			'proveedor_id',
-			array(
-				'wrapperHtmlOptions' => array(
-					'class' => 'col-sm-5',
-				),
-				'widgetOptions' => array(
-					'data' => $list,
-					'htmlOptions' => array(),
-				)
-			)
-		);*/ ?>
-	<?php //echo $form->textFieldGroup($model,'proveedor_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 	</div>
 
-	<?php //echo $form->textFieldGroup($model,'producto_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
-
+	<?php //echo $form->textFieldGroup($model,'proveedor_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
+	
 
 	<div class="form-group">
 	<?php 	
-		$list = CHtml::listData(Facturas::model()->findAll(), 'id', 'num_factura');
+		//$productos = CController::createUrl('planificacion/listaProductosPartida',array('partidaId'=>$partidaSel->partida_id,'proyectoActualId'=>$proyectoSel->proyecto_id, 'tipo'=>'n'));
+		//$list = CHtml::listData(Facturas::model()->findAll(), 'id', 'num_factura');
 
-		echo CHtml::label('Seleccionar Producto', 'Producto');
+		echo CHtml::label('Seleccionar producto', 'producto');
 		echo "<br>";
 		$this->widget(
 		    'booster.widgets.TbSelect2',
@@ -114,8 +102,8 @@
 		        
 		        'attribute' => 'producto_id',
 		        //'name' => 'factura_id',
-		        'data' => $list,
-		        'htmlOptions'=>array('id'=>'Producto',),
+		        'data' => array(),
+		        'htmlOptions'=>array('id'=>'producto',),
 		        'options' => array(
 		            //'tags' => array('proveedores'),
 		            'placeholder' => 'Producto',
@@ -126,20 +114,6 @@
 		);
 	?>
 
-
-		<?php /*echo $form->dropDownListGroup(
-			$model,
-			'proveedor_id',
-			array(
-				'wrapperHtmlOptions' => array(
-					'class' => 'col-sm-5',
-				),
-				'widgetOptions' => array(
-					'data' => $list,
-					'htmlOptions' => array(),
-				)
-			)
-		);*/ ?>
 	<?php //echo $form->textFieldGroup($model,'proveedor_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 	</div>
 
@@ -148,9 +122,23 @@
 
 	<?php echo $form->textFieldGroup($model,'cantidad_adquirida',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
-	<?php echo $form->textFieldGroup($model,'iva_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
+	<?php //echo $form->textFieldGroup($model,'iva_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); 
 
-	<?php //echo $form->textFieldGroup($model,'fecha',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
+	$list = CHtml::listData(Iva::model()->findAll(), 'id', 'porcentaje');
+			echo $form->dropDownListGroup(
+					$model,
+					'iva_id',
+					array(
+						'wrapperHtmlOptions' => array(
+							'class' => 'col-sm-5',
+						),
+						'widgetOptions' => array(
+							'data' => $list,
+							'htmlOptions' => array(),
+						)
+					)
+				);
+		?>
 
 <div class="form-actions">
 	<?php $this->widget('booster.widgets.TbButton', array(
@@ -160,7 +148,8 @@
 		)); ?>
 </div>
 
-<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
+<!-- 
+<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="" id="lista_productos">
 		    <thead>
 		        <tr class="principaltr">
 		            <th data-field="conapre">Producto</th>
@@ -185,5 +174,162 @@
 			'context'=>'primary',
 			'label'=>$model->isNewRecord ? 'Guardar' : 'Save',
 		)); ?>
-</div>
+</div> -->
 <?php $this->endWidget(); ?>
+
+
+<?php $this->widget('booster.widgets.TbGridView',array(
+						'id'=>'facturas-productos-grid',
+						'dataProvider'=>$model->search(),
+						'filter'=>$model,
+						'columns'=>array(
+								//'id',
+								//'factura_id',
+								array('name'=>'producto_id', 'value'=>'$data->producto->etiquetaProducto()'),
+								array('name' => 'costo_unitario', 'value'=>'number_format($data->costo_unitario,2)'),
+								'cantidad_adquirida',
+								array('name'=>'iva_id','value'=>'$data->iva->etiquetaPorcentaje()'),
+								/*
+								'fecha',
+								'presupuesto_partida_id',
+								*/
+							array(
+							'class'=>'booster.widgets.TbButtonColumn',
+								//'template'=>'{view}{update}<br>{delete}',
+							),
+						),
+				)); ?>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+    	var numId = 1;
+        $("#add").click(function() {
+        		$clone = $('#mytable tbody>tr:last').clone(true);
+				$('#mytable tbody>tr:last').clone(true).attr('id',$clone.attr('id').replace(/\d+$/, function(str) { return parseInt(str) + 1; } )).insertAfter('#mytable tbody>tr:last');
+						//$("#mytable tbody>tr:last").each(function() {this.reset();});
+						numId++;
+					    //$('#mytable tbody>tr:last').attr('id','producto'+numId);
+					    $('#mytable tbody>tr:last>td>a').attr('id','delete'+numId);
+		
+					        $("#delete"+numId).click(function(event) {
+						    	//alert('#mytable tbody>tr #'+$('#'+event.target.id).parent().parent().attr('id'));
+						    	if($('#mytable tr').length >1)
+        						{	
+									$('#mytable tbody>tr#'+$('#'+event.target.id).parent().parent().attr('id')).remove();
+								}
+							          return false;
+						    });
+
+          return false;
+        });
+
+        $("#delete1").click(function(event) {
+	    	//alert('#mytable tbody>tr #'+$('#'+event.target.id).parent().parent().attr('id'));
+	    	if($('#mytable tr').length >1)
+        						{	
+				$('#mytable tbody>tr#'+$('#'+event.target.id).parent().parent().attr('id')).remove();
+		          return false;
+		          }
+	    });
+
+    });
+</script>
+
+
+<a  id="add">+</a> </td>
+  <table id="mytable" width="300" border="1" cellspacing="0" cellpadding="2">
+  <tbody>
+<!--     <tr>
+  <td><?= CHtml::label('Costo unitario', ''); ?></td>
+  <td><?= CHtml::label('Cantidad Adquirida', ''); ?></td>
+  <td><?= CHtml::label('Iva', ''); ?></td>
+</tr> -->
+    <tr id='producto1' class="producto">
+<!-- 		<td> <?php 	
+
+		$list = CHtml::listData(PresupuestoPartidas::model()->findAllByAttributes(array('ente_organo_id'=>Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->ente_organo_id)), 
+			'partida_id', function($presuPartida){ return $presuPartida->partida->etiquetaPartida();});
+
+		echo CHtml::label('Seleccionar partida', 'partida');
+		echo "<br>";
+		$this->widget(
+		    'booster.widgets.TbSelect2',
+		    array(
+		        'asDropDownList' => true,
+		        'model' => $model,
+		        
+		        'attribute' => 'presupuesto_partida_id',
+		        //'name' => 'factura_id',
+		        'data' => $list,
+		        'htmlOptions'=>array('id'=>'partida',
+							'ajax' => array(
+									'type'=>'POST', //request type
+									'url'=>CController::createUrl('facturasProductos/buscarProductosPartida'), //url to call.
+									//Style: CController::createUrl('currentController/methodToCall')
+									'update'=>'#producto', //selector to update
+									//'data'=>'js:javascript statement' 
+									//leave out the data key to pass all form values through
+							  )),
+		        'options' => array(
+		            //'tags' => array('proveedores'),
+		            'placeholder' => 'Partida',
+		            'width' => '40%',
+		            'tokenSeparators' => array(',', ' ')
+		        )
+		    )
+		);
+	?>
+</td>
+<td>
+		<?php 	
+//$productos = CController::createUrl('planificacion/listaProductosPartida',array('partidaId'=>$partidaSel->partida_id,'proyectoActualId'=>$proyectoSel->proyecto_id, 'tipo'=>'n'));
+//$list = CHtml::listData(Facturas::model()->findAll(), 'id', 'num_factura');
+
+echo CHtml::label('Seleccionar producto', 'producto');
+echo "<br>";
+$this->widget(
+    'booster.widgets.TbSelect2',
+		    array(
+		        'asDropDownList' => true,
+		        'model' => $model,
+		        
+		        'attribute' => 'producto_id',
+		        //'name' => 'factura_id',
+		        'data' => array(),
+		        'htmlOptions'=>array('id'=>'producto',),
+		        'options' => array(
+		            //'tags' => array('proveedores'),
+		            'placeholder' => 'Producto',
+		            'width' => '40%',
+		            'tokenSeparators' => array(',', ' ')
+		        )
+		    )
+		);
+	?>
+ </td> -->
+
+      <td>	<?php echo $form->textFieldGroup($model,'costo_unitario',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>38)))); ?>
+      <!-- <input type="text" name="FacturasProductos[costo_unitario][]" id="name" /> --></td>
+      <td><?php echo $form->textFieldGroup($model,'cantidad_adquirida',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
+      <!-- <input type="text" name="FacturasProductos[cantidad_adquirida][]" id="name" /> --></td>
+      <td>	<?php
+
+				$list = CHtml::listData(Iva::model()->findAll(), 'id', 'porcentaje');
+			echo $form->dropDownListGroup(
+					$model,
+					'iva_id',
+					array(
+						'wrapperHtmlOptions' => array(
+							'class' => 'col-sm-5',
+						),
+						'widgetOptions' => array(
+							'data' => $list,
+							'htmlOptions' => array('name'=>'FacturasProductos[iva][]',),
+						)
+					)
+				);
+		?> <!-- <input type="text" name="FacturasProductos[iva][]" id="name" /> --></td>
+      <td><a  id="delete1">-</a> </td>
+    </tr>
+    </tbody>
+  </table>

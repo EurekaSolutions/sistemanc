@@ -5,8 +5,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-array('label'=>'List FacturasProductos','url'=>array('index')),
-array('label'=>'Create FacturasProductos','url'=>array('create')),
+//array('label'=>'List FacturasProductos','url'=>array('index')),
+array('label'=>'Agregar Productos a Facturas','url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "

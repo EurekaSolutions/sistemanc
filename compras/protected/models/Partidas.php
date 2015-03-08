@@ -72,6 +72,52 @@ class Partidas extends CActiveRecord
 	}
 
 	/**
+	 * @return @string numero de partida
+	 */
+	public function numeroPartida(){
+			$numPartida = $this->p1;
+			if($this->p2 != 0){
+				$numPartida .= '.'.sprintf("%02s", $this->p2);
+			}
+			if($this->p3 != 0){
+				$numPartida .= '.'.sprintf("%02s", $this->p3);
+			}
+			if($this->p4 != 0){
+				$numPartida .= '.'.sprintf("%02s", $this->p4);
+			}
+
+		return $numPartida;
+	}
+
+	/**
+	 * @return html nombre de partida compuesto con el nombre
+	 */
+	public function etiquetaPartida(){
+		return CHtml::encode($this->numeroPartida().' - '. $this->nombre);
+	}
+
+	 /**
+	 * @return html nombre de partida compuesto con el nombre
+	 */
+	public function listaProductos()
+	{
+		$name = "Seleccionar producto";
+
+		//echo CHtml::tag('option', array('value'=>""),CHtml::encode($name),true);
+
+		$productosPartidas = array();
+	   
+	    $productosPartidass = CHtml::listData($this->productos, 'producto_id', 
+								function($producto){ return $producto->etiquetaProducto(); });
+	    
+	    foreach($productosPartidass as $value => $name)
+	    {
+	        echo CHtml::tag('option',
+	                   array('value'=>$value),CHtml::encode($name),true);
+	    }
+	}
+
+	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
 	 * Typical usecase:

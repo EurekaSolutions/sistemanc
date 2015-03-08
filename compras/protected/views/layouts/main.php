@@ -94,6 +94,7 @@
 								'items' => array(
 									array('label' => 'Asociar Proyectos a Partidas', 'url'=>array('/partidaProductos/create'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 									array('label' => 'Modificar correos', 'url'=>array('/planificacion/modificarcorreo'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
+									array('label' => 'Gestionar montos de Iva', 'url'=>array('/iva/index'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), 
 									/*array('label' => 'Mis entes', 'url'=>array('/planificacion/misentes'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 									array('label' => 'Crear usuarios', 'url'=>array('/planificacion/usuariosentes'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), // si el tipo es ORGANO Yii::app()->session['organo']==1*/
 									),

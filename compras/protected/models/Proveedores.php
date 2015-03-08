@@ -32,7 +32,7 @@ class Proveedores extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('rif, razon_social, ente_organo_id', 'required'),
+			array('rif, razon_social', 'required'),
 			array('ente_organo_id', 'numerical', 'integerOnly'=>true),
 			array('rif', 'length', 'max'=>10),
 			array('rif', 'unique'),
@@ -69,6 +69,17 @@ class Proveedores extends CActiveRecord
 			'fecha' => 'Fecha',
 			'ente_organo_id' => 'Ente Organo',
 		);
+	}
+
+	/**
+	 *  Asignando anho y id del ente organo al cual pertenece el usuario.
+	 */
+	public function beforeSave() {
+	    if ($this->isNewRecord)
+		{	       
+	    	$this->ente_organo_id = Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->ente_organo_id;
+	    }
+	    return parent::beforeSave();
 	}
 
 	/**

@@ -70,6 +70,19 @@ class Productos extends CActiveRecord
 	}
 
 	/**
+	 * @return string 
+	 */
+	public function numeroProducto(){
+		return $this->cod_segmento.'.'.sprintf("%02s", $this->cod_familia).'.'.sprintf("%02s", $this->cod_clase).'.'.sprintf("%02s", $this->cod_producto);
+	}
+
+	/**
+	 * @return html nombre de partida compuesto con el nombre
+	 */
+	public function etiquetaProducto(){
+		return CHtml::encode($this->numeroProducto().' - '. $this->nombre);
+	}
+	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
 	 * Typical usecase:

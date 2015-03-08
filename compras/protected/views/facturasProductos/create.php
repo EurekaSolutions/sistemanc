@@ -5,7 +5,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-array('label'=>'Listar Productos de facturas','url'=>array('index')),
+//array('label'=>'Listar Productos de facturas','url'=>array('index')),
 array('label'=>'Administrar Productos en facturas','url'=>array('admin')),
 );
 ?>

@@ -37,7 +37,7 @@ class Facturas extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('num_factura, proveedor_id, procedimiento_id, ente_organo_id', 'required'),
+			array('num_factura, proveedor_id, procedimiento_id', 'required'),
 			array('anho, proveedor_id, procedimiento_id, ente_organo_id', 'numerical', 'integerOnly'=>true),
 			array('num_factura', 'length', 'max'=>255),
 			array('fecha_factura', 'safe'),
@@ -77,6 +77,18 @@ class Facturas extends CActiveRecord
 			'fecha_factura' => 'Fecha Factura',
 			'ente_organo_id' => 'Ente Organo',
 		);
+	}
+
+	/**
+	 *  Asignando anho y id del ente organo al cual pertenece el usuario.
+	 */
+	public function beforeSave() {
+	    if ($this->isNewRecord)
+		{	       
+			$this->anho = 2015;
+	    	$this->ente_organo_id = Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->ente_organo_id;
+	    }
+	    return parent::beforeSave();
 	}
 
 	/**

@@ -18,6 +18,7 @@
 			'widgetOptions' => array(
 				'options' => array(
 					'language' => 'es',
+					'format' => 'yyyy-m-d',
 				),
 			),
 			'wrapperHtmlOptions' => array(

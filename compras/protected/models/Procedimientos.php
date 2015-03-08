@@ -33,7 +33,7 @@ class Procedimientos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('num_contrato, anho, tipo, ente_organo_id', 'required'),
+			array('num_contrato, tipo', 'required'),
 			array('anho, ente_organo_id', 'numerical', 'integerOnly'=>true),
 			array('num_contrato, tipo', 'length', 'max'=>255),
 			// The following rule is used by search().
@@ -68,6 +68,18 @@ class Procedimientos extends CActiveRecord
 			'tipo' => 'Tipo',
 			'ente_organo_id' => 'Ente Organo',
 		);
+	}
+
+	/**
+	 *  Asignando anho y id del ente organo al cual pertenece el usuario.
+	 */
+	public function beforeSave() {
+	    if ($this->isNewRecord)
+		{	       
+			$this->anho = 2015;
+	    	$this->ente_organo_id = Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->ente_organo_id;
+	    }
+	    return parent::beforeSave();
 	}
 
 	/**
