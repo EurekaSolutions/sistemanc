@@ -72,7 +72,7 @@ $this->breadcrumbs=array(
 
 ?><?php
 
-	 	 echo $form->dropDownListGroup( $partidaSel, 'partida_id',
+/*	 	 echo $form->dropDownListGroup( $partidaSel, 'partida_id',
 			array(
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
@@ -95,8 +95,33 @@ $this->breadcrumbs=array(
 				),
 				'hint' => 'Selecciona la partida correspondiente al proyecto para cargar sus productos.'
 			)
-		); 
-
+		); */
+    echo $form->select2Group($partidaSel, 'partida_id',
+                        array(
+                            'wrapperHtmlOptions' => array(
+                                'class' => 'col-sm-5',
+                            ),
+                            'label'=>'Seleccione Partida para cargar sus productos',
+                            'widgetOptions' => array(
+                                'asDropDownList' => true,
+                                'data' => CHtml::listData($partidas,'partida_id', function($partida){ return CHtml::encode($this->numeroPartida($partida).' - '.$partida->nombre);}),
+                                'htmlOptions'=>array('id'=>'partida','ajax' => array(	
+												'type'=>'POST', //request type
+												'url'=>CController::createUrl('planificacion/buscarproductospartida',array('t'=>'n')), //url to call.
+												//Style: CController::createUrl('currentController/methodToCall')
+												'update'=>'#producto', //selector to update
+												//'data'=>'js:javascript statement' 
+												//leave out the data key to pass all form values through
+										  )),			
+                                'options' => array(
+                                    //'tags' => array('clever', 'is', 'better', 'clevertech'),
+                                    'placeholder' => 'Seleccionar partida',
+                                    // 'width' => '40%', 
+                                    'tokenSeparators' => array(',', ' ')
+                                )
+                            )
+                        )
+                    );
 	 	/* $this->widget(
 		    'booster.widgets.TbButton',
 		    array('buttonType' => 'submit', 'label' => 'Seleccionar')
@@ -116,7 +141,7 @@ $this->breadcrumbs=array(
 					$(\'#fecha\').val(\'\');
 					$(\'#divisa\').val(\'\');
 		})');
-		 echo  $form->dropDownListGroup( $productoSel, 'producto_id',
+/*		 echo  $form->dropDownListGroup( $productoSel, 'producto_id',
 			array(
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
@@ -131,6 +156,28 @@ $this->breadcrumbs=array(
 				'hint' => 'Selecciona el producto para añadir.'
 			)
 		); 
+*/
+    echo $form->select2Group($productoSel, 'producto_id',
+                        array(
+                            'wrapperHtmlOptions' => array(
+                                'class' => 'col-sm-5',
+                            ),
+                            'label'=>'Seleccione el producto',
+                            'hint' => 'Selecciona el producto para añadir.',
+                            'widgetOptions' => array(
+                                'asDropDownList' => true,
+                                'data' => $productosPartidas,
+                                'htmlOptions'=>array('id'=>'producto', 'onChange'=>'submit','submit' => array('/planificacion/importado','#'=>'producto')),
+                                'options' => array(
+                                    //'tags' => array('clever', 'is', 'better', 'clevertech'),
+                                    'placeholder' => 'Seleccionar producto',
+                                    // 'width' => '40%', 
+                                    'tokenSeparators' => array(',', ' ')
+                                )
+                            )
+                        )
+                    );
+
 
 	if(!empty($productoSel->producto_id)){
 
@@ -141,7 +188,7 @@ $this->breadcrumbs=array(
 		
 		$par = Partidas::model()->findByPk($partidaSel->partida_id);
 		if(!($par->p1 == '403'))
-		echo $form->dropDownListGroup( $presuImp, 'codigo_ncm_id',
+/*		echo $form->dropDownListGroup( $presuImp, 'codigo_ncm_id',
 			array(
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
@@ -152,12 +199,34 @@ $this->breadcrumbs=array(
 					'data' => CHtml::listData(CodigosNcm::model()->findAll($this->condicionVersion().'AND codigo_ncm_nivel_1!=\'0\''),
 						'codigo_ncm_id', function($codigo){ return CHtml::encode($this->numeroCodigoNcm($codigo).' - '.$codigo->descripcion_ncm);}),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array('id'=>'ncmnivel2', 'prompt' => 'Seleccionar codigo arancelario',  /*'multiple' => false,*/ ),
+					'htmlOptions' => array('id'=>'ncmnivel2', 'prompt' => 'Seleccionar codigo arancelario',  //'multiple' => false,
+					 ),
 				),
 				'hint' => 'Código arancelario.'
 			)
-		); 
+		);*/
 
+	    echo $form->select2Group($presuImp, 'codigo_ncm_id',
+	                        array(
+	                            'wrapperHtmlOptions' => array(
+	                                'class' => 'col-sm-5',
+	                            ),
+	                            'label'=>'Código arancelario',
+	                            'hint' => 'Código arancelario.',
+	                            'widgetOptions' => array(
+	                                'asDropDownList' => true,
+	                                'data' => CHtml::listData(CodigosNcm::model()->findAll($this->condicionVersion().'AND codigo_ncm_nivel_1!=\'0\''),
+						'codigo_ncm_id', function($codigo){ return CHtml::encode($this->numeroCodigoNcm($codigo).' - '.$codigo->descripcion_ncm);}),
+	                                'htmlOptions'=>array('id'=>'ncmnivel2',),
+	                                'options' => array(
+	                                    //'tags' => array('clever', 'is', 'better', 'clevertech'),
+	                                    'placeholder' => 'Seleccionar codigo arancelario',
+	                                    // 'width' => '40%', 
+	                                    'tokenSeparators' => array(',', ' ')
+	                                )
+	                            )
+	                        )
+	                    );
 		//Yii::app()->clientScript->registerScript("cambioDivisa", '$(\'#divisa\').change(function(){$(\'#montoPresupuesto\').parent(\'span\').html(\'$\');})');
 		echo $form->dropDownListGroup( $presuImp, 'divisa_id',
 			array(

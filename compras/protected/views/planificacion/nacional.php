@@ -67,7 +67,7 @@ $this->breadcrumbs=array(
 
 ?><?php
 	 //print_r($partidas);
-
+/*
 	 	 echo $form->dropDownListGroup( $partidaSel, 'partida_id',
 			array(
 				'wrapperHtmlOptions' => array(
@@ -91,8 +91,33 @@ $this->breadcrumbs=array(
 				),
 				'hint' => 'Selecciona la partida correspondiente al proyecto para cargar sus productos.'
 			)
-		); 
-
+		); */
+    echo $form->select2Group($partidaSel, 'partida_id',
+                        array(
+                            'wrapperHtmlOptions' => array(
+                                'class' => 'col-sm-5',
+                            ),
+                            'label'=>'Seleccione Partida para cargar sus productos',
+                            'widgetOptions' => array(
+                                'asDropDownList' => true,
+                                'data' => CHtml::listData($partidas,'partida_id', function($partida){ return CHtml::encode($this->numeroPartida($partida).' - '.$partida->nombre);}),
+                                'htmlOptions'=>array('id'=>'partida','ajax' => array(	
+												'type'=>'POST', //request type
+												'url'=>CController::createUrl('planificacion/buscarproductospartida',array('t'=>'n')), //url to call.
+												//Style: CController::createUrl('currentController/methodToCall')
+												'update'=>'#producto', //selector to update
+												//'data'=>'js:javascript statement' 
+												//leave out the data key to pass all form values through
+										  )),			
+                                'options' => array(
+                                    //'tags' => array('clever', 'is', 'better', 'clevertech'),
+                                    'placeholder' => 'Seleccionar partida',
+                                    // 'width' => '40%', 
+                                    'tokenSeparators' => array(',', ' ')
+                                )
+                            )
+                        )
+                    );
 	 	/* $this->widget(
 		    'booster.widgets.TbButton',
 		    array('buttonType' => 'submit', 'label' => 'Seleccionar')
@@ -115,7 +140,7 @@ $this->breadcrumbs=array(
 		})');
 ?>
 <?php
-		 echo  $form->dropDownListGroup( $productoSel, 'producto_id',
+/*		 echo  $form->dropDownListGroup( $productoSel, 'producto_id',
 			array(
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
@@ -129,8 +154,29 @@ $this->breadcrumbs=array(
 				),
 				'hint' => 'Selecciona el producto para añadir.'
 			)
-		); 
-		
+		); */
+
+    echo $form->select2Group($productoSel, 'producto_id',
+                        array(
+                            'wrapperHtmlOptions' => array(
+                                'class' => 'col-sm-5',
+                            ),
+                            'label'=>'Seleccione el producto',
+                            'hint' => 'Selecciona el producto para añadir.',
+                            'widgetOptions' => array(
+                                'asDropDownList' => true,
+                                'data' => $productosPartidas,
+                                'htmlOptions'=>array('id'=>'producto', 'onChange'=>'submit','submit' => array('/planificacion/nacional','#'=>'producto')),
+                                'options' => array(
+                                    //'tags' => array('clever', 'is', 'better', 'clevertech'),
+                                    'placeholder' => 'Seleccionar producto',
+                                    // 'width' => '40%', 
+                                    'tokenSeparators' => array(',', ' ')
+                                )
+                            )
+                        )
+                    );
+
 	if(!empty($productoSel->producto_id)){
  ?><div id="datos"><?php
 
@@ -140,7 +186,7 @@ $this->breadcrumbs=array(
 
 		echo $form->errorSummary($presuPro);
 
-		echo  $form->dropDownListGroup( $presuPro, 'unidad_id',
+/*		echo  $form->dropDownListGroup( $presuPro, 'unidad_id',
 			array(
 				'wrapperHtmlOptions' => array(
 					'class' => 'col-sm-5',
@@ -149,11 +195,33 @@ $this->breadcrumbs=array(
 				'widgetOptions' => array(
 					'data' => CHtml::listData(Unidades::model()->findAll(),'unidad_id', 'nombre'),
 					//'options'=>array($model->proyecto_id => array('selected'=>true)),
-					'htmlOptions' => array('id'=>'unidad', 'prompt' => 'Seleccionar unidad', /*'multiple' => false,*/ ),
+					'htmlOptions' => array('id'=>'unidad', 'prompt' => 'Seleccionar unidad', //'multiple' => false,
+						),
 				),
 				'hint' => 'Selecciona la unidad del producto.'
 			)
-		); 
+		); */
+
+    	echo $form->select2Group($presuPro, 'unidad_id',
+                        array(
+                            'wrapperHtmlOptions' => array(
+                                'class' => 'col-sm-5',
+                            ),
+                            'label'=>'Unidad',
+                            'widgetOptions' => array(
+                                'asDropDownList' => true,
+                                'data' => CHtml::listData(Unidades::model()->findAll(),'unidad_id', 'nombre'),
+                                'htmlOptions'=>array('id'=>'unidad',),
+                                'options' => array(
+                                    //'tags' => array('clever', 'is', 'better', 'clevertech'),
+                                    'placeholder' => 'Seleccionar unidad',
+                                    // 'width' => '40%', 
+                                    'tokenSeparators' => array(',', ' ')
+                                )
+                            )
+                        )
+                    );
+
 		echo  $form->textFieldGroup($presuPro, 'costo_unidad',array('prepend'=>'Bs','widgetOptions'=>array('htmlOptions'=>array('id'=>'costounidad'))));
 		echo  $form->textFieldGroup($presuPro, 'cantidad',array('widgetOptions'=>array('htmlOptions'=>array('id'=>'cantidad'))));
 
