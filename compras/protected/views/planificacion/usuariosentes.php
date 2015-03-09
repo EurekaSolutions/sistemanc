@@ -31,7 +31,7 @@
     <?php 
         $listaEntes = CHtml::listData($this->listaEntes(),'ente_organo_id', 'nombre');
 
-        echo  $form->dropDownListGroup( $model, 'ente_organo_id',
+/*        echo  $form->dropDownListGroup( $model, 'ente_organo_id',
             array(
                 'wrapperHtmlOptions' => array(
                     'class' => 'col-sm-5',
@@ -45,7 +45,28 @@
                 ),
                 'hint' => 'Ente hijo sin usuario.'
             )
-        ); ?>
+        );*/
+    echo $form->select2Group($model, 'ente_organo_id',
+                        array(
+                            'wrapperHtmlOptions' => array(
+                                'class' => 'col-sm-5',
+                            ),
+                            'label'=>'Seleccione el ente',
+                            'widgetOptions' => array(
+                                'asDropDownList' => true,
+                                'data' => $listaEntes,
+                                'htmlOptions'=>array('id'=>'producto',),
+                                'options' => array(
+                                    //'tags' => array('clever', 'is', 'better', 'clevertech'),
+                                    'placeholder' => 'Seleccionar ente',
+                                    // 'width' => '40%', 
+                                    'tokenSeparators' => array(',', ' ')
+                                )
+                            )
+                        )
+                    );
+
+         ?>
 
     <?php echo $form->textFieldGroup($model,'nombre',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>20)))); ?>
 

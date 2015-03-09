@@ -9,7 +9,7 @@
 	
 	<?php
 
-		echo $form->dropDownListGroup($model , 'partida_id',
+/*		echo $form->dropDownListGroup($model , 'partida_id',
 										array(
 											'wrapperHtmlOptions' => array(
 												'class' => 'col-sm-2',
@@ -22,8 +22,25 @@
 												'htmlOptions' => array('prompt' => 'Seleccione partida especifica'),
 											)
 										)
-		); 
-
+		); */
+	echo $form->select2Group($model, 'partida_id',
+							array(
+							'wrapperHtmlOptions' => array(
+								'class' => 'col-sm-5',
+							),
+							'widgetOptions' => array(
+								'asDropDownList' => true,
+								'data' => $especificas_lista,
+						        'htmlOptions'=>array('id'=>'partida',),
+								'options' => array(
+									//'tags' => array('clever', 'is', 'better', 'clevertech'),
+									'placeholder' => 'Seleccione partida especifica',
+									// 'width' => '40%', 
+									'tokenSeparators' => array(',', ' ')
+								)
+							)
+						)
+					);
 	?>
 	
 
@@ -39,11 +56,30 @@
 
 												'data' => $productos,
 												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												'htmlOptions' => array(/*'prompt' => 'Seleccione producto',*/ 'multiple' => true, 'width' => '320px'),
+												'htmlOptions' => array(//'prompt' => 'Seleccione producto',
+													'multiple' => true, 'width' => '320px'),
 											)
 										)
 		); 
-
+	/*echo $form->select2Group($model, 'producto_id',
+						array(
+							'wrapperHtmlOptions' => array(
+								'class' => 'col-sm-5',
+							),
+							'label'=>'Seleccione productos',
+							'widgetOptions' => array(
+								'asDropDownList' => true,
+								'data' => $productos,
+						        'htmlOptions'=>array(  'multiple'=>true,),
+								'options' => array(
+									//'tags' => array('clever', 'is', 'better', 'clevertech'),
+									'placeholder' => 'Seleccione productos',
+									// 'width' => '40%', 
+									'tokenSeparators' => array(',', ' ')
+								)
+							)
+						)
+					);*/
 
 	?>
 

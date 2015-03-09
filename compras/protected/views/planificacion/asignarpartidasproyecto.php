@@ -51,7 +51,7 @@
 
                                 echo $form->errorSummary($model);
 
-                                 echo $form->dropDownListGroup($model , 'nombreid',
+/*                                 echo $form->dropDownListGroup($model , 'nombreid',
                                         array(
                                             'wrapperHtmlOptions' => array(
                                                 'class' => 'col-sm-2',
@@ -64,12 +64,31 @@
                                                 'htmlOptions' => array('prompt' => 'Seleccione proyecto'),
                                             )
                                         )
-                                    ); 
+                                    ); */
 
+                                    echo $form->select2Group($model, 'nombreid',
+                                                        array(
+                                                            'wrapperHtmlOptions' => array(
+                                                                'class' => 'col-sm-5',
+                                                            ),
+                                                            'label'=>'Seleccione proyecto',
+                                                            'widgetOptions' => array(
+                                                                'asDropDownList' => true,
+                                                                'data' => $lista_proyectos,
+                                                                'htmlOptions'=>array(),
+                                                                'options' => array(
+                                                                    //'tags' => array('clever', 'is', 'better', 'clevertech'),
+                                                                    'placeholder' => 'Seleccione proyecto',
+                                                                    // 'width' => '40%', 
+                                                                    'tokenSeparators' => array(',', ' ')
+                                                                )
+                                                            )
+                                                        )
+                                                    );
                                 // echo CHtml::dropDownList('partida','', array());
 
                                  
-                                 echo $form->dropDownListGroup($model , 'partida',
+/*                                 echo $form->dropDownListGroup($model , 'partida',
                                         array(
                                             'wrapperHtmlOptions' => array(
                                                 'class' => 'col-sm-2',
@@ -89,9 +108,35 @@
                                               )),
                                             )
                                         )
-                                    );
+                                    );*/
+                                       echo $form->select2Group($model, 'partida',
+                                                            array(
+                                                                'wrapperHtmlOptions' => array(
+                                                                    'class' => 'col-sm-5',
+                                                                ),
+                                                                'label'=>'Seleccione la partida',
+                                                                'widgetOptions' => array(
+                                                                    'asDropDownList' => true,
+                                                                    'data' => empty($partidas_principal)? array() : $partidas_principal,
+                                                                    'htmlOptions'=>array('id'=>'partida','ajax' => array(
+                                                                            'type'=>'POST', //request type
+                                                                            'url'=>CController::createUrl('planificacion/buscargeneralproyecto'), //url to call.
+                                                                            //Style: CController::createUrl('currentController/methodToCall')
+                                                                            'update'=>'#general', //selector to update
+                                                                            //'data'=>'js:javascript statement' 
+                                                                            //leave out the data key to pass all form values through
+                                                                      )),
+                                                                    'options' => array(
+                                                                        //'tags' => array('clever', 'is', 'better', 'clevertech'),
+                                                                        'placeholder' => 'Seleccionar partida',
+                                                                        // 'width' => '40%', 
+                                                                        'tokenSeparators' => array(',', ' ')
+                                                                    )
+                                                                )
+                                                            )
+                                                        );
 
-                                    echo $form->dropDownListGroup($model , 'general',
+   /*                                 echo $form->dropDownListGroup($model , 'general',
                                         array(
                                             'wrapperHtmlOptions' => array(
                                                 'class' => 'col-sm-2',
@@ -115,9 +160,35 @@
                                             ),
 
                                         )
-                                    );
+                                    );*/
+                                       echo $form->select2Group($model, 'general',
+                                                            array(
+                                                                'wrapperHtmlOptions' => array(
+                                                                    'class' => 'col-sm-5',
+                                                                ),
+                                                                'label'=>'Seleccione general',
+                                                                'widgetOptions' => array(
+                                                                    'asDropDownList' => true,
+                                                                    'data' => empty($generales_todas)? array() : $generales_todas,
+                                                                    'htmlOptions'=>array('id'=>'general','ajax' => array(
+                                                                                                                'type'=>'POST', //request type
+                                                                                                                'url'=>CController::createUrl('planificacion/buscarespecficap'), //url to call.
+                                                                                                                //Style: CController::createUrl('currentController/methodToCall')
+                                                                                                                'update'=>'#especifica', //selector to update
+                                                                                                                //'data'=>'js:javascript statement' 
+                                                                                                                //leave out the data key to pass all form values through
+                                                                                                          )),
+                                                                    'options' => array(
+                                                                        //'tags' => array('clever', 'is', 'better', 'clevertech'),
+                                                                        'placeholder' => 'Seleccionar partida general',
+                                                                        // 'width' => '40%', 
+                                                                        'tokenSeparators' => array(',', ' ')
+                                                                    )
+                                                                )
+                                                            )
+                                                        );
 
-                                    echo $form->dropDownListGroup($model , 'especifica',
+  /*                                  echo $form->dropDownListGroup($model , 'especifica',
                                         array(
                                             'wrapperHtmlOptions' => array(
                                                 'class' => 'col-sm-2',
@@ -141,10 +212,36 @@
                                             ),
 
                                         )
-                                    );
+                                    );*/
+                                        echo $form->select2Group($model, 'especifica',
+                                                            array(
+                                                                'wrapperHtmlOptions' => array(
+                                                                    'class' => 'col-sm-5',
+                                                                ),
+                                                                'label'=>'Seleccione especifica',
+                                                                'widgetOptions' => array(
+                                                                    'asDropDownList' => true,
+                                                                    'data' => empty($especificas_todas)? array() : $especificas_todas,
+                                                                    'htmlOptions'=>array('id'=>'especifica','ajax' => array(
+                                                                                                            'type'=>'POST', //request type
+                                                                                                            'url'=>CController::createUrl('planificacion/buscarsubespecficap'), //url to call.
+                                                                                                            //Style: CController::createUrl('currentController/methodToCall')
+                                                                                                            'update'=>'#subespecifica', //selector to update
+                                                                                                            //'data'=>'js:javascript statement' 
+                                                                                                            //leave out the data key to pass all form values through
+                                                                                                      )),
+                                                                    'options' => array(
+                                                                        //'tags' => array('clever', 'is', 'better', 'clevertech'),
+                                                                        'placeholder' => 'Seleccionar partida especifica',
+                                                                        // 'width' => '40%', 
+                                                                        'tokenSeparators' => array(',', ' ')
+                                                                    )
+                                                                )
+                                                            )
+                                                        );
 
 
-                                    echo $form->dropDownListGroup($model , 'subespecifica',
+  /*                                  echo $form->dropDownListGroup($model , 'subespecifica',
                                         array(
                                             'wrapperHtmlOptions' => array(
                                                 'class' => 'col-sm-2',
@@ -162,10 +259,29 @@
                                             ),
 
                                         )
-                                    );
+                                    );*/
+                                    echo $form->select2Group($model, 'subespecifica',
+                                                        array(
+                                                            'wrapperHtmlOptions' => array(
+                                                                'class' => 'col-sm-5',
+                                                            ),
+                                                            'label'=>'Seleccione sub especifica',
+                                                            'hint' => '<b>Seleccione en caso de que aplique</b>',
+                                                            'widgetOptions' => array(
+                                                                'asDropDownList' => true,
+                                                                'data' => array(),
+                                                                'htmlOptions'=>array('id' => 'subespecifica'),
+                                                                'options' => array(
+                                                                    //'tags' => array('clever', 'is', 'better', 'clevertech'),
+                                                                    'placeholder' => 'Seleccionar partida subespecifica',
+                                                                    // 'width' => '40%', 
+                                                                    'tokenSeparators' => array(',', ' ')
+                                                                )
+                                                            )
+                                                        )
+                                                    );
 
-
-                                   echo $form->dropDownListGroup($model , 'fuente',
+/*                                   echo $form->dropDownListGroup($model , 'fuente',
                                         array(
                                             'wrapperHtmlOptions' => array(
                                                 'class' => 'col-sm-2',
@@ -176,11 +292,31 @@
 
                                                 'data' => $fuentes,
                                                 //'options'=>array($model->proyecto_id => array('selected'=>true)),
-                                                'htmlOptions' => array(/*'prompt' => 'Seleccionar la fuente de financiamiento',*/ 'multiple' => true),
+                                                'htmlOptions' => array(//'prompt' => 'Seleccionar la fuente de financiamiento',
+                                                            'multiple' => true),
                                             )
                                         )
-                                    ); 
-
+                                    ); */
+                                    echo $form->select2Group($model, 'fuente',
+                                                        array(
+                                                            'wrapperHtmlOptions' => array(
+                                                                'class' => 'col-sm-5',
+                                                            ),
+                                                            'label'=>'Fuente de financiamiento',
+                                                            'hint' => 'Seleccione la cantidad de fuentes que apliquen',
+                                                            'widgetOptions' => array(
+                                                                'asDropDownList' => true,
+                                                                'data' => $fuentes,
+                                                                'htmlOptions'=>array('multiple' => true),
+                                                                'options' => array(
+                                                                    //'tags' => array('clever', 'is', 'better', 'clevertech'),
+                                                                    'placeholder' => 'Seleccionar la fuente de financiamiento',
+                                                                    // 'width' => '40%', 
+                                                                    'tokenSeparators' => array(',', ' ')
+                                                                )
+                                                            )
+                                                        )
+                                                    );
 
                                     echo $form->textFieldGroup($model,'monto',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span3','maxlength'=>20))));
 
