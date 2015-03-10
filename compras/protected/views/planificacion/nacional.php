@@ -234,7 +234,7 @@ $this->breadcrumbs=array(
 			//echo $form->checkboxGroup($model, 'checkbox');
 			$this->widget(
 			    'booster.widgets.TbButton',
-			    array('buttonType' => 'submit',/*'url'=>array('/planificacion/nacional','#'=>'pestanas'),*/ 'label' => 'Añadir')
+			    array('buttonType' => 'submit',/*'url'=>array('/planificacion/nacional','#'=>'pestanas'),*/ 'label' => 'Cargar producto')
 			);
 
 		echo '<h3>Lista de productos nacionales por partida seleccionada: </h3>';

@@ -3,6 +3,12 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
+<?php
+    foreach(Yii::app()->user->getFlashes() as $key => $message) {
+        echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+    }
+?>
+
 <p class="help-block">Campos marcados con <span class="required">*</span> son obligatorios.</p>
 
 <?php echo $form->errorSummary($model); ?>
@@ -109,7 +115,7 @@
 	<?php $this->widget('booster.widgets.TbButton', array(
 			'buttonType'=>'submit',
 			'context'=>'primary',
-			'label'=>$model->isNewRecord ? 'Añadir productos a partida' : 'Guardar',
+			'label'=>$model->isNewRecord ? 'Asociar Productos a Partida' : 'Guardar',
 		)); ?>
 </div>
 

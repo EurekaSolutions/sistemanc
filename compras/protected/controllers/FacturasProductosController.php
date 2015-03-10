@@ -219,11 +219,17 @@ class FacturasProductosController extends Controller
 		if(isset($_POST['FacturasProductos']))
 		{
 			$model->attributes=$_POST['FacturasProductos'];
-			if($model->save())
+			if($model->save()){
+				$factura_id = $model->factura_id;
+				$model=new FacturasProductos;
+				$model->factura_id = $factura_id;
+
+					Yii::app()->user->setFlash('success', "Producto asociado con éxito.");
+			}else{
+					Yii::app()->user->setFlash('error', "Producto no fue asociado a la factura.");
+			}
 				//$this->redirect(array('view','id'=>$model->id));
-				$this->render('create',array(
-					'model'=>$model,
-		));
+				
 		}
 
 		$this->render('create',array(

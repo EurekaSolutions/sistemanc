@@ -330,7 +330,7 @@
                         $this->widget('booster.widgets.TbButton', array(
                             'buttonType'=>'submit',
                             'context'=>'primary',
-                            'label'=>$model->isNewRecord ? 'Asignar dinero' : 'Agregar dinero',
+                            'label'=>$model->isNewRecord ? 'Agregar Partida' : 'Agregar Partida',
                         )); 
 
 

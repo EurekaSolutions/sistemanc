@@ -41,7 +41,7 @@
  	  $this->widget('booster.widgets.TbButton', array(
                             'buttonType'=>'submit',
                             'context'=>'primary',
-                            'label'=>$proyectoSel->isNewRecord ? 'Cargar' : 'Cargar',
+                            'label'=>$proyectoSel->isNewRecord ? 'Eliminar Partida' : 'Eliminar Partida',
                         ));
 
  	    $this->endWidget();

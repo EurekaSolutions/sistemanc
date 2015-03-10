@@ -3,6 +3,13 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
+<?php
+    foreach(Yii::app()->user->getFlashes() as $key => $message) {
+        echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+    }
+?>
+
+
 <p class="help-block">Los campos con <span class="required">*</span> son obligatorios.</p>
 
 <?php echo $form->errorSummary($model); ?>
@@ -119,7 +126,7 @@
 	<?php 	
 		//$productos = CController::createUrl('planificacion/listaProductosPartida',array('partidaId'=>$partidaSel->partida_id,'proyectoActualId'=>$proyectoSel->proyecto_id, 'tipo'=>'n'));
 		//$list = CHtml::listData(Facturas::model()->findAll(), 'id', 'num_factura');
-print_r($model->producto_id);
+
 //print_r(CHtml::listData($model->presupuestoPartida->partida->productos, 'producto_id',function($producto){ return $producto->etiquetaProducto();} ));
 		echo CHtml::label('Seleccionar producto', 'producto');
 		echo "<br>";
@@ -191,41 +198,37 @@ print_r($model->producto_id);
 	<?php $this->widget('booster.widgets.TbButton', array(
 			'buttonType'=>'submit',
 			'context'=>'primary',
-			'label'=>$model->isNewRecord ? 'Añadir producto a factura' : 'Guardar',
+			'label'=>$model->isNewRecord ? 'Asociar Producto a Factura' : 'Asociar Producto a Factura',
 		)); ?>
 </div>
 
-<!-- 
-<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="" id="lista_productos">
-		    <thead>
-		        <tr class="principaltr">
-		            <th data-field="conapre">Producto</th>
-		            <th data-field="nombreoue">Costo unitario</th>
-		            <th data-field="tipo">Cantidad adquirida</th>
-		            <th data-field="oadscripcion">iva</th>
-		        </tr>
-		    </thead>
-		    <tbody>
-		    	<tr class="principaltr">
-		    		<td>53.10.16.02 - Camisas de hombre</td>
-		    		<td>350</td>
-		    		<td>20</td>
-		    		<td>12</td>
-		    	</tr>
-		    </tbody>
-		</table>
 
-<div class="form-actions">
-	<?php $this->widget('booster.widgets.TbButton', array(
-			'buttonType'=>'submit',
-			'context'=>'primary',
-			'label'=>$model->isNewRecord ? 'Guardar' : 'Save',
-		)); ?>
-</div> -->
 <?php $this->endWidget(); ?>
 
 <div id="lista_productos">
-	
+	<?php 		
+		if(isset($model->factura_id))	 
+				$this->widget('booster.widgets.TbGridView',array(
+									'id'=>'facturas-productos-grid',
+									'dataProvider'=>$model->buscarProductosFactura($model->factura_id),
+									'filter'=>$model,
+									'columns'=>array(
+											//'id',
+											//'factura_id',
+											array('name'=>'producto_id', 'value'=>'$data->producto->etiquetaProducto()'),
+											array('name' => 'costo_unitario', 'value'=>'number_format($data->costo_unitario,2)'),
+											'cantidad_adquirida',
+											array('name'=>'iva_id','value'=>'$data->iva->etiquetaPorcentaje()'),
+											/*
+											'fecha',
+											'presupuesto_partida_id',
+											*/
+										array(
+										'class'=>'booster.widgets.TbButtonColumn',
+											//'template'=>'{view}{update}<br>{delete}',
+										),
+									),
+							));?>
 </div><!-- 
 <?php $this->widget('booster.widgets.TbGridView',array(
 						'id'=>'facturas-productos-grid',

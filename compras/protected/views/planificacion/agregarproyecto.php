@@ -13,7 +13,7 @@
     'enableAjaxValidation'=>false,
 )); ?>
 
-    <h4 style="text-align: center;">CREAR PROYECTOS</h4>
+    <h4 style="text-align: center;">AGREGAR PROYECTOS</h4>
 
      <?php
         foreach(Yii::app()->user->getFlashes() as $key => $message) {
@@ -37,7 +37,7 @@
     <?php $this->widget('booster.widgets.TbButton', array(
             'buttonType'=>'submit',
             'context'=>'primary',
-            'label'=>$model->isNewRecord ? 'Crear proyecto' : 'Guardar proyecto',
+            'label'=>$model->isNewRecord ? 'Agregar proyecto' : 'Guardar proyecto',
         )); ?>
     </div>
     

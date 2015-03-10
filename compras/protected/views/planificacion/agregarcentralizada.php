@@ -338,7 +338,7 @@
 						$this->widget('booster.widgets.TbButton', array(
 			            	'buttonType'=>'submit',
 			            	'context'=>'primary',
-			            	'label'=>$acciones->isNewRecord ? 'Asignar dinero' : 'Agregar dinero',
+			            	'label'=>$acciones->isNewRecord ? 'Agregar Accion Centralizada' : 'Agregar Accion Centralizada',
 			        	)); 
 
 

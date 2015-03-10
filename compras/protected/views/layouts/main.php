@@ -86,6 +86,7 @@
 									array('label' => 'Crear entes', 'url'=>array('/planificacion/crearente'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 									array('label' => 'Mis entes', 'url'=>array('/planificacion/misentes'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 									array('label' => 'Crear usuarios', 'url'=>array('/planificacion/usuariosentes'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
+									array('label' => 'Organos y entes', 'url'=>array('/entesOrganos/index'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), 
 									//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 								), 'visible'=>(Yii::app()->user->checkAccess('organo')),
 							),
@@ -96,7 +97,6 @@
 									array('label' => 'Eliminar Productos de Partidas', 'url'=>array('/partidaProductos/eliminar'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 									array('label' => 'Modificar correos', 'url'=>array('/planificacion/modificarcorreo'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 									array('label' => 'Gestionar montos de Iva', 'url'=>array('/iva/index'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), 
-									array('label' => 'Organos y entes', 'url'=>array('/entesOrganos/index'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), 
 									/*array('label' => 'Mis entes', 'url'=>array('/planificacion/misentes'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 									array('label' => 'Crear usuarios', 'url'=>array('/planificacion/usuariosentes'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), // si el tipo es ORGANO Yii::app()->session['organo']==1*/
 									),
