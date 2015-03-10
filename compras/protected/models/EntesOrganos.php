@@ -43,13 +43,14 @@ class EntesOrganos extends CActiveRecord
 			//array('correo', 'email', 'on' => 'crearente'),
 			//array('correo', 'unique', 'className' => 'Usuarios', 'attributeName' => 'usuario', 'message'=>'Este correo ya se encuentra registrado en nuestro repositorio', 'on' => 'crearente'),
 			//array('correo', 'unique', 'className' => 'Usuarios', 'attributeName' => 'correo', 'message'=>'Este correo ya se encuentra registrado en nuestro repositorio', 'on' => 'crearente'),
-			array('rif', 'match', 'pattern' => '/^(j|J|v|V|e|E|G|g)(-)([0-9]{3,8})(-)([0-9]{1})$/', 'allowEmpty' => false),
+			array('rif', 'length', 'max'=>10),
+			array('rif', 'match', 'pattern' => '/^(j|J|v|V|e|E|G|g)(-)([0-9]{8,8})(-)([0-9]{1})$/', 'allowEmpty' => false, 'message'=>'El formato del rif no es válido. Debe ser de la siguiente manera: G-12345678-9'),
 			array('codigo_onapre', 'unique', 'attributeName'=> 'codigo_onapre', 'caseSensitive' => 'false', 'className' => 'EntesOrganos'),
 			array('rif', 'unique', 'attributeName'=> 'rif', 'caseSensitive' => 'false', 'className' => 'EntesOrganos'),
 			array('codigo_onapre', 'length', 'max'=>20),
 			array('nombre', 'length', 'max'=>255),
 			array('tipo', 'length', 'max'=>50),
-			array('rif', 'length', 'max'=>30),
+			
 			array('creado_por', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -71,6 +72,8 @@ class EntesOrganos extends CActiveRecord
 			'proyectos' => array(self::HAS_MANY, 'Proyectos', 'ente_organo_id'),
 			'acciones' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones', 'ente_organo_id'),
 			'accionesUni' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones', 'ente_organo_id', 'select'=>'DISTINCT(accion_id)'),
+			'facturas' => array(self::HAS_MANY, 'Facturas', 'ente_organo_id'),
+			'procedimientos' => array(self::HAS_MANY, 'Procedimientos', 'ente_organo_id'),
 		);
 	}
 	

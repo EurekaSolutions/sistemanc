@@ -16,5 +16,12 @@
 	<?php echo CHtml::encode($data->tipo); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('rif')); ?>:</b>
+	<?php echo CHtml::encode($data->rif); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('creado_por')); ?>:</b>
+	<?php echo CHtml::encode($data->creado_por); ?>
+	<br />
 
 </div>

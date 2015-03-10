@@ -54,6 +54,14 @@ class Productos extends CActiveRecord
 		);
 	}
 
+	public function defaultScope()
+	{
+	    return array(
+	        //'condition'=> "username <> ''",
+	        'order'=> "cod_segmento ASC, cod_familia ASC, cod_clase ASC, cod_producto ASC",
+	    );
+	}
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */

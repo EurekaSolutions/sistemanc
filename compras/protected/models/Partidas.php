@@ -56,6 +56,14 @@ class Partidas extends CActiveRecord
 		);
 	}
 
+	public function defaultScope()
+	{
+	    return array(
+	        //'condition'=> "username <> ''",
+	        'order'=> "p1 ASC, p2 ASC, p3 ASC, p4 ASC",
+	    );
+	}
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */

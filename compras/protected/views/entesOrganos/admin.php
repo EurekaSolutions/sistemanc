@@ -48,7 +48,7 @@ Yii::app()->clientScript->registerScript('search', "
 		'nombre',
 		'tipo',
 array(
-'class'=>'booster.widgets.TbButtonColumn',
+'class'=>'booster.widgets.TbButtonColumn','template'=>'{view}{update}'
 ),
 ),
 )); ?>
