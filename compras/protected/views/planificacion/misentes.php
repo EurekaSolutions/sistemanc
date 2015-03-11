@@ -13,30 +13,47 @@ tr.principaltr th {
 </style>
 
 <h4 style="text-align: center;">ENTES HIJOS</h4><br>
-		<table data-toggle="table" data-url="data1.json" data-cache="false" data-height="">
-		    <thead>
-		        <tr class="principaltr">
-		            <th data-field="conapre">NOMBRE</th>
-		            <th data-field="nombreoue">CODIGO ONAPRE</th>
-		            <th data-field="nombreoue">RIF</th>
-		            <th data-field="nombreoue">TIENE USUARIO</th>
-		        </tr>
-		    </thead>
-		    <tbody>
-					
-						<?php
-							foreach ($model as $key => $value) 
-							{
-						?>	
-							<tr class="principaltr">
-								<td><?php echo $value->enteOrgano->nombre; ?></td>
-								<td><?php echo $value->enteOrgano->codigo_onapre; ?></td>
-								<td><?php echo $value->enteOrgano->rif; ?></td>
-								<td><?php echo $this->tieneusuario($value->enteOrgano->ente_organo_id)?"SI":"NO"?></td>
-							</tr>
-						<?php
-							}
-						?>
-					
-		    </tbody>
-		</table>
+
+		<?php 
+$dataProvider=new CActiveDataProvider('EntesOrganos', array(
+            'data'=>$model,
+    ));/*new CArrayDataProvider($model, array(
+    'id'=>'ente_organo_id',
+    'keyField'=>'ente_organo_id',
+    'sort'=>array(
+        'attributes'=>array(
+             'ente_organo_id', 'nombre', 'codigo_onapre', 'rif',
+        ),
+    ),
+    'pagination'=>array(
+        'pageSize'=>10,
+    ),
+));*/
+				$this->widget('booster.widgets.TbGridView',array(
+				'id'=>'entes-organos-grid',
+				'dataProvider'=> $dataProvider,
+				//'filter'=>new EntesOrganos,
+
+				'columns'=>array(
+						//'ente_organo_id',
+						'nombre',
+						'codigo_onapre',						
+						//'tipo',
+						'rif',
+						//array('name'=>'Tiene Usuario','value'=>'$data->tieneusuario($value->enteOrgano->ente_organo_id)?"SI":"NO"'),
+
+					array(
+					'class'=>'booster.widgets.TbButtonColumn',
+					'template'=>'{update}',
+						 'buttons'=>array
+						(
+						    'update' => array
+						    (
+						          'url'=>'Yii::app()->createUrl("entesOrganos/actualizarMiEnte", array("id"=>$data->ente_organo_id))',
+						    ),
+				
+						),
+					),
+				),
+				)); 
+		?>

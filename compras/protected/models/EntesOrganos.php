@@ -43,7 +43,7 @@ class EntesOrganos extends CActiveRecord
 			//array('correo', 'email', 'on' => 'crearente'),
 			//array('correo', 'unique', 'className' => 'Usuarios', 'attributeName' => 'usuario', 'message'=>'Este correo ya se encuentra registrado en nuestro repositorio', 'on' => 'crearente'),
 			//array('correo', 'unique', 'className' => 'Usuarios', 'attributeName' => 'correo', 'message'=>'Este correo ya se encuentra registrado en nuestro repositorio', 'on' => 'crearente'),
-			array('rif', 'length', 'max'=>10),
+			array('rif', 'length', 'max'=>12),
 			array('rif', 'match', 'pattern' => '/^(j|J|v|V|e|E|G|g)(-)([0-9]{8,8})(-)([0-9]{1})$/', 'allowEmpty' => false, 'message'=>'El formato del rif no es válido. Debe ser de la siguiente manera: G-12345678-9'),
 			array('codigo_onapre', 'unique', 'attributeName'=> 'codigo_onapre', 'caseSensitive' => 'false', 'className' => 'EntesOrganos'),
 			array('rif', 'unique', 'attributeName'=> 'rif', 'caseSensitive' => 'false', 'className' => 'EntesOrganos'),
@@ -76,7 +76,15 @@ class EntesOrganos extends CActiveRecord
 			'procedimientos' => array(self::HAS_MANY, 'Procedimientos', 'ente_organo_id'),
 		);
 	}
-	
+
+	public function tieneusuario($ente_organo_id)
+	{
+		if(Usuarios::model()->findByAttributes(array(':ente_organo_id'=> $ente_organo_id)))
+			return true;
+		else
+			return false;
+	}
+
 	public function behaviors()
 	{
 	    return array(
@@ -118,7 +126,7 @@ class EntesOrganos extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('ente_organo_id',$this->ente_organo_id,true);
+		$criteria->compare('ente_organo_id',$this->ente_organo_id);
 		$criteria->compare('codigo_onapre',$this->codigo_onapre,true);
 		$criteria->compare('nombre',$this->nombre,true);
 		$criteria->compare('tipo',$this->tipo,true);

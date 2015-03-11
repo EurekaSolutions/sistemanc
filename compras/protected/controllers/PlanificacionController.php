@@ -643,8 +643,13 @@ class PlanificacionController extends Controller
 
 		$entesadscritos = $usuario->enteOrgano->hijos;
 
+		foreach ($entesadscritos as $key => $value) {
+			$entes[] = $value->enteOrgano;
+		}
+
+		//print_r($entes);
 		$this->render('misentes',array(
-						'model'=>$entesadscritos,
+						'model'=>$entes,
 		));
 	}
 
