@@ -41,7 +41,7 @@ class PlanificacionController extends Controller
 				'roles'=>array('ente'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','administracion','importacion', 'modificarcorreo', 'cargamasiva'),
+				'actions'=>array('admin','delete','administracion','importacion', 'modificarcorreo', 'cargamasiva', 'descargar'),
 				'users'=>array('@'),
 				'roles'=>array('admin'),
 			),
@@ -85,38 +85,55 @@ class PlanificacionController extends Controller
 
 	public function actioncargamasiva()
 	{
-		if($_POST)
+
+		$model = new Cargamasiva();
+
+
+		if(isset($_POST['Cargamasiva']))
 		{
-			$uploads_dir = './images';
-			$tmp_name = $_FILES["archivo"]["tmp_name"];
-			//$name = $_FILES["archivo"]["name"];
-		
-			if(move_uploaded_file($tmp_name, "$uploads_dir/test.csv"))
+			$model->attributes=$_POST['Cargamasiva'];
+			if($model->validate())
 			{
+				$model->archivo=CUploadedFile::getInstance($model,'archivo');
+				
+				$model->archivo->saveAs(Yii::app()->basePath.'\..\assets\archivo'.$model->archivo->extensionName);
+
 				$fila = 1;
-				if (($gestor = fopen("$uploads_dir/test.csv", "r")) !== FALSE) {
+				if (($gestor = fopen(Yii::app()->basePath.'\..\assets\archivo'.$model->archivo->extensionName, "r")) !== FALSE) {
 				    while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE) {
 				        $numero = count($datos);
-				        //echo "<p> $numero de campos en la línea $fila: <br /></p>\n";
 				      
 				        if($fila!=1)
 				        {
 
 				        	$ente = new EntesOrganos;
 				        	$usuario = new Usuarios;
+				        	$ente->codigo_onapre = utf8_encode(trim($datos[0]))!= '' ? utf8_encode(trim($datos[0])) : ''; 
 
-				        	$ente->nombre = utf8_encode($datos[5]);
+				        	$ente->nombre = utf8_encode(trim($datos[1]));
 				        	$ente->tipo = "O";
-				        	$ente->rif = utf8_encode($datos[6]);
 				        	$ente->creado_por = "snc";
-				        	
+				        	if(!preg_match("/^(j|J|v|V|e|E|g|G)([0-9]{8,8})([0-9]{1})$/",$datos[2]))
+				        	{
+				        		//echo "Error en Rif creando el organo";
+				        		continue;
+				        	}      	
+				        	$ente->rif = utf8_encode(trim($datos[2]));
+
 				        	if($ente->save(false))
 				        	{
 
-				        	
-				        	   	$usuario->usuario = utf8_encode(trim($datos[4]));
-					        	$usuario->correo = utf8_encode(trim($datos[4]));
-					        	$usuario->nombre = utf8_encode(trim($datos[2]).' '.trim($datos[3]));
+				        		if(!preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/",$datos[5]))
+				        		{
+				        			//echo "Error en correo del organo";
+				        			continue;
+				        		}
+
+				        	   	$usuario->usuario = strtolower(utf8_encode(trim($datos[5])));
+					        	$usuario->correo = strtolower(utf8_encode(trim($datos[5])));
+					        	$usuario->nombre = strtoupper(utf8_encode(trim($datos[3])));
+					        	$usuario->cedula = utf8_encode(trim($datos[4]));
+					        	$usuario->cargo = utf8_encode(trim($datos[6]))!= '' ? strtoupper(utf8_encode(trim($datos[6]))) : ''; 
 					        	$usuario->contrasena = md5(rand(0,100));
 							    $usuario->creado_el = date("Y-m-d");
 							    $usuario->llave_activacion = md5(rand(0,100));
@@ -126,43 +143,39 @@ class PlanificacionController extends Controller
 
 							    if($usuario->save(false))
 							    {
-							    	$this->enviarCorreoRecuperacion($usuario->usuario, '1234567');
+							    	//$this->enviarCorreoRecuperacion($usuario->usuario, '1234567');
+
+							    	Yii::app()->user->setFlash('success', "Usuario(s) creado(s) con exito!");
 
 							    }else
 							    {
-							    	echo "Error usuario";
+							    	Yii::app()->user->setFlash('error', "Ocurrio un error al momento de crear el usuario!");
 							    }
 
 						    }else
 						    {
-						    	echo "Error ente";
+						    	Yii::app()->user->setFlash('error', "Ocurrio un error al momento de crear el organo!");
 						    }
-
-						    /*Aquí enviamos el correo*/
-
-						    //$this->enviarCorreoRecuperacion($usuario->usuario, '1234567');
-
-					        /*
-					            echo 'Estado: '.$datos[1] . "<br />\n";
-					            echo 'Nombre: '.$datos[2] . "<br />\n";
-					            echo 'Apellido: '.$datos[3] . "<br />\n";
-					            echo 'Correo: '.$datos[4] . "<br />\n";
-					            echo 'Alcaldia/Gobernacion: '.$datos[5] . "<br />\n";
-					            echo 'Rif: '.$datos[6] . "<br />\n";
-					        */
-
-					        
 				    	}
 				        $fila++;
 				    }
 				    fclose($gestor);
+
 				}
 			}
 
-		}else
-		{
-			$this->render('cargamasiva');	
 		}
+
+		$this->render('cargamasiva',array(
+		'model'=>$model,
+		));
+	}
+
+	public function actionDescargar()
+	{
+		$file = 'assets/ejemplo.xlsx';
+		//echo $file;
+        return Yii::app()->getRequest()->sendFile('ejemplo.xlsx',@file_get_contents($file),'application/vnd.ms-excel');
 		
 	}
 

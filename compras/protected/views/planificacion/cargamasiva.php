@@ -1,6 +1,28 @@
-<?php
-?>
+<?php $form=$this->beginWidget('booster.widgets.TbActiveForm',array(
+	'id'=>'archivos-form',
+	'enableAjaxValidation'=>false,
+	'htmlOptions' => array('enctype' => 'multipart/form-data'),
+)); ?>
 
+<p class="help-block">Fields with <span class="required">*</span> are required.</p>
+
+<?php //echo $form->errorSummary($model); ?>
+ <?php 
+        foreach(Yii::app()->user->getFlashes() as $key => $message) {
+            echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+        }
+    ?>
+
+
+ <?php
+
+ 	echo $form->labelEx($model, 'archivo');
+	echo $form->fileField($model, 'archivo');
+	echo $form->error($model, 'archivo');
+
+
+ ?>
+<!--
 <form action="#" method="post" enctype="multipart/form-data">
 	<label for="archivo">
     	<input type="file" name="archivo" id="archivo" value="" />
@@ -8,3 +30,27 @@
     <br/>
    	<input type="submit" value="Cargar" name="Cargar" />
 </form>
+-->
+<br>
+<div class="form-group">
+
+	<?php echo CHtml::link('Descargar formato de ejemplo',array('planificacion/descargar')); ?>
+
+</div>
+<div class="form-group">
+
+	<p>El documento de ejemplo, una vez digitado debera ser convertido a .csv</p>
+
+</div>
+
+<div class="form-actions">
+	<?php $this->widget('booster.widgets.TbButton', array(
+			'buttonType'=>'submit',
+			'context'=>'primary',
+			'label'=>Yii::t('msg','Cargar archivo'),
+		)); ?>
+</div>
+
+
+
+<?php $this->endWidget(); ?>

@@ -225,6 +225,31 @@ $this->breadcrumbs=array(
 		echo  $form->textFieldGroup($presuPro, 'costo_unidad',array('prepend'=>'Bs','widgetOptions'=>array('htmlOptions'=>array('id'=>'costounidad'))));
 		echo  $form->textFieldGroup($presuPro, 'cantidad',array('widgetOptions'=>array('htmlOptions'=>array('id'=>'cantidad'))));
 
+		//echo  $form->textFieldGroup($presuPro, 'fecha_estimada',array('widgetOptions'=>array('htmlOptions'=>array('id'=>'fecha_estimada'))));
+
+		$ahno = Presupuestos::model()->findByAttributes(array('activo'=>true))->ahno;
+ 		echo $form->datePickerGroup(
+			$presuPro,
+			'fecha_estimada',
+			array(
+				'widgetOptions' => array(
+					'htmlOptions'=> array('id'=>'fecha'),
+					'options' => array(
+						'format' => 'yyyy-m-d',
+						'language' => 'es',
+						'startDate'=>$ahno.'-01-01',
+						'endDate'=>$ahno.'-12-31'
+					),
+				),
+
+				'wrapperHtmlOptions' => array(
+					'class' => 'col-sm-5',
+				), 
+				'hint' => 'Fecha de compra estimada.',
+				'prepend' => '<i class="glyphicon glyphicon-calendar"></i>'
+			)
+		);
+
 
 		echo $form->hiddenField($presuPro,'tipo',array('id'=>'tipoPro'));
 

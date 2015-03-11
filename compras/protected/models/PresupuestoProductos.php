@@ -13,6 +13,7 @@
  * @property string $tipo
  * @property string $monto_ejecutado
  * @property string $proyecto_partida_id
+ * @property string $fecha_estimada
  *
  * The followings are the available model relations:
  * @property CodigosNcm[] $codigosNcms
@@ -38,7 +39,7 @@ class PresupuestoProductos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('producto_id, unidad_id, costo_unidad, cantidad, monto_presupuesto, tipo, monto_ejecutado, proyecto_partida_id', 'required'),
+			array('producto_id, unidad_id, costo_unidad, cantidad, monto_presupuesto, tipo, monto_ejecutado, proyecto_partida_id, fecha_estimada', 'required'),
 			array('costo_unidad, monto_presupuesto, monto_ejecutado', 'length', 'max'=>38),
 			array('costo_unidad, monto_presupuesto, monto_ejecutado', 'numerical'),
 			array('cantidad', 'numerical', 'integerOnly'=>true, 'min'=>1),
