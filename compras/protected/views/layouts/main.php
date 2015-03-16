@@ -71,7 +71,7 @@
 								)
 							),
 							array(
-								'label' => 'Rendición de cuentas',  //si el usuario es creado por este sistema
+								'label' => 'Rendición de Cuentas',  //si el usuario es creado por este sistema
 								'items' => array(
 									array('label' => 'Proveedores', 'url' => array('/proveedores/index')),
 									array('label' => 'Procedimientos', 'url' => array('/procedimientos/index')),
@@ -79,6 +79,15 @@
 									array('label'=>  'Agregar productos a facturas', 'url'=>array('/facturasProductos/index'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 								),
 								//'visible'=>AQUI COLOCAR CONDICIÓN DE SI ESTA EN LA FECHA DE RENDICION DE CUENTA DEL TRIMESTRE PASADO),
+							),
+							array(
+								'label' => 'Mis Usuarios',  //si el usuario es creado por este sistema
+								'items' => array(
+									array('label' => 'Gestionar Usuarios', 'url'=>array('/usuarios/secundario'), 'visible'=>(Yii::app()->user->checkAccess('ente'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
+									array('label' => 'Mis entes', 'url'=>array('/planificacion/misentes'), 'visible'=>(Yii::app()->user->checkAccess('ente'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
+									array('label' => 'Crear usuarios', 'url'=>array('/usuarios/secundario'), 'visible'=>(Yii::app()->user->checkAccess('ente'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
+									//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
+								), 'visible'=>(Yii::app()->user->checkAccess('ente')),
 							),
 							array(
 								'label' => 'Entes',  //si el usuario es creado por este sistema

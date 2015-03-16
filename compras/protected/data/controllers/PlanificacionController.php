@@ -28,7 +28,7 @@ class PlanificacionController extends Controller
 				'roles'=>array('organo'),
 			),*/
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'Buscarsubespecficap', 'Buscarsubespecfica', 'agregarproyecto', 'agregarcentralizada', 'nacional','importado','eliminarProducto'),
+				'actions'=>array('index','view', 'Buscarsubespecficap', 'Buscarsubespecfica', 'agregarproyecto', 'agregarcentralizada', 'nacional','importado','eliminarProducto', 'secundario'),
 				'users'=>array('@'),
 				'roles'=>array('organo','ente','admin'),
 			),
@@ -62,7 +62,37 @@ class PlanificacionController extends Controller
 			),
 		);
 	}
+public function actionSecundario(){
 
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+		
+		$crea_usuario = new Usuarios('crearente');
+
+		if(isset($_POST['Usuarios']))
+	    {
+	    	$crea_usuario->attributes = $_POST['Usuarios'];	   
+			
+			   $crea_usuario->contrasena = md5(rand(0,100));
+			   $crea_usuario->usuario = $crea_usuario->correo;
+			   $crea_usuario->creado_el = date("Y-m-d");
+			   $crea_usuario->llave_activacion = md5(rand(0,100));
+			   $crea_usuario->actualizado_el = date("Y-m-d");
+			   $crea_usuario->ente_organo_id = $usuario->enteOrgano->ente_organo_id;
+			   //$crea_usuario->rol = '';
+
+	    	if($crea_usuario->save())
+	    	{
+	    		//if($this->enviarCorreoRecuperacion($crea_usuario->correo,$crea_usuario->cedula))
+	    			Yii::app()->user->setFlash('success','Usuario creado con éxito.');
+	    		
+	    		//Reiniciando el formulario
+	    		$crea_usuario = new Usuarios('crearente');
+	    	}
+	    }
+
+		$this->render('secundario',array( 'model' => $crea_usuario
+		));
+}
 	public function actionImportacion() /*Aqui esta vista tratara todo lo que tenga relacion con los datos de CENCOEX.*/
 	{
 		/*$_401 = $this->GeneralXpartida(402);

@@ -35,9 +35,24 @@ return array(
     'ente' => array (
         'type'=>CAuthItem::TYPE_ROLE,
         'description'=>'Acceso básico al sistema.',
+        'children'=>array(
+                'presupuesto', 'producto'
+            ),
         'bizRule'=>'',
         'data'=>''
-   )
+   ),
+    'presupuesto' => array (
+        'type'=>CAuthItem::TYPE_ROLE,
+        'description'=>'Puede cargar el presupuesto a las partidas. Es el unico con permisos para agregar y quitar partidas y asignar dinero a las mismas.',
+        'bizRule'=>'',
+        'data'=>''
+   ),
+    'productos' => array (
+        'type'=>CAuthItem::TYPE_ROLE,
+        'description'=>'Puede asociar productos al presupuesto cargado, eliminar productos.',
+        'bizRule'=>'',
+        'data'=>''
+   ),
 );
 
 ?>

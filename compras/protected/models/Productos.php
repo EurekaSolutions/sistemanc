@@ -85,7 +85,7 @@ class Productos extends CActiveRecord
 	}
 
 	/**
-	 * @return html nombre de partida compuesto con el nombre
+	 * @return string html nombre de partida compuesto con el nombre
 	 */
 	public function etiquetaProducto(){
 		return CHtml::encode($this->numeroProducto().' - '. $this->nombre);

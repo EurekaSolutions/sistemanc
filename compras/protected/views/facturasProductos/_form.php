@@ -290,8 +290,8 @@
 
     });
 </script>
-<!-- 
 
+<!-- 
 <?php echo CHtml::ajaxLink('Agregar Producto', CController::createUrl('facturasProductos/filaProducto'), array(
 									'type'=>'POST', //request type
 									//'url'=>CController::createUrl('facturasProductos/filaProducto'), //url to call.
@@ -385,10 +385,10 @@ $this->widget(
 	?>
  </td>
 
-      <td>	<?php echo $form->textFieldGroup($model,'costo_unitario',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>38)))); ?>
-      <input type="text" name="FacturasProductos[costo_unitario][]" id="name" /></td>
-      <td><?php echo $form->textFieldGroup($model,'cantidad_adquirida',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
-      <input type="text" name="FacturasProductos[cantidad_adquirida][]" id="name" /></td>
+      <td>	<?php echo $form->textFieldGroup($model,'costo_unitario',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5', 'name'=>'FacturasProductos[costo_unitario][]','maxlength'=>38)))); ?>
+     </td>
+      <td><?php echo $form->textFieldGroup($model,'cantidad_adquirida',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','name'=>'FacturasProductos[cantidad_adquirida][]')))); ?>
+      </td>
       <td>	<?php
 
 				$list = CHtml::listData(Iva::model()->findAll(), 'id', 'porcentaje');
@@ -405,8 +405,8 @@ $this->widget(
 						)
 					)
 				);
-		?> <input type="text" name="FacturasProductos[iva][]" id="name" /></td>
+		?> </td>
       <td><a  id="delete1">-</a> </td>
     </tr>
     </tbody>
-  </table> -->
+  </table>  -->
