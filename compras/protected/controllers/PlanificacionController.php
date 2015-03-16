@@ -181,7 +181,7 @@ class PlanificacionController extends Controller
 
 	public function actionModificarcorreo()
 	{
-		$model = new Usuarios;
+		$model = new Usuarios('actualizarCorreo');
 
 		$usuarios = Usuarios::model()->findAll();
 		
@@ -1118,8 +1118,10 @@ class PlanificacionController extends Controller
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 
 	      	//$model->ente_organo_id = $usuario->ente_organo_id;
-
-	    $fuentes = FuentesFinanciamiento::model()->findAll();
+		$fuen = new FuentesFinanciamiento('buscar');
+		echo 'EXCENARIO: '.$fuen->scenario;
+		Yii::app()->end();
+	    $fuentes = $fuen::model()->findAll();
 	    
 	    $partidas_principal = $this->obtenerPartidas("*");
 	      	

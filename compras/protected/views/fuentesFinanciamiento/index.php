@@ -4,8 +4,8 @@ $this->breadcrumbs=array(
 		);
 
 $this->menu=array(
-	array('label'=>'Create FuentesFinanciamiento','url'=>array('create')),
-	array('label'=>'Manage FuentesFinanciamiento','url'=>array('admin')),
+	array('label'=>'Crear Fuentes de Financiamiento','url'=>array('create')),
+	array('label'=>'Administrar Fuentes de Financiamiento','url'=>array('admin')),
 	);
 ?>
 

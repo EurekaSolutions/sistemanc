@@ -3,7 +3,7 @@
 	'method'=>'get',
 )); ?>
 
-		<?php echo $form->textFieldGroup($model,'fuente_financiamiento_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
+		<?php //echo $form->textFieldGroup($model,'fuente_financiamiento_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
 		<?php echo $form->textFieldGroup($model,'nombre',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
 

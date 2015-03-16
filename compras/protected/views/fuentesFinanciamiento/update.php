@@ -2,17 +2,17 @@
 $this->breadcrumbs=array(
 		'Fuentes Financiamientos'=>array('index'),
 		$model->fuente_financiamiento_id=>array('view','id'=>$model->fuente_financiamiento_id),
-		'Update',
+		'Actualizar',
 	);
 
 	$this->menu=array(
-		array('label'=>'List FuentesFinanciamiento','url'=>array('index')),
-		array('label'=>'Create FuentesFinanciamiento','url'=>array('create')),
-		array('label'=>'View FuentesFinanciamiento','url'=>array('view','id'=>$model->fuente_financiamiento_id)),
-		array('label'=>'Manage FuentesFinanciamiento','url'=>array('admin')),
+		array('label'=>'Listar fuentes financiamiento','url'=>array('index')),
+		array('label'=>'Crear fuentes financiamiento','url'=>array('create')),
+		//array('label'=>'V FuentesFinanciamiento','url'=>array('view','id'=>$model->fuente_financiamiento_id)),
+		array('label'=>'Administrar fuentes financiamiento','url'=>array('admin')),
 		);
 	?>
 
-	<h1>Update FuentesFinanciamiento <?php echo $model->fuente_financiamiento_id; ?></h1>
+	<h1>Actualizar fuentes de financiamiento <?php //cho $model->fuente_financiamiento_id; ?></h1>
 
 <?php echo $this->renderPartial('_form',array('model'=>$model)); ?>

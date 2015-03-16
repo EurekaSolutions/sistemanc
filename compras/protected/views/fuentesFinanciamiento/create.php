@@ -1,15 +1,15 @@
 <?php
 $this->breadcrumbs=array(
 	'Fuentes Financiamientos'=>array('index'),
-	'Create',
+	'Crear',
 );
 
 $this->menu=array(
-array('label'=>'List FuentesFinanciamiento','url'=>array('index')),
-array('label'=>'Manage FuentesFinanciamiento','url'=>array('admin')),
+array('label'=>'Listar fuentes financiamiento','url'=>array('index')),
+array('label'=>'Administrar fuentes financiamiento','url'=>array('admin')),
 );
 ?>
 
-<h1>Create FuentesFinanciamiento</h1>
+<h1>Crear fuentes de financiamiento</h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

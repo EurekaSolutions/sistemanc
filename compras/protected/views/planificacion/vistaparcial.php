@@ -47,7 +47,7 @@ tr.principaltr th {
 
 			 		//print_r($accionOrgano);
 			 		//echo count($accionOrgano);
-			 		echo count($accionOrgano);
+			 		//echo count($accionOrgano);
 					$valor = 0;
 
 					foreach ($accionOrgano as $key => $presupuestoPartidaAccion) 
