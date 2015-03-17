@@ -50,6 +50,7 @@ return array (
     'children' => 
     array (
       0 => 'presupuesto',
+      1 => 'producto',
     ),
   ),
   'presupuesto' => 
@@ -59,7 +60,7 @@ return array (
     'bizRule' => '',
     'data' => '',
   ),
-  'productos' => 
+  'producto' => 
   array (
     'type' => 2,
     'description' => 'Puede asociar productos al presupuesto cargado, eliminar productos.',

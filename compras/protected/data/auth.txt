@@ -47,7 +47,7 @@ return array(
         'bizRule'=>'',
         'data'=>''
    ),
-    'productos' => array (
+    'producto' => array (
         'type'=>CAuthItem::TYPE_ROLE,
         'description'=>'Puede asociar productos al presupuesto cargado, eliminar productos.',
         'bizRule'=>'',

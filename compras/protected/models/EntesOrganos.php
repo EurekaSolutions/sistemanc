@@ -67,6 +67,7 @@ class EntesOrganos extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'usuarios' => array(self::HAS_MANY, 'Usuarios', 'ente_organo_id'),
+			'usuarioPrincipal' => array(self::HAS_ONE, 'Usuarios', 'ente_organo_id', 'condition'=>"rol='normal' OR rol ='ente'"),
 			'padre' => array(self::HAS_ONE, 'EntesAdscritos', 'ente_organo_id'),
 			'hijos' => array(self::HAS_MANY, 'EntesAdscritos', 'padre_id'),
 			'proyectos' => array(self::HAS_MANY, 'Proyectos', 'ente_organo_id'),

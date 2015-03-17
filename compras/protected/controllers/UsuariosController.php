@@ -25,23 +25,31 @@ public function filters()
 */
 public function accessRules()
 {
-return array(
-array('allow',  // allow all users to perform 'index' and 'view' actions
-'actions'=>array('create','index','view'),
-'users'=>array('admin'),
-),
-array('allow', // allow authenticated user to perform 'create' and 'update' actions
-'actions'=>array('update'),
-'users'=>array('admin'),
-),
-array('allow', // allow admin user to perform 'admin' and 'delete' actions
-'actions'=>array('admin','delete'),
-'users'=>array('admin'),
-),
-array('deny',  // deny all users
-'users'=>array('*'),
-),
-);
+	return array(
+			array('allow',  // allow all users to perform 'index' and 'view' actions
+		'actions'=>array('secundario', 'gestionarsecundarios','deshabilitar', 'modificarUsuario'),
+		'users'=>array('@'),
+		'roles'=>array('ente'),
+		),
+		array('allow',  // allow all users to perform 'index' and 'view' actions
+		'actions'=>array('create','index','view'),
+		'users'=>array('@'),
+		'roles'=>array('ente'),
+		),
+		array('allow', // allow authenticated user to perform 'create' and 'update' actions
+		'actions'=>array('update'),
+		'users'=>array('@'),
+		'roles'=>array('ente'),
+		),
+		array('allow', // allow admin user to perform 'admin' and 'delete' actions
+		'actions'=>array('admin','delete'),
+		'users'=>array('@'),
+		'roles'=>array('admin'),
+		),
+		array('deny',  // deny all users
+		'users'=>array('*'),
+		),
+	);
 }
 
 /**
@@ -53,6 +61,94 @@ public function actionView($id)
 $this->render('view',array(
 'model'=>$this->loadModel($id),
 ));
+}
+
+/*public function actionDeshabilitar($id){
+
+		$model = new Usuarios();
+
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+		
+		//$usuariosSecundarios = $usuario->enteOrgano->usuarios;
+
+		if(isset($_POST['Usuarios'])){
+
+			$model->attributes = $_POST['Usuarios'];	
+		}
+
+		$this->render('gestionarsecundarios',array( 'model' => $usuariosSecundarios
+		));
+}*/
+
+/**
+* Updates a particular model.
+* If update is successful, the browser will be redirected to the 'view' page.
+* @param integer $id the ID of the model to be updated
+*/
+public function actionModificarUsuario($id)
+{
+	$model=$this->loadModel($id);
+
+	// Uncomment the following line if AJAX validation is needed
+	// $this->performAjaxValidation($model);
+
+	if(isset($_POST['Usuarios']))
+	{
+		$model->attributes=$_POST['Usuarios'];
+		$model->scenario = 'actualizarPerfil';
+		if($model->validate())
+		{
+			$model->usuario = $model->correo;
+			if($model->save())
+				$this->redirect(array('gestionarsecundarios',));
+		}
+	}
+
+	$this->render('modificarUsuario',array(
+	'model'=>$model,
+	));
+}
+
+public function actionGestionarsecundarios(){
+
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+		
+		$usuariosSecundarios = $usuario->enteOrgano->usuarios;
+
+		$this->render('gestionarsecundarios',array( 'model' => $usuariosSecundarios
+		));
+}
+
+public function actionSecundario(){
+
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+		
+		$crea_usuario = new Usuarios('crearente');
+
+		if(isset($_POST['Usuarios']))
+	    {
+	    	$crea_usuario->attributes = $_POST['Usuarios'];	   
+			
+			   $crea_usuario->contrasena = md5(rand(0,100));
+			   $crea_usuario->usuario = $crea_usuario->correo;
+			   $crea_usuario->creado_el = date("Y-m-d");
+			   $crea_usuario->llave_activacion = md5(rand(0,100));
+			   $crea_usuario->actualizado_el = date("Y-m-d");
+			   $crea_usuario->ente_organo_id = $usuario->enteOrgano->ente_organo_id;
+			   //$crea_usuario->rol = '';
+
+	    	if($crea_usuario->save())
+	    	{
+	    		//if($this->enviarCorreoRecuperacion($crea_usuario->correo,$crea_usuario->cedula))
+	    			Yii::app()->user->setFlash('success','Usuario creado con éxito.');
+	    		
+	    		//Reiniciando el formulario
+	    		$crea_usuario = new Usuarios('crearente');
+	    	}
+	    }
+
+		$this->render('secundario',array( 'model' => $crea_usuario
+		));
 }
 
 /**
@@ -68,14 +164,14 @@ $model=new Usuarios;
 
 if(isset($_POST['Usuarios']))
 {
-$model->attributes=$_POST['Usuarios'];
-if($model->save())
-$this->redirect(array('view','id'=>$model->usuario_id));
-}
+	$model->attributes=$_POST['Usuarios'];
+	if($model->save())
+		$this->redirect(array('view','id'=>$model->usuario_id));
+	}
 
-$this->render('create',array(
-'model'=>$model,
-));
+	$this->render('create',array(
+	'model'=>$model,
+	));
 }
 
 /**
@@ -85,21 +181,21 @@ $this->render('create',array(
 */
 public function actionUpdate($id)
 {
-$model=$this->loadModel($id);
+	$model=$this->loadModel($id);
 
-// Uncomment the following line if AJAX validation is needed
-// $this->performAjaxValidation($model);
+	// Uncomment the following line if AJAX validation is needed
+	// $this->performAjaxValidation($model);
 
-if(isset($_POST['Usuarios']))
-{
-$model->attributes=$_POST['Usuarios'];
-if($model->save())
-$this->redirect(array('view','id'=>$model->usuario_id));
-}
+	if(isset($_POST['Usuarios']))
+	{
+		$model->attributes=$_POST['Usuarios'];
+		if($model->save())
+			$this->redirect(array('view','id'=>$model->usuario_id));
+	}
 
-$this->render('update',array(
-'model'=>$model,
-));
+	$this->render('update',array(
+	'model'=>$model,
+	));
 }
 
 /**

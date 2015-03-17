@@ -27,16 +27,25 @@ class PlanificacionController extends Controller
 				'users'=>array('@'),
 				'roles'=>array('organo'),
 			),*/
+		
+			// Acciones relacionadas con el usuario secundario PRODUCTO
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'Buscarsubespecficap', 'Buscarsubespecfica', 'agregarproyecto', 'agregarcentralizada', 'nacional','importado','eliminarProducto',
-					'eliminaProyecto', 'eliminarProductoImportado', 'eliminaAccion', 'eliminaPartida'),
+				'actions'=>array('index','view', 'buscarespecfica', 'buscarespecficap', 'nacional','importado','eliminarProducto',
+					 'eliminarProductoImportado', 'buscarpartidasproyecto',  'buscarproductospartida'),
 				'users'=>array('@'),
-				'roles'=>array('ente'),
+				'roles'=>array( 'producto'),
+			),
+			// Acciones realacionadas con el usuario secundario PRESUPUESTO
+			array('allow',  // allow all users to perform 'index' and 'view' actions
+				'actions'=>array('eliminaraccion', 'eliminarproyecto', 'asignarpartidasproyecto', 'eliminaAccion', 'eliminaPartida', 
+					'agregarproyecto', 'eliminaProyecto', 'agregarcentralizada', 'eliminarpartidas'  ),
+				'users'=>array('@'),
+				'roles'=>array( 'presupuesto'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','view', 'agregarproyecto', 'agregarcentralizada', 'nacional','importado', 'buscarespecfica', 'buscarespecficap',
-								'create','update','partidas','vistaparcial', 'buscarpartida', 'buscargeneral', 'asignarpartidasproyecto', 'buscargeneralproyecto',
-								'buscarNcm', 'buscarpartidasproyecto', 'buscarproductospartida', 'eliminaraccion', 'eliminarproyecto', 'eliminarpartidas'),
+				'actions'=>array( 'create','update','partidas','vistaparcial', 'buscarpartida', 
+								'buscargeneral', 'buscargeneralproyecto', 'buscarNcm', 	'buscarproductospartida',
+								 ),
 				'users'=>array('@'),
 				'roles'=>array('ente'),
 			),
@@ -47,7 +56,7 @@ class PlanificacionController extends Controller
 			),
 
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('crearente','misentes', 'usuariosentes'),
+				'actions'=>array('crearente','misentes', 'usuariosentes', 'gesUsuEntes'),
 				'users'=>array('@'),
 				'roles'=>array('organo'),
 			),
@@ -65,6 +74,17 @@ class PlanificacionController extends Controller
 		);
 	}
 
+	public function actionGesUsuEntes()
+	{
+		
+		$usuaios =array();
+		foreach ($this->usuario()->enteOrgano->hijos as $key => $value) {
+			$usuarios[] = $value->enteOrgano->usuarioPrincipal;
+		}
+
+//		$usuarios = 
+		$this->render('gesUsuEntes', array('model' => $usuarios));
+	}
 
 
 	public function actionEliminaraccion()
@@ -1119,8 +1139,7 @@ class PlanificacionController extends Controller
 
 	      	//$model->ente_organo_id = $usuario->ente_organo_id;
 		$fuen = new FuentesFinanciamiento('buscar');
-		echo 'EXCENARIO: '.$fuen->scenario;
-		Yii::app()->end();
+
 	    $fuentes = $fuen::model()->findAll();
 	    
 	    $partidas_principal = $this->obtenerPartidas("*");
