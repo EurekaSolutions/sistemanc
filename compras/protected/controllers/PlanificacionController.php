@@ -45,7 +45,7 @@ class PlanificacionController extends Controller
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array( 'create','update','partidas','vistaparcial', 'buscarpartida', 
 								'buscargeneral', 'buscargeneralproyecto', 'buscarNcm', 	'buscarproductospartida',
-								 ),
+								 'reportes',),
 				'users'=>array('@'),
 				'roles'=>array('ente'),
 			),
@@ -72,6 +72,36 @@ class PlanificacionController extends Controller
 				'users'=>array('*'),
 			),
 		);
+	}
+
+	public function actionReportes()
+	{
+
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+
+		$proyectos = $usuario->enteOrgano->proyectos;
+
+		//$acciones = $usuario->enteOrgano->acciones;
+
+		$criteria = new CDbCriteria();
+		$criteria->distinct=true;
+		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
+		$criteria->select = 'codigo_accion, accion_id, ente_organo_id ';
+		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
+
+
+	   /* $mPDF1 = Yii::app()->ePdf->mpdf();
+ 
+        # You can easily override default constructor's params
+        $mPDF1 = Yii::app()->ePdf->mpdf('', 'A5');
+ 
+        # render (full page)
+        $mPDF1->WriteHTML($this->render('reportes', array('proyectos' => $proyectos, 'acciones' => $acciones), true));
+
+        $mPDF1->Output(); */
+
+		$this->render('reportes', array('proyectos' => $proyectos, 'acciones' => $acciones));
+
 	}
 
 	public function actionGesUsuEntes()
@@ -1161,7 +1191,8 @@ class PlanificacionController extends Controller
 	        $model->nombre = $nombre_proyecto->nombre;
 	        
 	        $model->setScenario(!empty($model->subespecifica) ? 'creaproyectose' : 'creaproyecto');
-
+CVarDumper::dump($model);
+//Yii::app()->end();
 	        if($model->validate())
 	        {
 
@@ -1190,7 +1221,7 @@ class PlanificacionController extends Controller
 				        		$fuentep->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
 				        		$fuentep->fuente_id = $value;
 				        		$fuentep->save();
-			        		}
+			        	}
 
 			        		
 		        		//$accion = Acciones::model()->find('codigo=:codigo', array(':codigo'=>$model->nombre));

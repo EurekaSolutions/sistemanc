@@ -281,23 +281,7 @@
                                                         )
                                                     );
 
-/*                                   echo $form->dropDownListGroup($model , 'fuente',
-                                        array(
-                                            'wrapperHtmlOptions' => array(
-                                                'class' => 'col-sm-2',
-                                            ),
-                                            'label'=>'Fuente de financiamiento',
-                                            'hint' => 'Seleccione la cantidad de fuentes que apliquen',
-                                            'widgetOptions' => array(
-
-                                                'data' => $fuentes,
-                                                //'options'=>array($model->proyecto_id => array('selected'=>true)),
-                                                'htmlOptions' => array(//'prompt' => 'Seleccionar la fuente de financiamiento',
-                                                            'multiple' => true),
-                                            )
-                                        )
-                                    ); */
-                                    echo $form->select2Group($model, 'fuente',
+                                    /*echo $form->select2Group($model, 'fuente',
                                                         array(
                                                             'wrapperHtmlOptions' => array(
                                                                 'class' => 'col-sm-5',
@@ -316,17 +300,58 @@
                                                                 )
                                                             )
                                                         )
-                                                    );
+                                                    );*/
+                            
+                            ?>
+                            
+                             <a id="add" style="cursor:pointer">Agregar fuente</a>
+  <table id="mytable" width="300" border="1" cellspacing="0" cellpadding="2">
+  <tbody>
+    <?php /*foreach ($model->fuente as $key => $value) 
+    {
+        # code...
+    }*/
+    ?>
+    <tr id='producto1' class="producto">
+    <td>
+        <?php echo $form->dropDownListGroup($model, 'fuente',
+                                        array(
+                                            'wrapperHtmlOptions' => array(
+                                                'class' => 'col-sm-2',
+                                            ),
+                                            'label'=>'Fuente de financiamiento',
+                                            //'hint' => 'Seleccione la cantidad de fuentes que apliquen',
+                                            'widgetOptions' => array(
 
-                                    echo $form->textFieldGroup($model,'monto',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span3','maxlength'=>20))));
+                                                'data' => $fuentes,
+                                                //'options'=>array($model->proyecto_id => array('selected'=>true)),
+                                                'htmlOptions' => array(//'prompt' => 'Seleccionar la fuente de financiamiento',
+                                                            'multiple' => false,
+                                                            //'name'=>'Proyectos[fuente][]'
+                                                            ),
+                                            )
+                                        )
+                                    );?>
+    </td>
+    <td>
+        <?php
+                                            echo $form->textFieldGroup($model,'monto',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span3','maxlength'=>20, /*'name' => 'Proyectos[monto][]'*/))));
+                                        ?>
+    </td>
+      <td><a  id="delete1" style="cursor:pointer">Eliminar fuente</a> </td>
+    </tr>
+    </tbody>
+  </table>
+
+                            
+                                    
+
+                            <?php       
 
                                 /*  $this->widget(
                                         'booster.widgets.TbButton',
                                         array('buttonType' => 'submit', 'label' => 'Seleccionar')
                                     ); */
-                                 
-
-
                         $this->widget('booster.widgets.TbButton', array(
                             'buttonType'=>'submit',
                             'context'=>'primary',
@@ -340,3 +365,39 @@
             ?>
 
         </div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var numId = 1;
+        $("#add").click(function() {
+                $clone = $("#mytable tbody>tr:last").clone(true);
+                $('#mytable tbody>tr:last').clone(true).attr("id",$clone.attr("id").replace(/\d+$/, function(str) { return parseInt(str) + 1; } )).insertAfter("#mytable tbody>tr:last");
+                        //$("#mytable tbody>tr:last").each(function() {this.reset();});
+                        numId++;
+                        //$('#mytable tbody>tr:last').attr('id','producto'+numId);
+                        $('#mytable tbody>tr:last>td>a').attr('id','delete'+numId);
+        
+                            $("#delete"+numId).click(function(event) {
+                                //alert('#mytable tbody>tr #'+$('#'+event.target.id).parent().parent().attr('id'));
+                                if($('#mytable tr').length >1)
+                                {   
+                                    $('#mytable tbody>tr#'+$('#'+event.target.id).parent().parent().attr('id')).remove();
+                                }
+                                      return false;
+                            });
+
+          return false;
+        });
+
+        $("#delete1").click(function(event) {
+            //alert('#mytable tbody>tr #'+$('#'+event.target.id).parent().parent().attr('id'));
+            if($('#mytable tr').length >1)
+                                {   
+                $('#mytable tbody>tr#'+$('#'+event.target.id).parent().parent().attr('id')).remove();
+                  return false;
+                  }
+        });
+
+    });
+</script>

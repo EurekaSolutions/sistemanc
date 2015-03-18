@@ -311,15 +311,16 @@
 									//'complete' => 'function(html){ $("#mytable tbody>tr:last").insertAfter(html);}'
 									//'data'=>'js:javascript statement' 
 									//leave out the data key to pass all form values through
-							  )); ?>
+							  )); ?> -->
 
-							  <a  id="add">+</a> </td>
+						<!--	  <a  id="add">+</a> </td>
   <table id="mytable" width="300" border="1" cellspacing="0" cellpadding="2">
   <tbody>
 <tr>
-  <td><?= CHtml::label('Costo unitario', ''); ?></td>
+  <!--<td><?= CHtml::label('Costo unitario', ''); ?></td>
   <td><?= CHtml::label('Cantidad Adquirida', ''); ?></td>
-  <td><?= CHtml::label('Iva', ''); ?></td>
+  <td><?= CHtml::label('Iva', ''); ?></td>-->
+  <!--
 </tr>
     <tr id='producto1' class="producto">
 <td> <?php 	
@@ -409,4 +410,4 @@ $this->widget(
       <td><a  id="delete1">-</a> </td>
     </tr>
     </tbody>
-  </table>  -->
+  </table> -->

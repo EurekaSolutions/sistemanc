@@ -4,12 +4,12 @@ $this->breadcrumbs=array(
 		);
 
 $this->menu=array(
-	array('label'=>'Crear Fuentes de Financiamiento','url'=>array('create')),
-	array('label'=>'Administrar Fuentes de Financiamiento','url'=>array('admin')),
+	array('label'=>'Crear Fuentes Financiamiento','url'=>array('create')),
+	array('label'=>'Administrar fuentes financiamiento','url'=>array('admin')),
 	);
 ?>
 
-<h1>Fuentes Financiamientos</h1>
+<h1>Fuentes financiamientos</h1>
 
 <?php $this->widget('booster.widgets.TbListView',array(
 'dataProvider'=>$dataProvider,

@@ -30,6 +30,7 @@ class FuentesFinanciamiento extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('nombre, activo', 'required'),
+			array('nombre', 'unique', 'className' => 'FuentesFinanciamiento', 'attributeName' => 'nombre', 'message'=>'Esta fuente ya se encuentra registrada en nuestro repositorio'),
 			array('nombre', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.

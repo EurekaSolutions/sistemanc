@@ -105,7 +105,7 @@ public function actionModificarUsuario($id)
 	}
 
 	$this->render('modificarUsuario',array(
-	'model'=>$model,
+		'model'=>$model,
 	));
 }
 
