@@ -55,7 +55,8 @@ return false;
 		$criteria->condition = 'p3 <> 0';
 		//$criteria->params = array(':p1'=>$general->p1, ':p2' => $general->p2);
 
-		$especificas = Partidas::model()->findAll($criteria);
+		$especificas = new Partidas('search');
+		$especificas = $especificas->findAll($criteria);
 
 		$especificas_lista = CHtml::listData($especificas, function($especificas) {
 																	return CHtml::encode($especificas->partida_id);
@@ -99,7 +100,7 @@ echo $form->select2Group($model, 'partida_producto_id',
 						        'htmlOptions'=>array('id'=>'partidaProductos','multiple'=>true),
 								'options' => array(
 									//'tags' => array('clever', 'is', 'better', 'clevertech'),
-									'placeholder' => 'Seleccione producto a elimimnar asociación',
+									'placeholder' => 'Seleccione producto a eliminar asociación',
 									// 'width' => '40%', 
 									'tokenSeparators' => array(',', ' ')
 								)

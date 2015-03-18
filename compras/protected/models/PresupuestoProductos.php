@@ -39,12 +39,13 @@ class PresupuestoProductos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('producto_id, unidad_id, costo_unidad, cantidad, monto_presupuesto, tipo, monto_ejecutado, proyecto_partida_id, fecha_estimada', 'required'),
+			array('producto_id, unidad_id, costo_unidad, cantidad, monto_presupuesto, tipo, monto_ejecutado, proyecto_partida_id', 'required'),
+			array('fecha_estimada','required', 'except'=>'update'),
 			array('costo_unidad, monto_presupuesto, monto_ejecutado', 'length', 'max'=>38),
 			array('costo_unidad, monto_presupuesto, monto_ejecutado', 'numerical'),
 			array('cantidad', 'numerical', 'integerOnly'=>true, 'min'=>1),
 			array('tipo', 'length', 'max'=>60),
-			array('producto_id', 'unicoProducto'),
+			array('producto_id', 'unicoProducto', 'except'=>'update'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('presupuesto_id, producto_id, unidad_id, costo_unidad, cantidad, monto_presupuesto, tipo, monto_ejecutado, proyecto_partida_id', 'safe', 'on'=>'search'),

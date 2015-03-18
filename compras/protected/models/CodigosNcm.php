@@ -59,6 +59,28 @@ class CodigosNcm extends CActiveRecord
 		);
 	}
 
+	public function numeroCodigoNcm(){
+		$numCodigo = $this->codigo_ncm_nivel_1;
+			
+			if(intval($this->codigo_ncm_nivel_4) != 0)
+				$numCodigo .= '.'.$this->codigo_ncm_nivel_2.'.'.$this->codigo_ncm_nivel_3.'.'.$this->codigo_ncm_nivel_4;
+			else
+			if(intval($this->codigo_ncm_nivel_3) != 0)
+				$numCodigo .= '.'.$this->codigo_ncm_nivel_2.'.'.$this->codigo_ncm_nivel_3;
+			else
+			if(intval($this->codigo_ncm_nivel_2) != 0)
+				$numCodigo .= '.'.$this->codigo_ncm_nivel_2;
+
+			return $numCodigo;
+	}
+
+	/**
+	 * @return string html nombre de partida compuesto con el nombre
+	 */
+	public function etiquetaCodigo(){
+		return CHtml::encode($this->numeroCodigoNcm().' - '. $this->descripcion_ncm);
+	}
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */

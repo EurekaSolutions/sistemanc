@@ -38,7 +38,7 @@ class PlanificacionController extends Controller
 			// Acciones realacionadas con el usuario secundario PRESUPUESTO
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('eliminaraccion', 'eliminarproyecto', 'asignarpartidasproyecto', 'eliminaAccion', 'eliminaPartida', 
-					'agregarproyecto', 'eliminaProyecto', 'agregarcentralizada', 'eliminarpartidas'  ),
+					'agregarproyecto', 'eliminaProyecto', 'agregarcentralizada', 'eliminarpartidas', 'buscarsubespecficap', 'buscarsubespecfica'   ),
 				'users'=>array('@'),
 				'roles'=>array( 'presupuesto'),
 			),
@@ -1410,7 +1410,8 @@ CVarDumper::dump($model);
 
 		$partidas =array();
 		foreach ($presupuestoPartidaAcciones as $key => $prePar) {
-			$partidas[$key] = $prePar->presupuestoPartida->partida;
+			if(!empty($prePar->presupuestoPartida->partida))
+				$partidas[$key] = $prePar->presupuestoPartida->partida;
 		}
 		return $partidas;
 	}
@@ -1423,7 +1424,8 @@ CVarDumper::dump($model);
 			
 			$partidas =array();
 			foreach (Proyectos::model()->findByPk($id)->presupuestoPartidas as $key => $prePar) { //echo '|'.($partida->partida_id);
-				$partidas[$key] = $prePar->partida;
+				if(!empty($prePar->partida))
+					$partidas[$key] = $prePar->partida;
 			}
 			return $partidas;
 	}

@@ -61,13 +61,33 @@ class PresupuestoPartidas extends CActiveRecord
 			'presupuestoProductos' => array(self::HAS_MANY, 'PresupuestoProductos', array('proyecto_partida_id'=>'presupuesto_partida_id')),
 			'presupuestoImportacion' => array(self::HAS_MANY, 'PresupuestoImportacion', 'presupuesto_partida_id'),
 			'presupuestoProducto' => array(self::HAS_ONE, 'PresupuestoProductos', 'proyecto_partida_id'),
-			'partida' => array(self::BELONGS_TO, 'Partidas', array('partida_id'=>'partida_id')),
+			'partida' => array(self::BELONGS_TO, 'Partidas', array('partida_id'=>'partida_id'), 'scopes'=>array('habilitadas')),
 			'proyectoses' => array(self::MANY_MANY, 'Proyectos', 'presupuesto_partida_proyecto(presupuesto_partida_id, proyecto_id)'),
 			'presupuestoPartidaAcciones' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones',  'presupuesto_partida_id'),
 			'presupuestoPartidaProyecto' => array(self::HAS_MANY, 'PresupuestoPartidaProyecto', 'presupuesto_partida_id'),
 			'fuenteFinanciamientos' => array(self::HAS_MANY, 'FuentePresupuesto', 'presupuesto_partida_id'),
 		);
 	}
+ 	/**
+ 	 * Función que suma el total de monto cargado de esta partida
+ 	 * 
+ 	 * @return float $total
+ 	 * */
+ 	public function montoCargadoPartida(){
+			// Validando la suma de los productos de la partida
+ 		$total = 0;
+ 		//Nacionales
+			if($this->presupuestoProductos)
+				foreach ($this->presupuestoProductos as $key => $presupuestoProducto) {
+					$total += $presupuestoProducto->monto_presupuesto;	
+				}
+		//Importados
+			if($this->presupuestoImportacion)
+				foreach ($this->presupuestoImportacion as $key => $presupuestoImportacion) {
+					$total += ($presupuestoImportacion->cantidad*$presupuestoImportacion->monto_presupuesto*$presupuestoImportacion->divisa->tasa->tasa);
+				}
+ 		return $total;
+ 	}
 
 	// Delete cascade / Borrado en cascada
 	public function beforeDelete()

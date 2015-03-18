@@ -72,7 +72,8 @@ class PartidaProductosController extends Controller
 		$criteria->condition = 'p3 <> 0';
 		//$criteria->params = array(':p1'=>$general->p1, ':p2' => $general->p2);
 
-		$especificas = Partidas::model()->findAll($criteria);
+		$especificas = new Partidas('search');
+		$especificas = $especificas->findAll($criteria);
 
 		$especificas_lista = CHtml::listData($especificas, function($especificas) {
 																	return CHtml::encode($especificas->partida_id);
@@ -237,7 +238,7 @@ class PartidaProductosController extends Controller
 	*/
 	public function actionEliminar()
 	{
-		$model = new PartidaProductos();
+		$model = new PartidaProductos('sea');
 
 		$listaProductos =array();
 

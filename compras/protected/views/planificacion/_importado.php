@@ -26,7 +26,12 @@
 			array(
 				'htmlOptions' => array('nowrap'=>'nowrap'),
 				'class'=>'booster.widgets.TbButtonColumn',
-				'template'=>'{delete}',
+				'template'=>'{modificar} {delete}',
+				'buttons' => array(
+					'modificar'=>array(
+							'url'=> 'Yii::app()->createUrl("presupuestoImportacion/modificarProducto", array("cid"=>$data->codigo_ncm_id,"pid"=>$data->producto_id,"ppid"=>$data->presupuesto_partida_id))'
+						)
+					),
 				/*'buttons'=>array(
 					'delete'=>array(
 						'url'=>'Yii::app()->createUrl("/planificacion/eliminarProductoImportado", array("ppid"=>$data->presupuesto_partida_id,"pid"=>$data->producto_id,"cn"=>$data->codigo_ncm_id))',

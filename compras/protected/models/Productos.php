@@ -90,6 +90,7 @@ class Productos extends CActiveRecord
 	public function etiquetaProducto(){
 		return CHtml::encode($this->numeroProducto().' - '. $this->nombre);
 	}
+	
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *

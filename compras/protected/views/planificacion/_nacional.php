@@ -23,7 +23,12 @@
 				'htmlOptions' => array('nowrap'=>'nowrap'),
 	
 				'class'=>'booster.widgets.TbButtonColumn',
-				'template'=>'{delete}', // {view} {update}
+				'template'=>'{modificar} {delete}', // {view} {update}
+				'buttons' => array(
+					'modificar'=>array(
+							'url'=> 'Yii::app()->createUrl("presupuestoProductos/modificarProducto", array("id"=>$data->presupuesto_id))'
+						)
+					),
 				//'deleteConfirmation'=>"js:'El producto '+$(this).parent().parent().children(':first-child').text()+' será borrado! Continuar?'",
 				//'viewButtonUrl'=>null,
 				//'updateButtonUrl'=>null,

@@ -33,6 +33,27 @@
 											)
 										)
 									); */
+
+							    echo $form->select2Group($usuario, 'usuario_id',
+							                        array(
+							                            'wrapperHtmlOptions' => array(
+							                                'class' => 'col-sm-5',
+							                            ),
+							                            'label'=>'Seleccione Ente u Organo',
+							                            'widgetOptions' => array(
+							                                'asDropDownList' => true,
+							                                'data' => $lista_usuarios,
+							                                'htmlOptions'=>array(),
+							                                'options' => array(
+							                                    //'tags' => array('clever', 'is', 'better', 'clevertech'),
+							                                    'placeholder' => 'Seleccionar Ente u Organo',
+							                                    // 'width' => '40%', 
+							                                    'tokenSeparators' => array(',', ' ')
+							                                )
+							                            )
+							                        )
+							                    );
+
 							    echo $form->select2Group($usuario, 'usuario_id',
 							                        array(
 							                            'wrapperHtmlOptions' => array(

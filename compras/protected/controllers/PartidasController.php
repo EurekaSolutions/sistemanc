@@ -1,6 +1,6 @@
 <?php
 
-class ProductosController extends Controller
+class PartidasController extends Controller
 {
 	/**
 	* @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -26,18 +26,20 @@ class ProductosController extends Controller
 	public function accessRules()
 	{
 		return array(
-
 		array('allow',  // allow all users to perform 'index' and 'view' actions
 			'actions'=>array('index','view'),
-			'users'=>array('admin'),
+			'users'=>array('*'),
+			'roles'=>array('admin'),
 		),
 		array('allow', // allow authenticated user to perform 'create' and 'update' actions
 			'actions'=>array('create','update'),
-			'users'=>array('admin'),
+			'users'=>array('@'),
+			'roles'=>array('admin'),
 		),
 		array('allow', // allow admin user to perform 'admin' and 'delete' actions
 			'actions'=>array('admin','delete'),
-			'users'=>array('admin'),
+			'users'=>array('@'),
+			'roles'=>array('admin'),
 		),
 		array('deny',  // deny all users
 			'users'=>array('*'),
@@ -62,16 +64,16 @@ class ProductosController extends Controller
 	*/
 	public function actionCreate()
 	{
-		$model=new Productos;
+		$model=new Partidas;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Productos']))
+		if(isset($_POST['Partidas']))
 		{
-			$model->attributes=$_POST['Productos'];
+			$model->attributes=$_POST['Partidas'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->producto_id));
+				$this->redirect(array('view','id'=>$model->partida_id));
 		}
 
 		$this->render('create',array(
@@ -91,11 +93,12 @@ class ProductosController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Productos']))
+		if(isset($_POST['Partidas']))
 		{
-			$model->attributes=$_POST['Productos'];
+			$model->attributes=$_POST['Partidas'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->producto_id));
+				//$this->redirect(array('view','id'=>$model->partida_id));
+				$this->redirect(array('admin'));
 		}
 
 		$this->render('update',array(
@@ -128,10 +131,11 @@ class ProductosController extends Controller
 		*/
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Productos');
+/*		$dataProvider=new CActiveDataProvider('Partidas');
 			$this->render('index',array(
 			'dataProvider'=>$dataProvider,
-		));
+		));*/
+		$this->redirect(array('admin'));
 	}
 
 	/**
@@ -139,10 +143,10 @@ class ProductosController extends Controller
 	*/
 	public function actionAdmin()
 	{
-		$model=new Productos('search');
+		$model=new Partidas('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Productos']))
-			$model->attributes=$_GET['Productos'];
+		if(isset($_GET['Partidas']))
+			$model->attributes=$_GET['Partidas'];
 
 		$this->render('admin',array(
 		'model'=>$model,
@@ -156,7 +160,7 @@ class ProductosController extends Controller
 	*/
 	public function loadModel($id)
 	{
-		$model=Productos::model()->findByPk($id);
+		$model=Partidas::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -168,7 +172,7 @@ class ProductosController extends Controller
 	*/
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='productos-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='partidas-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

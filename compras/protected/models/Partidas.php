@@ -10,6 +10,7 @@
  * @property string $p3
  * @property string $p4
  * @property string $nombre
+ * @property boolean $habilitada
  *
  * The followings are the available model relations:
  * @property PresupuestoPartidas[] $presupuestoPartidases
@@ -35,9 +36,10 @@ class Partidas extends CActiveRecord
 		return array(
 			array('p1, p2, p3, p4, nombre', 'required'),
 			array('p1, p2, p3, p4', 'length', 'max'=>4),
+			array('habilitada', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('partida_id, p1, p2, p3, p4, nombre', 'safe', 'on'=>'search'),
+			array('partida_id, p1, p2, p3, p4, nombre, habilitada', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,10 +60,33 @@ class Partidas extends CActiveRecord
 
 	public function defaultScope()
 	{
+/*		//print_r($this);
+		CVarDumper::dump($this->getScenario());
+		echo ($this->scenario!='search')?'habilitada=true':'';
+		//Yii::app()->end();*/
 	    return array(
-	        //'condition'=> "username <> ''",
+	        'condition'=> ($this->getScenario()!='search')?'habilitada=true':'habilitada=true OR habilitada=false',//"username <> ''",
 	        'order'=> "p1 ASC, p2 ASC, p3 ASC, p4 ASC",
 	    );
+	}
+
+	public function scopes()
+	{
+	    return array(
+		  	'todas'=>array(
+		          'condition'=>'habilitada=true OR habilitada=false',
+		    ),
+		    'habilitadas'=>array(
+		          'condition'=>'habilitada=true',
+		    ),
+		  	'noHabilitadas'=>array(
+		          'condition'=>'habilitada=false',
+		    ),
+/*		    'recently'=>array(
+		          'order'=>'create_time DESC',
+		          'limit'=>5,
+		    ),*/
+    );
 	}
 
 	/**
@@ -76,6 +101,7 @@ class Partidas extends CActiveRecord
 			'p3' => 'P3',
 			'p4' => 'P4',
 			'nombre' => 'Nombre',
+			'habilitada' => 'Habilitada',
 		);
 	}
 
@@ -149,6 +175,7 @@ class Partidas extends CActiveRecord
 		$criteria->compare('p3',$this->p3,true);
 		$criteria->compare('p4',$this->p4,true);
 		$criteria->compare('nombre',$this->nombre,true);
+		$criteria->compare('habilitada',$this->habilitada);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

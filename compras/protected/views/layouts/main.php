@@ -119,7 +119,11 @@
 									array('label' => 'Asociar Productos a Partidas', 'url'=>array('/partidaProductos/create'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 									array('label' => 'Eliminar Productos de Partidas', 'url'=>array('/partidaProductos/eliminar'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 									array('label' => 'Modificar correos', 'url'=>array('/planificacion/modificarcorreo'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
-									array('label' => 'Gestionar montos de Iva', 'url'=>array('/iva/index'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), 
+									array('label' => 'Gestionar montos de IVA', 'url'=>array('/iva/index'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), 
+									array('label' => 'Gestionar partidas', 'url'=> array('/partidas/index'), /*'items'=>array(
+													array('label' => 'Crear', 'url'=>array('/partidas/create'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), 
+													array('label' => 'Habilitar/Deshabilitar', 'url'=>array('/partidas/admin'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), 
+										),*/ 'visible'=>(Yii::app()->user->checkAccess('admin'))), 
 									//array('label' => 'Crear organos', 'url'=>array('/entesOrganos/index'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), 
 									array('label' => 'Crear organos', 'url'=>array('/planificacion/cargamasiva'), 'visible'=>(Yii::app()->user->checkAccess('admin'))),
 									array('label' => 'Fuentes financiamiento', 'url'=>array('/fuentesFinanciamiento'), 'visible'=>(Yii::app()->user->checkAccess('admin'))),  

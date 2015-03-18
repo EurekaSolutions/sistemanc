@@ -27,6 +27,11 @@ class PresupuestoImportacionController extends Controller
 	public function accessRules()
 	{
 		return array(
+		array('allow',  // allow all users to perform 'index' and 'view' actions
+			'actions'=>array('modificarProducto'),
+			'users'=>array('@'),
+			'roles'=>array('admin'),
+		),	
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view'),
 				'users'=>array('admin'),
@@ -45,6 +50,66 @@ class PresupuestoImportacionController extends Controller
 		);
 	}
 
+
+	/**
+	* Updates a particular model.
+	* If update is successful, the browser will be redirected to the 'view' page.
+	* @param integer $id the ID of the model to be updated
+	*/
+	public function actionModificarProducto($cid, $pid, $ppid)
+	{
+		$model=$this->loadModel(array('codigo_ncm_id'=>$cid,'producto_id'=>$pid,'presupuesto_partida_id'=>$ppid));
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['PresupuestoImportacion']))
+		{
+			$modelNuevo = new PresupuestoProductos();
+
+			$modelNuevo->attributes = $_POST['PresupuestoImportacion'];
+			//print_r($_POST['PresupuestoProductos']);
+			//Yii::app()->end();
+			//$model = $this->loadModel($id);
+
+			//print_r($model);
+
+/*			if($modelNuevo->cantidad > $model->cantidad || $modelNuevo->monto_presupuesto > $model->monto_presupuesto)
+			{*/
+
+				$cantDif = $modelNuevo->cantidad - $model->cantidad;
+				$costoUniDif = $modelNuevo->monto_presupuesto - $model->monto_presupuesto;
+				$montoPresuDif = $cantDif * $costoUniDif * $model->divisa->tasa->tasa;
+
+				if($modelNuevo->cantidad < $model->cantidad && $modelNuevo->monto_presupuesto < $model->monto_presupuesto){
+					echo 'antes: '.$montoPresuDif.'  ';
+					$montoPresuDif = -$montoPresuDif;
+					echo 'despues: '.$montoPresuDif;
+					Yii::app()->end();
+				}
+
+				if($model->presupuestoPartida->montoCargadoPartida()+$montoPresuDif >= $model->presupuestoPartida->monto_presupuestado){
+					Yii::app()->user->setFlash('error', "El cambio no puede realizarse, el monto sobrepasa la cantidad de presupuesto disponible para la partida asociada al producto.");
+				}else{
+					//if($modelNuevo->costo_unidad)
+					//$modelNuevo->monto_presupuesto = $modelNuevo->cantidad * $modelNuevo->costo_unidad;
+					//$model->scenario = 'update';
+					$model->monto_presupuesto = $modelNuevo->monto_presupuesto;
+					$model->cantidad = $modelNuevo->cantidad;
+					//$model->monto_presupuesto=$model->costo_unidad * $model->cantidad;
+					if($model->save()){
+						Yii::app()->user->setFlash('success', "El cambio fue realizado con éxito.");
+							//$this->redirect(array('view','id'=>$model->presupuesto_id));
+					}
+				}
+			//}
+
+		}
+
+		$this->render('update',array(
+		'model'=>$model,
+		));
+	}
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed

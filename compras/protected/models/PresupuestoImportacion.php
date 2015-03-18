@@ -36,7 +36,7 @@ class PresupuestoImportacion extends CActiveRecord
 			array('codigo_ncm_id, producto_id, cantidad, fecha_llegada, monto_presupuesto, tipo, divisa_id, descripcion', 'required'),
 			array('monto_presupuesto, monto_ejecutado', 'numerical'),
 			array('cantidad', 'numerical', 'integerOnly'=>true, 'min'=>1),
-			array('codigo_ncm_id', 'codigoNcmUnico'),
+			array('codigo_ncm_id', 'codigoNcmUnico', 'except'=>'update'),
 			array('tipo', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
