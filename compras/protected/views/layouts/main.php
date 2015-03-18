@@ -110,6 +110,9 @@
 									//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 								), 'visible'=>(Yii::app()->user->checkAccess('ente')),
 							),
+
+
+			
 							array(
 								'label' => 'Administrador',
 								'items' => array(

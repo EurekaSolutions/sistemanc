@@ -116,6 +116,18 @@ class PlanificacionController extends Controller
 		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
 		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
 
+
+		/*$mPDF1 = Yii::app()->ePdf->mpdf();
+ 
+        # You can easily override default constructor's params
+        $mPDF1 = Yii::app()->ePdf->mpdf('', 'A5');
+ 
+        # render (full page)
+        $mPDF1->WriteHTML($this->render('producto', array('proyectos' => $proyectos, 'acciones' =>$acciones), true));
+
+        $mPDF1->Output(); */
+
+
 		$this->render('producto', array('proyectos' => $proyectos, 'acciones' =>$acciones));
 	}
 
