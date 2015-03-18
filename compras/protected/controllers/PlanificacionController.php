@@ -45,7 +45,7 @@ class PlanificacionController extends Controller
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array( 'create','update','partidas','vistaparcial', 'buscarpartida', 
 								'buscargeneral', 'buscargeneralproyecto', 'buscarNcm', 	'buscarproductospartida',
-								 'reportes',),
+								 'reportes', 'producto'),
 				'users'=>array('@'),
 				'roles'=>array('ente'),
 			),
@@ -102,6 +102,21 @@ class PlanificacionController extends Controller
 
 		$this->render('reportes', array('proyectos' => $proyectos, 'acciones' => $acciones));
 
+	}
+
+
+	public function actionProducto()
+	{
+
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+
+		$proyectos = $usuario->enteOrgano->proyectos;
+
+		$criteria = new CDbCriteria();
+		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
+		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
+
+		$this->render('producto', array('proyectos' => $proyectos, 'acciones' =>$acciones));
 	}
 
 	public function actionGesUsuEntes()
