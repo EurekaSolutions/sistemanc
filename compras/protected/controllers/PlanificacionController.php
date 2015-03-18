@@ -974,7 +974,12 @@ class PlanificacionController extends Controller
 
 		$accionestodas = $this->obtenerAccionesCentralizadas();
 
-		$fuentes = FuentesFinanciamiento::model()->findAll();
+		
+		$criteria = new CDbCriteria();
+		$criteria->condition = "activo=true";      
+	
+
+		$fuentes = FuentesFinanciamiento::model()->findAll($criteria);
 
 		if(isset($_POST['Acciones']))
 	    {
@@ -1197,7 +1202,11 @@ class PlanificacionController extends Controller
 	      	//$model->ente_organo_id = $usuario->ente_organo_id;
 		$fuen = new FuentesFinanciamiento('buscar');
 
-	    $fuentes = $fuen::model()->findAll();
+		$criteria = new CDbCriteria();
+		$criteria->condition = "activo=true";      
+		
+
+	    $fuentes = $fuen::model()->findAll($criteria);
 	    
 	    $partidas_principal = $this->obtenerPartidas("*");
 	      	
