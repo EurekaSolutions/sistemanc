@@ -43,7 +43,7 @@ return false;
 'dataProvider'=>$model->search(),
 'filter'=>$model,
 'columns'=>array(
-		'id',
+		//'id',
 		'tipo',
 		'porcentaje',
 		'fecha',
