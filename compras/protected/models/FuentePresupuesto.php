@@ -10,6 +10,8 @@
  */
 class FuentePresupuesto extends CActiveRecord
 {
+
+	public $monto;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -26,7 +28,8 @@ class FuentePresupuesto extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fuente_id, presupuesto_partida_id', 'required'),
+			array('fuente_id, presupuesto_partida_id, monto', 'required'),
+			array('monto', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, fuente_id, presupuesto_partida_id', 'safe', 'on'=>'search'),

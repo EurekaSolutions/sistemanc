@@ -307,14 +307,11 @@
                              <a id="add" style="cursor:pointer">Agregar fuente</a>
   <table id="mytable" width="300" border="1" cellspacing="0" cellpadding="2">
   <tbody>
-    <?php /*foreach ($model->fuente as $key => $value) 
-    {
-        # code...
-    }*/
-    ?>
-    <tr id='producto1' class="producto">
+    <?php foreach ($fuentesSel as $key => $value) 
+    { ?>
+    <tr id='producto<?php echo $key; ?>' class="producto">
     <td>
-        <?php echo $form->dropDownListGroup($model, 'fuente',
+        <?php echo $form->dropDownListGroup($value, 'fuente_id',
                                         array(
                                             'wrapperHtmlOptions' => array(
                                                 'class' => 'col-sm-2',
@@ -327,26 +324,35 @@
                                                 //'options'=>array($model->proyecto_id => array('selected'=>true)),
                                                 'htmlOptions' => array(//'prompt' => 'Seleccionar la fuente de financiamiento',
                                                             'multiple' => false,
-                                                            //'name'=>'Proyectos[fuente][]'
+                                                            'name'=>'f[][FuentePresupuesto[fuente_id]]',
+                                                            'id' => 'fuente'.$key,
                                                             ),
                                             )
                                         )
-                                    );?>
+                                    );
+        //echo CHtml::dropDownList('fuente', $select, $fuentes,array('empty' => 'Seleccione fuente de financiamiento'));
+        ?>
+
     </td>
     <td>
         <?php
-                                            echo $form->textFieldGroup($model,'monto',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span3','maxlength'=>20, /*'name' => 'Proyectos[monto][]'*/))));
+                     echo $form->textFieldGroup($model,'monto',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span3','maxlength'=>20, 'name' => 'f[][FuentePresupuesto[monto]]', 'id' => 'monto'.$key))));
+                                       //echo CHtml::textField('monto', 'some value');
                                         ?>
     </td>
       <td><a  id="delete1" style="cursor:pointer">Eliminar fuente</a> </td>
     </tr>
+    <?php
+            }
+    ?>
     </tbody>
   </table>
 
-                            
+                           
                                     
 
-                            <?php       
+                            <?php   
+
 
                                 /*  $this->widget(
                                         'booster.widgets.TbButton',

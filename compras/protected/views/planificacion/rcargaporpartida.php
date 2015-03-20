@@ -1,4 +1,4 @@
-<h4 style="text-align: center;">REPORTE 2</h4><br>
+<h4 style="text-align: center;">REPORTE CARGA POR PARTIDAS</h4><br>
 
 
 		<h4 style="text-align: center;">ACCIONES CENTRALIZADAS</h4><br>
@@ -38,10 +38,7 @@
 							    <thead>
 							        <tr class="principaltr">
 							            <th data-field="conapre">Nombre</th>
-							            <th data-field="nombreoue">Partida</th>
-							            <th data-field="tipo">General</th>
-							            <th data-field="tipo">Especifica</th>
-							            <th data-field="tipo">Subespecifica</th>
+							            <th data-field="nombreoue">Número de partida</th>
 							            <th data-field="tipo">Monto asignado</th>
 							            <th data-field="tipo">Monto cargado</th>
 							            <th data-field="tipo">% Carga</th>
@@ -63,10 +60,7 @@
 							    			//echo '<tr><td>'.$presupuestoPartida['presupuesto_partida_id'].'<t/d></tr>';
 								    			echo '<tr>';
 												echo '<td>'.$proyectomonto->partida['nombre'].'</td>';
-												echo '<td>'.$proyectomonto->partida['p1'].'</td>';
-												echo '<td>'.$proyectomonto->partida['p2'].'</td>';
-												echo '<td>'.$proyectomonto->partida['p3'].'</td>';
-												echo '<td>'.$proyectomonto->partida['p4'].'</td>';
+												echo '<td>'.$proyectomonto->partida['p1'].'.'.$proyectomonto->partida['p2'].'.'.$proyectomonto->partida['p3'].'.'.$proyectomonto->partida['p4'].'</td>';
 												echo '<td>'.number_format($proyectomonto->monto_presupuestado,2,',','.').'</td>';
 												echo '<td>'.number_format($valor,2,',','.').'</td>';
 												$porcentajePartida += $valor*100/$proyectomonto->monto_presupuestado;
@@ -121,10 +115,7 @@
 				    <thead>
 				        <tr class="principaltr">
 				            <th data-field="conapre">Nombre</th>
-				            <th data-field="nombreoue">Partida</th>
-				            <th data-field="tipo">General</th>
-				            <th data-field="tipo">Especifica</th>
-				            <th data-field="tipo">Subespecifica</th>
+				            <th data-field="nombreoue">Número de partida</th>
 				            <th data-field="tipo">Monto asignado</th>
 				            <th data-field="tipo">Monto cargado</th>
 				            <th data-field="tipo">% Carga</th>
@@ -138,10 +129,7 @@
 
 			    				echo '<tr>';
 									echo '<td>'.$proyectomonto->partida['nombre'].'</td>';
-									echo '<td>'.$proyectomonto->partida['p1'].'</td>';
-									echo '<td>'.$proyectomonto->partida['p2'].'</td>';
-									echo '<td>'.$proyectomonto->partida['p3'].'</td>';
-									echo '<td>'.$proyectomonto->partida['p4'].'</td>';
+									echo '<td>'.$proyectomonto->partida['p1'].'.'.$proyectomonto->partida['p2'].'.'.$proyectomonto->partida['p3'].'.'.$proyectomonto->partida['p4'].'</td>';
 									echo '<td>'.number_format($proyectomonto->monto_presupuestado,2,',','.').'</td>';
 									$partida_dinero_nacional = 0;
 									foreach ($proyectomonto->presupuestoProductos as $key => $value) {

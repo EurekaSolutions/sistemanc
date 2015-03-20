@@ -45,7 +45,7 @@ class PlanificacionController extends Controller
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array( 'create','update','partidas','vistaparcial', 'buscarpartida', 
 								'buscargeneral', 'buscargeneralproyecto', 'buscarNcm', 	'buscarproductospartida',
-								 'reportes', 'producto'),
+								 'Rcargaporpartida', 'rproducto'),
 				'users'=>array('@'),
 				'roles'=>array('ente'),
 			),
@@ -56,7 +56,7 @@ class PlanificacionController extends Controller
 			),
 
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('crearente','misentes', 'usuariosentes', 'gesUsuEntes'),
+				'actions'=>array('crearente','misentes', 'usuariosentes', 'gesUsuEntes', 'rporusuario'),
 				'users'=>array('@'),
 				'roles'=>array('organo'),
 			),
@@ -74,7 +74,23 @@ class PlanificacionController extends Controller
 		);
 	}
 
-	public function actionReportes()
+	public function actionRporusuario()
+	{
+
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+
+		$entesadscritos = $usuario->enteOrgano->hijos;
+
+		foreach ($entesadscritos as $key => $value) {
+			$entes[] = $value->enteOrgano;
+		}
+
+		//print_r($entes);
+
+		$this->render('rporusuario', array('misentes' => $entes));
+	}
+
+	public function actionRcargaporpartida()
 	{
 
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
@@ -100,12 +116,12 @@ class PlanificacionController extends Controller
 
         $mPDF1->Output(); */
 
-		$this->render('reportes', array('proyectos' => $proyectos, 'acciones' => $acciones));
+		$this->render('rcargaporpartida', array('proyectos' => $proyectos, 'acciones' => $acciones));
 
 	}
 
 
-	public function actionProducto()
+	public function actionRproducto()
 	{
 
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
@@ -128,7 +144,7 @@ class PlanificacionController extends Controller
         $mPDF1->Output(); */
 
 
-		$this->render('producto', array('proyectos' => $proyectos, 'acciones' =>$acciones));
+		$this->render('rproducto', array('proyectos' => $proyectos, 'acciones' =>$acciones));
 	}
 
 	public function actionGesUsuEntes()
@@ -1200,14 +1216,14 @@ class PlanificacionController extends Controller
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 
 	      	//$model->ente_organo_id = $usuario->ente_organo_id;
-		$fuen = new FuentesFinanciamiento('buscar');
+
 
 		$criteria = new CDbCriteria();
 		$criteria->condition = "activo=true";      
-		
-
-	    $fuentes = $fuen::model()->findAll($criteria);
+	    $fuentes = FuentesFinanciamiento::model()->findAll($criteria);
 	    
+	    $fuentesSel[] = new FuentePresupuesto();
+
 	    $partidas_principal = $this->obtenerPartidas("*");
 	      	
 		$proyectos = $usuario->enteOrgano->proyectos;
@@ -1221,6 +1237,28 @@ class PlanificacionController extends Controller
 	        $model->subespecifica = $_POST['Proyectos']['subespecifica'];
 	        $model->ente_organo_id = $usuario->ente_organo_id;
 	        $model->codigo = $model->nombreid;
+
+			print_r($_POST['f']);
+			Yii::app()->end();
+	       
+	       foreach ($_POST['f'] as $key => $value) {
+	        	if($key != 'Proyectos'){
+	        		$fuentePresu = new FuentePresupuesto();
+	        		$fuentePresu->fuente_id= $value->fuente_id;
+	        		$fuentePresu->monto = $value->monto;
+
+	        		//$fuentePresu->validate()
+	        		
+	        		$fuenteSel[$key] = $fuentePresu;
+
+	        		/*if($fuenteSel[$key]->save())
+	        			Yii*/
+
+	        	}	
+	        	# code...
+	        }
+
+
 
 	        $nombre_proyecto = Proyectos::model()->find('codigo=:codigo and ente_organo_id=:ente_organo_id', array(':codigo' => $model->codigo, ':ente_organo_id' => $usuario->ente_organo_id));
 
@@ -1300,21 +1338,19 @@ CVarDumper::dump($model);
 					    	$especificas_todas = $this->buscar_especifica($model->general);
 					    	
 					    	$this->render('asignarpartidasproyecto',array(
-							'model'=>$model, 'fuentes' => $fuentes, 'generales_todas' => $generales_todas, 'partidas' => $partidas_principal, 'proyectos' => $proyectos, 'especificas_todas' => $especificas_todas));
+							'model'=>$model, 'fuentes' => $fuentes, 'generales_todas' => $generales_todas, 'partidas' => $partidas_principal, 'proyectos' => $proyectos, 'especificas_todas' => $especificas_todas, 'fuentesSel' => $fuentesSel));
 							
 					    }
 
 					    Yii::app()->end();
 						
-							$this->render('asignarpartidasproyecto',array('model'=>$model, 'fuentes' => $fuentes, 'generales_todas' => $generales_todas, 'partidas' => $partidas_principal, 'proyectos' => $proyectos));
+							$this->render('asignarpartidasproyecto',array('model'=>$model, 'fuentes' => $fuentes, 'generales_todas' => $generales_todas, 'partidas' => $partidas_principal, 'proyectos' => $proyectos, 'fuentesSel' => $fuentesSel));
 						Yii::app()->end();
 				}
 		    }
 	    }
 		
-		$this->render('asignarpartidasproyecto',array(
-						'model'=>$model, 'fuentes' => $fuentes, 'partidas' => $partidas_principal, 'proyectos' => $proyectos
-			   ));
+		$this->render('asignarpartidasproyecto',array('model'=>$model, 'fuentes' => $fuentes, 'partidas' => $partidas_principal, 'proyectos' => $proyectos, 'fuentesSel' => $fuentesSel));
 	}
 
 	public function actionAdministracion()
