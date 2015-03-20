@@ -76,13 +76,18 @@ class PresupuestoProductosController extends Controller
 
 			//print_r($model);
 
-			if($modelNuevo->cantidad > $model->cantidad || $modelNuevo->costo_unidad > $model->costo_unidad)
-			{
+			//if($modelNuevo->cantidad > $model->cantidad || $modelNuevo->costo_unidad > $model->costo_unidad)
+			//{
 				$cantDif = $modelNuevo->cantidad - $model->cantidad;
 				$costoUniDif = $modelNuevo->costo_unidad - $model->costo_unidad;
 				$montoPresuDif = $cantDif * $costoUniDif;
 
-				if($model->proyectoPartida->montoCargadoPartida()+$montoPresuDif >= $model->proyectoPartida->monto_presupuestado){
+				if($modelNuevo->cantidad < $model->cantidad && $modelNuevo->costo_unidad < $model->costo_unidad){
+					$montoPresuDif = -$montoPresuDif;
+				}
+
+
+				if($model->proyectoPartida->montoCargadoPartida()+$montoPresuDif > $model->proyectoPartida->monto_presupuestado){
 					Yii::app()->user->setFlash('error', "El cambio no puede realizarse, el monto sobrepasa la cantidad de presupuesto disponible para la partida asociada al producto.");
 				}else{
 					//if($modelNuevo->costo_unidad)
@@ -96,7 +101,7 @@ class PresupuestoProductosController extends Controller
 							//$this->redirect(array('view','id'=>$model->presupuesto_id));
 					}
 				}
-			}
+			//}
 
 
 		}

@@ -68,6 +68,7 @@ class EntesOrganos extends CActiveRecord
 		return array(
 			'usuarios' => array(self::HAS_MANY, 'Usuarios', 'ente_organo_id'),
 			'usuarioPrincipal' => array(self::HAS_ONE, 'Usuarios', 'ente_organo_id', 'condition'=>"rol='normal' OR rol ='ente'"),
+			'usuariosSecundarios' => array(self::HAS_MANY, 'Usuarios', 'ente_organo_id', 'condition'=>'rol=\'presupuesto\' OR rol=\'producto\''),	
 			'padre' => array(self::HAS_ONE, 'EntesAdscritos', 'ente_organo_id'),
 			'hijos' => array(self::HAS_MANY, 'EntesAdscritos', 'padre_id'),
 			'proyectos' => array(self::HAS_MANY, 'Proyectos', 'ente_organo_id'),

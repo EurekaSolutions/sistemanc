@@ -1265,8 +1265,8 @@ class PlanificacionController extends Controller
 	        $model->nombre = $nombre_proyecto->nombre;
 	        
 	        $model->setScenario(!empty($model->subespecifica) ? 'creaproyectose' : 'creaproyecto');
-CVarDumper::dump($model);
-//Yii::app()->end();
+/*CVarDumper::dump($model);
+//Yii::app()->end();*/
 	        if($model->validate())
 	        {
 

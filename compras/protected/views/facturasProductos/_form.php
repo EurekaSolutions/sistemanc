@@ -57,7 +57,7 @@
 	<?php 	
 	
 		$list = CHtml::listData(PresupuestoPartidas::model()->findAllByAttributes(array('ente_organo_id'=>Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->ente_organo_id)), 
-			'partida_id', function($presuPartida){ return $presuPartida->partida->etiquetaPartida();});
+			'partida_id', function($presuPartida){ /*return $presuPartida->partida->etiquetaPartida();*/});
 			
 		echo CHtml::label('Seleccionar partida', 'partida');
 		echo "<br>";
@@ -257,7 +257,7 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function() {
+/*    $(document).ready(function() {
     	var numId = 1;
         $("#add").click(function() {
         		$clone = $("#mytable tbody>tr:last").clone(true);
@@ -289,7 +289,7 @@
 	    });
 
     });
-</script>
+*/</script>
 
 <!-- 
 <?php echo CHtml::ajaxLink('Agregar Producto', CController::createUrl('facturasProductos/filaProducto'), array(

@@ -82,13 +82,13 @@ class PresupuestoImportacionController extends Controller
 				$montoPresuDif = $cantDif * $costoUniDif * $model->divisa->tasa->tasa;
 
 				if($modelNuevo->cantidad < $model->cantidad && $modelNuevo->monto_presupuesto < $model->monto_presupuesto){
-					echo 'antes: '.$montoPresuDif.'  ';
+					//echo 'antes: '.$montoPresuDif.'  ';
 					$montoPresuDif = -$montoPresuDif;
-					echo 'despues: '.$montoPresuDif;
-					Yii::app()->end();
+					//echo 'despues: '.$montoPresuDif;
+					//Yii::app()->end();
 				}
 
-				if($model->presupuestoPartida->montoCargadoPartida()+$montoPresuDif >= $model->presupuestoPartida->monto_presupuestado){
+				if($model->presupuestoPartida->montoCargadoPartida()+$montoPresuDif > $model->presupuestoPartida->monto_presupuestado){
 					Yii::app()->user->setFlash('error', "El cambio no puede realizarse, el monto sobrepasa la cantidad de presupuesto disponible para la partida asociada al producto.");
 				}else{
 					//if($modelNuevo->costo_unidad)

@@ -84,6 +84,27 @@ class Usuarios extends CActiveRecord
 			//array('repetir_contrasena', 'safe'),
 		);
 	}
+
+
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
+		return array(
+			'enteOrgano' => array(self::BELONGS_TO, 'EntesOrganos', 'ente_organo_id'),
+			'userLoginAttempts' => array(self::HAS_MANY, 'UserLoginAttempt', 'user_id', 'order'=>'performed_on DESC'),
+			'userUsedPasswords' => array(self::HAS_MANY, 'UserUsedPassword', 'user_id'),
+			'presupuestoPartidas' => array(self::HAS_MANY, 'PresupuestoPartidas', 'ente_organo_id'),
+		);
+	}
+
+	public function actual(){
+		return $this->findByPk(Yii::app()->user->getId());
+	}
+
 /*
 	public function getPrimaryKey(){
 		return $this->usuario_id;
@@ -203,19 +224,6 @@ class Usuarios extends CActiveRecord
 		}
 		else
 			return false;
-	}
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-			'enteOrgano' => array(self::BELONGS_TO, 'EntesOrganos', 'ente_organo_id'),
-			'userLoginAttempts' => array(self::HAS_MANY, 'UserLoginAttempt', 'user_id', 'order'=>'performed_on DESC'),
-			'userUsedPasswords' => array(self::HAS_MANY, 'UserUsedPassword', 'user_id'),
-		);
 	}
 
 	/**
