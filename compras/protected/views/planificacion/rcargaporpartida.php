@@ -6,9 +6,12 @@
 		
 			    	<?php
 
+			    	//echo 'acciones';print_r($acciones);
+
+			    		$tiene_acciones = false;
 			    		foreach ($acciones as $key => $accion) 
 			    		{
-
+			    			$tiene_acciones = true;
 							$monto = $this->montoAccion($accion);
 
 			    		?>
@@ -18,6 +21,8 @@
 					            <th data-field="conapre">Código</th>
 					            <th data-field="nombreoue">Denominación</th>
 					            <th data-field="tipo">Bs. Solicitados</th>
+					            <th data-field="tipo"></th>
+					            <th data-field="tipo"></th>
 					            <th data-field="tipo"></th>
 					        </tr>
 					    	</thead>
@@ -34,17 +39,16 @@
 			    			</tr>
 			    			<tr>
 			    			
-			    			<table data-toggle="table" data-url="" data-cache="false" data-height="">
-							    <thead>
+			    			<div>
 							        <tr class="principaltr">
 							            <th data-field="conapre">Nombre</th>
 							            <th data-field="nombreoue">Número de partida</th>
 							            <th data-field="tipo">Monto asignado</th>
 							            <th data-field="tipo">Monto cargado</th>
 							            <th data-field="tipo">% Carga</th>
+
 							        </tr>
-							    </thead>
-							    <tbody>
+							    
 							    	<?php
 
 								    	$contador = 0;
@@ -68,8 +72,7 @@
 												echo '</tr>';
 							    			}
 							    	?>
-							    </tbody>
-							</table>
+							</div>
 			    			</tr>
 			    			<tr>
 			    			
@@ -82,6 +85,11 @@
 			
 			<?php
 				   }
+
+				if(!$tiene_acciones)
+				{
+					echo '<h4 style="text-align: center;">El ente no tiene acciones cargadas</h4><br>';
+				}
 			?>
 
 			
@@ -89,7 +97,13 @@
 
 			
 
-			<?php  foreach ($proyectos as $key => $value){ 
+			<?php 
+
+			//echo 'proyectos'; print_r($proyectos);
+				$tiene_proyecto = false;
+
+			foreach ($proyectos as $key => $value){ 
+				$tiene_proyecto = true;
 						$monto = $this->montoProyecto($value);
 					$valor = 0;
 			?> 
@@ -100,6 +114,9 @@
 		            <th data-field="conapre">Código</th>
 		            <th data-field="nombreoue">Denominación</th>
 		            <th data-field="tipo">Bs. Solicitados</th>
+		            <th data-field="tipo"></th>
+					<th data-field="tipo"></th>
+					<th data-field="tipo"></th>
 
 		        </tr>
 		    </thead>
@@ -111,8 +128,7 @@
 		    		<td><?php echo number_format($monto,2,',','.'); ?></td>
 		    	</tr>
 		    	<tr>
-		    		<table data-toggle="table" data-url="" data-cache="false" data-height="">
-				    <thead>
+		    		<div>
 				        <tr class="principaltr">
 				            <th data-field="conapre">Nombre</th>
 				            <th data-field="nombreoue">Número de partida</th>
@@ -120,8 +136,7 @@
 				            <th data-field="tipo">Monto cargado</th>
 				            <th data-field="tipo">% Carga</th>
 				        </tr>
-				    </thead>
-				    <tbody>
+
 		    		<?php
 		    			$contador = 0;
 		    			$porcentajePartida = 0;
@@ -153,8 +168,7 @@
 						}
 						
 		    		?>
-					</tbody>
-					</table>
+					</div>
 		    	</tr>
 		    		<tr>
 		    			<td colspan="8" align="right" style="text-align:right !important">Porcentaje total de carga proyecto: <strong><?php echo number_format(($porcentajePartida/$contador),2,',','.').' %'; ?></strong></td>
@@ -163,4 +177,11 @@
 		    </tbody>
 		</table>
 		<?php //$mfinal += $monto;
-				} ?>
+				}
+
+				if(!$tiene_proyecto)
+				{
+					echo '<h4 style="text-align: center;">El ente no tiene proyectos cargados</h4><br>';
+				}
+
+			/// no tiene proyectos ?>

@@ -56,7 +56,7 @@ class PlanificacionController extends Controller
 			),
 
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('crearente','misentes', 'usuariosentes', 'gesUsuEntes', 'rporusuario'),
+				'actions'=>array('crearente','misentes', 'usuariosentes', 'gesUsuEntes', 'rporusuario', 'ajaxreportes', 'actividad'),
 				'users'=>array('@'),
 				'roles'=>array('organo'),
 			),
@@ -72,6 +72,130 @@ class PlanificacionController extends Controller
 				'users'=>array('*'),
 			),
 		);
+	}
+
+	public function actionActividad()
+	{
+		$this->render('actividad', array('misentes' => $entes));
+	}
+
+	public function actionAjaxreportes()
+	{
+		if(isset($_GET['param']) and isset($_GET['report']))
+		{
+			if($_GET['report']==1)
+			{
+				$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+				
+			
+				if($usuario->esHijo($_GET['param']))
+				{
+
+					$enteOrgano = EntesOrganos::model()->findByPk($_GET['param']);
+					$proyectos = $enteOrgano->proyectos;
+					$criteria = new CDbCriteria();
+					$criteria->distinct=true;
+					$criteria->condition = "ente_organo_id=".$_GET['param'];      
+					$criteria->select = 'codigo_accion, accion_id, ente_organo_id ';
+					$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
+
+				    $mPDF1 = Yii::app()->ePdf->mpdf();
+			        $mPDF1 = Yii::app()->ePdf->mpdf('', 'A5');
+			        $mPDF1->WriteHTML($this->render('rcargaporpartida', array('proyectos' => $proyectos, 'acciones' => $acciones), true));
+
+			        $mPDF1->Output('cargaporpartidas.pdf', 'D');
+		    	}else
+		    	{
+		    		echo "Operaci&oacute;n invalida";
+		    	}
+
+		
+			}elseif($_GET['report']==2)
+			{
+				
+				$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+
+				if($usuario->esHijo($_GET['param']))
+				{
+					$enteOrgano = EntesOrganos::model()->findByPk($_GET['param']);
+					$proyectos = $enteOrgano->proyectos;
+
+					$criteria = new CDbCriteria();
+					$criteria->condition = "ente_organo_id=".$_GET['param'];      
+					$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
+
+
+					$mPDF1 = Yii::app()->ePdf->mpdf();
+			 
+			        # You can easily override default constructor's params
+			        $mPDF1 = Yii::app()->ePdf->mpdf('', 'A5');
+			 
+			        # render (full page)
+			        $mPDF1->WriteHTML($this->render('rproducto', array('proyectos' => $proyectos, 'acciones' =>$acciones), true));
+
+			       	$mPDF1->Output('rproducto.pdf', 'D');
+
+			    }else
+		    	{
+		    		echo "Operaci&oacute;n invalida";
+		    	}
+			}elseif($_GET['report']==3)
+			{
+				$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+
+				if($usuario->esHijo($_GET['param']))
+				{
+
+					$mensaje = "";
+					$criteria = new CDbCriteria();
+					$criteria->condition = "ente_organo_id=".$_GET['param'];      
+					//$criteria->condition = 'userid='.$userid;
+
+
+					$usuario=Usuarios::model()->find($criteria);
+					
+					if(count($usuario))
+					{
+						$usuario->usuario_id = 1339;
+						$criteria = new CDbCriteria();
+						$criteria->condition = 'userid='.$usuario->usuario_id; 
+						$todos_log = Activerecordlog::model()->findAll($criteria);
+					}else
+					{
+						$mensaje = "Este usuario no tiene actividad registrada en el sistema.";
+					}
+
+				}else
+				{
+					$todos_log = array();
+					$mensaje = "Este usuario no tiene actividad registrada en el sistema.";
+				}
+
+
+					if(!count($todos_log))
+					{
+						$mensaje = "Este usuario no tiene actividad registrada en el sistema.";
+					}
+
+					$mPDF1 = Yii::app()->ePdf->mpdf();
+			 
+			        # You can easily override default constructor's params
+			        $mPDF1 = Yii::app()->ePdf->mpdf('', 'A5');
+			 
+			        # render (full page)
+			        $mPDF1->WriteHTML($this->render('actividad', array('todos_log' => $todos_log, 'mensaje' => $mensaje), true));
+
+			       	$mPDF1->Output('actividad.pdf', 'D');
+
+			       	
+
+			     
+
+			    }else
+		    	{
+		    		echo "Operaci&oacute;n invalida";
+		   		}	
+		}
 	}
 
 	public function actionRporusuario()
@@ -1117,6 +1241,7 @@ class PlanificacionController extends Controller
 		if($_POST['Acciones']['nombre'])
 		{
 			$tipo = $_POST['Acciones']['nombre'];
+
 			$partidas = $this->obtenerPartidas($tipo);
 		    
 		    $partidas_principal = CHtml::listData($partidas, function($partidas) {
@@ -1134,7 +1259,6 @@ class PlanificacionController extends Controller
 		    }
 		}else
 		{
-
 		     echo CHtml::tag('option',
 		                   array('value'=>""),CHtml::encode($name),true);
 		}
@@ -1238,28 +1362,26 @@ class PlanificacionController extends Controller
 	        $model->ente_organo_id = $usuario->ente_organo_id;
 	        $model->codigo = $model->nombreid;
 
-			print_r($_POST['f']);
-			Yii::app()->end();
+			$fuente_ids = $_POST['f']['fuente_id'];
+			$montos = $_POST['f']['monto'];
+
+			if(count($fuente_ids) == count($montos))
+			{
+				$cantidad = count($fuente_ids);
+			 	
+			 	for ($i=0; $i <= $cantidad; $i++) { 
+			 		$fuentePresu = new FuentePresupuesto();
+	        		$fuentePresu->fuente_id= $fuente_ids[$i];
+	        		$fuentePresu->monto = $montos[$i];
+
+	        		$fuenteSel[$i] = $fuentePresu;
+			 	}
+			}
+
+			
+
+			//Yii::app()->end();
 	       
-	       foreach ($_POST['f'] as $key => $value) {
-	        	if($key != 'Proyectos'){
-	        		$fuentePresu = new FuentePresupuesto();
-	        		$fuentePresu->fuente_id= $value->fuente_id;
-	        		$fuentePresu->monto = $value->monto;
-
-	        		//$fuentePresu->validate()
-	        		
-	        		$fuenteSel[$key] = $fuentePresu;
-
-	        		/*if($fuenteSel[$key]->save())
-	        			Yii*/
-
-	        	}	
-	        	# code...
-	        }
-
-
-
 	        $nombre_proyecto = Proyectos::model()->find('codigo=:codigo and ente_organo_id=:ente_organo_id', array(':codigo' => $model->codigo, ':ente_organo_id' => $usuario->ente_organo_id));
 
 	        $model->nombre = $nombre_proyecto->nombre;
@@ -1274,7 +1396,7 @@ class PlanificacionController extends Controller
 	        	$presupuesto_partida_proyecto = new PresupuestoPartidaProyecto;
 
 	        	$presupuesto_partida->partida_id = !empty($model->subespecifica) ? $model->subespecifica : $model->especifica;
-	        	$presupuesto_partida->monto_presupuestado = $model->monto;
+	        	$presupuesto_partida->monto_presupuestado = $model->monto;  //aqui va la suma de todos los montos.
 	        	$presupuesto_partida->fecha_desde = "1900-01-01";
 	        	$presupuesto_partida->fecha_hasta = "2199-12-31";
 	        	$presupuesto_partida->tipo = "P";
@@ -1287,14 +1409,18 @@ class PlanificacionController extends Controller
 				$transaction = $presupuesto_partida->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 				try{
 
-		        	if($presupuesto_partida->save())
-		        	{
+					
 
-		        		foreach ($model->fuente as $key => $value) {
-			        			$fuentep = new FuentePresupuesto;
+		        	if($presupuesto_partida->save() )
+		        	{
+		        		$verificar = true;
+		        		//aqui realmente es que tiene que ir.
+		        		foreach ($fuenteSel as $key => $fuentep) {
+			        			//$fuentep = new FuentePresupuesto;
 				        		$fuentep->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
-				        		$fuentep->fuente_id = $value;
-				        		$fuentep->save();
+				        		//$fuentep->fuente_id = $value;
+
+				        		$verificar = $fuentep->save() && $verificar;
 			        	}
 
 			        		
@@ -1302,7 +1428,7 @@ class PlanificacionController extends Controller
 			        	$presupuesto_partida_proyecto->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
 			        	$presupuesto_partida_proyecto->proyecto_id = $nombre_proyecto->proyecto_id;
 
-			        	if($presupuesto_partida_proyecto->save())
+			        	if($presupuesto_partida_proyecto->save() && $verificar)
 			        	{
 			        		$transaction->commit();    // committing 
 			        		 Yii::app()->user->setFlash('success', 'Partida asignada con éxito!');

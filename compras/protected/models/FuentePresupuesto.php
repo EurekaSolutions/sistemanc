@@ -29,6 +29,7 @@ class FuentePresupuesto extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('fuente_id, presupuesto_partida_id, monto', 'required'),
+			array('monto', 'numerical', 'integerOnly'=>false, 'min'=>1),
 			array('monto', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.

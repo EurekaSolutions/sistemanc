@@ -51,21 +51,6 @@
 
                                 echo $form->errorSummary($model);
 
-/*                                 echo $form->dropDownListGroup($model , 'nombreid',
-                                        array(
-                                            'wrapperHtmlOptions' => array(
-                                                'class' => 'col-sm-2',
-                                            ),
-                                            'label'=>'Seleccione proyecto',
-                                            'widgetOptions' => array(
-
-                                                'data' => $lista_proyectos,
-                                                //'options'=>array($model->proyecto_id => array('selected'=>true)),
-                                                'htmlOptions' => array('prompt' => 'Seleccione proyecto'),
-                                            )
-                                        )
-                                    ); */
-
                                     echo $form->select2Group($model, 'nombreid',
                                                         array(
                                                             'wrapperHtmlOptions' => array(
@@ -85,30 +70,7 @@
                                                             )
                                                         )
                                                     );
-                                // echo CHtml::dropDownList('partida','', array());
 
-                                 
-/*                                 echo $form->dropDownListGroup($model , 'partida',
-                                        array(
-                                            'wrapperHtmlOptions' => array(
-                                                'class' => 'col-sm-2',
-                                            ),
-                                            'label'=>'Seleccione la partida',
-                                            'widgetOptions' => array(
-
-                                                'data' => empty($partidas_principal)? array() : $partidas_principal ,
-                                                //'options'=>array($model->proyecto_id => array('selected'=>true)),
-                                                'htmlOptions' => array('prompt' => 'Seleccionar partida', 'id' => 'partida', 'ajax' => array(
-                                                    'type'=>'POST', //request type
-                                                    'url'=>CController::createUrl('planificacion/buscargeneralproyecto'), //url to call.
-                                                    //Style: CController::createUrl('currentController/methodToCall')
-                                                    'update'=>'#general', //selector to update
-                                                    //'data'=>'js:javascript statement' 
-                                                    //leave out the data key to pass all form values through
-                                              )),
-                                            )
-                                        )
-                                    );*/
                                        echo $form->select2Group($model, 'partida',
                                                             array(
                                                                 'wrapperHtmlOptions' => array(
@@ -136,31 +98,6 @@
                                                             )
                                                         );
 
-   /*                                 echo $form->dropDownListGroup($model , 'general',
-                                        array(
-                                            'wrapperHtmlOptions' => array(
-                                                'class' => 'col-sm-2',
-                                            ),
-                                            'label'=>'Seleccione general',
-                                            'widgetOptions' => array(
-
-                                                'data' => empty($generales_todas)? array() : $generales_todas,
-                                                
-                                                //'options'=>array($model->proyecto_id => array('selected'=>true)),
-                                                'htmlOptions' => array('prompt' => 'Seleccionar partida general', 'id' => 'general', 'ajax' => array(
-                                                    'type'=>'POST', //request type
-                                                    'url'=>CController::createUrl('planificacion/buscarespecficap'), //url to call.
-                                                    //Style: CController::createUrl('currentController/methodToCall')
-                                                    'update'=>'#especifica', //selector to update
-                                                    //'data'=>'js:javascript statement' 
-                                                    //leave out the data key to pass all form values through
-                                              )
-
-                                                ),
-                                            ),
-
-                                        )
-                                    );*/
                                        echo $form->select2Group($model, 'general',
                                                             array(
                                                                 'wrapperHtmlOptions' => array(
@@ -187,32 +124,7 @@
                                                                 )
                                                             )
                                                         );
-
-  /*                                  echo $form->dropDownListGroup($model , 'especifica',
-                                        array(
-                                            'wrapperHtmlOptions' => array(
-                                                'class' => 'col-sm-2',
-                                            ),
-                                            'label'=>'Seleccione especifica',
-                                            'widgetOptions' => array(
-
-                                                'data' => empty($especificas_todas)? array() : $especificas_todas,
-                                                
-                                                //'options'=>array($model->proyecto_id => array('selected'=>true)),
-                                                'htmlOptions' => array('prompt' => 'Seleccionar partida especifica', 'id' => 'especifica' , 'ajax' => array(
-                                                    'type'=>'POST', //request type
-                                                    'url'=>CController::createUrl('planificacion/buscarsubespecficap'), //url to call.
-                                                    //Style: CController::createUrl('currentController/methodToCall')
-                                                    'update'=>'#subespecifica', //selector to update
-                                                    //'data'=>'js:javascript statement' 
-                                                    //leave out the data key to pass all form values through
-                                              )
-
-                                                ),
-                                            ),
-
-                                        )
-                                    );*/
+                              
                                         echo $form->select2Group($model, 'especifica',
                                                             array(
                                                                 'wrapperHtmlOptions' => array(
@@ -241,25 +153,6 @@
                                                         );
 
 
-  /*                                  echo $form->dropDownListGroup($model , 'subespecifica',
-                                        array(
-                                            'wrapperHtmlOptions' => array(
-                                                'class' => 'col-sm-2',
-                                            ),
-                                            'label'=>'Seleccione sub especifica',
-                                            'hint' => '<b>Seleccione en caso de que aplique</b>',
-                                            'widgetOptions' => array(
-
-                                                'data' => array(),
-                                                
-                                                //'options'=>array($model->proyecto_id => array('selected'=>true)),
-                                                'htmlOptions' => array('prompt' => 'Seleccionar partida subespecifica', 'id' => 'subespecifica'
-
-                                                ),
-                                            ),
-
-                                        )
-                                    );*/
                                     echo $form->select2Group($model, 'subespecifica',
                                                         array(
                                                             'wrapperHtmlOptions' => array(
@@ -279,29 +172,7 @@
                                                                 )
                                                             )
                                                         )
-                                                    );
-
-                                    /*echo $form->select2Group($model, 'fuente',
-                                                        array(
-                                                            'wrapperHtmlOptions' => array(
-                                                                'class' => 'col-sm-5',
-                                                            ),
-                                                            'label'=>'Fuente de financiamiento',
-                                                            'hint' => 'Seleccione la cantidad de fuentes que apliquen',
-                                                            'widgetOptions' => array(
-                                                                'asDropDownList' => true,
-                                                                'data' => $fuentes,
-                                                                'htmlOptions'=>array('multiple' => true),
-                                                                'options' => array(
-                                                                    //'tags' => array('clever', 'is', 'better', 'clevertech'),
-                                                                    'placeholder' => 'Seleccionar la fuente de financiamiento',
-                                                                    // 'width' => '40%', 
-                                                                    'tokenSeparators' => array(',', ' ')
-                                                                )
-                                                            )
-                                                        )
-                                                    );*/
-                            
+                                                    );                            
                             ?>
                             
                              <a id="add" style="cursor:pointer">Agregar fuente</a>
@@ -324,7 +195,7 @@
                                                 //'options'=>array($model->proyecto_id => array('selected'=>true)),
                                                 'htmlOptions' => array(//'prompt' => 'Seleccionar la fuente de financiamiento',
                                                             'multiple' => false,
-                                                            'name'=>'f[][FuentePresupuesto[fuente_id]]',
+                                                            'name'=>'f[fuente_id][]',
                                                             'id' => 'fuente'.$key,
                                                             ),
                                             )
@@ -336,14 +207,14 @@
     </td>
     <td>
         <?php
-                     echo $form->textFieldGroup($model,'monto',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span3','maxlength'=>20, 'name' => 'f[][FuentePresupuesto[monto]]', 'id' => 'monto'.$key))));
+                     echo $form->textFieldGroup($value,'monto',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span3','maxlength'=>20, 'name' => 'f[monto][]', 'id' => 'monto'.$key))));
                                        //echo CHtml::textField('monto', 'some value');
                                         ?>
     </td>
       <td><a  id="delete1" style="cursor:pointer">Eliminar fuente</a> </td>
     </tr>
     <?php
-            }
+        }
     ?>
     </tbody>
   </table>

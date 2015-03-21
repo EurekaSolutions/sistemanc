@@ -44,6 +44,27 @@ class Usuarios extends CActiveRecord
 		return 'usuarios';
 	}
 
+	public function behaviors()
+	{
+	    return array(
+	        'ActiveRecordLogableBehavior'=>
+	            'application.behaviors.ActiveRecordLogableBehavior',
+	    );
+	}
+	
+
+	public function esHijo($ente_organo_id)
+	{
+
+		$entes_adscritos = EntesAdscritos::model()->find('ente_organo_id=:ente_organo_id AND padre_id=:padre_id',
+		array(
+		  ':ente_organo_id'=>$ente_organo_id,
+		  ':padre_id'=>$this->ente_organo_id,
+		));
+
+		return count($entes_adscritos);
+	}
+
 	/**
 	 * @return array validation rules for model attributes.
 	 */

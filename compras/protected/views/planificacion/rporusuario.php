@@ -25,21 +25,61 @@ tr.principaltr th {
 		            <th data-field="tipo">Rif</th>
 		            <th data-field="tipo">Carga por partidas</th>
 		            <th data-field="tipo">Productos</th>
+		            <th data-field="tipo">Actividad reciente</th>
 		        </tr>
 		    </thead>
 		    <tbody>
 <?php
 	//print_r($misentes);
-	foreach ($misentes as $key => $value) {
+	foreach ($misentes as $key => $value){
 		echo '<tr class="principaltr">';
 			echo '<td>'.$value['codigo_onapre'].'</td>';
 			echo '<td>'.$value['nombre'].'</td>';
 			echo '<td>'.$value['rif'].'</td>';
-			echo '<td><a href="">Descargar</a></td>';
-			echo '<td><a href="">Descargar</a></td>';
+			echo '<td>';
+			/*echo CHtml::ajaxLink(
+			  "Descargar",
+			  Yii::app()->createUrl( 'planificacion/ajaxreportes' ),
+			  array( // ajaxOptions
+			    'type' => 'GET',
+			    'data' => array( 'param' => $value['ente_organo_id'], 'report' => '1' )
+			  ),
+			  array( //htmlOptions
+			    'href' => Yii::app()->createUrl( 'planificacion/ajaxreportes' ),
+			    'class' => $class,
+			    'id' => 'porproyectos'
+			  )
+			);*/
+
+			echo CHtml::link('Descargar',array('planificacion/ajaxreportes',
+                                         'param' => $value['ente_organo_id'], 'report' => '1'));
+
+		    echo '</td>';
+		    echo '<td>';
+			/*echo CHtml::ajaxLink(
+			  "Descargar",
+			  Yii::app()->createUrl( 'planificacion/ajaxreportes' ),
+			  array( // ajaxOptions
+			    'type' => 'GET',
+			    'data' => array( 'param' => $value['ente_organo_id'], 'report' => '2' )
+			  ),
+			  array( //htmlOptions
+			    'href' => Yii::app()->createUrl( 'planificacion/ajaxreportes' ),
+			    'class' => $class,
+			    'id' => 'porpartidas'
+			  )
+			);*/
+			echo CHtml::link('Descargar',array('planificacion/ajaxreportes',
+                                         'param' => $value['ente_organo_id'], 'report' => '2'));
+		    echo '</td>';
+
+		    echo '<td>';
+
+			echo CHtml::link('Descargar',array('planificacion/ajaxreportes',
+                                         'param' => $value['ente_organo_id'], 'report' => '3'));
+		    echo '</td>';
 		echo '</tr>';
 	}
-
 ?>
 </tbody>
 </table>
