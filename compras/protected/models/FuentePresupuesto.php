@@ -28,7 +28,7 @@ class FuentePresupuesto extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fuente_id, presupuesto_partida_id, monto', 'required'),
+			array('fuente_id, monto', 'required'), //presupuesto_partida_id
 			array('monto', 'numerical', 'integerOnly'=>false, 'min'=>1),
 			array('monto', 'safe'),
 			// The following rule is used by search().

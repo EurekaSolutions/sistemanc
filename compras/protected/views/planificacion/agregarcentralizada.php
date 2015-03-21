@@ -32,13 +32,6 @@
 
 				    			$lista_acciones = CHtml::listData($accionestodas, 'codigo', 'nombre');
 
-				    			
-								/*$partidas_principal = CHtml::listData($partidas, function($partidas) {
-																return CHtml::encode($partidas->partida_id);
-															}, function($partidas) {
-																return CHtml::encode($partidas->p1.'-'. $partidas->nombre);
-															});*/
-
 								$fuentes = CHtml::listData($fuentes, 'fuente_financiamiento_id', 'nombre');
 
 								/** @var TbActiveForm $form */
@@ -72,56 +65,7 @@
 											)
 										)
 									); 
-/*                               echo $form->select2Group($acciones, 'nombre',
-                                                    array(
-                                                        'wrapperHtmlOptions' => array(
-                                                            'class' => 'col-sm-5',
-                                                        ),
-                                                        'label'=>'Seleccione Acción Centralizada a cargar',
-                                                        'widgetOptions' => array(
-                                                            'asDropDownList' => true,
-                                                            'data' => $lista_acciones,
-                                                            'htmlOptions'=>array('id'=>'partida', 'ajax' => array(
-																	'type'=>'POST', //request type
-																	'url'=>CController::createUrl('planificacion/buscarpartida'), //url to call.
-																	//Style: CController::createUrl('currentController/methodToCall')
-																	'update'=>'#partida', //selector to update
-																	//'data'=>'js:javascript statement' 
-																	//leave out the data key to pass all form values through
-															  )),
-                                                            'options' => array(
-                                                                //'tags' => array('clever', 'is', 'better', 'clevertech'),
-                                                                'placeholder' => 'Seleccione Acción centralizada',
-                                                                // 'width' => '40%', 
-                                                                'tokenSeparators' => array(',', ' ')
-                                                            )
-                                                        )
-                                                    )
-                                                );*/
-								// echo CHtml::dropDownList('partida','', array());
 
-								 
-/*								 echo $form->dropDownListGroup($acciones , 'partida',
-										array(
-											'wrapperHtmlOptions' => array(
-												'class' => 'col-sm-2',
-											),
-											'label'=>'Seleccione la partida',
-											'widgetOptions' => array(
-
-												'data' => empty($partidas_principal)? array() : $partidas_principal ,
-												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												'htmlOptions' => array('prompt' => 'Seleccionar partida', 'id' => 'partida', 'ajax' => array(
-													'type'=>'POST', //request type
-													'url'=>CController::createUrl('planificacion/buscargeneral'), //url to call.
-													//Style: CController::createUrl('currentController/methodToCall')
-													'update'=>'#general', //selector to update
-													//'data'=>'js:javascript statement' 
-													//leave out the data key to pass all form values through
-											  )),
-											)
-										)
-									);*/
                                    echo $form->select2Group($acciones, 'partida',
                                                         array(
                                                             'wrapperHtmlOptions' => array(
@@ -148,29 +92,7 @@
                                                             )
                                                         )
                                                     );
-/*								  echo $form->dropDownListGroup($acciones , 'general',
-										array(
-											'wrapperHtmlOptions' => array(
-												'class' => 'col-sm-2',
-											),
-											'label'=>'Seleccione general',
-											'widgetOptions' => array(
-
-												'data' => empty($generales_todas)? array() : $generales_todas,
-												
-												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												'htmlOptions' => array('prompt' => 'Seleccionar partida general', 'id' => 'general', 'ajax' => array(
-													'type'=>'POST', //request type
-													'url'=>CController::createUrl('planificacion/buscarespecfica'), //url to call.
-													//Style: CController::createUrl('currentController/methodToCall')
-													'update'=>'#especifica', //selector to update
-													//'data'=>'js:javascript statement' 
-													//leave out the data key to pass all form values through
-											  	)),
-											),
-
-										)
-									);*/
+						 
                                    echo $form->select2Group($acciones, 'general',
                                                         array(
                                                             'wrapperHtmlOptions' => array(
@@ -199,29 +121,7 @@
                                                     );
 
 
-/*								  echo $form->dropDownListGroup($acciones , 'especifica',
-										array(
-											'wrapperHtmlOptions' => array(
-												'class' => 'col-sm-2',
-											),
-											'label'=>'Seleccione especifica',
-											'widgetOptions' => array(
 
-												'data' => empty($especificas_todas)? array() : $especificas_todas,
-												
-												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												'htmlOptions' => array('prompt' => 'Seleccionar partida especifica', 'id' => 'especifica', 'ajax' => array(
-													'type'=>'POST', //request type
-													'url'=>CController::createUrl('planificacion/buscarsubespecfica'), //url to call.
-													//Style: CController::createUrl('currentController/methodToCall')
-													'update'=>'#subespecifica', //selector to update
-													//'data'=>'js:javascript statement' 
-													//leave out the data key to pass all form values through
-											  )),
-											),
-
-										)
-									);*/
                                     echo $form->select2Group($acciones, 'especifica',
                                                         array(
                                                             'wrapperHtmlOptions' => array(
@@ -249,25 +149,7 @@
                                                         )
                                                     );
 
-/*								  echo $form->dropDownListGroup($acciones , 'subespecifica',
-										array(
-											'wrapperHtmlOptions' => array(
-												'class' => 'col-sm-2',
-											),
-											'label'=>'Seleccione sub especifica',
-											'hint' => '<b>Seleccione en caso de que aplique</b>',
-											'widgetOptions' => array(
 
-												'data' => array(),
-												
-												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												'htmlOptions' => array('prompt' => 'Seleccionar partida subespecifica', 'id' => 'subespecifica'
-
-												),
-											),
-
-										)
-									);*/
                                     echo $form->select2Group($acciones, 'subespecifica',
                                                         array(
                                                             'wrapperHtmlOptions' => array(
@@ -289,51 +171,59 @@
                                                         )
                                                     );
 
-/*									echo $form->dropDownListGroup($acciones , 'fuente',
-										array(
-											'wrapperHtmlOptions' => array(
-												'class' => 'col-sm-2',
-											),
-											'label'=>'Fuente de financiamiento',
-											'hint' => 'Seleccione la cantidad de fuentes que apliquen',
-											'widgetOptions' => array(
+?>
 
-												'data' => $fuentes,
-												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												'htmlOptions' => array(//'prompt' => 'Seleccionar la fuente de financiamiento',
-																'multiple' => true),
-											)
-										)
-									); */
-                                    echo $form->select2Group($acciones, 'fuente',
-                                                        array(
-                                                            'wrapperHtmlOptions' => array(
-                                                                'class' => 'col-sm-5',
+   <a id="add" style="cursor:pointer">Agregar fuente</a>
+  <table id="mytable" width="300" border="1" cellspacing="0" cellpadding="2">
+  <tbody>
+    <?php 
+       /* echo "Fuentes";
+        print_r($fuentesSel);
+        Yii::app()->end();*/
+
+    foreach ($fuentesSel as $key => $value) 
+    { ?>
+    <tr id='producto<?php echo $key; ?>' class="producto">
+    <td>
+        <?php echo $form->dropDownListGroup($value, 'fuente_id',
+                                        array(
+                                            'wrapperHtmlOptions' => array(
+                                                'class' => 'col-sm-2',
+                                            ),
+                                            'label'=>'Fuente de financiamiento',
+                                            //'hint' => 'Seleccione la cantidad de fuentes que apliquen',
+                                            'widgetOptions' => array(
+
+                                                'data' => $fuentes,
+                                                //'options'=>array($model->proyecto_id => array('selected'=>true)),
+                                                'htmlOptions' => array(//'prompt' => 'Seleccionar la fuente de financiamiento',
+                                                            'multiple' => false,
+                                                            'name'=>'f[fuente_id][]',
+                                                            'id' => 'fuente'.$key,
                                                             ),
-                                                            'label'=>'Fuente de financiamiento',
-                                                            'hint' => 'Seleccione la cantidad de fuentes que apliquen',
-                                                            'widgetOptions' => array(
-                                                                'asDropDownList' => true,
-                                                                'data' => $fuentes,
-                                                                'htmlOptions'=>array('multiple' => true),
-                                                                'options' => array(
-                                                                    //'tags' => array('clever', 'is', 'better', 'clevertech'),
-                                                                    'placeholder' => 'Seleccionar la fuente de financiamiento',
-                                                                    // 'width' => '40%', 
-                                                                    'tokenSeparators' => array(',', ' ')
-                                                                )
-                                                            )
-                                                        )
-                                                    );
+                                            )
+                                        )
+                                    );
+        //echo CHtml::dropDownList('fuente', $select, $fuentes,array('empty' => 'Seleccione fuente de financiamiento'));
+        ?>
 
-									echo $form->textFieldGroup($acciones,'monto',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span3','maxlength'=>20))));
-
-								/*	$this->widget(
-									    'booster.widgets.TbButton',
-									    array('buttonType' => 'submit', 'label' => 'Seleccionar')
-									); */
-								 
-
+    </td>
+    <td>
+        <?php
+                     echo $form->textFieldGroup($value,'monto',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span3','maxlength'=>20, 'name' => 'f[monto][]', 'id' => 'monto'.$key))));
+                                       //echo CHtml::textField('monto', 'some value');
+                                        ?>
+    </td>
+      <td><a  id="delete1" style="cursor:pointer">Eliminar fuente</a> </td>
+    </tr>
+    <?php
+        }
+    ?>
+    </tbody>
+  </table> 
+                                    
+<?php
+							
 
 						$this->widget('booster.widgets.TbButton', array(
 			            	'buttonType'=>'submit',
@@ -348,3 +238,37 @@
 			?>
 
 		</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var numId = 1;
+        $("#add").click(function() {
+                $clone = $("#mytable tbody>tr:last").clone(true);
+                $('#mytable tbody>tr:last').clone(true).attr("id",$clone.attr("id").replace(/\d+$/, function(str) { return parseInt(str) + 1; } )).insertAfter("#mytable tbody>tr:last");
+                        //$("#mytable tbody>tr:last").each(function() {this.reset();});
+                        numId++;
+                        //$('#mytable tbody>tr:last').attr('id','producto'+numId);
+                        $('#mytable tbody>tr:last>td>a').attr('id','delete'+numId);
+        
+                            $("#delete"+numId).click(function(event) {
+                                //alert('#mytable tbody>tr #'+$('#'+event.target.id).parent().parent().attr('id'));
+                                if($('#mytable tr').length >1)
+                                {   
+                                    $('#mytable tbody>tr#'+$('#'+event.target.id).parent().parent().attr('id')).remove();
+                                }
+                                      return false;
+                            });
+
+          return false;
+        });
+
+        $("#delete1").click(function(event) {
+            //alert('#mytable tbody>tr #'+$('#'+event.target.id).parent().parent().attr('id'));
+            if($('#mytable tr').length >1)
+                                {   
+                $('#mytable tbody>tr#'+$('#'+event.target.id).parent().parent().attr('id')).remove();
+                  return false;
+                  }
+        });
+
+    });
+</script>

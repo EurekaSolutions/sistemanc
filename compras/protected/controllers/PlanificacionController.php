@@ -1121,6 +1121,8 @@ class PlanificacionController extends Controller
 
 		$fuentes = FuentesFinanciamiento::model()->findAll($criteria);
 
+		$fuentesSel[] = new FuentePresupuesto();
+
 		if(isset($_POST['Acciones']))
 	    {
 
@@ -1128,14 +1130,38 @@ class PlanificacionController extends Controller
 
 	        $model->setScenario(!empty($model->subespecifica) ? 'crearaccionse' : 'crearaccion');
 
-	        if($model->validate())
+	        $fuente_ids = $_POST['f']['fuente_id'];
+			$montos = $_POST['f']['monto'];
+
+			if(count($fuente_ids) == count($montos))
+			{
+				$cantidad = count($fuente_ids);
+			 	
+			 	for ($i=0; $i < $cantidad; $i++) { 
+			 		
+			 		$fuentePresu = new FuentePresupuesto();
+	        		$fuentePresu->fuente_id= $fuente_ids[$i];
+	        		$fuentePresu->monto = $montos[$i];
+
+	        		$fuentesSel[$i] = $fuentePresu;
+			 	}
+			}
+
+			$verificar = true;
+
+			foreach ($fuentesSel as $key => $fuentep)
+			{
+				$verificar = $fuentep->validate() && $verificar;
+			}
+
+	        if($model->validate() && $verificar)
 	        {
 	        	//return;
 	        	$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 	        	$presupuesto_partida = new PresupuestoPartidas;
 	        	$presupuesto_partida_acciones = new PresupuestoPartidaAcciones;
 	        	$presupuesto_partida->partida_id = !empty($model->subespecifica) ? $model->subespecifica : $model->especifica;
-	        	$presupuesto_partida->monto_presupuestado = $model->monto;
+	        	$presupuesto_partida->monto_presupuestado = 200;//$model->monto;  //aqui va la suma de todos los montos.
 	        	$presupuesto_partida->fecha_desde = "1900-01-01";
 	        	$presupuesto_partida->fecha_hasta = "2199-12-31";
 	        	$presupuesto_partida->tipo = "A";
@@ -1146,16 +1172,21 @@ class PlanificacionController extends Controller
 	        	$presupuesto_partida_acciones->setScenario($model->scenario);
 	     	
 	        	$transaction = $presupuesto_partida->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
-				 try{
-			        	if($presupuesto_partida->save())
+				
+				try{
+			        	if($presupuesto_partida->save() && $verificar)
 			        	{
 			        		
-			        		foreach ($model->fuente as $key => $value) {
-			        			$fuentep = new FuentePresupuesto;
-				        		$fuentep->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
-				        		$fuentep->fuente_id = $value;
-				        		$fuentep->save();
-			        		}
+			        		$verificar = true;
+
+			        		$monto_total = 0;
+			        		//$cont = count($fuentesSel);
+			        		//aqui realmente es que tiene que ir.
+			        		foreach ($fuentesSel as $key => $fuentep) {
+					        		$fuentep->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
+					        		$monto_total +=$fuentep->monto;
+					        		$verificar = $fuentep->save() && $verificar;
+				        	}
 			        			
 			        		$accion = Acciones::model()->find('codigo=:codigo', array(':codigo'=>$model->nombre));
 				        	$presupuesto_partida_acciones->accion_id = $accion->accion_id;
@@ -1163,12 +1194,18 @@ class PlanificacionController extends Controller
 				        	$presupuesto_partida_acciones->ente_organo_id = $usuario->ente_organo_id;
 				        	$presupuesto_partida_acciones->codigo_accion = $model->nombre;
 
-				        	if($presupuesto_partida_acciones->save())
+				        	if($presupuesto_partida_acciones->save() && $verificar) 
 				        	{
+				        		$actualizar_presupuesto_partida = PresupuestoPartidas::model()->findByPk($presupuesto_partida->presupuesto_partida_id);;
+				        		$actualizar_presupuesto_partida->monto_presupuestado = $monto_total;
+				        		$actualizar_presupuesto_partida->save(array('monto_presupuestado'));
+
 				        		$transaction->commit();    // committing 
 				        		Yii::app()->user->setFlash('success', "Acción centralizada creada con éxito!");
 				        		
 				        		$model = new Acciones('crearaccion');
+				        		 unset($fuentesSel);  // borramos el arreglo para mandarlo limpio a la vista.
+			        		 	$fuentesSel[] = new FuentePresupuesto();
 
 				        	}else throw new Exception("Error Processing Request", 1);
 
@@ -1211,25 +1248,28 @@ class PlanificacionController extends Controller
 					    {
 					    	$especificas_todas = $this->buscar_especifica($model->general);
 
-					    	$this->render('agregarcentralizada',array('acciones'=>$model, 'accionestodas' => $accionestodas, 'fuentes' => $fuentes, 'partidas_principal' => $partidas_principal, 'generales_todas' => $generales_todas, 'especificas_todas' => $especificas_todas));
+					    	$this->render('agregarcentralizada',array('acciones'=>$model, 'accionestodas' => $accionestodas, 'fuentes' => $fuentes, 'partidas_principal' => $partidas_principal, 'generales_todas' => $generales_todas, 'especificas_todas' => $especificas_todas, 'fuentesSel' => $fuentesSel));
 					    }else
 					    {
 
-					 		$this->render('agregarcentralizada',array('acciones'=>$model, 'accionestodas' => $accionestodas, 'fuentes' => $fuentes, 'partidas_principal' => $partidas_principal, 'generales_todas' => $generales_todas));
+					 		$this->render('agregarcentralizada',array('acciones'=>$model, 'accionestodas' => $accionestodas, 'fuentes' => $fuentes, 'partidas_principal' => $partidas_principal, 'generales_todas' => $generales_todas, 'fuentesSel' => $fuentesSel));
 					 	}
-
+					 	Yii::app()->end();
 		    		}else
 		    		{
-		    			$this->render('agregarcentralizada',array('acciones'=>$model, 'accionestodas' => $accionestodas, 'fuentes' => $fuentes, 'partidas_principal' => $partidas_principal));
+		    			$this->render('agregarcentralizada',array('acciones'=>$model, 'accionestodas' => $accionestodas, 'fuentes' => $fuentes, 'partidas_principal' => $partidas_principal, 'fuentesSel' => $fuentesSel));
+
 		    		}
+		    			Yii::app()->end();
 	        	}else
 	        	{
-	        		$this->render('agregarcentralizada',array('acciones'=>$model, 'accionestodas' => $accionestodas, 'fuentes' => $fuentes));
+	        		$this->render('agregarcentralizada',array('acciones'=>$model, 'accionestodas' => $accionestodas, 'fuentes' => $fuentes, 'fuentesSel' => $fuentesSel));
 	        	}
+	        	Yii::app()->end();
 	        }
 	    }
 	    
-	    	$this->render('agregarcentralizada',array('acciones'=>$model, 'accionestodas' => $accionestodas, 'fuentes' => $fuentes));
+	    	$this->render('agregarcentralizada',array('acciones'=>$model, 'accionestodas' => $accionestodas, 'fuentes' => $fuentes, 'fuentesSel' => $fuentesSel));
 	    
 		
 	}
@@ -1369,18 +1409,23 @@ class PlanificacionController extends Controller
 			{
 				$cantidad = count($fuente_ids);
 			 	
-			 	for ($i=0; $i <= $cantidad; $i++) { 
+			 	for ($i=0; $i < $cantidad; $i++) { 
+			 		
 			 		$fuentePresu = new FuentePresupuesto();
 	        		$fuentePresu->fuente_id= $fuente_ids[$i];
 	        		$fuentePresu->monto = $montos[$i];
 
-	        		$fuenteSel[$i] = $fuentePresu;
+	        		$fuentesSel[$i] = $fuentePresu;
 			 	}
 			}
 
-			
 
-			//Yii::app()->end();
+			$verificar = true;
+
+			foreach ($fuentesSel as $key => $fuentep)
+			{
+				$verificar = $fuentep->validate() && $verificar;
+			}
 	       
 	        $nombre_proyecto = Proyectos::model()->find('codigo=:codigo and ente_organo_id=:ente_organo_id', array(':codigo' => $model->codigo, ':ente_organo_id' => $usuario->ente_organo_id));
 
@@ -1389,14 +1434,14 @@ class PlanificacionController extends Controller
 	        $model->setScenario(!empty($model->subespecifica) ? 'creaproyectose' : 'creaproyecto');
 /*CVarDumper::dump($model);
 //Yii::app()->end();*/
-	        if($model->validate())
+	        if($model->validate() && $verificar)
 	        {
 
 	        	$presupuesto_partida = new PresupuestoPartidas;
 	        	$presupuesto_partida_proyecto = new PresupuestoPartidaProyecto;
 
 	        	$presupuesto_partida->partida_id = !empty($model->subespecifica) ? $model->subespecifica : $model->especifica;
-	        	$presupuesto_partida->monto_presupuestado = $model->monto;  //aqui va la suma de todos los montos.
+	        	$presupuesto_partida->monto_presupuestado = 200;//$model->monto;  //aqui va la suma de todos los montos.
 	        	$presupuesto_partida->fecha_desde = "1900-01-01";
 	        	$presupuesto_partida->fecha_hasta = "2199-12-31";
 	        	$presupuesto_partida->tipo = "P";
@@ -1409,20 +1454,18 @@ class PlanificacionController extends Controller
 				$transaction = $presupuesto_partida->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 				try{
 
-					
-
-		        	if($presupuesto_partida->save() )
+		        	if($presupuesto_partida->save() && $verificar)
 		        	{
 		        		$verificar = true;
-		        		//aqui realmente es que tiene que ir.
-		        		foreach ($fuenteSel as $key => $fuentep) {
-			        			//$fuentep = new FuentePresupuesto;
-				        		$fuentep->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
-				        		//$fuentep->fuente_id = $value;
 
+		        		$monto_total = 0;
+		        		//$cont = count($fuentesSel);
+		        		//aqui realmente es que tiene que ir.
+		        		foreach ($fuentesSel as $key => $fuentep) {
+				        		$fuentep->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
+				        		$monto_total +=$fuentep->monto;
 				        		$verificar = $fuentep->save() && $verificar;
 			        	}
-
 			        		
 		        		//$accion = Acciones::model()->find('codigo=:codigo', array(':codigo'=>$model->nombre));
 			        	$presupuesto_partida_proyecto->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
@@ -1430,9 +1473,17 @@ class PlanificacionController extends Controller
 
 			        	if($presupuesto_partida_proyecto->save() && $verificar)
 			        	{
+			        		$actualizar_presupuesto_partida = PresupuestoPartidas::model()->findByPk($presupuesto_partida->presupuesto_partida_id);;
+			        		$actualizar_presupuesto_partida->monto_presupuestado = $monto_total;
+			        		$actualizar_presupuesto_partida->save(array('monto_presupuestado'));
+
 			        		$transaction->commit();    // committing 
+			        		 
 			        		 Yii::app()->user->setFlash('success', 'Partida asignada con éxito!');
+
 			        		 $model = new Proyectos('creaproyecto');
+			        		 unset($fuentesSel);  // borramos el arreglo para mandarlo limpio a la vista.
+			        		 $fuentesSel[] = new FuentePresupuesto();
 
 				       	}else throw new Exception("Error Processing Request", 1);
 
@@ -1465,10 +1516,10 @@ class PlanificacionController extends Controller
 					    	
 					    	$this->render('asignarpartidasproyecto',array(
 							'model'=>$model, 'fuentes' => $fuentes, 'generales_todas' => $generales_todas, 'partidas' => $partidas_principal, 'proyectos' => $proyectos, 'especificas_todas' => $especificas_todas, 'fuentesSel' => $fuentesSel));
-							
+							Yii::app()->end();
 					    }
 
-					    Yii::app()->end();
+					    //Yii::app()->end();
 						
 							$this->render('asignarpartidasproyecto',array('model'=>$model, 'fuentes' => $fuentes, 'generales_todas' => $generales_todas, 'partidas' => $partidas_principal, 'proyectos' => $proyectos, 'fuentesSel' => $fuentesSel));
 						Yii::app()->end();

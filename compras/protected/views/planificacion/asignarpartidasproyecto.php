@@ -178,7 +178,12 @@
                              <a id="add" style="cursor:pointer">Agregar fuente</a>
   <table id="mytable" width="300" border="1" cellspacing="0" cellpadding="2">
   <tbody>
-    <?php foreach ($fuentesSel as $key => $value) 
+    <?php 
+       /* echo "Fuentes";
+        print_r($fuentesSel);
+        Yii::app()->end();*/
+
+    foreach ($fuentesSel as $key => $value) 
     { ?>
     <tr id='producto<?php echo $key; ?>' class="producto">
     <td>
@@ -217,10 +222,7 @@
         }
     ?>
     </tbody>
-  </table>
-
-                           
-                                    
+  </table>           
 
                             <?php   
 

@@ -38,11 +38,12 @@ class Acciones extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('nombre', 'required'),
-			array('partida, general, monto, fuente, especifica', 'required', 'on' => 'crearaccion, crearaccionse'),
+			array('partida, general, especifica', 'required', 'on' => 'crearaccion, crearaccionse'),
+			//array('partida, general, monto, fuente, especifica', 'required', 'on' => 'crearaccion, crearaccionse'),
 			array('especifica, subespecifica', 'partidaAsignada', 'on'=>'crearaccion'),
 			array('subespecifica', 'partidaAsignada', 'on'=>'crearaccionse'),
-
-			array('monto', 'numerical', 'integerOnly'=>false, 'min'=>1),
+			array('monto,fuente','safe'),
+			//array('monto', 'numerical', 'integerOnly'=>false, 'min'=>1),
 			array('codigo', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
