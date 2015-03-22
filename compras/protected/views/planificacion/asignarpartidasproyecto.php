@@ -182,7 +182,7 @@
        /* echo "Fuentes";
         print_r($fuentesSel);
         Yii::app()->end();*/
-
+        $cantidad = count($fuentesSel);
     foreach ($fuentesSel as $key => $value) 
     { ?>
     <tr id='producto<?php echo $key; ?>' class="producto">
@@ -216,7 +216,24 @@
                                        //echo CHtml::textField('monto', 'some value');
                                         ?>
     </td>
-      <td><a  id="delete1" style="cursor:pointer">Eliminar fuente</a> </td>
+
+     <script type="text/javascript">
+    $(document).ready(function() {
+                $("#delete<?php echo $key; ?>").click(function(event) {
+            //alert('#mytable tbody>tr #'+$('#'+event.target.id).parent().parent().attr('id'));
+            if($('#mytable tr').length >1)
+                                {   
+                $('#mytable tbody>tr#'+$('#'+event.target.id).parent().parent().attr('id')).remove();
+                  return false;
+                  }
+        });
+
+       });
+
+            </script>
+
+            
+      <td><a  id='delete<?php echo $key ?>' style="cursor:pointer">Eliminar fuente</a></td>
     </tr>
     <?php
         }
@@ -248,12 +265,12 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        var numId = 1;
+        var numId = <?php echo $cantidad; ?>;
         $("#add").click(function() {
                 $clone = $("#mytable tbody>tr:last").clone(true);
                 $('#mytable tbody>tr:last').clone(true).attr("id",$clone.attr("id").replace(/\d+$/, function(str) { return parseInt(str) + 1; } )).insertAfter("#mytable tbody>tr:last");
-                        //$("#mytable tbody>tr:last").each(function() {this.reset();});
                         numId++;
+                        //alert(numId);
                         //$('#mytable tbody>tr:last').attr('id','producto'+numId);
                         $('#mytable tbody>tr:last>td>a').attr('id','delete'+numId);
         
@@ -265,18 +282,9 @@
                                 }
                                       return false;
                             });
-
           return false;
         });
 
-        $("#delete1").click(function(event) {
-            //alert('#mytable tbody>tr #'+$('#'+event.target.id).parent().parent().attr('id'));
-            if($('#mytable tr').length >1)
-                                {   
-                $('#mytable tbody>tr#'+$('#'+event.target.id).parent().parent().attr('id')).remove();
-                  return false;
-                  }
-        });
-
+      
     });
 </script>
