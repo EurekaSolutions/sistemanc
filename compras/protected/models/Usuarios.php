@@ -77,6 +77,7 @@ class Usuarios extends ActiveRecord
 			array('actualizado_el, repetir_contrasena, nombre,', 'required', 'on'=>'registro, actualizar'),
 
 			array('usuario, contrasena, correo, creado_el,actualizado_el, rol, ente_organo_id, nombre, cedula, cargo', 'required', 'on'=>'crearente'),
+			array('usuario, correo, rol, ente_organo_id, nombre, cedula, cargo', 'required', 'on'=>'cargamasiva'),
 			//array('correo', 'required', 'on'=>'actualizarCorreo'),
 			array('correo, usuario_id', 'required', 'on'=>'actualizarCorreo'),
 
@@ -91,7 +92,7 @@ class Usuarios extends ActiveRecord
 			array('correo','email'),
 			array('correo','unique', 'except'=>'update'),
 			array('usuario', 'unique', 'except'=>'register, registro', 'criteria'=>array('condition'=>'usuario_id !=:id ','params'=>array(':id'=>Yii::app()->user->getId())), 'allowEmpty' => false, 'message'=>Yii::t('UsrModule.usr','El nombre de usuario ya existe.')),
-			array('contrasena','ext.validators.EPasswordStrength', 'min'=>$this->min, 'except'=>'actualizarPerfil, crearente','message'=>'La {attribute} es debil. La {attribute} debe contener al menos '.$this->min.' caracteres, al menos una letra minuscula, una mayuscula, y un número.'),
+			array('contrasena','ext.validators.EPasswordStrength', 'min'=>$this->min, 'except'=>'actualizarPerfil, crearente, cargamasiva','message'=>'La {attribute} es debil. La {attribute} debe contener al menos '.$this->min.' caracteres, al menos una letra minuscula, una mayuscula, y un número.'),
 			//array('codigo_onapre', 'validarCodigo', 'except'=>'actualizarPerfil'),
 			array('llave_activacion, creado_el, actualizado_el, ultima_visita_el, correo_verificado', 'default', 'setOnEmpty' => true, 'value' => null, 'on' => 'search'),
 			array('creado_el, actualizado_el, ultima_visita_el', 'date', 'format' => array('yyyy-MM-dd', 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm:ss'), 'on' => 'search'),

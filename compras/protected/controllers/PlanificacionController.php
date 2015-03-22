@@ -319,10 +319,12 @@ class PlanificacionController extends Controller
 				$fila = -1;
 				$usuario_procesados = 0;
 				$usuario_noprocesados = 0;
+				$todosErrores = array();
 				$file = file(Yii::app()->basePath.'\..\assets\archivo.'.$model->archivo->extensionName);
 				$lineas = count($file);
 				$lineas--;
 				$si = true;
+
 				if (($gestor = fopen(Yii::app()->basePath.'\..\assets\archivo.'.$model->archivo->extensionName, "r")) !== FALSE)
 				{
 				    while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE)
@@ -338,7 +340,7 @@ class PlanificacionController extends Controller
 					        	try
 					        	{
 						        	$ente = new EntesOrganos;
-						        	$usuario = new Usuarios;
+						        	$usuario = new Usuarios('cargamasiva');
 						        	
 						        	$ente->codigo_onapre = utf8_encode(trim($datos[0]))!= '' ? utf8_encode(trim($datos[0])) : ''; 
 
@@ -348,7 +350,7 @@ class PlanificacionController extends Controller
 						        	
 						        	$ente->rif = utf8_encode(trim($datos[2]));
 
-						        	if($ente->save(false))
+						        	if($ente->save())
 						        	{
 
 						   
@@ -365,7 +367,7 @@ class PlanificacionController extends Controller
 									    $usuario->rol = 'normal';
 									    $usuario->ente_organo_id = $ente->ente_organo_id;
 
-									    if($usuario->save(false))
+									    if($usuario->save())
 									    {
 									    	$transaction->commit();
 									    	$usuario_procesados++;
@@ -376,14 +378,20 @@ class PlanificacionController extends Controller
 									    }else
 									    {
 
-									    	throw new Exception($usuario->getErrors(),1);
+									    	/*print_r(Chtml::errorSummary($usuario));
+									    	Yii::app()->end();*/
+
+									    	throw new Exception(Chtml::errorSummary($usuario),1);
 									    	//$transaction->rollBack();
 									    	//Yii::app()->user->setFlash('error', "Ocurrio un error al momento de crear el usuario!");
 									    }
 
 								    }else
 								    {
-								    	throw new Exception($ente->getErrors(),1);
+								    	//print_r(Chtml::errorSummary($ente));
+									    //	Yii::app()->end();
+
+								    	throw new Exception(Chtml::errorSummary($ente),1);
 								    	//$transaction->rollBack();
 								    	//Yii::app()->user->setFlash('error', "Ocurrio un error al momento de crear el organo!");
 								    }
@@ -391,8 +399,9 @@ class PlanificacionController extends Controller
 								    $transaction->rollBack();
 								  	$usuario_noprocesados++;
 								    $construir_archivo[$fila] = $file[$fila+1];
+								    $todosErrores[$fila] = $e->getMessage();
 								    $si = false;
-									
+									//Yii::app()->user->setFlash('error', $e->getMessage());
 									Yii::app()->user->setFlash('error', "$usuario_noprocesados usuario(s) NO procesado(s) del archivo con número de lineas $lineas");
 								}
 					    	}
@@ -413,7 +422,7 @@ class PlanificacionController extends Controller
 			}
 		}
 
-		$this->render('cargamasiva',array('model'=>$model, 'errores' => $construir_archivo, 'valida' => $si));
+		$this->render('cargamasiva',array('model'=>$model, 'errores' => $construir_archivo, 'todosErrores' => $todosErrores));
 	}
 
 	public function actionDescargar()

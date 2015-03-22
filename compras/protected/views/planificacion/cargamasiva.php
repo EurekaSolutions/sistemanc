@@ -18,7 +18,8 @@ if(isset($errores) and !$valida)
 {
 	echo '<p class="help-block">Se han encontrado los siguientes errores:</p>';
 	foreach ($errores as $key => $value) {
-		echo '<div class="flash-notice"> Linea '.($key+2).' '.$value."</div>\n";
+		echo '<div class="flash-notice"> Linea '.($key+2).' '.$value."</div>";
+		echo '<div class="flash-error">'.$todosErrores[$key].'</div>';
 	}
 }else
 {
