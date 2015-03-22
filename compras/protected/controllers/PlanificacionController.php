@@ -166,7 +166,7 @@ class PlanificacionController extends Controller
 					
 					if(count($usuario))
 					{
-						$usuario->usuario_id = 1339;
+						//$usuario->usuario_id = 1339;
 						$criteria = new CDbCriteria();
 						$criteria->condition = 'userid='.$usuario->usuario_id; 
 						$todos_log = Activerecordlog::model()->findAll($criteria);
