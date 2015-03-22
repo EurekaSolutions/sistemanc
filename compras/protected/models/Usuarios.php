@@ -213,12 +213,6 @@ class Usuarios extends ActiveRecord
 		return $this->contrasena !== null && password_verify($contrasena, $this->contrasena);*/
 
     }
-
-    public function miCorreo($usuario_id)
-    {
-    	$usuario = $this->findByPk($usuario_id);
-    	return $usuario->correo;
-    }
 	/**
 	 * Authenticates the password.
 	 * This is the 'authenticate' validator as declared in rules().
