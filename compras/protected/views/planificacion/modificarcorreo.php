@@ -1,5 +1,5 @@
 <div>
-			<h4 style="text-align: center;">MODIFICAR CORREO A USUARIOS</h4><br>				
+			<h4 style="text-align: center;">MODIFICAR CORREO A USUARIOS ORGANOS</h4><br>				
 				  	
 
 			   <?php 
@@ -17,22 +17,6 @@
 								    )
 								);
 
-								//echo $form->errorSummary($usuario);
-/*
-								 echo $form->dropDownListGroup($usuario , 'usuario_id',
-										array(
-											'wrapperHtmlOptions' => array(
-												'class' => 'col-sm-2',
-											),
-											'label'=>'Seleccione Ente u Organo',
-											'widgetOptions' => array(
-
-												'data' => $lista_usuarios,
-												//'options'=>array($model->proyecto_id => array('selected'=>true)),
-												//'htmlOptions' => array('prompt' => 'Seleccione'),
-											)
-										)
-									); */
 
 							    echo $form->select2Group($usuario, 'usuario_id',
 							                        array(
@@ -43,7 +27,21 @@
 							                            'widgetOptions' => array(
 							                                'asDropDownList' => true,
 							                                'data' => $lista_usuarios,
-							                                'htmlOptions'=>array(),
+							                                'htmlOptions'=>array('id'=>'usuarios',
+							                                	'ajax' => array(
+																'type'=>'POST', //request type
+																'url'=>CController::createUrl('planificacion/correoactual'), //url to call.
+																//Style: CController::createUrl('currentController/methodToCall')
+																//'update'=>'#disponible', //selector to update
+																'success' => 'function($data){ 
+								
+																		$("#correo_actual").html("Correo actual: "+$data);
+											
+																}',
+																//'data'=>'js:javascript statement' 
+																//leave out the data key to pass all form values through
+														 		 )),
+
 							                                'options' => array(
 							                                    //'tags' => array('clever', 'is', 'better', 'clevertech'),
 							                                    'placeholder' => 'Seleccionar Ente u Organo',
@@ -53,37 +51,16 @@
 							                            )
 							                        )
 							                    );
-
-							    echo $form->select2Group($usuario, 'usuario_id',
-							                        array(
-							                            'wrapperHtmlOptions' => array(
-							                                'class' => 'col-sm-5',
-							                            ),
-							                            'label'=>'Seleccione Ente u Organo',
-							                            'widgetOptions' => array(
-							                                'asDropDownList' => true,
-							                                'data' => $lista_usuarios,
-							                                'htmlOptions'=>array(),
-							                                'options' => array(
-							                                    //'tags' => array('clever', 'is', 'better', 'clevertech'),
-							                                    'placeholder' => 'Seleccionar Ente u Organo',
-							                                    // 'width' => '40%', 
-							                                    'tokenSeparators' => array(',', ' ')
-							                                )
-							                            )
-							                        )
-							                    );
-								 echo $form->textFieldGroup($usuario,'correo',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span3'))));
-
-								// echo CHtml::dropDownList('partida','', array());
-
-								 
-								 
-
-								/*	$this->widget(
-									    'booster.widgets.TbButton',
-									    array('buttonType' => 'submit', 'label' => 'Seleccionar')
-									); */
+								
+								if($correo_actual)
+								{	
+									echo CHtml::label('Correo actual: '.$correo_actual , 'correo_actual', array('id'=>'correo_actual'));
+								}else
+								{
+									echo CHtml::label('Correo actual:', 'correo_actual', array('id'=>'correo_actual'));
+								}
+							    echo '<br/><br/>';
+								echo $form->textFieldGroup($usuario,'correo',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span3'))));
 								 
 
 
@@ -92,8 +69,6 @@
 			            	'context'=>'primary',
 			            	'label'=>$usuario->isNewRecord ? 'Cambiar correo' : 'Cambiar correo',
 			        	)); 
-
-
 
 						$this->endWidget();
 					unset($form);

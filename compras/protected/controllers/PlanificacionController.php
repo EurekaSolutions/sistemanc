@@ -50,7 +50,7 @@ class PlanificacionController extends Controller
 				'roles'=>array('ente'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','administracion','importacion', 'modificarcorreo', 'cargamasiva', 'descargar'),
+				'actions'=>array('admin','delete','administracion','importacion', 'modificarcorreo', 'cargamasiva', 'descargar', 'correoactual'),
 				'users'=>array('@'),
 				'roles'=>array('admin'),
 			),
@@ -72,6 +72,16 @@ class PlanificacionController extends Controller
 				'users'=>array('*'),
 			),
 		);
+	}
+
+
+	public function actionCorreoactual()
+	{
+		if($_POST['Usuarios']['usuario_id'])
+		{
+			$usuario = Usuarios::model()->findByPk($_POST['Usuarios']['usuario_id']);
+			echo $usuario->correo;
+		}
 	}
 
 	public function actionActividad()
@@ -437,7 +447,11 @@ class PlanificacionController extends Controller
 	{
 		$model = new Usuarios('actualizarCorreo');
 
-		$usuarios = Usuarios::model()->findAll();
+		$correo_actual = "";
+		$rol = "organo";
+		$criteria = new CDbCriteria();
+		$criteria->condition = "rol='$rol'";      
+		$usuarios = Usuarios::model()->findAll($criteria);
 		
 		$lista_usuarios = CHtml::listData($usuarios, function($usuario) {
 														return CHtml::encode($usuario->usuario_id);
@@ -468,9 +482,14 @@ class PlanificacionController extends Controller
 	    		}
 	    		
 	    	}
+
+	    	if($model->usuario_id)
+	    	{
+	    		$correo_actual = Usuarios::model()->findByPk($_POST['Usuarios']['usuario_id'])->correo;
+	    	}
 		}
 
-		$this->render('modificarcorreo',array('lista_usuarios'=>$lista_usuarios, 'usuario' => $model));
+		$this->render('modificarcorreo',array('lista_usuarios'=>$lista_usuarios, 'usuario' => $model, 'correo_actual'=>$correo_actual));
 	}
 
 	/*public function actionBuscarcorreo()
