@@ -26,19 +26,19 @@ $this->widget('booster.widgets.TbGridView',array(
 		'llave_activacion',
 		'ultima_visita_el',
 		*/
-array(
-'class'=>'booster.widgets.TbButtonColumn',
- 'template'=>'{view}{update}',
- 'buttons'=>array(
- 		'view'=>array(
- 			'url'=>'Yii::app()->createUrl("usuarios/view", array("id"=>$data->usuario_id))',
- 			),
-		'update'=>array(
- 			'url'=>'Yii::app()->createUrl("usuarios/modificarUsuario", array("id"=>$data->usuario_id))',
- 			),
+		array(
+			'class'=>'booster.widgets.TbButtonColumn',
+			 'template'=>'{view}{update}',
+			 'buttons'=>array(
+			 		'view'=>array(
+			 			'url'=>'Yii::app()->createUrl("usuarios/view", array("id"=>$data->usuario_id))',
+			 			),
+					'update'=>array(
+			 			'url'=>'Yii::app()->createUrl("usuarios/modificarUsuario", array("id"=>$data->usuario_id))',
+			 			),
 
 
- 	)
-),
-),
+			 	)
+			),
+		),
 )); ?>

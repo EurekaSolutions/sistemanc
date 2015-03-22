@@ -51,6 +51,7 @@ $dataProvider=new CActiveDataProvider('Usuarios', array(
  $this->widget('booster.widgets.TbGridView',array(
 'id'=>'usuarios-grid',
 'dataProvider'=>$dataProvider,
+'summaryText'=>'',
 //'filter'=>$model,
 'columns'=>array(
 		//'usuario_id',
