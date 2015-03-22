@@ -8,7 +8,7 @@
  * @property string $fuente_id
  * @property string $presupuesto_partida_id
  */
-class FuentePresupuesto extends CActiveRecord
+class FuentePresupuesto extends ActiveRecord
 {
 
 	public $monto;
@@ -17,7 +17,7 @@ class FuentePresupuesto extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'public.fuente_presupuesto';
+		return $this->obtenerSchema().'fuente_presupuesto';
 	}
 
 	/**

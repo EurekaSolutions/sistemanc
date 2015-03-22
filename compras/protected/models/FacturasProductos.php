@@ -19,14 +19,14 @@
  * @property Productos $producto
  * @property PresupuestoPartidas $presupuestoPartida
  */
-class FacturasProductos extends CActiveRecord
+class FacturasProductos extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'facturas_productos';
+		return $this->obtenerSchema().'.facturas_productos';
 	}
 
 	/**

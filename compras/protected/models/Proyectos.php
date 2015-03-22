@@ -13,7 +13,7 @@
  * @property EntesOrganos $enteOrgano
  * @property PresupuestoPartidas[] $presupuestoPartidases
  */
-class Proyectos extends CActiveRecord
+class Proyectos extends ActiveRecord
 {
 	public $partida;
 	public $general;
@@ -29,7 +29,8 @@ class Proyectos extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'public.proyectos';
+
+		return $this->obtenerSchema().'.proyectos';
 	}
 
 	/**

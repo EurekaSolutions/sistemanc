@@ -21,14 +21,17 @@
  * @property Proyectos[] $proyectoses
  * @property PresupuestoPartidaAcciones[] $presupuestoPartidaAcciones
  */
-class PresupuestoPartidas extends CActiveRecord
+class PresupuestoPartidas extends ActiveRecord
 {
+	public $sustraendo_id;
+	public $monto_transferir;
+	public $todo;
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'public.presupuesto_partidas';
+		return $this->obtenerSchema().'.presupuesto_partidas';
 	}
 
 	/**
@@ -41,8 +44,13 @@ class PresupuestoPartidas extends CActiveRecord
 		return array(
 			array('partida_id, monto_presupuestado, fecha_desde, anho, ente_organo_id', 'required'),
 			array('monto_presupuestado', 'length', 'max'=>38),
+			array('todo', 'required', 'on'=>'transferir'),
 			array('tipo', 'length', 'max'=>1),
-			array('fecha_hasta, presupuesto_id', 'safe'),
+			array('fecha_hasta, presupuesto_id, sustraendo_id, monto_transferir, todo', 'safe'),
+			array('sustraendo_id', 'validarSustraendo', 'on'=>'transferir'),
+			array('monto_transferir','numerical', 'on'=>'transferir'),
+			array('presupuesto_partida_id', 'validarSumando', 'on'=>'transferir'),
+			array('monto_transferir', 'validarTansferirMonto', 'on'=>'transferir'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('presupuesto_partida_id, partida_id, monto_presupuestado, fecha_desde, fecha_hasta, tipo, anho, ente_organo_id', 'safe', 'on'=>'search'),
@@ -87,6 +95,58 @@ class PresupuestoPartidas extends CActiveRecord
 					$total += ($presupuestoImportacion->cantidad*$presupuestoImportacion->monto_presupuesto*$presupuestoImportacion->divisa->tasa->tasa);
 				}
  		return $total;
+ 	}
+
+ 	/**
+ 	 * Función que calcula el monto disponible de una partida presupuestada.
+ 	 * 
+ 	 * @return float $disponible
+ 	 * */
+ 	public function montoDisponible(){
+			
+ 		return $this->monto_presupuestado - $this->montoCargadoPartida();
+ 	}
+ 	/**
+ 	 * Función que calcula el monto disponible de una partida presupuestada.
+ 	 * 
+ 	 * @return float $disponible
+ 	 * */
+ 	public function validarSustraendo($attribute,$params)
+	{
+		if($this->$attribute == '' || $this->$attribute == null )
+			$this->addError($attribute, 'Debe seleccionar una partida a sustraer.');
+		else
+		if($this->$attribute == $this->presupuesto_partida_id)
+			$this->addError($attribute, 'Las partidas seleccionadas son la misma.');
+	     
+ 	}
+ 	/**
+ 	 * Función que calcula el monto disponible de una partida presupuestada.
+ 	 * 
+ 	 * @return float $disponible
+ 	 * */
+ 	public function validarSumando($attribute,$params)
+	{
+		if($this->$attribute == '' || $this->$attribute == null )
+					$this->addError($attribute, 'Debe seleccionar una partida a transferir.');
+	}
+ 	/**
+ 	 * Función que calcula el monto disponible de una partida presupuestada.
+ 	 * 
+ 	 * @return float $disponible
+ 	 * */
+ 	public function validarTansferirMonto($attribute,$params)
+	{
+		if($monto_disponible = $this->findByAttributes(array('presupuesto_partida_id'=>$this->sustraendo_id)))
+			$monto_disponible = $this->findByAttributes(array('presupuesto_partida_id'=>$this->sustraendo_id))->montoDisponible();
+
+		if(!$this->todo){
+		   if($this->$attribute > $monto_disponible)
+	 			$this->addError($attribute, 'El monto a transferir sobrepasa la cantidad disponible de la partida origen.');
+		   
+		   if($this->$attribute <= 0)
+		   		$this->addError($attribute, 'El monto a transferir debe ser mayor a 0.');
+	     }
  	}
 
 	// Delete cascade / Borrado en cascada
@@ -144,6 +204,9 @@ class PresupuestoPartidas extends CActiveRecord
 			'ente_organo_id' => 'Ente Organo',
 			//'fuente_financiamiento_id' => 'Fuente Financiamiento',
 			'presupuesto_id' => 'Presupuesto',
+			'sustraendo_id'=>'Partida a sustraer',
+			'monto_transferir'=>'Monto a transferir',
+			'todo'=>'Transferir todo',
 
 		);
 	}

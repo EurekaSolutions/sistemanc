@@ -13,7 +13,7 @@
  * The followings are the available model relations:
  * @property Divisas $divisa
  */
-class Tasas extends CActiveRecord
+class Tasas extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name

@@ -16,7 +16,7 @@
  * @property PresupuestoPartidas[] $presupuestoPartidases
  * @property PartidaProductos[] $partidaProductoses
  */
-class Partidas extends CActiveRecord
+class Partidas extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name

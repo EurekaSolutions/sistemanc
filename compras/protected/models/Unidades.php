@@ -10,7 +10,7 @@
  * The followings are the available model relations:
  * @property PresupuestoProductos[] $presupuestoProductoses
  */
-class Unidades extends CActiveRecord
+class Unidades extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name

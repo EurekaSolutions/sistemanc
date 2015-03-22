@@ -15,14 +15,14 @@
  * @property EntesOrganos $enteOrgano
  * @property Facturas[] $facturases
  */
-class Procedimientos extends CActiveRecord
+class Procedimientos extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'procedimientos';
+		return $this->obtenerSchema().'.procedimientos';
 	}
 
 	/**

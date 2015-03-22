@@ -15,14 +15,14 @@
  * @property EntesOrganos $enteOrgano
  * @property PresupuestoPartidas $presupuestoPartida
  */
-class PresupuestoPartidaAcciones extends CActiveRecord
+class PresupuestoPartidaAcciones extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'public.presupuesto_partida_acciones';
+		return $this->obtenerSchema().'.presupuesto_partida_acciones';
 	}
 
 	/**

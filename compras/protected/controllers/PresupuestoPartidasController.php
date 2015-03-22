@@ -27,7 +27,7 @@ class PresupuestoPartidasController extends Controller
 	{
 		return array(
 		array('allow',  // allow all users to perform 'index' and 'view' actions
-			'actions'=>array('modificarPartida'),
+			'actions'=>array('modificarPartida', 'montoDisponible', 'montoDisponibleSustraendo'),
 			'users'=>array('@'),
 			'roles'=>array('presupuesto')
 		),
@@ -52,6 +52,46 @@ class PresupuestoPartidasController extends Controller
 		);
 	}
 
+ 	/**
+ 	 * Función que calcula el monto disponible de una partida presupuestada.
+ 	 * 
+ 	 * @return float $disponible
+ 	 * */
+ 	public function actionMontoDisponibleSustraendo(){
+
+			if(isset($_POST['PresupuestoPartidas'])){
+				$this->montoDisponible($_POST['PresupuestoPartidas']['sustraendo_id']);
+			}
+ 	}
+
+ 	/**
+ 	 * Función que calcula el monto disponible de una partida presupuestada.
+ 	 * 
+ 	 * @return float $disponible
+ 	 * */
+ 	public function actionMontoDisponible(){
+
+			if(isset($_POST['PresupuestoPartidas'])){
+				$this->montoDisponible($_POST['PresupuestoPartidas']['presupuesto_partida_id']);
+			}
+ 	}
+
+ 	/**
+ 	 * Función que calcula el monto disponible de una partida presupuestada.
+ 	 * 
+ 	 * @return float $disponible
+ 	 * */
+ 	public function montoDisponible($id){
+
+ 			$disponible = 0;
+
+			$presuPartida = PresupuestoPartidas::model()->findByAttributes(array('presupuesto_partida_id'=>$id));
+
+			$disponible = $presuPartida->montoDisponible();
+
+			echo number_format($disponible, 2, ',', '.').' Bs.';
+ 	}
+
 	/**
 	* Updates a particular model.
 	* If update is successful, the browser will be redirected to the 'view' page.
@@ -59,8 +99,7 @@ class PresupuestoPartidasController extends Controller
 	*/
 	public function actionModificarPartida()
 	{
-		$model=new PresupuestoPartidas;
-		$modelSustraendo=new PresupuestoPartidas;
+		$model=new PresupuestoPartidas('transferir');
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -68,12 +107,37 @@ class PresupuestoPartidasController extends Controller
 		if(isset($_POST['PresupuestoPartidas']))
 		{
 			$model->attributes=$_POST['PresupuestoPartidas'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->presupuesto_partida_id));
+			if($model->sustraendo_id=='')
+				$model->sustraendo_id = null;
+			if($model->presupuesto_partida_id=='')
+				$model->presupuesto_partida_id = null;
+
+			if($model->validate(array('presupuesto_partida_id','monto_transferir','sustraendo_id')))
+			{
+				$modelSustraendo = $this->loadModel($model->sustraendo_id);
+
+				$monto_transferir = 0;
+				if($model->todo){
+					$monto_transferir = $model->monto_transferir = $modelSustraendo->montoDisponible();	
+				}else
+				 	$monto_transferir = $model->monto_transferir;
+
+				$modelSuma = $this->loadModel($model->presupuesto_partida_id);
+
+				$modelSuma->monto_presupuestado += $monto_transferir;
+				$modelSustraendo->monto_presupuestado -= $monto_transferir;
+
+				if($modelSuma->save() && $modelSustraendo->save()){
+					//$this->redirect(array('view','id'=>$model->presupuesto_partida_id));
+					Yii::app()->user->setFlash('success', "Transferencia realizada con exito.");
+					//$model = new PresupuestoPartidas;
+				}else
+					Yii::app()->user->setFlash('error', "Hubo un problema guardando la transferencia. Intentelo nuevamente.");
+			}
 		}
 
 		$this->render('modificarPartida',array(
-		'model'=>$model,'modelSustraendo'=>$modelSustraendo
+		'model'=>$model,
 		));
 	}
 

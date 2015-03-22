@@ -90,7 +90,7 @@
 		         'attribute' => 'procedimiento_id',
 		        //'name' => 'procedimiento_id',
 		        'data' => $list,
-		        'htmlOptions'=>array('id'=>'Procedimeinto',),
+		        'htmlOptions'=>array('id'=>'Procedimiento',),
 		        'options' => array(
 		            //'tags' => array('procedimientos'),
 		            'placeholder' => 'Procedimientos',

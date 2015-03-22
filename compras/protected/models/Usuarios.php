@@ -26,7 +26,7 @@
  * @property UserUsedPasswords[] $userUsedPasswords
  * @property UserLoginAttempts[] $userLoginAttempts
  */
-class Usuarios extends CActiveRecord
+class Usuarios extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name

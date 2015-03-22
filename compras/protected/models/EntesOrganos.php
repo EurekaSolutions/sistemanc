@@ -18,7 +18,7 @@
  * @property EntesAdscritos[] $entesAdscritoses1
  * @property PresupuestoPartidaAcciones[] $presupuestoPartidaAcciones
  */
-class EntesOrganos extends CActiveRecord
+class EntesOrganos extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
@@ -27,7 +27,7 @@ class EntesOrganos extends CActiveRecord
 	
 	public function tableName()
 	{
-		return 'entes_organos';
+		return 'public.entes_organos';
 	}
 
 	/**

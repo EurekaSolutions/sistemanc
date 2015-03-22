@@ -16,7 +16,7 @@
  * @property ProyectosAcciones $proyecto
  * @property PresupuestoProductos[] $presupuestoProductoses
  */
-class ProyectoPartidas extends CActiveRecord
+class ProyectoPartidas extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name

@@ -11,14 +11,14 @@
  * The followings are the available model relations:
  * @property PresupuestoPartidas[] $presupuestoPartidases
  */
-class FuentesFinanciamiento extends CActiveRecord
+class FuentesFinanciamiento extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'fuentes_financiamiento';
+		return 'public.fuentes_financiamiento';
 	}
 
 	/**

@@ -7,14 +7,14 @@
  * @property string $proyecto_id
  * @property string $presupuesto_partida_id
  */
-class PresupuestoPartidaProyecto extends CActiveRecord
+class PresupuestoPartidaProyecto extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'public.presupuesto_partida_proyecto';
+		return $this->obtenerSchema().'.presupuesto_partida_proyecto';
 	}
 
 	/**

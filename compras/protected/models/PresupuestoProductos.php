@@ -21,14 +21,14 @@
  * @property PresupuestoPartidas $proyectoPartida
  * @property Unidades $unidad
  */
-class PresupuestoProductos extends CActiveRecord
+class PresupuestoProductos extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'public.presupuesto_productos';
+		return $this->obtenerSchema().'.presupuesto_productos';
 	}
 
 	/**

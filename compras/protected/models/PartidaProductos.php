@@ -15,7 +15,7 @@
  * @property Partidas $partida
  * @property Productos $producto
  */
-class PartidaProductos extends CActiveRecord
+class PartidaProductos extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name

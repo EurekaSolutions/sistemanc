@@ -19,7 +19,7 @@ class Iva extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'iva';
+		return 'public.iva';
 	}
 
 	/**

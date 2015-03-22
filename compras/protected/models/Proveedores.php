@@ -14,14 +14,14 @@
  * @property EntesOrganos $enteOrgano
  * @property Facturas[] $facturases
  */
-class Proveedores extends CActiveRecord
+class Proveedores extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'proveedores';
+		return $this->obtenerSchema().'proveedores';
 	}
 
 	/**

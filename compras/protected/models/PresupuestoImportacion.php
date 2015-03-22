@@ -15,14 +15,14 @@
  * @property string $descripcion
  * @property string $presupuesto_partida_id
  */
-class PresupuestoImportacion extends CActiveRecord
+class PresupuestoImportacion extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'public.presupuesto_importacion';
+		return $this->obtenerSchema().'.presupuesto_importacion';
 	}
 
 	/**

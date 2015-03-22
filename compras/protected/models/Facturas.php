@@ -19,14 +19,14 @@
  * @property Proveedores $proveedor
  * @property EntesOrganos $enteOrgano
  */
-class Facturas extends CActiveRecord
+class Facturas extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'facturas';
+		return $this->obtenerSchema.'.facturas';
 	}
 
 	/**
