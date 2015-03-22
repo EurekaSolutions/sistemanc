@@ -17,7 +17,7 @@ class FuentePresupuesto extends ActiveRecord
 	 */
 	public function tableName()
 	{
-		return $this->obtenerSchema().'fuente_presupuesto';
+		return $this->obtenerSchema().'.fuente_presupuesto';
 	}
 
 	/**
