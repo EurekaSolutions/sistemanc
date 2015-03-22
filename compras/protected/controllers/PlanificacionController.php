@@ -1221,7 +1221,7 @@ class PlanificacionController extends Controller
 	        	$presupuesto_partida->fecha_desde = "1900-01-01";
 	        	$presupuesto_partida->fecha_hasta = "2199-12-31";
 	        	$presupuesto_partida->tipo = "A";
-	        	$presupuesto_partida->anho = date("Y");
+	        	$presupuesto_partida->anho = Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];//date("Y");
 	        	$presupuesto_partida->ente_organo_id= $usuario->ente_organo_id;
 	        	//$presupuesto_partida->fuente_fianciamiento_id = $model->fuente;
 
@@ -1501,7 +1501,7 @@ class PlanificacionController extends Controller
 	        	$presupuesto_partida->fecha_desde = "1900-01-01";
 	        	$presupuesto_partida->fecha_hasta = "2199-12-31";
 	        	$presupuesto_partida->tipo = "P";
-	        	$presupuesto_partida->anho = date("Y");
+	        	$presupuesto_partida->anho = Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];//date("Y");
 	        	$presupuesto_partida->ente_organo_id= $usuario->ente_organo_id;
 	        	//$presupuesto_partida->fuente_fianciamiento_id = $model->fuente;
 

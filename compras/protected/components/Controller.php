@@ -22,17 +22,25 @@ class Controller extends CController
 	public $breadcrumbs=array();
 
 	public function beforeAction($action){
-/*			$fechaActual = new DateTime();
-		print_r($fechaActual->format("Y-m-d"));
-		print_r(date('Y'));
-		if($fechaActual->format("Y-m-d") < "") 
-			Yii::app()->params['trimestreActual'] = 0;
 		
-		Yii::app()->end();
-		//if(!isset(Yii::app()->params['trimestreActual']))
-		//{
-		//	if()
-		//}*/
+		$fechaActual = new DateTime();
+
+		$fechaActFor = $fechaActual->format("Y-m-d");
+	
+		foreach (Yii::app()->params['trimestresFechas'] as $key => $value) {
+		 	if($fechaActFor >= $value['c'] && $fechaActFor <= $value['f']) 
+		 	{
+				$trimestres[$key] = Yii::app()->params['etiquetasTrimestres'][$key].' '.$value['anho'];
+/*				if(!isset(Yii::app()->session['trimestreSeleccionado']))
+				 	Yii::app()->session['trimestreSeleccionado'] = $key;
+				 elseif(!array_key_exists(Yii::app()->session['trimestreSeleccionado'],$trimestres))*/
+			}
+		}
+
+		if(!array_key_exists(Yii::app()->session['trimestreSeleccionado'],$trimestres))
+			Yii::app()->session['trimestreSeleccionado'] = current(array_keys($trimestres));
+
+		 Yii::app()->session['trimestresDisponibles'] = $trimestres;	
 
 		return parent::beforeAction($action);
 	}

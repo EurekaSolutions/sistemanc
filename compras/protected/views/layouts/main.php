@@ -25,16 +25,49 @@
 	<div id="header">
 		<div id="logo" style="text-align: center;"><?php echo CHtml::image(Yii::app()->request->baseUrl.'/images/banner.jpg'); ?></div>
 	</div><!-- header -->
-
+	
+<div id="trimestre">
+	Cargando: <?php echo ($trimestre = Yii::app()->session['trimestresDisponibles'][Yii::app()->session['trimestreSeleccionado']])?$trimestre:''; ?>
+</div>
 	<!--<div id="mainmenu">-->
 		<?php 
+$form=$this->beginWidget('booster.widgets.TbActiveForm',array(
+	'id'=>'trimestre-seleccion-form',
+	'enableAjaxValidation'=>false,
+)); 
 
+$list = Yii::app()->session['trimestresDisponibles']?Yii::app()->session['trimestresDisponibles']:array();
+$this->widget(
+		    'booster.widgets.TbSelect2',
+		    array(
+		        'asDropDownList' => true,
+		        'name' => 'trimestreSeleccion',
+		        'data' =>$list,
+		        'htmlOptions'=>array('id'=>'trimestreSel',
+    			 'ajax' => array(
+									'type'=>'POST', //request type
+									'url'=>CController::createUrl('site/seleccionarTrimestre'), //url to call.
+									//Style: CController::createUrl('currentController/methodToCall')
+									//'update'=>'#trimestre', //selector to update
+									'success'=>'function(){ location.reload();}'
+									//'data'=>'js:javascript statement' 
+									//leave out the data key to pass all form values through
+							  )),
+		        'options' => array(
+		            //'tags' => array('proveedores'),
+		            'placeholder' => 'Seleccionar trimestre de carga',
+		            'width' => '40%',
+		            'tokenSeparators' => array(',', ' ')
+		        )
+		    )
+		);
+ $this->endWidget();
 		if(!Yii::app()->user->isGuest)
 		{
 		    $this->widget(
     		'booster.widgets.TbNavbar',
 		    array(
-			    'brand' => 'Plan de compras del estado',
+			    'brand' => 'Plan de compras del estado - '.$trimestre,
 			    'fixed' => false,
 			    'fluid' => true,
 			    'items' => array(

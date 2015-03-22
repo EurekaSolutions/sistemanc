@@ -72,7 +72,7 @@ class FacturasController extends Controller
 			$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 			
 			$model->ente_organo_id = $usuario->ente_organo_id;
-			$model->anho = date("Y");
+			$model->anho =  Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho']; //date("Y");
 
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));

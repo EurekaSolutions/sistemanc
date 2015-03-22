@@ -86,6 +86,11 @@ return array(
         'booster' => array(
 		    'class' => 'ext.booster.components.Booster',
 		),
+		'session' => array (
+		    'sessionName' => 'SNCAccess',
+		    'cookieMode' => 'only',
+		    //'savePath' => '/path/to/new/directory',
+		),
 		 'format'=>array(
 		        'class'=>'application.components.Formatter',
 		        'numberFormat'=>array('decimals'=>2, 'decimalSeparator'=>',', 'thousandSeparator'=>'.'),
@@ -181,13 +186,25 @@ return array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
 		'minimoContrasena'=>6,
-		'trimestreActual'=>0,
+		'trimestresDisponibles'=>-1,
+		'etiquetasTrimestres'=>array(
+			'trimestre0'=>'Plan de compras original',
+			'trimestre1'=>'Trimestre 1',
+			'trimestre2'=>'Trimestre 2',
+			'trimestre3'=>'Trimestre 3',
+			'trimestre4'=>'Trimestre 4',),
 		'trimestresFechas'=>array(
-			'trimestre0'=>array('c'=>date('Y').'-07-01', 'f'=>date('Y').'-12-31'),
-			'trimestre1'=>array('c'=>(date('Y')+1).'-01-01', 'f'=>(date('Y')+1).'-03-31'),
-			'trimestre2'=>array('c'=>(date('Y')+1).'-04-01', 'f'=>(date('Y')+1).'-06-30'),
-			'trimestre3'=>array('c'=>(date('Y')+1).'-07-01', 'f'=>(date('Y')+1).'-09-30'),
-			'trimestre4'=>array('c'=>(date('Y')+1).'-10-01', 'f'=>(date('Y')+1).'-12-31')),
+			'trimestre0'=>array('c'=>date('Y').'-07-01', 'f'=>date('Y').'-12-31', 'anho'=>date('Y')+1),
+			'trimestre1'=>array('c'=>date('Y').'-01-01', 'f'=>date('Y').'-03-31', 'anho'=>date('Y')),
+			'trimestre2'=>array('c'=>date('Y').'-04-01', 'f'=>date('Y').'-06-30', 'anho'=>date('Y')),
+			'trimestre3'=>array('c'=>date('Y').'-07-01', 'f'=>date('Y').'-09-30', 'anho'=>date('Y')),
+			'trimestre4'=>array('c'=>date('Y').'-10-01', 'f'=>date('Y').'-12-31', 'anho'=>date('Y'))),
+		'trimestresEsquemas'=>array(
+			'trimestre0'=>'public',
+			'trimestre1'=>'trimestre1',
+			'trimestre2'=>'trimestre2',
+			'trimestre3'=>'trimestre3',
+			'trimestre4'=>'trimestre4',),
 		//Yii::app()->params['trimestreActual']
 	),
 );

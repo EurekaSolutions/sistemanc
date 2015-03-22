@@ -22,6 +22,21 @@ class SiteController extends Controller
 	}
 
 	/**
+	 * 
+	 */
+	public function actionSeleccionarTrimestre()
+	{
+		if(isset($_POST['trimestreSeleccion'])){
+
+			if(Yii::app()->session['trimestresDisponibles'][$_POST['trimestreSeleccion']])
+				 Yii::app()->session['trimestreSeleccionado'] = $_POST['trimestreSeleccion'] ;
+			else
+				throw new CHttpException(404,'El trimestre seleccionado no se encuentra disponible.');
+		}
+
+
+	}	
+	/**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
 	 */
