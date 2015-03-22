@@ -309,83 +309,111 @@ class PlanificacionController extends Controller
 		if(isset($_POST['Cargamasiva']))
 		{
 			$model->attributes=$_POST['Cargamasiva'];
+			
 			if($model->validate())
 			{
 				$model->archivo=CUploadedFile::getInstance($model,'archivo');
 				
-				$model->archivo->saveAs(Yii::app()->basePath.'\..\assets\archivo'.$model->archivo->extensionName);
-
-				$fila = 1;
-				if (($gestor = fopen(Yii::app()->basePath.'\..\assets\archivo'.$model->archivo->extensionName, "r")) !== FALSE) {
-				    while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE) {
+				$model->archivo->saveAs(Yii::app()->basePath.'\..\assets\archivo.'.$model->archivo->extensionName);
+				$construir_archivo = array();
+				$fila = -1;
+				$usuario_procesados = 0;
+				$usuario_noprocesados = 0;
+				$file = file(Yii::app()->basePath.'\..\assets\archivo.'.$model->archivo->extensionName);
+				$lineas = count($file);
+				$lineas--;
+				$si = true;
+				if (($gestor = fopen(Yii::app()->basePath.'\..\assets\archivo.'.$model->archivo->extensionName, "r")) !== FALSE)
+				{
+				    while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE)
+				    {
 				        $numero = count($datos);
-				      
-				        if($fila!=1)
-				        {
+				      	if($numero!=0)
+				      	{
+					        if($fila!=-1)
+					        {
 
-				        	$ente = new EntesOrganos;
-				        	$usuario = new Usuarios;
-				        	$ente->codigo_onapre = utf8_encode(trim($datos[0]))!= '' ? utf8_encode(trim($datos[0])) : ''; 
+					        	$transaction = Yii::app()->db->beginTransaction();
 
-				        	$ente->nombre = utf8_encode(trim($datos[1]));
-				        	$ente->tipo = "O";
-				        	$ente->creado_por = "snc";
-				        	if(!preg_match("/^(j|J|v|V|e|E|g|G)([0-9]{8,8})([0-9]{1})$/",$datos[2]))
-				        	{
-				        		//echo "Error en Rif creando el organo";
-				        		continue;
-				        	}      	
-				        	$ente->rif = utf8_encode(trim($datos[2]));
+					        	try
+					        	{
+						        	$ente = new EntesOrganos;
+						        	$usuario = new Usuarios;
+						        	
+						        	$ente->codigo_onapre = utf8_encode(trim($datos[0]))!= '' ? utf8_encode(trim($datos[0])) : ''; 
 
-				        	if($ente->save(false))
-				        	{
+						        	$ente->nombre = utf8_encode(trim($datos[1]));
+						        	$ente->tipo = "O";
+						        	$ente->creado_por = "snc";
+						        	
+						        	$ente->rif = utf8_encode(trim($datos[2]));
 
-				        		if(!preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/",$datos[5]))
-				        		{
-				        			//echo "Error en correo del organo";
-				        			continue;
-				        		}
+						        	if($ente->save(false))
+						        	{
 
-				        	   	$usuario->usuario = strtolower(utf8_encode(trim($datos[5])));
-					        	$usuario->correo = strtolower(utf8_encode(trim($datos[5])));
-					        	$usuario->nombre = strtoupper(utf8_encode(trim($datos[3])));
-					        	$usuario->cedula = utf8_encode(trim($datos[4]));
-					        	$usuario->cargo = utf8_encode(trim($datos[6]))!= '' ? strtoupper(utf8_encode(trim($datos[6]))) : ''; 
-					        	$usuario->contrasena = md5(rand(0,100));
-							    $usuario->creado_el = date("Y-m-d");
-							    $usuario->llave_activacion = md5(rand(0,100));
-							    $usuario->actualizado_el = date("Y-m-d");
-							    $usuario->rol = 'normal';
-							    $usuario->ente_organo_id = $ente->ente_organo_id;
+						   
 
-							    if($usuario->save(false))
-							    {
-							    	//$this->enviarCorreoRecuperacion($usuario->usuario, '1234567');
+						        	   	$usuario->usuario = strtolower(utf8_encode(trim($datos[5])));
+							        	$usuario->correo = strtolower(utf8_encode(trim($datos[5])));
+							        	$usuario->nombre = strtoupper(utf8_encode(trim($datos[3])));
+							        	$usuario->cedula = utf8_encode(trim($datos[4]));
+							        	$usuario->cargo = utf8_encode(trim($datos[6]))!= '' ? strtoupper(utf8_encode(trim($datos[6]))) : ''; 
+							        	$usuario->contrasena = md5(rand(0,100));
+									    $usuario->creado_el = date("Y-m-d");
+									    $usuario->llave_activacion = md5(rand(0,100));
+									    $usuario->actualizado_el = date("Y-m-d");
+									    $usuario->rol = 'normal';
+									    $usuario->ente_organo_id = $ente->ente_organo_id;
 
-							    	Yii::app()->user->setFlash('success', "Usuario(s) creado(s) con exito!");
+									    if($usuario->save(false))
+									    {
+									    	$transaction->commit();
+									    	$usuario_procesados++;
+									    	//$this->enviarCorreoRecuperacion($usuario->usuario, '1234567');
 
-							    }else
-							    {
-							    	Yii::app()->user->setFlash('error', "Ocurrio un error al momento de crear el usuario!");
-							    }
+									    	Yii::app()->user->setFlash('success', "$usuario_procesados usuario(s) procesado(s) del archivo con número de lineas $lineas !");
 
-						    }else
-						    {
-						    	Yii::app()->user->setFlash('error', "Ocurrio un error al momento de crear el organo!");
-						    }
-				    	}
+									    }else
+									    {
+
+									    	throw new Exception($usuario->getErrors(),1);
+									    	//$transaction->rollBack();
+									    	//Yii::app()->user->setFlash('error', "Ocurrio un error al momento de crear el usuario!");
+									    }
+
+								    }else
+								    {
+								    	throw new Exception($ente->getErrors(),1);
+								    	//$transaction->rollBack();
+								    	//Yii::app()->user->setFlash('error', "Ocurrio un error al momento de crear el organo!");
+								    }
+								}catch (Exception $e){
+								    $transaction->rollBack();
+								  	$usuario_noprocesados++;
+								    $construir_archivo[$fila] = $file[$fila+1];
+								    $si = false;
+									
+									Yii::app()->user->setFlash('error', "$usuario_noprocesados usuario(s) NO procesado(s) del archivo con número de lineas $lineas");
+								}
+					    	}
+					    }
 				        $fila++;
 				    }
 				    fclose($gestor);
-
 				}
-			}
 
+				//$this->redirect(array('planificacion/descargar','id'=>$model->id, 'title'=>$model->title));
+				//$this->redirect(array('planificacion/errores'));
+
+				//print_r($construir_archivo);
+				//$this->redirect('planificacion/descargar');
+				//$file = 'assets/archivo.csv';
+				//echo $file;
+        		//return Yii::app()->getRequest()->sendFile('archivo.csv',@file_get_contents($file),'application/vnd.ms-excel');
+			}
 		}
 
-		$this->render('cargamasiva',array(
-		'model'=>$model,
-		));
+		$this->render('cargamasiva',array('model'=>$model, 'errores' => $construir_archivo, 'valida' => $si));
 	}
 
 	public function actionDescargar()

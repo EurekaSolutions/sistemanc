@@ -181,12 +181,12 @@ return array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
 		'minimoContrasena'=>6,
-		'trimestreActual'=>1,
+		'trimestreActual'=>0,
 		'trimestresFechas'=>array(
 			'trimestre0'=>array('c'=>date('Y').'-07-01', 'f'=>date('Y').'-12-31'),
 			'trimestre1'=>array('c'=>(date('Y')+1).'-01-01', 'f'=>(date('Y')+1).'-03-31'),
-			'trimestre2'=>array('c'=>(date('Y')+1).'-04-01', 'f'=>(date('Y')+1).'-06-30')
-			'trimestre3'=>array('c'=>(date('Y')+1).'-07-01', 'f'=>(date('Y')+1).'-09-30')
+			'trimestre2'=>array('c'=>(date('Y')+1).'-04-01', 'f'=>(date('Y')+1).'-06-30'),
+			'trimestre3'=>array('c'=>(date('Y')+1).'-07-01', 'f'=>(date('Y')+1).'-09-30'),
 			'trimestre4'=>array('c'=>(date('Y')+1).'-10-01', 'f'=>(date('Y')+1).'-12-31')),
 		//Yii::app()->params['trimestreActual']
 	),

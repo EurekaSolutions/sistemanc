@@ -13,6 +13,19 @@
         }
     ?>
 
+<?php
+if(isset($errores) and !$valida)
+{
+	echo '<p class="help-block">Se han encontrado los siguientes errores:</p>';
+	foreach ($errores as $key => $value) {
+		echo '<div class="flash-notice"> Linea '.($key+2).' '.$value."</div>\n";
+	}
+}else
+{
+	echo '<p class="help-block">Todo el archivo cargado con éxito.</p>';	
+}
+?>
+
 
  <?php
 
