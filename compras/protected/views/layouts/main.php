@@ -54,50 +54,49 @@
 					    'class' => 'booster.widgets.TbMenu',
 					    'type' => 'navbar',
 					    'items' => array(
-					    	array('label'=>'Inicio', 'url'=>array('/planificacion/index'), 'visible'=>!Yii::app()->user->isGuest),
+					    	//array('label'=>'Inicio', 'url'=>array('/planificacion/index'), 'visible'=>!Yii::app()->user->isGuest),
 
 					    	array(
 								'label' => 'Compras',  //si el usuario es creado por este sistema
 								'items' => array(
-									array(
-										'label' => 'Productos',  //si el usuario es creado por este sistema
-										'items' => array(
+
+											array('label'=>'Estado de carga', 'url'=>array('/planificacion/vistaparcial'), 'visible'=>!Yii::app()->user->isGuest),
+											
+											'---',
+											array('label' => 'Productos', 'url' => '#'),
+											'---',
 											array('label' => 'Nacional', 'url' => array('/planificacion/nacional')),
 											array('label' => 'Importado', 'url' => array('/planificacion/importado')),
 											//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
-										)
-									),
-									array(
-										'label' => 'Agregar',  //si el usuario es creado por este sistema
-										'items' => array(
+										
+											'---',
+											array('label' => 'Agregar', 'url' => '#'),
+											'---',
 											array('label' => 'Proyecto', 'url' => array('/planificacion/agregarproyecto'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')),
 											array('label' => 'Acción centralizada', 'url' => array('/planificacion/agregarcentralizada'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')),
 											array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')), // si el tipo es admin.
-										)
-									),
-
-									array(
-										'label' => 'Eliminar',  //si el usuario es creado por este sistema
-										'items' => array(
+										
+											'---',
+											array('label' => 'Eliminar', 'url' => '#'),
+											'---',
+									
 											array('label' => 'Proyecto', 'url' => array('/planificacion/eliminarproyecto'), 'visible'=>(Yii::app()->user->checkAccess('presupuesto'))),
 											array('label' => 'Acción centralizada', 'url' => array('/planificacion/eliminaraccion'), 'visible'=>(Yii::app()->user->checkAccess('presupuesto'))),
 											array('label'=>  'Partidas', 'url'=>array('/planificacion/eliminarpartidas'), 'visible'=>(Yii::app()->user->checkAccess('presupuesto'))), // si el tipo es admin.
-										)
-									),
-
-									array(
-										'label' => 'Reportes',  //si el usuario es creado por este sistema
-										'items' => array(
+									
+											'---',
+											array('label' => 'Reportes', 'url' => '#'),
+											'---',
+										
 											array('label' => 'Carga por partidas', 'url'=>array('/planificacion/rcargaporpartida'), 'visible'=>(Yii::app()->user->checkAccess('ente'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 											array('label' => 'Productos', 'url'=>array('/planificacion/rproducto'), 'visible'=>(Yii::app()->user->checkAccess('ente'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 											/*array('label' => 'Mis entes', 'url'=>array('/planificacion/misentes'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 											array('label' => 'Crear usuarios', 'url'=>array('/planificacion/usuariosentes'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 											array('label' => 'Gestionar usuarios', 'url'=>array('/planificacion/gesUsuEntes'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1*/
 											//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
-										), 'visible'=>(Yii::app()->user->checkAccess('ente')),
-									),
+									
 
-									array('label'=>'Estado de carga', 'url'=>array('/planificacion/vistaparcial'), 'visible'=>!Yii::app()->user->isGuest),
+											
 									//array('label' => 'Importado', 'url' => array('/planificacion/importado')),
 									//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 								)
@@ -129,17 +128,14 @@
 							array(
 								'label' => 'Gestion de usuarios',  //si el usuario es creado por este sistema
 								'items' => array(
-									array(
-										'label' => 'Entes',  //si el usuario es creado por este sistema
-										'items' => array(
+				
 											array('label' => 'Crear entes', 'url'=>array('/planificacion/crearente'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 											array('label' => 'Mis entes', 'url'=>array('/planificacion/misentes'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 											array('label' => 'Crear usuarios', 'url'=>array('/planificacion/usuariosentes'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 											array('label' => 'Gestionar usuarios', 'url'=>array('/planificacion/gesUsuEntes'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 											array('label' => 'Reportes por usuario', 'url'=>array('/planificacion/rporusuario'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 											//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
-										), 'visible'=>(Yii::app()->user->checkAccess('organo')),
-									),
+											'---',
 									array('label' => 'Mis Usuarios', 'url'=>array('/usuarios/gestionarsecundarios'), 'visible'=>(Yii::app()->user->checkAccess('ente'))),
 									//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 								), 'visible'=>(Yii::app()->user->checkAccess('organo')),
