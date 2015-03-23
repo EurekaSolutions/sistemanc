@@ -85,6 +85,8 @@ class PresupuestoPartidasController extends Controller
 			$fuente_ids = $_POST['f']['fuente_id'];
 			$montos = $_POST['f']['monto'];
 
+			$pro_acc = PresupuestoPartidas::model()->findByPk($model->abonar_id);
+
 			if(count($fuente_ids) == count($montos))
 			{
 				$cantidad = count($fuente_ids);
@@ -100,7 +102,7 @@ class PresupuestoPartidasController extends Controller
 
 
 			$verificar = true;
-			
+
 			foreach ($fuentesSel as $key => $fuentep)
 			{
 				$verificar = $fuentep->validate() && $verificar;
@@ -113,8 +115,10 @@ class PresupuestoPartidasController extends Controller
 
 			if($model->validate(array('anadir_id')) && $verificar)
 			{
-				$modelSustraendo = $this->loadModel($model->sustraendo_id);
+				//$modelSustraendo = $this->loadModel($model->sustraendo_id);
 
+				//print_r();
+				$monto_total = 0;
 				
 				foreach ($fuentesSel as $key => $fuentep) {
 				        		$fuentep->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
@@ -122,18 +126,8 @@ class PresupuestoPartidasController extends Controller
 				        		$verificar = $fuentep->save() && $verificar;
 			    }
 
-
-				/*$modelSuma = $this->loadModel($model->presupuesto_partida_id);
-
-				$modelSuma->monto_presupuestado += $monto_transferir;
-				$modelSustraendo->monto_presupuestado -= $monto_transferir;*/
-
-				/*if($modelSuma->save() && $modelSustraendo->save()){
-					//$this->redirect(array('view','id'=>$model->presupuesto_partida_id));
-					Yii::app()->user->setFlash('success', "Transferencia realizada con exito.");
-					//$model = new PresupuestoPartidas;
-				}else
-					Yii::app()->user->setFlash('error', "Hubo un problema guardando la transferencia. Intentelo nuevamente.");*/
+			    print_r($monto_total);
+				
 			}
 		}
 
