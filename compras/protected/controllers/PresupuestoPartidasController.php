@@ -77,7 +77,7 @@ class PresupuestoPartidasController extends Controller
 	    $fuentes = FuentesFinanciamiento::model()->findAll($criteria);
 
 
-		if(isset($_POST['PresupuestoPartidas']))
+		if(isset($_POST['PresupuestoPartidas']) and isset($_POST['Proyectos']))
 		{
 			$model->attributes=$_POST['PresupuestoPartidas'];
 			$proyectoSel->attributes = $_POST['Proyectos'];
@@ -85,7 +85,7 @@ class PresupuestoPartidasController extends Controller
 			$fuente_ids = $_POST['f']['fuente_id'];
 			$montos = $_POST['f']['monto'];
 
-			$pro_acc = PresupuestoPartidas::model()->findByPk($model->abonar_id);
+			
 
 			if(count($fuente_ids) == count($montos))
 			{
@@ -118,6 +118,8 @@ class PresupuestoPartidasController extends Controller
 				//$modelSustraendo = $this->loadModel($model->sustraendo_id);
 
 				//print_r();
+				$pro_acc = PresupuestoPartidas::model()->findByPk($model->abonar_id);
+
 				$monto_total = 0;
 				
 				foreach ($fuentesSel as $key => $fuentep) {

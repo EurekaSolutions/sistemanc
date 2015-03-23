@@ -51,6 +51,7 @@ class PresupuestoPartidas extends ActiveRecord
 			array('fecha_hasta, presupuesto_id, sustraendo_id, monto_transferir, todo, abonar_id', 'safe'),
 			array('sustraendo_id', 'validarSustraendo', 'on'=>'transferir'),
 			array('abonar_id', 'validarAbono', 'on'=>'anadir'),
+			//array('abonar_id', 'required', 'on'=>'anadir'),
 			array('monto_transferir','numerical', 'on'=>'transferir'),
 			array('presupuesto_partida_id', 'validarSumando', 'on'=>'transferir'),
 			array('monto_transferir', 'validarTansferirMonto', 'on'=>'transferir'),
