@@ -101,7 +101,7 @@
 																  )),
 													'options' => array(
 														//'tags' => array('clever', 'is', 'better', 'clevertech'),
-														'placeholder' => 'Seleccione partida a sustraer.',
+														'placeholder' => 'Seleccione partida para añadir dinero.',
 														// 'width' => '40%', 
 														'tokenSeparators' => array(',', ' ')
 													)
@@ -109,13 +109,13 @@
 											)
 										);
 					
-					echo CHtml::label('Monto Disponible:&nbsp;', 'disponible');
-					echo CHtml::label(isset($model->sustraendo_id)?number_format($this->loadModel($model->sustraendo_id)->montoDisponible(), 2, ',', '.').' Bs.':'','',array('style'=>'color: green;', 'id'=>'disponible'));
+					//echo CHtml::label('Monto Disponible:&nbsp;', 'disponible');
+					//echo CHtml::label(isset($model->sustraendo_id)?number_format($this->loadModel($model->sustraendo_id)->montoDisponible(), 2, ',', '.').' Bs.':'','',array('style'=>'color: green;', 'id'=>'disponible'));
 			 ?>
 
-			<?php echo $form->textFieldGroup($model,'monto_transferir',array('prepend'=>'Bs.','widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>38)))); ?>
+			<?php //echo $form->textFieldGroup($model,'monto_transferir',array('prepend'=>'Bs.','widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>38)))); ?>
 
-			<?php echo $form->checkboxGroup($model,'todo',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>38)))); ?>
+			<?php //echo $form->checkboxGroup($model,'todo',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>38)))); ?>
 	<!-- 	</td> -->
 
 	<br>
@@ -123,7 +123,7 @@
 <!-- 		<td> -->
 			<!-- <td>data</td> -->
 			<?php     
-
+			/*
 			 echo $form->dropDownListGroup( $proyectoSel,	'anho',
 					array(
 						'wrapperHtmlOptions' => array(
@@ -135,8 +135,8 @@
 							'data' => $listas,
 
 							//'options'=>array($model->proyecto_id => array('selected'=>true)),
-							'htmlOptions' => array(	/*'name'=>'Proyectos[1][proyecto_id]',*/'id'=>'proyecto2', 'prompt' => 'Seleccionar proyecto', //'onChange'=>'submit','submit' => array('/planificacion/nacional','#'=>'proyecto')
-												  'ajax' => array(
+							'htmlOptions' => array(	/*'name'=>'Proyectos[1][proyecto_id]',*/ //'id'=>'proyecto2', 'prompt' => 'Seleccionar proyecto', //'onChange'=>'submit','submit' => array('/planificacion/nacional','#'=>'proyecto')
+											/*	  'ajax' => array(
 														'type'=>'POST', //request type
 														'url'=>CController::createUrl('planificacion/buscarpartidasproyecto'), //url to call.
 														//Style: CController::createUrl('currentController/methodToCall')
@@ -147,10 +147,10 @@
 						),
 						'hint' => 'Selecciona la Acción o Proyecto.'
 					)
-				); 
+				); */
 
 
-					echo $form->select2Group($model, 'presupuesto_partida_id',
+					/*echo $form->select2Group($model, 'presupuesto_partida_id',
 			                        array(
 			                            'wrapperHtmlOptions' => array(
 			                                'class' => 'col-sm-5',
@@ -178,9 +178,9 @@
 			                                )
 			                            )
 			                        )
-			                    );
-					echo CHtml::label('Monto Disponible:&nbsp;', 'disponible2');
-					echo CHtml::label(isset($model->presupuesto_partida_id)?number_format($this->loadModel($model->presupuesto_partida_id)->montoDisponible(), 2, ',', '.').' Bs.':'','',array('style'=>'color: blue;', 'id'=>'disponible2'));
+			                    );*/
+					//echo CHtml::label('Monto Disponible:&nbsp;', 'disponible2');
+					//echo CHtml::label(isset($model->presupuesto_partida_id)?number_format($this->loadModel($model->presupuesto_partida_id)->montoDisponible(), 2, ',', '.').' Bs.':'','',array('style'=>'color: blue;', 'id'=>'disponible2'));
 			?>
 
 <!-- 		</td>
@@ -213,7 +213,7 @@
 	<?php $this->widget('booster.widgets.TbButton', array(
 			'buttonType'=>'submit',
 			'context'=>'primary',
-			'label'=>$model->isNewRecord ? 'Transferir' : 'Transferir',
+			'label'=>$model->isNewRecord ? 'Añadir' : 'Añadir',
 		)); ?>
 </div>
 

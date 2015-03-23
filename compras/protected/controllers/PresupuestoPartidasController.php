@@ -112,7 +112,7 @@ class PresupuestoPartidasController extends Controller
 			}
 		}
 
-		$this->render('modificarPartida',array(
+		$this->render('anadirPartida',array(
 			'model'=>$model, 'proyectoSel'=>$proyectoSel
 		));
 	}
