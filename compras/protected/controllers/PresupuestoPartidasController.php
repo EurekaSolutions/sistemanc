@@ -70,23 +70,17 @@ class PresupuestoPartidasController extends Controller
 		$proyectoSel = new Proyectos('search');
 		
 		$fuentesSel[] = new FuentePresupuesto();
-		//$proyectoSel[1] = new Proyectos();
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$criteria = new CDbCriteria();
+		$criteria->condition = "activo=true";      
+	    
+	    $fuentes = FuentesFinanciamiento::model()->findAll($criteria);
+
 
 		if(isset($_POST['PresupuestoPartidas']))
 		{
 			$model->attributes=$_POST['PresupuestoPartidas'];
-			/*if($model->sustraendo_id=='')
-				$model->sustraendo_id = null;
-			if($model->presupuesto_partida_id=='')
-				$model->presupuesto_partida_id = null;*/
-			//print_r($_POST);
-			//Yii::app()->end();
 			$proyectoSel->attributes = $_POST['Proyectos'];
-
-			
 
 			$fuente_ids = $_POST['f']['fuente_id'];
 			$montos = $_POST['f']['monto'];
@@ -135,17 +129,17 @@ class PresupuestoPartidasController extends Controller
 				$modelSuma->monto_presupuestado += $monto_transferir;
 				$modelSustraendo->monto_presupuestado -= $monto_transferir;*/
 
-				if($modelSuma->save() && $modelSustraendo->save()){
+				/*if($modelSuma->save() && $modelSustraendo->save()){
 					//$this->redirect(array('view','id'=>$model->presupuesto_partida_id));
 					Yii::app()->user->setFlash('success', "Transferencia realizada con exito.");
 					//$model = new PresupuestoPartidas;
 				}else
-					Yii::app()->user->setFlash('error', "Hubo un problema guardando la transferencia. Intentelo nuevamente.");
+					Yii::app()->user->setFlash('error', "Hubo un problema guardando la transferencia. Intentelo nuevamente.");*/
 			}
 		}
 
 		$this->render('anadirPartida',array(
-			'model'=>$model, 'proyectoSel'=>$proyectoSel, 'fuentesSel' => $fuentesSel
+			'model'=>$model, 'proyectoSel'=>$proyectoSel, 'fuentesSel' => $fuentesSel, 'fuentes' => $fuentes
 		));
 	}
 

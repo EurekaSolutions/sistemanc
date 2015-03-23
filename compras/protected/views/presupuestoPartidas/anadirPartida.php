@@ -11,5 +11,5 @@ array('label'=>'Manage PresupuestoPartidas','url'=>array('admin')),
 ?>
 <div id='form'>
 <h1>Añadir montos Presupuesto Partidas</h1>
-<?php echo $this->renderPartial('_formAnadir', array('model'=>$model, 'proyectoSel'=>$proyectoSel,'fuentesSel' => $fuentesSel)); ?>
+<?php echo $this->renderPartial('_formAnadir', array('model'=>$model, 'proyectoSel'=>$proyectoSel,'fuentesSel' => $fuentesSel, 'fuentes' => $fuentes)); ?>
 </div>
