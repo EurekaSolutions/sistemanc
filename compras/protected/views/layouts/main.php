@@ -140,7 +140,7 @@
 											'---',
 									array('label' => 'Usuarios secundarios', 'url'=>array('/usuarios/gestionarsecundarios'), 'visible'=>(Yii::app()->user->checkAccess('ente'))),
 									//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
-								), 'visible'=>(Yii::app()->user->checkAccess('organo')),
+								), 'visible'=>(Yii::app()->user->checkAccess('ente')),
 							),
 							
 				/*			array(

@@ -27,7 +27,7 @@ public function accessRules()
 {
 	return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-		'actions'=>array('secundario', 'gestionarsecundarios','deshabilitar', 'modificarUsuario'),
+		'actions'=>array('secundario', 'gestionarsecundarios','deshabilitar', 'modificarUsuario', 'modificarUsuarioEnte'),
 		'users'=>array('@'),
 		'roles'=>array('ente'),
 		),
@@ -88,6 +88,38 @@ public function actionView($id)
 * If update is successful, the browser will be redirected to the 'view' page.
 * @param integer $id the ID of the model to be updated
 */
+public function actionModificarUsuarioEnte($id)
+{
+	if(!Usuarios::model()->actual()->perteneceSecundarios($id) and !Usuarios::model()->actual()->perteneceEntes($id))
+		throw new CHttpException(403,'No se puede procesar la solicitud.');
+
+	$model=$this->loadModel($id);
+
+	// Uncomment the following line if AJAX validation is needed
+	// $this->performAjaxValidation($model);
+
+	if(isset($_POST['Usuarios']))
+	{
+		$model->attributes=$_POST['Usuarios'];
+		$model->scenario = 'actualizarPerfil';
+		if($model->validate())
+		{
+			$model->usuario = $model->correo;
+			if($model->save())
+				$this->redirect(array('planificacion/gesUsuEntes',));
+		}
+	}
+
+	$this->render('modificarUsuario',array(
+		'model'=>$model,
+	));
+}
+
+/**
+* Updates a particular model.
+* If update is successful, the browser will be redirected to the 'view' page.
+* @param integer $id the ID of the model to be updated
+*/
 public function actionModificarUsuario($id)
 {
 	if(!Usuarios::model()->actual()->perteneceSecundarios($id) and !Usuarios::model()->actual()->perteneceEntes($id) )
@@ -107,6 +139,8 @@ public function actionModificarUsuario($id)
 			$model->usuario = $model->correo;
 			if($model->save())
 				$this->redirect(array('gestionarsecundarios',));
+				//$this->redirect(array(,));
+			//Yii::app()->request->redirect(Yii::app()->user->returnUrl);
 		}
 	}
 
