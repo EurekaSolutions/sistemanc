@@ -3,6 +3,11 @@
 /* @var $model Usuarios */
 /* @var $form CActiveForm */
 
+$this->breadcrumbs=array(
+    'Mis Usuarios'=>array('gestionarsecundarios'),
+    'Crear Usuario Secundario',
+);
+
 $this->menu=array(
     //array('label'=>'List Usuarios','url'=>array('index')),
     array('label'=>'Gestionar Usuarios secundarios','url'=>array('gestionarsecundarios')),
