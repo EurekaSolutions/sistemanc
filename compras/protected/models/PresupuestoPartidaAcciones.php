@@ -34,7 +34,7 @@ class PresupuestoPartidaAcciones extends ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('accion_id, presupuesto_partida_id, codigo_accion, ente_organo_id, anho', 'required'),
+			array('accion_id, presupuesto_partida_id, codigo_accion, ente_organo_id', 'required'),
 			array('codigo_accion', 'length', 'max'=>100),
 			array('codigo_accion_padre', 'safe'),
 			// The following rule is used by search().
