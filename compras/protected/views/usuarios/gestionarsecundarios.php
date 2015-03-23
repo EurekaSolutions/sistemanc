@@ -46,13 +46,16 @@ $dataProvider=new CActiveDataProvider('Usuarios', array(
 $this->breadcrumbs=array(
 	'Mis Usuarios'=>array('gestionarsecundarios'),
 	'Gestionar',
-);
+);?>
 
+
+<?php
 		$this->menu=array(
 			//array('label'=>'List Usuarios','url'=>array('index')),
 			array('label'=>'Crear Usuarios','url'=>array('secundario')),
 		); ?>
-
+		
+<center><h4>Mis Usuarios Secundarios</h4></center>
 <?php
 $dataProvider=new CActiveDataProvider('Usuarios', array(
             'data'=>$model,

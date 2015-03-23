@@ -58,7 +58,7 @@ public function accessRules()
 */
 public function actionView($id)
 {
-	if(!Usuarios::model()->actual()->perteneceSecundarios($id) || !Usuarios::model()->actual()->perteneceEntes($id) )
+	if(!Usuarios::model()->actual()->perteneceSecundarios($id) and !Usuarios::model()->actual()->perteneceEntes($id) )
 		throw new CHttpException(403,'No se puede procesar la solicitud.');
 
 	$this->render('view',array(
