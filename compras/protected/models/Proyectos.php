@@ -8,6 +8,7 @@
  * @property string $nombre
  * @property string $codigo
  * @property string $ente_organo_id
+ * @property integer $anho
  *
  * The followings are the available model relations:
  * @property EntesOrganos $enteOrgano
@@ -53,7 +54,7 @@ class Proyectos extends ActiveRecord
 			array('subespecifica', 'partidaAsignada', 'on'=>'creaproyectose'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('proyecto_id, nombre, codigo, ente_organo_id', 'safe', 'on'=>'search'),
+			array('proyecto_id, nombre, codigo, ente_organo_id, anho', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -69,6 +70,12 @@ class Proyectos extends ActiveRecord
 			'presupuestoPartidas' => array(self::MANY_MANY, 'PresupuestoPartidas', 'presupuesto_partida_proyecto(proyecto_id, presupuesto_partida_id)','condition'=>'fecha_desde<\''.date('Y-m-d').'\' AND fecha_hasta>=\''.date('Y-m-d').'\''),
 			'presupuestoPartidaProyecto' => array(self::HAS_MANY, 'PresupuestoPartidaProyecto', 'proyecto_id'),
 		);
+	}
+
+	// 
+	public function beforeSave(){
+	   	$this->anho = Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];
+	    return parent::beforeSave();
 	}
 
 	// Delete cascade / Borrado en cascada
@@ -146,6 +153,7 @@ class Proyectos extends ActiveRecord
 			'codigo' => 'Codigo',
 			'ente_organo_id' => 'Ente Organo',
 			'nombreid' => 'Proyecto',
+			'anho'=>'Año'
 		);
 	}
 
@@ -171,6 +179,7 @@ class Proyectos extends ActiveRecord
 		$criteria->compare('nombre',$this->nombre,true);
 		$criteria->compare('codigo',$this->codigo,true);
 		$criteria->compare('ente_organo_id',$this->ente_organo_id,true);
+		$criteria->compare('anho',$this->anho,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
