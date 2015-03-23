@@ -42,7 +42,7 @@
 
 			$fuentes = CHtml::listData($fuentes, 'fuente_financiamiento_id', 'nombre');
 
-			
+
 			
 			echo $form->dropDownListGroup( $proyectoSel,	'proyecto_id',
 					array(
@@ -90,20 +90,7 @@
 												'widgetOptions' => array(
 													'asDropDownList' => true,
 													'data' => $list,
-											        'htmlOptions'=>array('id'=>'partidasSus',
-																'ajax' => array(
-																		'type'=>'POST', //request type
-																		'url'=>CController::createUrl('presupuestoPartidas/montoDisponibleSustraendo'), //url to call.
-																		//Style: CController::createUrl('currentController/methodToCall')
-																		//'update'=>'#disponible', //selector to update
-																		'success' => 'function($data){ 
-																			//alert($data);
-																				$("#disponible").html($data);
-																				//$("#partidaSum").html($data);
-																		}',
-																		//'data'=>'js:javascript statement' 
-																		//leave out the data key to pass all form values through
-																  )),
+											        'htmlOptions'=>array('id'=>'partidasSus'),
 													'options' => array(
 														//'tags' => array('clever', 'is', 'better', 'clevertech'),
 														'placeholder' => 'Seleccione partida para añadir dinero.',

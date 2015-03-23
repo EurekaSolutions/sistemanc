@@ -72,7 +72,7 @@ class PresupuestoPartidasController extends Controller
 		$fuentesSel[] = new FuentePresupuesto();
 
 		$criteria = new CDbCriteria();
-		$criteria->condition = "activo=true";      
+		$criteria->condition = "activo=true";     
 	    
 	    $fuentes = FuentesFinanciamiento::model()->findAll($criteria);
 
@@ -121,12 +121,30 @@ class PresupuestoPartidasController extends Controller
 				$monto_total = 0;
 				
 				foreach ($fuentesSel as $key => $fuentep) {
-				        		$fuentep->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
+				        		$fuentep->presupuesto_partida_id = $pro_acc->presupuesto_partida_id;
 				        		$monto_total +=$fuentep->monto;
 				        		$verificar = $fuentep->save() && $verificar;
 			    }
 
-			    print_r($monto_total);
+			    if($verificar)
+			    {
+			    	$pro_acc->monto_presupuestado += $monto_total;
+			    	if($pro_acc->save())
+			    	{
+			    		 unset($fuentesSel);  // borramos el arreglo para mandarlo limpio a la vista.
+			        	 $fuentesSel[] = new FuentePresupuesto();
+			        	 $model=new PresupuestoPartidas('anadir');
+						 $proyectoSel = new Proyectos('search');
+
+			    		Yii::app()->user->setFlash('success', "Incremento realizado con éxito.");
+
+			    	}else
+			    	{	
+			    		Yii::app()->user->setFlash('error', "Hubo un problema guardando la transferencia. Intentelo nuevamente.");
+			    	}
+					//$model = new PresupuestoPartidas;
+				}else
+					Yii::app()->user->setFlash('error', "Hubo un problema guardando la transferencia. Intentelo nuevamente.");
 				
 			}
 		}
