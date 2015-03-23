@@ -113,7 +113,7 @@ class PresupuestoPartidasController extends Controller
 			//$proyectoSel[0]->proyecto_id = $_POST['Proyectos']['0']['proyecto_id'];
 			//$proyectoSel[1]->proyecto_id = $_POST['Proyectos']['1']['proyecto_id'];
 
-			if($model->validate(array('anadir_id')) && $verificar)
+			if($model->validate(array('abonar_id')) && $verificar)
 			{
 				//$modelSustraendo = $this->loadModel($model->sustraendo_id);
 
@@ -136,7 +136,7 @@ class PresupuestoPartidasController extends Controller
 			        	 $model=new PresupuestoPartidas('anadir');
 						 $proyectoSel = new Proyectos('search');
 
-			    		Yii::app()->user->setFlash('success', "Incremento realizado con éxito.");
+			    		 Yii::app()->user->setFlash('success', "Incremento realizado con éxito.");
 
 			    	}else
 			    	{	
