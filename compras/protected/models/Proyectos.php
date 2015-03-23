@@ -67,7 +67,7 @@ class Proyectos extends ActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'enteOrgano' => array(self::BELONGS_TO, 'EntesOrganos', 'ente_organo_id'),
-			'presupuestoPartidas' => array(self::MANY_MANY, 'PresupuestoPartidas', 'presupuesto_partida_proyecto(proyecto_id, presupuesto_partida_id)','condition'=>'fecha_desde<\''.date('Y-m-d').'\' AND fecha_hasta>=\''.date('Y-m-d').'\''),
+			'presupuestoPartidas' => array(self::MANY_MANY, 'PresupuestoPartidas', PresupuestoPartidaProyecto::model()->tableName().'(proyecto_id, presupuesto_partida_id)','condition'=>'fecha_desde<\''.date('Y-m-d').'\' AND fecha_hasta>=\''.date('Y-m-d').'\''),
 			'presupuestoPartidaProyecto' => array(self::HAS_MANY, 'PresupuestoPartidaProyecto', 'proyecto_id'),
 		);
 	}
