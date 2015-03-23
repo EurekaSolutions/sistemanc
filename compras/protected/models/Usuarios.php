@@ -139,6 +139,17 @@ class Usuarios extends ActiveRecord
 		return false;
 	}
 
+	public function perteneceEntes($id)
+	{
+
+		foreach ($this->enteOrgano->hijos as $key => $value) {
+			if($value->enteOrgano->usuarioPrincipal->usuario_id == $id)
+				return true;
+		}
+
+		return false;
+	}
+
 
 /*
 	public function getPrimaryKey(){

@@ -204,7 +204,7 @@ class PresupuestoPartidas extends ActiveRecord
 			'ente_organo_id' => 'Ente Organo',
 			//'fuente_financiamiento_id' => 'Fuente Financiamiento',
 			'presupuesto_id' => 'Presupuesto',
-			'sustraendo_id'=>'Partida a sustraer',
+			'sustraendo_id'=>'Partida a abonar',
 			'monto_transferir'=>'Monto a transferir',
 			'todo'=>'Transferir todo',
 

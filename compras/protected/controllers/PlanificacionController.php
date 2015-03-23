@@ -286,7 +286,8 @@ class PlanificacionController extends Controller
 		
 		$usuaios =array();
 		foreach ($this->usuario()->enteOrgano->hijos as $key => $value) {
-			$usuarios[] = $value->enteOrgano->usuarioPrincipal;
+			if($value->enteOrgano->usuarioPrincipal)
+				$usuarios[] = $value->enteOrgano->usuarioPrincipal;
 		}
 
 //		$usuarios = 

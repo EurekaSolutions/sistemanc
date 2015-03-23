@@ -4,6 +4,9 @@
 	'htmlOptions' => array('enctype' => 'multipart/form-data'),
 )); ?>
 
+<center><h4>Carga masiva de Organos</h4></center>
+
+
 <p class="help-block">Los campos con <span class="required">*</span> son requeridos.</p>
 
 <?php //echo $form->errorSummary($model); ?>

@@ -58,9 +58,12 @@ public function accessRules()
 */
 public function actionView($id)
 {
-$this->render('view',array(
-'model'=>$this->loadModel($id),
-));
+	if(!Usuarios::model()->actual()->perteneceSecundarios($id) || !Usuarios::model()->actual()->perteneceEntes($id) )
+		throw new CHttpException(403,'No se puede procesar la solicitud.');
+
+	$this->render('view',array(
+		'model'=>$this->loadModel($id),
+	));
 }
 
 /*public function actionDeshabilitar($id){
@@ -87,7 +90,7 @@ $this->render('view',array(
 */
 public function actionModificarUsuario($id)
 {
-	if(!Usuarios::model()->actual()->perteneceSecundarios($id))
+	if(!Usuarios::model()->actual()->perteneceSecundarios($id) and !Usuarios::model()->actual()->perteneceEntes($id) )
 		throw new CHttpException(403,'No se puede procesar la solicitud.');
 
 	$model=$this->loadModel($id);
