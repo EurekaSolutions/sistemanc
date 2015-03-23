@@ -136,7 +136,7 @@
 											array('label' => 'Reportes por usuario', 'url'=>array('/planificacion/rporusuario'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 											//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 											'---',
-									array('label' => 'Mis Usuarios', 'url'=>array('/usuarios/gestionarsecundarios'), 'visible'=>(Yii::app()->user->checkAccess('ente'))),
+									array('label' => 'Usuarios secundarios', 'url'=>array('/usuarios/gestionarsecundarios'), 'visible'=>(Yii::app()->user->checkAccess('ente'))),
 									//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 								), 'visible'=>(Yii::app()->user->checkAccess('organo')),
 							),
