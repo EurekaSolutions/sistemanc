@@ -94,7 +94,6 @@ class PresupuestoPartidasController extends Controller
 			 		$fuentePresu = new FuentePresupuesto();
 	        		$fuentePresu->fuente_id= $fuente_ids[$i];
 	        		$fuentePresu->monto = $montos[$i];
-
 	        		$fuentesSel[$i] = $fuentePresu;
 			 	}
 			}

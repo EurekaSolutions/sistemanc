@@ -39,7 +39,12 @@
 			 				!empty($lista_proyectos)?'Proyectos':null =>$lista_proyectos);
 
 
-			 echo $form->dropDownListGroup( $proyectoSel,	'proyecto_id',
+
+			$fuentes = CHtml::listData($fuentes, 'fuente_financiamiento_id', 'nombre');
+
+			
+			
+			echo $form->dropDownListGroup( $proyectoSel,	'proyecto_id',
 					array(
 						'wrapperHtmlOptions' => array(
 							'class' => 'col-sm-2',
