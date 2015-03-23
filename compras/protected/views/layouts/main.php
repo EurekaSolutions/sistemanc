@@ -23,7 +23,10 @@
 <div class="container-fluid" id="page">
 
 	<div id="header">
-		<div id="logo" style="text-align: center;"><?php echo CHtml::image(Yii::app()->request->baseUrl.'/images/banner.jpg'); ?></div>
+		<div id="logo" style="text-align: center;"><?php echo CHtml::image(Yii::app()->request->baseUrl.'/images/banner.jpg',
+      'banner',
+      array('width'=>'1500px','height'=>'300px','title'=>'banner')); ?>
+	</div>
 	</div><!-- header -->
 	
 <div id="trimestre">
