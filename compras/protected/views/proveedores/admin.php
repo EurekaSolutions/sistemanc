@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Proveedores'=>array('index'),
-	'Manage',
+	'Gestionar',
 );
 
 $this->menu=array(

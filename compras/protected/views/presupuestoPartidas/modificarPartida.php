@@ -13,6 +13,6 @@ array('label'=>'Manage PresupuestoPartidas','url'=>array('admin')),
 <h1>Transferir montos Presupuesto Partidas</h1>
 
 
-<?php echo $this->renderPartial('_formModificar', array('model'=>$model, )); ?>
+<?php echo $this->renderPartial('_formModificar', array('model'=>$model, 'proyectoSel'=>$proyectoSel)); ?>
 
 </div>

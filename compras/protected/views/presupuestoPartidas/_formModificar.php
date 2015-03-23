@@ -17,8 +17,46 @@
 	<?php //echo $form->textFieldGroup($model,'partida_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5'))));
 	
 	//Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/javscript/jquery.number.min.js',CClientScript::POS_END);
+	$lista_acciones = CHtml::listData(Usuarios::model()->actual()->enteOrgano->acciones, function($accion) {
+																return CHtml::encode('a'.$accion->accion->accion_id);
+															}, function($accion) {
+																return CHtml::encode($accion->codigo_accion.' - '.$accion->accion->nombre);
+															});
+	$lista_proyectos = CHtml::listData(Usuarios::model()->actual()->enteOrgano->proyectos, 'proyecto_id', function($proyecto) {
+																return CHtml::encode($proyecto->codigo.' - '.$proyecto->nombre);
+															},'Proyectos');
+	 
+	$listas = array(!empty($lista_acciones)?'Acciones Centralizadas':null=>$lista_acciones,
+	 				!empty($lista_proyectos)?'Proyectos':null =>$lista_proyectos);
+
+
+	 echo $form->dropDownListGroup( $proyectoSel,	'proyecto_id',
+			array(
+				'wrapperHtmlOptions' => array(
+					'class' => 'col-sm-2',
+				),
+				'label'=>'Seleccione Proyecto o Acción Centralizada a cargar',
+				'widgetOptions' => array(
+					'data' => $listas,
+
+					//'options'=>array($model->proyecto_id => array('selected'=>true)),
+					'htmlOptions' => array(	/*'name'=>'Proyectos[0][proyecto_id]',*/ 'id'=>'proyecto', 'prompt' => 'Seleccionar proyecto', //'onChange'=>'submit','submit' => array('/planificacion/nacional','#'=>'proyecto')
+										  'ajax' => array(
+												'type'=>'POST', //request type
+												'url'=>CController::createUrl('planificacion/buscarpartidasproyecto'), //url to call.
+												//Style: CController::createUrl('currentController/methodToCall')
+												'update'=>'#partida', //selector to update
+												//'data'=>'js:javascript statement' 
+												//leave out the data key to pass all form values through
+										  )),
+				),
+				'hint' => 'Selecciona la Acción o Proyecto.'
+			)
+		); 
+
+
 	$list = array();
-	$presuPartidas =array();
+/*	$presuPartidas =array();
 	foreach (Usuarios::model()->actual()->presupuestoPartidas as $key => $value) {
 		if($value->partida != null)
 			$presuPartidas[] = $value;
@@ -27,7 +65,7 @@
 															//print_r($presupuestoPartida);
 															//Yii::app()->end();
 																return $presupuestoPartida->partida->etiquetaPartida();
-															});
+															});*/
 				echo $form->select2Group(
 									$model,
 									'sustraendo_id',
@@ -73,7 +111,32 @@
 	<br>
 	<?php     
 
-	$listaEntes = array();
+	 echo $form->dropDownListGroup( $proyectoSel,	'anho',
+			array(
+				'wrapperHtmlOptions' => array(
+					'class' => 'col-sm-2',
+				),
+
+				'label'=>'Seleccione Proyecto o Acción Centralizada a cargar',
+				'widgetOptions' => array(
+					'data' => $listas,
+
+					//'options'=>array($model->proyecto_id => array('selected'=>true)),
+					'htmlOptions' => array(	/*'name'=>'Proyectos[1][proyecto_id]',*/'id'=>'proyecto', 'prompt' => 'Seleccionar proyecto', //'onChange'=>'submit','submit' => array('/planificacion/nacional','#'=>'proyecto')
+										  'ajax' => array(
+												'type'=>'POST', //request type
+												'url'=>CController::createUrl('planificacion/buscarpartidasproyecto'), //url to call.
+												//Style: CController::createUrl('currentController/methodToCall')
+												'update'=>'#partidaSum', //selector to update
+												//'data'=>'js:javascript statement' 
+												//leave out the data key to pass all form values through
+										  )),
+				),
+				'hint' => 'Selecciona la Acción o Proyecto.'
+			)
+		); 
+
+
 			echo $form->select2Group($model, 'presupuesto_partida_id',
 	                        array(
 	                            'wrapperHtmlOptions' => array(

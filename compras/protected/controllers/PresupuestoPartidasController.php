@@ -100,6 +100,8 @@ class PresupuestoPartidasController extends Controller
 	public function actionModificarPartida()
 	{
 		$model=new PresupuestoPartidas('transferir');
+		$proyectoSel = new Proyectos('search');
+		//$proyectoSel[1] = new Proyectos();
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -111,6 +113,13 @@ class PresupuestoPartidasController extends Controller
 				$model->sustraendo_id = null;
 			if($model->presupuesto_partida_id=='')
 				$model->presupuesto_partida_id = null;
+			print_r($_POST);
+			//Yii::app()->end();
+			$proyectoSel->attributes = $_POST['Proyectos'];
+			print_r($proyectoSel);
+			//Yii::app()->end();
+			//$proyectoSel[0]->proyecto_id = $_POST['Proyectos']['0']['proyecto_id'];
+			//$proyectoSel[1]->proyecto_id = $_POST['Proyectos']['1']['proyecto_id'];
 
 			if($model->validate(array('presupuesto_partida_id','monto_transferir','sustraendo_id')))
 			{
@@ -137,7 +146,7 @@ class PresupuestoPartidasController extends Controller
 		}
 
 		$this->render('modificarPartida',array(
-		'model'=>$model,
+		'model'=>$model, 'proyectoSel'=>$proyectoSel
 		));
 	}
 

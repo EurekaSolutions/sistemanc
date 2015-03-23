@@ -1751,17 +1751,25 @@ class PlanificacionController extends Controller
 		 echo CHtml::tag('option',
 		                   array('value'=>""),CHtml::encode($name),true);
 
-		if(isset($_POST['Proyectos']) and !empty($_POST['Proyectos']['proyecto_id']))
-		{
 
-			if(strstr($_POST['Proyectos']['proyecto_id'], 'a'))
+
+		if(isset($_POST['Proyectos']) and (!empty($_POST['Proyectos']['proyecto_id']) ||
+			 !empty($_POST['Proyectos']['anho']) /*|| !empty($_POST['Proyectos']['1']['proyecto_id'])*/))
+		{
+			$id = isset($_POST['Proyectos']['proyecto_id'])?$_POST['Proyectos']['proyecto_id']:$_POST['Proyectos']['anho'];
+
+	/*		foreach ($_POST['Proyectos'] as $key => $value) {
+				?$_POST['Proyectos']['proyecto_id']:$_POST['Proyectos']['0']['proyecto_id']
+			}
+			Yii::app()->end();*/
+			if(strstr($id, 'a'))
 			{//Es un id de accion
 
-				$accionId = $this->accionId($_POST['Proyectos']['proyecto_id']);
+				$accionId = $this->accionId($id);
 
 				$partidas = $this->partidasAccion($accionId);
 			}else{//Es un id de proyecto
-				$proyectoSel = Proyectos::model()->findByPk($_POST['Proyectos']['proyecto_id'] );
+				$proyectoSel = Proyectos::model()->findByPk($id);
 
 				//$proyectoActual = Proyectos::model()->findByPk($proyectoSel->proyecto_id);
 				$partidas = $this->partidasProyecto($proyectoSel->proyecto_id);
