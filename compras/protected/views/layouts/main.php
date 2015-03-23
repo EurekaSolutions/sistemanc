@@ -63,21 +63,21 @@
 											array('label'=>'Estado de carga', 'url'=>array('/planificacion/vistaparcial'), 'visible'=>!Yii::app()->user->isGuest),
 											
 											'---',
-											array('label' => 'Productos', 'url' => '#'),
+											array('label' => 'Productos', 'url' => ''),
 											'---',
 											array('label' => 'Nacional', 'url' => array('/planificacion/nacional')),
 											array('label' => 'Importado', 'url' => array('/planificacion/importado')),
 											//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 										
 											'---',
-											array('label' => 'Agregar', 'url' => '#'),
+											array('label' => 'Agregar', 'url' => ''),
 											'---',
 											array('label' => 'Proyecto', 'url' => array('/planificacion/agregarproyecto'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')),
 											array('label' => 'Acción centralizada', 'url' => array('/planificacion/agregarcentralizada'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')),
 											array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')), // si el tipo es admin.
 										
 											'---',
-											array('label' => 'Eliminar', 'url' => '#'),
+											array('label' => 'Eliminar', 'url' => ''),
 											'---',
 									
 											array('label' => 'Proyecto', 'url' => array('/planificacion/eliminarproyecto'), 'visible'=>(Yii::app()->user->checkAccess('presupuesto'))),
@@ -85,7 +85,7 @@
 											array('label'=>  'Partidas', 'url'=>array('/planificacion/eliminarpartidas'), 'visible'=>(Yii::app()->user->checkAccess('presupuesto'))), // si el tipo es admin.
 									
 											'---',
-											array('label' => 'Reportes', 'url' => '#'),
+											array('label' => 'Reportes', 'url' => ''),
 											'---',
 										
 											array('label' => 'Carga por partidas', 'url'=>array('/planificacion/rcargaporpartida'), 'visible'=>(Yii::app()->user->checkAccess('ente'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
