@@ -2,7 +2,12 @@
 /* @var $this EntesOrganosController */
 /* @var $model EntesOrganos */
 /* @var $form CActiveForm */
+$this->breadcrumbs=array(
+    'Proyectos'=>array('agregarproyecto'),
+);
+
 ?>
+
 <div class="form">
 <?php $form=$this->beginWidget('booster.widgets.TbActiveForm',array(
     'id'=>'agregarproyecto-crearente-form',

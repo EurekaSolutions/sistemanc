@@ -315,6 +315,8 @@ class PlanificacionController extends Controller
 
 		$model = new Cargamasiva();
 
+		$construir_archivo = array();
+		$todosErrores = array();
 
 		if(isset($_POST['Cargamasiva']))
 		{
@@ -325,11 +327,11 @@ class PlanificacionController extends Controller
 				$model->archivo=CUploadedFile::getInstance($model,'archivo');
 				
 				$model->archivo->saveAs(Yii::app()->basePath.'\..\assets\archivo.'.$model->archivo->extensionName);
-				$construir_archivo = array();
+				
 				$fila = -1;
 				$usuario_procesados = 0;
 				$usuario_noprocesados = 0;
-				$todosErrores = array();
+				
 				$file = file(Yii::app()->basePath.'\..\assets\archivo.'.$model->archivo->extensionName);
 				$lineas = count($file);
 				$lineas--;
@@ -374,7 +376,7 @@ class PlanificacionController extends Controller
 									    $usuario->creado_el = date("Y-m-d");
 									    $usuario->llave_activacion = md5(rand(0,100));
 									    $usuario->actualizado_el = date("Y-m-d");
-									    $usuario->rol = 'normal';
+									    $usuario->rol = 'organo';
 									    $usuario->ente_organo_id = $ente->ente_organo_id;
 
 									    if($usuario->save())

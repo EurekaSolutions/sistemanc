@@ -79,7 +79,7 @@ $dataProvider=new CActiveDataProvider('Usuarios', array(
 		*/
 array(
 'class'=>'booster.widgets.TbButtonColumn',
-   'template'=>'{view}{update}{delete}',
+   'template'=>'{update} {delete}',
     'buttons'=>array
      (
         'update' => array

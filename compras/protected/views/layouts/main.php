@@ -27,46 +27,22 @@
 	</div><!-- header -->
 	
 <div id="trimestre">
-	 <?php if(!Yii::app()->user->isGuest)
-						echo 'Cargando: '.($trimestre = Yii::app()->session['trimestresDisponibles'][Yii::app()->session['trimestreSeleccionado']])?$trimestre:''; ?>
+	  <?php 
+	  			$trimestre = Yii::app()->session['trimestresDisponibles'][Yii::app()->session['trimestreSeleccionado']];
+	  			//if(!Yii::app()->user->isGuest)
+					// echo 'Cargando: '.($trimestre = Yii::app()->session['trimestresDisponibles'][Yii::app()->session['trimestreSeleccionado']])?$trimestre:''; ?>
 </div>
 	<!--<div id="mainmenu">-->
 		<?php 
-$form=$this->beginWidget('booster.widgets.TbActiveForm',array(
-	'id'=>'trimestre-seleccion-form',
-	'enableAjaxValidation'=>false,
-)); 
 
-$list = Yii::app()->session['trimestresDisponibles']?Yii::app()->session['trimestresDisponibles']:array();
-if(!Yii::app()->user->isGuest)
-$this->widget(
-		    'booster.widgets.TbSelect2',
-		    array(
-		        'asDropDownList' => true,
-		        'name' => 'trimestreSeleccion',
-		        'data' =>$list,
-		        'htmlOptions'=>array('id'=>'trimestreSel',
-    			 'ajax' => array(
-									'type'=>'POST', //request type
-									'url'=>CController::createUrl('site/seleccionarTrimestre'), //url to call.
-									//Style: CController::createUrl('currentController/methodToCall')
-									//'update'=>'#trimestre', //selector to update
-									'success'=>'function(){ location.reload();}'
-									//'data'=>'js:javascript statement' 
-									//leave out the data key to pass all form values through
-							  )),
-		        'options' => array(
-		            //'tags' => array('proveedores'),
-		            'placeholder' => 'Seleccionar trimestre de carga',
-		            'width' => '25%',
-		            'tokenSeparators' => array(',', ' ')
-		        )
-		    )
-		);
- $this->endWidget();?>
- <?php 
 		if(!Yii::app()->user->isGuest)
 		{
+		$form=$this->beginWidget('booster.widgets.TbActiveForm',array(
+			'id'=>'trimestre-seleccion-form',
+			'enableAjaxValidation'=>false,
+		)); 
+
+
 		    $this->widget(
     		'booster.widgets.TbNavbar',
 		    array(
@@ -98,7 +74,7 @@ $this->widget(
 									array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')), // si el tipo es admin.
 								)
 							),
-							array('label'=>'Modificación de partida', 'url'=>array('/presupuestoPartidas/modificarPartida'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')),
+							array('label'=>'Transferir Montos', 'url'=>array('/presupuestoPartidas/modificarPartida'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')),
 							array(
 								'label' => 'Eliminar',  //si el usuario es creado por este sistema
 								'items' => array(
@@ -108,7 +84,7 @@ $this->widget(
 								)
 							),
 							array(
-								'label' => 'Rendición de cuentas',  //si el usuario es creado por este sistema
+								'label' => 'Rendición',  //si el usuario es creado por este sistema
 								'items' => array(
 									array('label' => 'Proveedores', 'url' => array('/proveedores/index')),
 									array('label' => 'Procedimientos', 'url' => array('/procedimientos/index')),
@@ -172,13 +148,47 @@ $this->widget(
 							),
 						   // array('label'=>'Perfil usuario', 'url'=>array('/usr/profile'), 'visible'=>!Yii::app()->user->isGuest),
 						    
-							array('label'=>'Salir ('.Yii::app()->user->name.')', 'url'=>array('/usr/logout'), 'visible'=>!Yii::app()->user->isGuest)
+							array('label'=>'Salir ('.Yii::app()->user->name.')', 'url'=>array('/usr/logout'), 'visible'=>!Yii::app()->user->isGuest),
 					    )
 				    )
 			    )
 		    )
 	  	  );
+		$list = Yii::app()->session['trimestresDisponibles']?Yii::app()->session['trimestresDisponibles']:array();
+
+		$this->widget(
+				    'booster.widgets.TbSelect2',
+				    array(
+				        'asDropDownList' => true,
+				        'name' => 'trimestreSeleccion',
+				        'value'=>Yii::app()->session['trimestreSeleccionado'],
+				        'data' =>$list,
+				        'htmlOptions'=>array('id'=>'trimestreSel', 'style'=>'background-color: white; z-index: 3; position: relative; left: 70%; #width: 10%;
+				        	height: 1px;
+		    #padding-top: 10%;
+		    #border-top: 25px solid navy;
+		    margin-top: 15px;',
+		    			 'ajax' => array(
+											'type'=>'POST', //request type
+											'url'=>CController::createUrl('site/seleccionarTrimestre'), //url to call.
+											//Style: CController::createUrl('currentController/methodToCall')
+											//'update'=>'#trimestre', //selector to update
+											'success'=>'function(){ location.reload();}'
+											//'data'=>'js:javascript statement' 
+											//leave out the data key to pass all form values through
+									  )),
+				        'options' => array(
+				            //'tags' => array('proveedores'),
+				            'placeholder' => 'Seleccionar trimestre de carga',
+				            'width' => '25%',
+				            'tokenSeparators' => array(',', ' ')
+				        )
+				    )
+				);
+
+	  	 $this->endWidget();
 		}
+
 	 	?>
 
 	<!--</div> -->

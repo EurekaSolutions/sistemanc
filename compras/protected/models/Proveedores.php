@@ -21,7 +21,7 @@ class Proveedores extends ActiveRecord
 	 */
 	public function tableName()
 	{
-		return $this->obtenerSchema().'proveedores';
+		return $this->obtenerSchema().'.proveedores';
 	}
 
 	/**

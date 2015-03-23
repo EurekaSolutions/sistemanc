@@ -4,7 +4,7 @@
 	'htmlOptions' => array('enctype' => 'multipart/form-data'),
 )); ?>
 
-<p class="help-block">Fields with <span class="required">*</span> are required.</p>
+<p class="help-block">Los campos con <span class="required">*</span> son requeridos.</p>
 
 <?php //echo $form->errorSummary($model); ?>
  <?php 
@@ -14,7 +14,7 @@
     ?>
 
 <?php
-if(isset($errores) and !$valida)
+if(isset($errores) )
 {
 	echo '<p class="help-block">Se han encontrado los siguientes errores:</p>';
 	foreach ($errores as $key => $value) {
