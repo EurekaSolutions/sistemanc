@@ -128,10 +128,10 @@ class Usuarios extends ActiveRecord
 		return count($entes_adscritos);
 	}
 
-	public function pertenece($id)
+	public function perteneceSecundarios($id)
 	{
 
-		foreach ($this->entesOrganos->usuarios as $key => $value) {
+		foreach ($this->enteOrgano->usuariosSecundarios as $key => $value) {
 			if($value->usuario_id == $id)
 				return true;
 		}

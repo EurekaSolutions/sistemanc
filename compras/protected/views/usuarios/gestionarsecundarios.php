@@ -42,7 +42,16 @@ $dataProvider=new CActiveDataProvider('Usuarios', array(
 				),
 				)); */
 		?>
+<?php 
+$this->breadcrumbs=array(
+	'Mis Usuarios'=>array('gestionarsecundarios'),
+	'Gestionar',
+);
 
+		$this->menu=array(
+			//array('label'=>'List Usuarios','url'=>array('index')),
+			array('label'=>'Crear Usuarios','url'=>array('secundario')),
+		); ?>
 
 <?php
 $dataProvider=new CActiveDataProvider('Usuarios', array(

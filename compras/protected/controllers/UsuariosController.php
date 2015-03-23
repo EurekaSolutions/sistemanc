@@ -87,6 +87,9 @@ $this->render('view',array(
 */
 public function actionModificarUsuario($id)
 {
+	if(!Usuarios::model()->actual()->perteneceSecundarios($id))
+		throw new CHttpException(403,'No se puede procesar la solicitud.');
+
 	$model=$this->loadModel($id);
 
 	// Uncomment the following line if AJAX validation is needed
@@ -113,7 +116,7 @@ public function actionGestionarsecundarios(){
 
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 		
-		$usuariosSecundarios = $usuario->enteOrgano->usuarios;
+		$usuariosSecundarios = $usuario->enteOrgano->usuariosSecundarios;
 
 		$this->render('gestionarsecundarios',array( 'model' => $usuariosSecundarios
 		));
@@ -182,8 +185,8 @@ public function actionCreate()
 public function actionUpdate($id)
 {
 
-	if(!Usuarios::model()->actual()->pertenece($id))
-		throw new CHttpException(404,'No se puede procesar la solicitud.');
+	if(!Usuarios::model()->actual()->perteneceSecundarios($id))
+		throw new CHttpException(403,'No se puede procesar la solicitud.');
 
 	$model=$this->loadModel($id);
 
@@ -212,9 +215,10 @@ public function actionDelete($id)
 	if(Yii::app()->request->isPostRequest)
 	{
 		// we only allow deletion via POST request
-		if(!Usuarios::model()->actual()->pertenece($id))
-			throw new CHttpException(404,'No se puede procesar la solicitud.');
-			$this->loadModel($id)->delete();
+		if(!Usuarios::model()->actual()->perteneceSecundarios($id))
+			throw new CHttpException(403,'No se puede procesar la solicitud.');
+		
+		$this->loadModel($id)->delete();
 			
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser

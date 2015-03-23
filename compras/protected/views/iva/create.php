@@ -5,11 +5,11 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-array('label'=>'List Iva','url'=>array('index')),
-array('label'=>'Manage Iva','url'=>array('admin')),
+//array('label'=>'List Iva','url'=>array('index')),
+array('label'=>'Gestionar Iva','url'=>array('admin')),
 );
 ?>
 
-<h1>Create Iva</h1>
+<h1>Crear Iva</h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

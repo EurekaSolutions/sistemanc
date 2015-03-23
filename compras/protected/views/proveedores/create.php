@@ -6,7 +6,7 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 //array('label'=>'Lista de Proveedores','url'=>array('index')),
-array('label'=>'Registrar Proveedor','url'=>array('admin')),
+array('label'=>'Gestionar Proveedores','url'=>array('admin')),
 );
 ?>
 

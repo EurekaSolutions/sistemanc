@@ -2,6 +2,12 @@
 /* @var $this UsuariosController */
 /* @var $model Usuarios */
 /* @var $form CActiveForm */
+
+$this->menu=array(
+    //array('label'=>'List Usuarios','url'=>array('index')),
+    array('label'=>'Gestionar Usuarios secundarios','url'=>array('gestionarsecundarios')),
+);
+
 ?>
 <div class="form">
 <?php $form=$this->beginWidget('booster.widgets.TbActiveForm',array(
