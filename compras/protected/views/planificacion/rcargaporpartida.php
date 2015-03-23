@@ -57,19 +57,20 @@
 							    		foreach ($accionOrgano as $key => $presupuestoPartidaAccion) 
 											foreach ($presupuestoPartidaAccion->presupuestoPartidas as $key => $proyectomonto) 
 									 		{
-									 			$contador++;
-			    								
-
-									 			$valor += $this->montoCargadoPartida($proyectomonto);
-							    			//echo '<tr><td>'.$presupuestoPartida['presupuesto_partida_id'].'<t/d></tr>';
-								    			echo '<tr>';
-												echo '<td>'.$proyectomonto->partida['nombre'].'</td>';
-												echo '<td>'.$proyectomonto->partida['p1'].'.'.$proyectomonto->partida['p2'].'.'.$proyectomonto->partida['p3'].'.'.$proyectomonto->partida['p4'].'</td>';
-												echo '<td>'.number_format($proyectomonto->monto_presupuestado,2,',','.').'</td>';
-												echo '<td>'.number_format($valor,2,',','.').'</td>';
-												$porcentajePartida += $valor*100/$proyectomonto->monto_presupuestado;
-												echo '<td>'.number_format($valor*100/$proyectomonto->monto_presupuestado,2,',','.').'</td>';
-												echo '</tr>';
+									 			if($proyectomonto->monto_presupuestado!=0)
+									 			{
+										 			$contador++;
+										 			$valor += $this->montoCargadoPartida($proyectomonto);
+								    			//echo '<tr><td>'.$presupuestoPartida['presupuesto_partida_id'].'<t/d></tr>';
+									    			echo '<tr>';
+													echo '<td>'.$proyectomonto->partida['nombre'].'</td>';
+													echo '<td>'.$proyectomonto->partida['p1'].'.'.$proyectomonto->partida['p2'].'.'.$proyectomonto->partida['p3'].'.'.$proyectomonto->partida['p4'].'</td>';
+													echo '<td>'.number_format($proyectomonto->monto_presupuestado,2,',','.').'</td>';
+													echo '<td>'.number_format($valor,2,',','.').'</td>';
+													$porcentajePartida += $valor*100/$proyectomonto->monto_presupuestado;
+													echo '<td>'.number_format($valor*100/$proyectomonto->monto_presupuestado,2,',','.').'</td>';
+													echo '</tr>';
+												}
 							    			}
 							    	?>
 							</div>
@@ -141,7 +142,8 @@
 		    			$contador = 0;
 		    			$porcentajePartida = 0;
 			    		foreach ($value->presupuestoPartidas as $key => $proyectomonto) {
-
+			    			if($proyectomonto->monto_presupuestado!=0)
+							{
 			    				echo '<tr>';
 									echo '<td>'.$proyectomonto->partida['nombre'].'</td>';
 									echo '<td>'.$proyectomonto->partida['p1'].'.'.$proyectomonto->partida['p2'].'.'.$proyectomonto->partida['p3'].'.'.$proyectomonto->partida['p4'].'</td>';
@@ -160,19 +162,26 @@
 									echo '<td>'.number_format($total_cargado,2,',','.').'</td>';
 									echo '<td> '.number_format($porcentaje,2,',','.').'% </td>';
 								echo '</tr>';
-							$contador++;
-							$porcentajePartida += $porcentaje;		
+								$contador++;
+								$porcentajePartida += $porcentaje;		
 							//$valor += $this->montoCargadoPartida($proyectomonto);
 
 							//print_r($value->presupuestoPartidas);
+							}
 						}
 						
 		    		?>
 					</div>
 		    	</tr>
+		    		<?php
+		    			if($contador !=0)
+		    			{?>
 		    		<tr>
 		    			<td colspan="8" align="right" style="text-align:right !important">Porcentaje total de carga proyecto: <strong><?php echo number_format(($porcentajePartida/$contador),2,',','.').' %'; ?></strong></td>
 		    		</tr>
+		    		<?php
+		    			}
+		    		?>
 		     
 		    </tbody>
 		</table>

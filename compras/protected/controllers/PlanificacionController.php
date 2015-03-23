@@ -321,7 +321,7 @@ class PlanificacionController extends Controller
 		if(isset($_POST['Cargamasiva']))
 		{
 			$model->attributes=$_POST['Cargamasiva'];
-			
+			$construir_archivo = array();
 			if($model->validate())
 			{
 				$model->archivo=CUploadedFile::getInstance($model,'archivo');
@@ -335,7 +335,7 @@ class PlanificacionController extends Controller
 				$file = file(Yii::app()->basePath.'\..\assets\archivo.'.$model->archivo->extensionName);
 				$lineas = count($file);
 				$lineas--;
-				$si = true;
+				//$si = true;
 
 				if (($gestor = fopen(Yii::app()->basePath.'\..\assets\archivo.'.$model->archivo->extensionName, "r")) !== FALSE)
 				{
