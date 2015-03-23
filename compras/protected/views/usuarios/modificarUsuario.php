@@ -7,9 +7,9 @@
 
 <?php echo $form->errorSummary($model); ?>
 
-	<?php echo $form->textFieldGroup($model,'cedula',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>20,'disabled'=>$model->isNewRecord ? false:true)))); ?>
+	<?php echo $form->textFieldGroup($model,'cedula',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>20,/*'disabled'=>$model->isNewRecord ? false:true*/)))); ?>
 
-	<?php echo $form->textFieldGroup($model,'usuario',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>50,'disabled'=>$model->isNewRecord ? false:true)))); ?>
+	<?php //echo $form->textFieldGroup($model,'usuario',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>50,'disabled'=>$model->isNewRecord ? false:true)))); ?>
 
 	<?php //echo $form->textFieldGroup($model,'contrasena',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>50)))); ?>
 
