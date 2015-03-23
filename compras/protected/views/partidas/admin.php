@@ -1,12 +1,12 @@
 <?php
 $this->breadcrumbs=array(
-	'Partidases'=>array('index'),
-	'Manage',
+	'Partidas'=>array('index'),
+	'Gestionar',
 );
 
 $this->menu=array(
-array('label'=>'List Partidas','url'=>array('index')),
-array('label'=>'Create Partidas','url'=>array('create')),
+array('label'=>'Gestionar Partidas','url'=>array('index')),
+array('label'=>'Crear Partidas','url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -23,9 +23,9 @@ return false;
 ");
 ?>
 
-<h1>Manage Partidases</h1>
+<h1>Gestionar Partidas</h1>
 
-<p>
+<!-- <p>
 	You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>
 		&lt;&gt;</b>
 	or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
@@ -36,12 +36,13 @@ return false;
 	<?php $this->renderPartial('_search',array(
 	'model'=>$model,
 )); ?>
-</div><!-- search-form -->
+</div> --><!-- search-form -->
 
 <?php $this->widget('booster.widgets.TbGridView',array(
 'id'=>'partidas-grid',
 'dataProvider'=>$model->search(),
 'filter'=>$model,
+'summaryText'=>'',
 'columns'=>array(
 		'partida_id',
 		'p1',

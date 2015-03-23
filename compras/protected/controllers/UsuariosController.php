@@ -157,21 +157,21 @@ public function actionSecundario(){
 */
 public function actionCreate()
 {
-$model=new Usuarios;
+	$model=new Usuarios;
 
-// Uncomment the following line if AJAX validation is needed
- $this->performAjaxValidation($model);
+	// Uncomment the following line if AJAX validation is needed
+	 $this->performAjaxValidation($model);
 
-if(isset($_POST['Usuarios']))
-{
-	$model->attributes=$_POST['Usuarios'];
-	if($model->save())
-		$this->redirect(array('view','id'=>$model->usuario_id));
-	}
+	if(isset($_POST['Usuarios']))
+	{
+		$model->attributes=$_POST['Usuarios'];
+		if($model->save())
+			$this->redirect(array('view','id'=>$model->usuario_id));
+		}
 
-	$this->render('create',array(
-	'model'=>$model,
-	));
+		$this->render('create',array(
+		'model'=>$model,
+		));
 }
 
 /**
@@ -181,6 +181,10 @@ if(isset($_POST['Usuarios']))
 */
 public function actionUpdate($id)
 {
+
+	if(!Usuarios::model()->actual()->pertenece($id))
+		throw new CHttpException(404,'No se puede procesar la solicitud.');
+
 	$model=$this->loadModel($id);
 
 	// Uncomment the following line if AJAX validation is needed
@@ -208,8 +212,10 @@ public function actionDelete($id)
 	if(Yii::app()->request->isPostRequest)
 	{
 		// we only allow deletion via POST request
-		if($this->loadModel($id)->esHijo())
-		$this->loadModel($id)->delete();
+		if(!Usuarios::model()->actual()->pertenece($id))
+			throw new CHttpException(404,'No se puede procesar la solicitud.');
+			$this->loadModel($id)->delete();
+			
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))

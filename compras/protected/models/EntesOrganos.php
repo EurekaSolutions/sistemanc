@@ -67,7 +67,7 @@ class EntesOrganos extends ActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'usuarios' => array(self::HAS_MANY, 'Usuarios', 'ente_organo_id'),
-			'usuarioPrincipal' => array(self::HAS_ONE, 'Usuarios', 'ente_organo_id', 'condition'=>"rol='normal' OR rol ='ente'"),
+			'usuarioPrincipal' => array(self::HAS_ONE, 'Usuarios', 'ente_organo_id', 'condition'=>"rol='organo' OR rol ='ente'"),
 			'usuariosSecundarios' => array(self::HAS_MANY, 'Usuarios', 'ente_organo_id', 'condition'=>'rol=\'presupuesto\' OR rol=\'producto\''),	
 			'padre' => array(self::HAS_ONE, 'EntesAdscritos', 'ente_organo_id'),
 			'hijos' => array(self::HAS_MANY, 'EntesAdscritos', 'padre_id'),
@@ -85,6 +85,18 @@ class EntesOrganos extends ActiveRecord
 			return true;
 		else
 			return false;
+	}
+
+	public function esHijo($ente_organo_id)
+	{
+
+		$entes_adscritos = EntesAdscritos::model()->find('ente_organo_id=:ente_organo_id AND padre_id=:padre_id',
+		array(
+		  ':ente_organo_id'=>$ente_organo_id,
+		  ':padre_id'=>$this->ente_organo_id,
+		));
+
+		return count($entes_adscritos);
 	}
 
 	public function behaviors()

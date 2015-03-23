@@ -1748,6 +1748,7 @@ class PlanificacionController extends Controller
 	{
 		$name = "Seleccionar partida";
 
+		if(!isset($_POST['PresupuestoPartidas']))
 		 echo CHtml::tag('option',
 		                   array('value'=>""),CHtml::encode($name),true);
 
@@ -1757,11 +1758,11 @@ class PlanificacionController extends Controller
 			 !empty($_POST['Proyectos']['anho']) /*|| !empty($_POST['Proyectos']['1']['proyecto_id'])*/))
 		{
 			$id = isset($_POST['Proyectos']['proyecto_id'])?$_POST['Proyectos']['proyecto_id']:$_POST['Proyectos']['anho'];
-
+			//print_r($id);
 	/*		foreach ($_POST['Proyectos'] as $key => $value) {
 				?$_POST['Proyectos']['proyecto_id']:$_POST['Proyectos']['0']['proyecto_id']
-			}
-			Yii::app()->end();*/
+			}*/
+			//Yii::app()->end();
 			if(strstr($id, 'a'))
 			{//Es un id de accion
 
