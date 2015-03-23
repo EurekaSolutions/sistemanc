@@ -27,7 +27,8 @@
 	</div><!-- header -->
 	
 <div id="trimestre">
-	Cargando: <?php echo ($trimestre = Yii::app()->session['trimestresDisponibles'][Yii::app()->session['trimestreSeleccionado']])?$trimestre:''; ?>
+	 <?php if(!Yii::app()->user->isGuest)
+						echo 'Cargando: '.($trimestre = Yii::app()->session['trimestresDisponibles'][Yii::app()->session['trimestreSeleccionado']])?$trimestre:''; ?>
 </div>
 	<!--<div id="mainmenu">-->
 		<?php 
@@ -37,6 +38,7 @@ $form=$this->beginWidget('booster.widgets.TbActiveForm',array(
 )); 
 
 $list = Yii::app()->session['trimestresDisponibles']?Yii::app()->session['trimestresDisponibles']:array();
+if(!Yii::app()->user->isGuest)
 $this->widget(
 		    'booster.widgets.TbSelect2',
 		    array(
@@ -56,12 +58,13 @@ $this->widget(
 		        'options' => array(
 		            //'tags' => array('proveedores'),
 		            'placeholder' => 'Seleccionar trimestre de carga',
-		            'width' => '40%',
+		            'width' => '25%',
 		            'tokenSeparators' => array(',', ' ')
 		        )
 		    )
 		);
- $this->endWidget();
+ $this->endWidget();?>
+ <?php 
 		if(!Yii::app()->user->isGuest)
 		{
 		    $this->widget(
