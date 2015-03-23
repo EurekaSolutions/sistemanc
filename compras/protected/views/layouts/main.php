@@ -74,7 +74,8 @@
 									array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')), // si el tipo es admin.
 								)
 							),
-							array('label'=>'Transferir Montos', 'url'=>array('/presupuestoPartidas/modificarPartida'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')),
+							array('label'=>'Transferir montos', 'url'=>array('/presupuestoPartidas/modificarPartida'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')),
+							array('label'=>'Añadir montos', 'url'=>array('/presupuestoPartidas/anadirPartida'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')),
 							array(
 								'label' => 'Eliminar',  //si el usuario es creado por este sistema
 								'items' => array(

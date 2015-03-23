@@ -27,7 +27,7 @@ class PresupuestoPartidasController extends Controller
 	{
 		return array(
 		array('allow',  // allow all users to perform 'index' and 'view' actions
-			'actions'=>array('modificarPartida', 'montoDisponible', 'montoDisponibleSustraendo'),
+			'actions'=>array('modificarPartida', 'montoDisponible', 'montoDisponibleSustraendo', 'anadirPartida'),
 			'users'=>array('@'),
 			'roles'=>array('presupuesto')
 		),
@@ -63,6 +63,59 @@ class PresupuestoPartidasController extends Controller
 				$this->montoDisponible($_POST['PresupuestoPartidas']['sustraendo_id']);
 			}
  	}
+
+ 	public function actionAnadirPartida()
+	{
+		$model=new PresupuestoPartidas('transferir');
+		$proyectoSel = new Proyectos('search');
+		//$proyectoSel[1] = new Proyectos();
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['PresupuestoPartidas']))
+		{
+			$model->attributes=$_POST['PresupuestoPartidas'];
+			if($model->sustraendo_id=='')
+				$model->sustraendo_id = null;
+			if($model->presupuesto_partida_id=='')
+				$model->presupuesto_partida_id = null;
+			print_r($_POST);
+			//Yii::app()->end();
+			$proyectoSel->attributes = $_POST['Proyectos'];
+			print_r($proyectoSel);
+			//Yii::app()->end();
+			//$proyectoSel[0]->proyecto_id = $_POST['Proyectos']['0']['proyecto_id'];
+			//$proyectoSel[1]->proyecto_id = $_POST['Proyectos']['1']['proyecto_id'];
+
+			if($model->validate(array('presupuesto_partida_id','monto_transferir','sustraendo_id')))
+			{
+				$modelSustraendo = $this->loadModel($model->sustraendo_id);
+
+				$monto_transferir = 0;
+				if($model->todo){
+					$monto_transferir = $model->monto_transferir = $modelSustraendo->montoDisponible();	
+				}else
+				 	$monto_transferir = $model->monto_transferir;
+
+				$modelSuma = $this->loadModel($model->presupuesto_partida_id);
+
+				$modelSuma->monto_presupuestado += $monto_transferir;
+				$modelSustraendo->monto_presupuestado -= $monto_transferir;
+
+				if($modelSuma->save() && $modelSustraendo->save()){
+					//$this->redirect(array('view','id'=>$model->presupuesto_partida_id));
+					Yii::app()->user->setFlash('success', "Transferencia realizada con exito.");
+					//$model = new PresupuestoPartidas;
+				}else
+					Yii::app()->user->setFlash('error', "Hubo un problema guardando la transferencia. Intentelo nuevamente.");
+			}
+		}
+
+		$this->render('modificarPartida',array(
+			'model'=>$model, 'proyectoSel'=>$proyectoSel
+		));
+	}
 
  	/**
  	 * Función que calcula el monto disponible de una partida presupuestada.
@@ -146,7 +199,7 @@ class PresupuestoPartidasController extends Controller
 		}
 
 		$this->render('modificarPartida',array(
-		'model'=>$model, 'proyectoSel'=>$proyectoSel
+			'model'=>$model, 'proyectoSel'=>$proyectoSel
 		));
 	}
 
