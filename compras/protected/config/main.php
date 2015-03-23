@@ -186,7 +186,6 @@ return array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
 		'minimoContrasena'=>6,
-		'trimestresDisponibles'=>-1,
 		'etiquetasTrimestres'=>array(
 			'trimestre0'=>'Plan de compras original',
 			'trimestre1'=>'Trimestre 1',
