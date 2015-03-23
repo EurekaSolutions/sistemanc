@@ -66,8 +66,10 @@ class PresupuestoPartidasController extends Controller
 
  	public function actionAnadirPartida()
 	{
-		$model=new PresupuestoPartidas('transferir');
+		$model=new PresupuestoPartidas('anadir');
 		$proyectoSel = new Proyectos('search');
+		
+		$fuentesSel[] = new FuentePresupuesto();
 		//$proyectoSel[1] = new Proyectos();
 
 		// Uncomment the following line if AJAX validation is needed
@@ -76,32 +78,62 @@ class PresupuestoPartidasController extends Controller
 		if(isset($_POST['PresupuestoPartidas']))
 		{
 			$model->attributes=$_POST['PresupuestoPartidas'];
-			if($model->sustraendo_id=='')
+			/*if($model->sustraendo_id=='')
 				$model->sustraendo_id = null;
 			if($model->presupuesto_partida_id=='')
-				$model->presupuesto_partida_id = null;
-			print_r($_POST);
+				$model->presupuesto_partida_id = null;*/
+			//print_r($_POST);
 			//Yii::app()->end();
 			$proyectoSel->attributes = $_POST['Proyectos'];
-			print_r($proyectoSel);
+
+			
+
+			$fuente_ids = $_POST['f']['fuente_id'];
+			$montos = $_POST['f']['monto'];
+
+			if(count($fuente_ids) == count($montos))
+			{
+				$cantidad = count($fuente_ids);
+			 	
+			 	for ($i=0; $i < $cantidad; $i++) { 
+			 		
+			 		$fuentePresu = new FuentePresupuesto();
+	        		$fuentePresu->fuente_id= $fuente_ids[$i];
+	        		$fuentePresu->monto = $montos[$i];
+
+	        		$fuentesSel[$i] = $fuentePresu;
+			 	}
+			}
+
+
+			$verificar = true;
+
+			foreach ($fuentesSel as $key => $fuentep)
+			{
+				$verificar = $fuentep->validate() && $verificar;
+			}
+
+			//print_r($proyectoSel);
 			//Yii::app()->end();
 			//$proyectoSel[0]->proyecto_id = $_POST['Proyectos']['0']['proyecto_id'];
 			//$proyectoSel[1]->proyecto_id = $_POST['Proyectos']['1']['proyecto_id'];
 
-			if($model->validate(array('presupuesto_partida_id','monto_transferir','sustraendo_id')))
+			if($model->validate(array('anadir_id')) && $verificar)
 			{
 				$modelSustraendo = $this->loadModel($model->sustraendo_id);
 
-				$monto_transferir = 0;
-				if($model->todo){
-					$monto_transferir = $model->monto_transferir = $modelSustraendo->montoDisponible();	
-				}else
-				 	$monto_transferir = $model->monto_transferir;
+				
+				foreach ($fuentesSel as $key => $fuentep) {
+				        		$fuentep->presupuesto_partida_id = $presupuesto_partida->presupuesto_partida_id;
+				        		$monto_total +=$fuentep->monto;
+				        		$verificar = $fuentep->save() && $verificar;
+			    }
 
-				$modelSuma = $this->loadModel($model->presupuesto_partida_id);
+
+				/*$modelSuma = $this->loadModel($model->presupuesto_partida_id);
 
 				$modelSuma->monto_presupuestado += $monto_transferir;
-				$modelSustraendo->monto_presupuestado -= $monto_transferir;
+				$modelSustraendo->monto_presupuestado -= $monto_transferir;*/
 
 				if($modelSuma->save() && $modelSustraendo->save()){
 					//$this->redirect(array('view','id'=>$model->presupuesto_partida_id));
@@ -113,7 +145,7 @@ class PresupuestoPartidasController extends Controller
 		}
 
 		$this->render('anadirPartida',array(
-			'model'=>$model, 'proyectoSel'=>$proyectoSel
+			'model'=>$model, 'proyectoSel'=>$proyectoSel, 'fuentesSel' => $fuentesSel
 		));
 	}
 
@@ -166,10 +198,10 @@ class PresupuestoPartidasController extends Controller
 				$model->sustraendo_id = null;
 			if($model->presupuesto_partida_id=='')
 				$model->presupuesto_partida_id = null;
-			print_r($_POST);
+			//print_r($_POST);
 			//Yii::app()->end();
 			$proyectoSel->attributes = $_POST['Proyectos'];
-			print_r($proyectoSel);
+			//print_r($proyectoSel);
 			//Yii::app()->end();
 			//$proyectoSel[0]->proyecto_id = $_POST['Proyectos']['0']['proyecto_id'];
 			//$proyectoSel[1]->proyecto_id = $_POST['Proyectos']['1']['proyecto_id'];

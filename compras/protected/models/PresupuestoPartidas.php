@@ -26,6 +26,8 @@ class PresupuestoPartidas extends ActiveRecord
 	public $sustraendo_id;
 	public $monto_transferir;
 	public $todo;
+	public $abonar_id;
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -46,8 +48,9 @@ class PresupuestoPartidas extends ActiveRecord
 			array('monto_presupuestado', 'length', 'max'=>38),
 			array('todo', 'required', 'on'=>'transferir'),
 			array('tipo', 'length', 'max'=>1),
-			array('fecha_hasta, presupuesto_id, sustraendo_id, monto_transferir, todo', 'safe'),
+			array('fecha_hasta, presupuesto_id, sustraendo_id, monto_transferir, todo, abonar_id', 'safe'),
 			array('sustraendo_id', 'validarSustraendo', 'on'=>'transferir'),
+			array('abonar_id', 'required', 'on'=>'anadir'),
 			array('monto_transferir','numerical', 'on'=>'transferir'),
 			array('presupuesto_partida_id', 'validarSumando', 'on'=>'transferir'),
 			array('monto_transferir', 'validarTansferirMonto', 'on'=>'transferir'),
@@ -207,6 +210,7 @@ class PresupuestoPartidas extends ActiveRecord
 			'sustraendo_id'=>'Partida a abonar',
 			'monto_transferir'=>'Monto a transferir',
 			'todo'=>'Transferir todo',
+			'abonar_id' => 'Partida a añadir',
 
 		);
 	}
