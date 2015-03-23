@@ -100,7 +100,7 @@ class PresupuestoPartidasController extends Controller
 
 
 			$verificar = true;
-
+			
 			foreach ($fuentesSel as $key => $fuentep)
 			{
 				$verificar = $fuentep->validate() && $verificar;
