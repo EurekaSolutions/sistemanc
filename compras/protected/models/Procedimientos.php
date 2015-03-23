@@ -63,7 +63,7 @@ class Procedimientos extends ActiveRecord
 		return array(
 			'id' => 'ID',
 			'num_contrato' => 'Número de Contrato',
-			'anho' => 'Anho',
+			'anho' => 'Año',
 			'fecha' => 'Fecha',
 			'tipo' => 'Tipo',
 			'ente_organo_id' => 'Ente Organo',

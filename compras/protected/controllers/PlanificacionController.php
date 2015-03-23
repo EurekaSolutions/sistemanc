@@ -1768,10 +1768,25 @@ class PlanificacionController extends Controller
 			{//Es un id de accion
 
 				$accionId = $this->accionId($id);
-
+				
 				$partidas = $this->partidasAccion($accionId);
+
+/*				$presuPartidaAccion = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionId, 'ente_organo_id'=>Usuario::model()->actual()->ente_organo_id));
+
+				$pertenece = true;
+				foreach ($presupuestoPartidaAcciones as $key => $prePar) {
+					if(!empty($prePar->presupuestoPartida->partida))
+						$partidas[$key] = $prePar->presupuestoPartida->partida;
+				}
+				if(Usuarios::model()->actual()->enteOrgano->ente_organo_id != $proyectoSel->ente_organo_id)
+					throw new CHttpException(403, "No se puede procesar la solicitud.");
+*/
 			}else{//Es un id de proyecto
 				$proyectoSel = Proyectos::model()->findByPk($id);
+
+				if(Usuarios::model()->actual()->ente_organo_id != $proyectoSel->ente_organo_id)
+					throw new CHttpException(403, "No se puede procesar la solicitud.");
+					
 
 				//$proyectoActual = Proyectos::model()->findByPk($proyectoSel->proyecto_id);
 				$partidas = $this->partidasProyecto($proyectoSel->proyecto_id);

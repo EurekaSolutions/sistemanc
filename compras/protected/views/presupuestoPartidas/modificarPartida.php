@@ -1,9 +1,9 @@
 <?php
-/*$this->breadcrumbs=array(
-	'Presupuesto Partidases'=>array('index'),
-	'Create',
+$this->breadcrumbs=array(
+	'Transferir Presupuesto Partidas'=>array('modificarPartida'),
+	'Transferir',
 );
-
+/*
 $this->menu=array(
 array('label'=>'List PresupuestoPartidas','url'=>array('index')),
 array('label'=>'Manage PresupuestoPartidas','url'=>array('admin')),
