@@ -15,9 +15,10 @@ $this->widget('booster.widgets.TbGridView',array(
 		//'usuario_id',
 		array('name'=>'ente_organo_id', 'value'=>'$data->enteOrgano->nombre'),
 		//'codigo_onapre',
-		'usuario',
+		//'usuario',
 		//'contrasena',
 		'correo',
+		'cedula',
 		'creado_el',
 		/*
 		'actualizado_el',
@@ -29,11 +30,11 @@ $this->widget('booster.widgets.TbGridView',array(
 		*/
 		array(
 			'class'=>'booster.widgets.TbButtonColumn',
-			 'template'=>'{view}{update}',
+			 'template'=>'{update}',
 			 'buttons'=>array(
-			 		'view'=>array(
+			/* 		'view'=>array(
 			 			'url'=>'Yii::app()->createUrl("usuarios/view", array("id"=>$data->usuario_id))',
-			 			),
+			 			),*/
 					'update'=>array(
 			 			'url'=>'Yii::app()->createUrl("usuarios/modificarUsuarioEnte", array("id"=>$data->usuario_id))',
 			 			),

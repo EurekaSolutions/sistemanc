@@ -40,6 +40,14 @@ return array (
     array (
       0 => 'ente',
     ),
+    'assignments' => 
+    array (
+      4491 => 
+      array (
+        'bizRule' => NULL,
+        'data' => NULL,
+      ),
+    ),
   ),
   'ente' => 
   array (

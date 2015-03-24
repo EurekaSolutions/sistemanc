@@ -54,7 +54,7 @@
 								    	$contador = 0;
 			    						$porcentajePartida = 0;
 
-							    		foreach ($accionOrgano as $key => $presupuestoPartidaAccion)
+							    		foreach ($accionOrgano as $key => $presupuestoPartidaAccion){
 							    			$valor = 0;
 											foreach ($presupuestoPartidaAccion->presupuestoPartidas as $key => $proyectomonto) 
 									 		{
@@ -73,7 +73,7 @@
 													echo '</tr>';
 												}
 							    			}
-							    		
+							    		}
 							    	?>
 							</div>
 			    			</tr>
