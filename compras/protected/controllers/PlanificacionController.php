@@ -327,18 +327,18 @@ class PlanificacionController extends Controller
 			{
 				$model->archivo=CUploadedFile::getInstance($model,'archivo');
 				
-				$model->archivo->saveAs(Yii::app()->basePath.'\..\assets\archivo.'.$model->archivo->extensionName);
+				$model->archivo->saveAs(Yii::app()->basePath.'/../assets/archivo.'.$model->archivo->extensionName);
 				
 				$fila = -1;
 				$usuario_procesados = 0;
 				$usuario_noprocesados = 0;
 				
-				$file = file(Yii::app()->basePath.'\..\assets\archivo.'.$model->archivo->extensionName);
+				$file = file(Yii::app()->basePath.'/../assets/archivo.'.$model->archivo->extensionName);
 				$lineas = count($file);
 				$lineas--;
 				//$si = true;
 
-				if (($gestor = fopen(Yii::app()->basePath.'\..\assets\archivo.'.$model->archivo->extensionName, "r")) !== FALSE)
+				if (($gestor = fopen(Yii::app()->basePath.'/../assets/archivo.'.$model->archivo->extensionName, "r")) !== FALSE)
 				{
 				    while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE)
 				    {
