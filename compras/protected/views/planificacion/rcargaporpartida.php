@@ -54,7 +54,8 @@
 								    	$contador = 0;
 			    						$porcentajePartida = 0;
 
-							    		foreach ($accionOrgano as $key => $presupuestoPartidaAccion) 
+							    		foreach ($accionOrgano as $key => $presupuestoPartidaAccion)
+							    			$valor = 0;
 											foreach ($presupuestoPartidaAccion->presupuestoPartidas as $key => $proyectomonto) 
 									 		{
 									 			if($proyectomonto->monto_presupuestado!=0)
@@ -72,6 +73,7 @@
 													echo '</tr>';
 												}
 							    			}
+							    		
 							    	?>
 							</div>
 			    			</tr>
@@ -142,6 +144,7 @@
 		    			$contador = 0;
 		    			$porcentajePartida = 0;
 			    		foreach ($value->presupuestoPartidas as $key => $proyectomonto) {
+			    			//$total_cargado = 0;
 			    			if($proyectomonto->monto_presupuestado!=0)
 							{
 			    				echo '<tr>';
