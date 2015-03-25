@@ -12,7 +12,8 @@ tr.principaltr th {
 }
 </style>
 
-<h4 style="text-align: center;">Actividades recientes</h4><br>
+<h4 style="text-align: center;">Actividades recientes</h4>
+<h4 style="text-align: center;"> <?php if ($nombre) echo 'Ente: '.$nombre; ?></h4><br>
 
 <?php
 

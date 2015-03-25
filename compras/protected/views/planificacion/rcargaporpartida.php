@@ -1,9 +1,9 @@
-<h4 style="text-align: center;">REPORTE CARGA POR PARTIDAS</h4><br>
+<h4 style="text-align: center;">REPORTE CARGA POR PARTIDAS</h4>
 
 
-		<h4 style="text-align: center;">ACCIONES CENTRALIZADAS</h4><br>
+		<h4 style="text-align: center;">ACCIONES CENTRALIZADAS</h4>
 
-		
+		<h4 style="text-align: center;"> <?php if ($nombre) echo 'Ente: '.$nombre; ?></h4>
 			    	<?php
 
 			    	//echo 'acciones';print_r($acciones);
@@ -14,7 +14,7 @@
 			    			$tiene_acciones = true;
 							$monto = $this->montoAccion($accion);
 
-			    		?>
+			    			?>
 			    		<table data-toggle="table" data-url="" data-cache="false" data-height="" width="100%">
 					    <thead>
 					        <tr class="principaltr">
@@ -55,7 +55,6 @@
 			    						$porcentajePartida = 0;
 
 							    		foreach ($accionOrgano as $key => $presupuestoPartidaAccion){
-							    		{
 							    			$valor = 0;
 							    			//$porcentajePartida = 0;
 											foreach ($presupuestoPartidaAccion->presupuestoPartidas as $key => $proyectomonto) 
@@ -200,4 +199,5 @@
 					echo '<h4 style="text-align: center;">El ente no tiene proyectos cargados</h4><br>';
 				}
 
-			/// no tiene proyectos ?>
+			/// no tiene proyectos 
+?>

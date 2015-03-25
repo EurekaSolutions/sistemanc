@@ -51,8 +51,8 @@ tr.principaltr th {
 			  )
 			);*/
 
-			echo CHtml::link('Descargar',array('planificacion/ajaxreportes',
-                                         'param' => $value['ente_organo_id'], 'report' => '1'));
+			echo CHtml::link('Ver',array('planificacion/ajaxreportes',
+                                         'param' => $value['ente_organo_id'], 'report' => '1', 'nombre' => $value['nombre']), array('target'=>'_blank'));
 
 		    echo '</td>';
 		    echo '<td>';
@@ -69,14 +69,14 @@ tr.principaltr th {
 			    'id' => 'porpartidas'
 			  )
 			);*/
-			echo CHtml::link('Descargar',array('planificacion/ajaxreportes',
-                                         'param' => $value['ente_organo_id'], 'report' => '2'));
+			echo CHtml::link('Ver',array('planificacion/ajaxreportes',
+                                         'param' => $value['ente_organo_id'], 'report' => '2', 'nombre' => $value['nombre']), array('target'=>'_blank'));
 		    echo '</td>';
 
 		    echo '<td>';
 
-			echo CHtml::link('Descargar',array('planificacion/ajaxreportes',
-                                         'param' => $value['ente_organo_id'], 'report' => '3'));
+			echo CHtml::link('Ver',array('planificacion/ajaxreportes',
+                                         'param' => $value['ente_organo_id'], 'report' => '3', 'nombre' => $value['nombre']), array('target'=>'_blank'));
 		    echo '</td>';
 		echo '</tr>';
 	}

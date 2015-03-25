@@ -109,11 +109,19 @@ class PlanificacionController extends Controller
 					$criteria->select = 'codigo_accion, accion_id, ente_organo_id ';
 					$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
 
-				    $mPDF1 = Yii::app()->ePdf->mpdf();
+				    /*$mPDF1 = Yii::app()->ePdf->mpdf();
 			        $mPDF1 = Yii::app()->ePdf->mpdf('', 'A5');
 			        $mPDF1->WriteHTML($this->render('rcargaporpartida', array('proyectos' => $proyectos, 'acciones' => $acciones), true));
 
-			        $mPDF1->Output('cargaporpartidas.pdf', 'D');
+			        $mPDF1->Output('cargaporpartidas.pdf', 'D');*/
+			        $nombre = "";
+			        if($_GET['nombre'])
+			        {
+			        	$nombre = $_GET['nombre'];
+			        }
+
+			        $this->render('rcargaporpartida', array('proyectos' => $proyectos, 'acciones' => $acciones, 'nombre' => $nombre));
+
 		    	}else
 		    	{
 		    		echo "Operaci&oacute;n invalida";
@@ -135,7 +143,7 @@ class PlanificacionController extends Controller
 					$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
 
 
-					$mPDF1 = Yii::app()->ePdf->mpdf();
+					/*$mPDF1 = Yii::app()->ePdf->mpdf();
 			 
 			        # You can easily override default constructor's params
 			        $mPDF1 = Yii::app()->ePdf->mpdf('', 'A5');
@@ -143,7 +151,15 @@ class PlanificacionController extends Controller
 			        # render (full page)
 			        $mPDF1->WriteHTML($this->render('rproducto', array('proyectos' => $proyectos, 'acciones' =>$acciones), true));
 
-			       	$mPDF1->Output('rproducto.pdf', 'D');
+			       	$mPDF1->Output('rproducto.pdf', 'D');*/
+
+			       	$nombre = "";
+			        if($_GET['nombre'])
+			        {
+			        	$nombre = $_GET['nombre'];
+			        }
+
+			       	$this->render('rproducto', array('proyectos' => $proyectos, 'acciones' =>$acciones , 'nombre' => $nombre));
 
 			    }else
 		    	{
@@ -187,7 +203,7 @@ class PlanificacionController extends Controller
 						$mensaje = "Este usuario no tiene actividad registrada en el sistema.";
 					}
 
-					$mPDF1 = Yii::app()->ePdf->mpdf();
+					/*$mPDF1 = Yii::app()->ePdf->mpdf();
 			 
 			        # You can easily override default constructor's params
 			        $mPDF1 = Yii::app()->ePdf->mpdf('', 'A5');
@@ -195,10 +211,15 @@ class PlanificacionController extends Controller
 			        # render (full page)
 			        $mPDF1->WriteHTML($this->render('actividad', array('todos_log' => $todos_log, 'mensaje' => $mensaje), true));
 
-			       	$mPDF1->Output('actividad.pdf', 'D');
+			       	$mPDF1->Output('actividad.pdf', 'D');*/
 
-			       	
+			       	$nombre = "";
+			        if($_GET['nombre'])
+			        {
+			        	$nombre = $_GET['nombre'];
+			        }
 
+			       	$this->render('actividad', array('todos_log' => $todos_log, 'mensaje' => $mensaje, 'nombre' => $nombre));
 			     
 
 			    }else
@@ -249,8 +270,8 @@ class PlanificacionController extends Controller
         $mPDF1->WriteHTML($this->render('reportes', array('proyectos' => $proyectos, 'acciones' => $acciones), true));
 
         $mPDF1->Output(); */
-
-		$this->render('rcargaporpartida', array('proyectos' => $proyectos, 'acciones' => $acciones));
+        $nombre = "";
+		$this->render('rcargaporpartida', array('proyectos' => $proyectos, 'acciones' => $acciones, 'nombre' => $nombre));
 
 	}
 
@@ -277,8 +298,8 @@ class PlanificacionController extends Controller
 
         $mPDF1->Output(); */
 
-
-		$this->render('rproducto', array('proyectos' => $proyectos, 'acciones' =>$acciones));
+        $nombre = "";
+		$this->render('rproducto', array('proyectos' => $proyectos, 'acciones' =>$acciones, 'nombre' => $nombre));
 	}
 
 	public function actionGesUsuEntes()

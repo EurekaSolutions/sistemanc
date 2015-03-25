@@ -1,7 +1,6 @@
-<h4 style="text-align: center;">REPORTE PRODUCTOS CARGADOS</h4><br>
-
-
-		<h4 style="text-align: center;">NACIONALES</h4><br>
+<h4 style="text-align: center;">REPORTE PRODUCTOS CARGADOS</h4>
+<h4 style="text-align: center;">NACIONALES</h4>
+<h4 style="text-align: center;"> <?php if ($nombre) echo 'Ente: '.$nombre; ?></h4><br>
 
 <table data-toggle="table" data-url="" data-cache="false" data-height="" width="100%">
 					    <thead>
