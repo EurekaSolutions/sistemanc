@@ -38,8 +38,8 @@ class EntesOrganos extends ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre, tipo, codigo_onapre, rif', 'required'),
-			array('nombre, tipo, codigo_onapre, rif', 'required', 'on' => 'crearente'),
+			array('nombre, tipo, rif', 'required'),
+			array('nombre, tipo, rif', 'required', 'on' => 'crearente'),
 			//array('correo', 'email', 'on' => 'crearente'),
 			//array('correo', 'unique', 'className' => 'Usuarios', 'attributeName' => 'usuario', 'message'=>'Este correo ya se encuentra registrado en nuestro repositorio', 'on' => 'crearente'),
 			//array('correo', 'unique', 'className' => 'Usuarios', 'attributeName' => 'correo', 'message'=>'Este correo ya se encuentra registrado en nuestro repositorio', 'on' => 'crearente'),

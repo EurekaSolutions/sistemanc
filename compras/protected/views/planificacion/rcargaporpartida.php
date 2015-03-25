@@ -1,9 +1,10 @@
 <h4 style="text-align: center;">REPORTE CARGA POR PARTIDAS</h4>
+	
+	<h4 style="text-align: center;"> <?php if ($nombre) echo 'Ente: '.$nombre; ?></h4>
 
+		<h4 style="text-align: center;">ACCIONES CENTRALIZADAS</h4><br>
 
-		<h4 style="text-align: center;">ACCIONES CENTRALIZADAS</h4>
-
-		<h4 style="text-align: center;"> <?php if ($nombre) echo 'Ente: '.$nombre; ?></h4>
+		
 			    	<?php
 
 			    	//echo 'acciones';print_r($acciones);

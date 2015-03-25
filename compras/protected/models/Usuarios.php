@@ -57,7 +57,7 @@ class Usuarios extends ActiveRecord
 			array('actualizado_el, repetir_contrasena, nombre,', 'required', 'on'=>'registro, actualizar'),
 
 			array('usuario, contrasena, correo, creado_el,actualizado_el, rol, ente_organo_id, nombre, cedula, cargo', 'required', 'on'=>'crearente'),
-			array('usuario, correo, rol, ente_organo_id, nombre, cedula, cargo', 'required', 'on'=>'cargamasiva'),
+			array('usuario, correo, rol, ente_organo_id, nombre, cedula', 'required', 'on'=>'cargamasiva'),
 			//array('correo', 'required', 'on'=>'actualizarCorreo'),
 			array('correo, usuario_id', 'required', 'on'=>'actualizarCorreo'),
 
