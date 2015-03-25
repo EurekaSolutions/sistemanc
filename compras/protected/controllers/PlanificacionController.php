@@ -167,6 +167,7 @@ class PlanificacionController extends Controller
 		    	}
 			}elseif($_GET['report']==3)
 			{
+				$todos_log = array();
 				$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 
 				if($usuario->esHijo($_GET['param']))
