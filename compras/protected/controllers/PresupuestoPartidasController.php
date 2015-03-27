@@ -27,7 +27,7 @@ class PresupuestoPartidasController extends Controller
 	{
 		return array(
 		array('allow',  // allow all users to perform 'index' and 'view' actions
-			'actions'=>array('modificarPartida', 'montoDisponible', 'montoDisponibleSustraendo', 'anadirPartida'),
+			'actions'=>array('modificarPartida', 'montoDisponible', 'montoDisponibleSustraendo', 'anadirPartida','buscarpartidasproyecto','buscarpartidasproyecto2'),
 			'users'=>array('@'),
 			'roles'=>array('presupuesto')
 		),
@@ -52,6 +52,55 @@ class PresupuestoPartidasController extends Controller
 		);
 	}
 
+
+	public function actionBuscarpartidasproyecto()
+	{
+		if(isset($_POST['Proyectos']) and !empty($_POST['Proyectos']['proyecto_id']))
+		{
+			$this->buscarPartidasProyectoAccion($_POST['Proyectos']['proyecto_id']);
+		}
+	}
+	public function actionBuscarpartidasproyecto2()
+	{
+		if(isset($_POST['Proyectos']) and  !empty($_POST['Proyectos']['anho']) )
+		{
+			$this->buscarPartidasProyectoAccion($_POST['Proyectos']['anho']);	
+		}
+	}
+	public function buscarPartidasProyectoAccion($id)
+	{
+
+
+			if(strstr($id, 'a'))
+			{//Es un id de accion
+
+				$accionId = PresupuestoPartidaAcciones::model()->accionId($id);
+				
+				$presuPartidas = PresupuestoPartidaAcciones::model()->presuPartidas($accionId);
+
+			}else{//Es un id de proyecto
+
+				$proyectoSel = Proyectos::model()->findByPk($id);
+
+				if(Usuarios::model()->actual()->ente_organo_id != $proyectoSel->ente_organo_id)
+					throw new CHttpException(403, "No se puede procesar la solicitud.");
+					
+				$presuPartidas = $proyectoSel->presuPartidas();
+			}	
+		    
+		    $listPresuPartidas = CHtml::listData($presuPartidas, function($presuPartida) {
+																	return $presuPartida->presupuesto_partida_id;
+																}, function($presuPartida) {
+																	return $presuPartida->partida->etiquetaPartida();
+																});
+		    
+		    foreach($listPresuPartidas as $value => $name)
+		    {
+		        echo CHtml::tag('option',
+		                   array('value'=>$value),CHtml::encode($name),true);
+		    }
+
+	}
  	/**
  	 * Función que calcula el monto disponible de una partida presupuestada.
  	 * 
@@ -61,7 +110,9 @@ class PresupuestoPartidasController extends Controller
 
 			if(isset($_POST['PresupuestoPartidas'])){
 				$this->montoDisponible($_POST['PresupuestoPartidas']['sustraendo_id']);
-			}
+			}else
+				throw new CHtmlException(403,"No se posee información.");
+			
  	}
 
  	public function actionAnadirPartida()
@@ -174,6 +225,7 @@ class PresupuestoPartidasController extends Controller
  	 * @return float $disponible
  	 * */
  	public function montoDisponible($id){
+
 
  			$disponible = 0;
 

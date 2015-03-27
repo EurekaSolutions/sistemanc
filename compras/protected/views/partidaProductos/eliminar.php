@@ -83,7 +83,7 @@ echo $form->select2Group($model, 'partida_id',
 									//'tags' => array('clever', 'is', 'better', 'clevertech'),
 									'placeholder' => 'Seleccione partida especifica',
 									// 'width' => '40%', 
-									'tokenSeparators' => array(',', ' ')
+									'tokenSeparators' => array(',', ' '),
 								)
 							)
 						)
@@ -97,12 +97,14 @@ echo $form->select2Group($model, 'partida_producto_id',
 							'widgetOptions' => array(
 								'asDropDownList' => true,
 								'data' => $listaProductos,
-						        'htmlOptions'=>array('id'=>'partidaProductos','multiple'=>true),
+						        'htmlOptions'=>array('id'=>'partidaProductos','multiple'=>true, 'style'=>'height: 300px;' ),
 								'options' => array(
 									//'tags' => array('clever', 'is', 'better', 'clevertech'),
-									'placeholder' => 'Seleccione producto a eliminar asociación',
+									'placeholder' => 'Seleccione productos a eliminar asociación',
 									// 'width' => '40%', 
-									'tokenSeparators' => array(',', ' ')
+									//'tokenSeparators' => array(',', ' '),
+									//'closeOnSelect ' => false,
+									'multiple'=>true,
 								)
 							)
 						)

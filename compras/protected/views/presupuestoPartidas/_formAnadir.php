@@ -57,7 +57,7 @@
 							'htmlOptions' => array(	/*'name'=>'Proyectos[0][proyecto_id]',*/ 'id'=>'proyecto', 'prompt' => 'Seleccionar proyecto', //'onChange'=>'submit','submit' => array('/planificacion/nacional','#'=>'proyecto')
 												  'ajax' => array(
 														'type'=>'POST', //request type
-														'url'=>CController::createUrl('planificacion/buscarpartidasproyecto'), //url to call.
+														'url'=>CController::createUrl('presupuestoPartidas/buscarpartidasproyecto'), //url to call.
 														//Style: CController::createUrl('currentController/methodToCall')
 														'update'=>'#partidasSus', //selector to update
 														//'data'=>'js:javascript statement' 

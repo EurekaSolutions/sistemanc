@@ -50,11 +50,13 @@ class PresupuestoPartidas extends ActiveRecord
 			array('tipo', 'length', 'max'=>1),
 			array('fecha_hasta, presupuesto_id, sustraendo_id, monto_transferir, todo, abonar_id', 'safe'),
 			array('sustraendo_id', 'validarSustraendo', 'on'=>'transferir'),
-			array('abonar_id', 'validarAbono', 'on'=>'anadir'),
-			//array('abonar_id', 'required', 'on'=>'anadir'),
+			array('presupuesto_partida_id, sustraendo_id', 'validarPertenencia', 'on'=>'transferir'),
 			array('monto_transferir','numerical', 'on'=>'transferir'),
 			array('presupuesto_partida_id', 'validarSumando', 'on'=>'transferir'),
 			array('monto_transferir', 'validarTansferirMonto', 'on'=>'transferir'),
+			array('abonar_id', 'validarAbono', 'on'=>'anadir'),
+			//array('abonar_id', 'required', 'on'=>'anadir'),
+			array('abonar_id', 'validarPertenencia', 'on'=>'anadir'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('presupuesto_partida_id, partida_id, monto_presupuestado, fecha_desde, fecha_hasta, tipo, anho, ente_organo_id', 'safe', 'on'=>'search'),
@@ -110,11 +112,6 @@ class PresupuestoPartidas extends ActiveRecord
 			
  		return $this->monto_presupuestado - $this->montoCargadoPartida();
  	}
- 	/**
- 	 * Función que calcula el monto disponible de una partida presupuestada.
- 	 * 
- 	 * @return float $disponible
- 	 * */
 
  	public function validarAbono($attribute,$params)
  	{
@@ -122,6 +119,25 @@ class PresupuestoPartidas extends ActiveRecord
 			$this->addError($attribute, 'Debe seleccionar una partida para abonar.');
  	}
 
+ 	/**
+ 	 * Función que valida la pertenencia del ide de presupuesto partida  el usuario logueado actualmente.
+ 	 * 
+ 	 * @return float $disponible
+ 	 * */
+ 	public function validarPertenencia($attribute,$params)
+	{
+		$va = $this->findAllByAttributes(array('presupuesto_partida_id'=>$this->$attribute,
+			'ente_organo_id'=>Usuarios::model()->actual()->ente_organo_id));
+		if(empty($va) )
+			$this->addError($attribute, 'No se pudo procesar la solicitud.');
+
+ 	}
+
+ 	/**
+ 	 * Función que calcula el monto disponible de una partida presupuestada.
+ 	 * 
+ 	 * @return float $disponible
+ 	 * */
  	public function validarSustraendo($attribute,$params)
 	{
 		if($this->$attribute == '' || $this->$attribute == null )
@@ -129,8 +145,9 @@ class PresupuestoPartidas extends ActiveRecord
 		else
 		if($this->$attribute == $this->presupuesto_partida_id)
 			$this->addError($attribute, 'Las partidas seleccionadas son la misma.');
-	     
+
  	}
+
  	/**
  	 * Función que calcula el monto disponible de una partida presupuestada.
  	 * 
@@ -140,6 +157,7 @@ class PresupuestoPartidas extends ActiveRecord
 	{
 		if($this->$attribute == '' || $this->$attribute == null )
 					$this->addError($attribute, 'Debe seleccionar una partida a transferir.');
+
 	}
  	/**
  	 * Función que calcula el monto disponible de una partida presupuestada.

@@ -91,7 +91,23 @@ class Proyectos extends ActiveRecord
 	            'application.behaviors.ActiveRecordLogableBehavior',
 	    );
 	}
-	
+
+	/**
+	*Busca la lista de partidas del proyecto
+	*@return Partidas[] $partidas
+	**/
+	public function presuPartidas(){
+			
+			$presuPartidas =array();
+			foreach ($this->presupuestoPartidas as $key => $prePar) { //echo '|'.($partida->partida_id);
+				// Esto debido a que pueden existir partidas deshabilitadas, las cuales el modelo retorna null.
+				if(!empty($prePar->partida))
+					$presuPartidas[$key] = $prePar;
+			}
+
+			return $presuPartidas;
+	}
+
 	public function partidaAsignada($attribute,$params)
 	{
 		

@@ -1727,9 +1727,11 @@ class PlanificacionController extends Controller
 			
 			$partidas =array();
 			foreach (Proyectos::model()->findByPk($id)->presupuestoPartidas as $key => $prePar) { //echo '|'.($partida->partida_id);
+				// Esto debido a que pueden existir partidas deshabilitadas, las cuales el modelo retorna null.
 				if(!empty($prePar->partida))
 					$partidas[$key] = $prePar->partida;
 			}
+
 			return $partidas;
 	}
 
@@ -1777,10 +1779,9 @@ class PlanificacionController extends Controller
 
 
 
-		if(isset($_POST['Proyectos']) and (!empty($_POST['Proyectos']['proyecto_id']) ||
-			 !empty($_POST['Proyectos']['anho']) /*|| !empty($_POST['Proyectos']['1']['proyecto_id'])*/))
+		if(isset($_POST['Proyectos']) and !empty($_POST['Proyectos']['proyecto_id']) /*|| !empty($_POST['Proyectos']['1']['proyecto_id'])*/))
 		{
-			$id = isset($_POST['Proyectos']['proyecto_id'])?$_POST['Proyectos']['proyecto_id']:$_POST['Proyectos']['anho'];
+			$id = $_POST['Proyectos']['proyecto_id'];
 			//print_r($id);
 	/*		foreach ($_POST['Proyectos'] as $key => $value) {
 				?$_POST['Proyectos']['proyecto_id']:$_POST['Proyectos']['0']['proyecto_id']

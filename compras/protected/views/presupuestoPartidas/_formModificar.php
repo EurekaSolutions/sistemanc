@@ -52,7 +52,7 @@
 							'htmlOptions' => array(	/*'name'=>'Proyectos[0][proyecto_id]',*/ 'id'=>'proyecto', 'prompt' => 'Seleccionar proyecto', //'onChange'=>'submit','submit' => array('/planificacion/nacional','#'=>'proyecto')
 												  'ajax' => array(
 														'type'=>'POST', //request type
-														'url'=>CController::createUrl('planificacion/buscarpartidasproyecto'), //url to call.
+														'url'=>CController::createUrl('presupuestoPartidas/buscarpartidasproyecto'), //url to call.
 														//Style: CController::createUrl('currentController/methodToCall')
 														'update'=>'#partidasSus', //selector to update
 														//'data'=>'js:javascript statement' 
@@ -94,7 +94,7 @@
 																		'success' => 'function($data){ 
 																			//alert($data);
 																				$("#disponible").html($data);
-																				//$("#partidaSum").html($data);
+
 																		}',
 																		//'data'=>'js:javascript statement' 
 																		//leave out the data key to pass all form values through
@@ -138,7 +138,7 @@
 							'htmlOptions' => array(	/*'name'=>'Proyectos[1][proyecto_id]',*/'id'=>'proyecto2', 'prompt' => 'Seleccionar proyecto', //'onChange'=>'submit','submit' => array('/planificacion/nacional','#'=>'proyecto')
 												  'ajax' => array(
 														'type'=>'POST', //request type
-														'url'=>CController::createUrl('planificacion/buscarpartidasproyecto'), //url to call.
+														'url'=>CController::createUrl('presupuestoPartidas/buscarpartidasproyecto2'), //url to call.
 														//Style: CController::createUrl('currentController/methodToCall')
 														'update'=>'#partidaSum', //selector to update
 														//'data'=>'js:javascript statement' 
