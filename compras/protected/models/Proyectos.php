@@ -49,6 +49,7 @@ class Proyectos extends ActiveRecord
 			//array('monto', 'numerical', 'integerOnly'=>false, 'min'=>1),
 			array('monto,fuente','safe'),
 			array('codigo', 'length', 'max'=>20),
+			array('proyecto_id', 'required', 'on' => 'anadir'),
 			array('nombre', 'proyectounico', 'on'=>'create'),
 			array('especifica', 'partidaAsignada', 'on'=>'creaproyecto'),
 			array('subespecifica', 'partidaAsignada', 'on'=>'creaproyectose'),

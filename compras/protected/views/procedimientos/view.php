@@ -5,25 +5,25 @@ $this->breadcrumbs=array(
 	);
 
 $this->menu=array(
-	array('label'=>'List Procedimientos','url'=>array('index')),
-	array('label'=>'Create Procedimientos','url'=>array('create')),
-	array('label'=>'Update Procedimientos','url'=>array('update','id'=>$model->id)),
-	array('label'=>'Delete Procedimientos','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Procedimientos','url'=>array('admin')),
+	array('label'=>'Listar Procedimientos','url'=>array('index')),
+	array('label'=>'Crear Procedimientos','url'=>array('create')),
+	array('label'=>'Actualizar Procedimientos','url'=>array('update','id'=>$model->id)),
+	array('label'=>'Eliminar Procedimientos','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+	array('label'=>'Administrar Procedimientos','url'=>array('admin')),
 	);
 ?>
 
-<h1>View Procedimientos #<?php echo $model->id; ?></h1>
+<h1>Ver Procedimiento<?php //echo $model->id; ?></h1>
 
 <?php 
 	$this->widget('booster.widgets.TbDetailView',array(
 	'data'=>$model,
 	'attributes'=>array(
-		'id',
+		//'id',
 		'num_contrato',
 		'anho',
-		'fecha',
+		//'fecha',
 		'tipo',
-		'ente_organo_id',
+		//'ente_organo_id',
 ),
 )); ?>

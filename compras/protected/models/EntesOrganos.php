@@ -46,7 +46,7 @@ class EntesOrganos extends ActiveRecord
 			array('rif', 'length', 'max'=>12),
 			array('rif', 'match', 'pattern' => '/^(j|J|v|V|e|E|G|g)([0-9]{8,8})([0-9]{1})$/', 'allowEmpty' => false, 'message'=>'El formato del rif no es válido. Formatos aceptados: G123456789 y J123456789'),
 			//array('codigo_onapre', 'unique', 'attributeName'=> 'codigo_onapre', 'caseSensitive' => 'false', 'className' => 'EntesOrganos'),
-			array('rif', 'unique', 'attributeName'=> 'rif', 'caseSensitive' => 'false', 'className' => 'EntesOrganos'),
+			//array('rif', 'unique', 'attributeName'=> 'rif', 'caseSensitive' => 'false', 'className' => 'EntesOrganos'),
 			array('codigo_onapre', 'length', 'max'=>20),
 			array('nombre', 'length', 'max'=>255),
 			array('tipo', 'length', 'max'=>50),

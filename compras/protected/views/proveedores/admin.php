@@ -46,10 +46,10 @@ return false;
 		//'id',
 		'rif',
 		'razon_social',
-		'fecha',
-		'ente_organo_id',
+		//'fecha',
+		//'ente_organo_id',
 array(
-'class'=>'booster.widgets.TbButtonColumn',
+'class'=>'booster.widgets.TbButtonColumn','template'=>'{update}{delete}'
 ),
 ),
 )); ?>

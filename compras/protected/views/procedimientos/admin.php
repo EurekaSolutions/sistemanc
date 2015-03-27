@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
-	'Procedimientoses'=>array('index'),
-	'Manage',
+	'Procedimientos'=>array('index'),
+	'Administrar',
 );
 
 $this->menu=array(
@@ -46,11 +46,11 @@ return false;
 		//'id',
 		'num_contrato',
 		'anho',
-		'fecha',
+		//'fecha',
 		'tipo',
-		'ente_organo_id',
+		//'ente_organo_id',
 array(
-'class'=>'booster.widgets.TbButtonColumn',
+'class'=>'booster.widgets.TbButtonColumn','template'=>'{update}{delete}'
 ),
 ),
 )); ?>

@@ -70,7 +70,7 @@ class Facturas extends ActiveRecord
 		return array(
 			'id' => 'ID',
 			'num_factura' => 'Número de Factura',
-			'anho' => 'Anho',
+			'anho' => 'Año',
 			'proveedor_id' => 'Proveedor',
 			'procedimiento_id' => 'Procedimiento',
 			'fecha' => 'Fecha',
