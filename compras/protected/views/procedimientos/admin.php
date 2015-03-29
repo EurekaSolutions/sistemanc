@@ -42,6 +42,7 @@ return false;
 'id'=>'procedimientos-grid',
 'dataProvider'=>$model->search(),
 'filter'=>$model,
+'summaryText'=>'',
 'columns'=>array(
 		//'id',
 		'num_contrato',

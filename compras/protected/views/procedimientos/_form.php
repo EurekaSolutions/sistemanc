@@ -20,7 +20,7 @@
 					'class' => 'col-sm-5',
 				),
 				'widgetOptions' => array(
-					'data' => array('OrdenDeServicio'=>'Orden de Servicio', 'OrdenCompra'=>'Orden de Compra', 'Contrato'=>'Contrato'),
+					'data' => array('OrdenServicio'=>'Orden de Servicio', 'OrdenCompra'=>'Orden de Compra', 'Contrato'=>'Contrato'),
 					'htmlOptions' =>  array('empty'=>'Seleccione el tipo'),
 				)
 			)

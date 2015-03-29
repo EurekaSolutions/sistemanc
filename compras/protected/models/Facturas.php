@@ -85,7 +85,7 @@ class Facturas extends ActiveRecord
 	public function beforeSave() {
 	    if ($this->isNewRecord)
 		{	       
-			$this->anho = 2015;
+			$this->anho = Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];
 	    	$this->ente_organo_id = Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->ente_organo_id;
 	    }
 	    return parent::beforeSave();

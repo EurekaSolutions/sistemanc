@@ -1773,13 +1773,12 @@ class PlanificacionController extends Controller
 	{
 		$name = "Seleccionar partida";
 
-		if(!isset($_POST['PresupuestoPartidas']))
 		 echo CHtml::tag('option',
 		                   array('value'=>""),CHtml::encode($name),true);
 
 
 
-		if(isset($_POST['Proyectos']) and !empty($_POST['Proyectos']['proyecto_id']) /*|| !empty($_POST['Proyectos']['1']['proyecto_id'])*/))
+		if(isset($_POST['Proyectos']) and !empty($_POST['Proyectos']['proyecto_id']))
 		{
 			$id = $_POST['Proyectos']['proyecto_id'];
 			//print_r($id);

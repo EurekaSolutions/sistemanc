@@ -42,6 +42,7 @@ return false;
 'id'=>'proveedores-grid',
 'dataProvider'=>$model->search(),
 'filter'=>$model,
+'summaryText'=>'',
 'columns'=>array(
 		//'id',
 		'rif',
