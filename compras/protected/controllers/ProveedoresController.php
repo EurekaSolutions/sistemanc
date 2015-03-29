@@ -27,7 +27,7 @@ class ProveedoresController extends Controller
 	{
 		return array(
 		array('allow',  // allow all users to perform 'index' and 'view' actions
-			'actions'=>array('index','view'),
+			'actions'=>array('index','view', 'subir'),
 			'users'=>array('*'),
 			'roles'=>array('admin'),
 		),
@@ -108,6 +108,28 @@ class ProveedoresController extends Controller
 		$this->render('update',array(
 		'model'=>$model,
 		));
+	}
+
+	public function actionSubir()
+	{
+		if (($gestor = fopen(Yii::app()->basePath.'/../assets/rif_rnc.csv', "r")) !== FALSE)
+				{
+				    while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE)
+				    {
+				       	strtoupper(utf8_encode(trim($datos[0])));
+				       	strtoupper(utf8_encode(trim($datos[1]))); 
+				       	strtoupper(utf8_encode(trim($datos[2])));
+
+				       	$proveedores = new Proveedores();
+				       	$proveedores->edocontratista_id = trim($datos[0]);
+				       	$proveedores->rif = strtoupper(trim($datos[1])); 
+				       	$proveedores->razon_social = strtoupper(trim($datos[2])); 
+				       	//$proveedores->ente_organo_id = 15694;
+				       	$proveedores->save();
+
+					}        
+				  fclose($gestor);  
+				}
 	}
 
 	/**

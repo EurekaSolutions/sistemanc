@@ -33,8 +33,9 @@
 
 <div class="form-group">
 	<?php 	
-		$list = CHtml::listData(Proveedores::model()->findAll(), 'id', 'razon_social');
+		//$list = CHtml::listData(Proveedores::model()->findAll(), 'id', 'razon_social');
 
+		$list = array('hola' => 'chao');
 		echo CHtml::label('Seleccionar Proveedor', 'Proveedor');
 		echo "<br>";
 		$this->widget(
