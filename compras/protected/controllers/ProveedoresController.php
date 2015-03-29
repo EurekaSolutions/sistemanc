@@ -117,11 +117,16 @@ class ProveedoresController extends Controller
 				    while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE)
 				    {
 				       	strtoupper(utf8_encode(trim($datos[0])));
-				       	strtoupper(utf8_encode(trim($datos[1]))); 
+				       	strtoupper(utf8_encode(trim($datos[1]))); 				       		
+				       	$i=3;
+				       	while ( isset($datos[$i])) {
+								$datos[2].= $datos[$i];
+				       		$i++;
+				       	}
 				       	strtoupper(utf8_encode(trim($datos[2])));
 
 				       	$proveedores = new Proveedores();
-				       	$proveedores->edocontratista_id = trim($datos[0]);
+				       	$proveedores->estatus_contratista_id = trim($datos[0]);
 				       	$proveedores->rif = strtoupper(trim($datos[1])); 
 				       	$proveedores->razon_social = strtoupper(trim($datos[2])); 
 				       	//$proveedores->ente_organo_id = 15694;
