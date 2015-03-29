@@ -23,7 +23,7 @@ return false;
 ");
 ?>
 
-<h1>Administrar Proveedores</h1>
+<h1>Mis proveedores Proveedores</h1>
 
 <!-- <p>
 	You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>
@@ -50,7 +50,7 @@ return false;
 		//'fecha',
 		//'ente_organo_id',
 array(
-'class'=>'booster.widgets.TbButtonColumn','template'=>'{update}{delete}'
+'class'=>'booster.widgets.TbButtonColumn','template'=>''
 ),
 ),
 )); ?>
