@@ -37,7 +37,7 @@
 		$list = CHtml::listData(Procedimientos::model()->findAll(), 'id', 'num_contrato');
 	
 
-		echo CHtml::label('Seleccionar Procedimeinto', 'Procedimeinto');	
+		echo CHtml::label('Seleccionar procedimiento', 'Procedimeinto');
 		echo "<br>";
 		$this->widget(
 		    'booster.widgets.TbSelect2',
@@ -72,7 +72,7 @@
 		);*/ ?>
 
 	</div>
-	
+
 <div class="form-group">
 	<?php 	
 		//$list = CHtml::listData(Proveedores::model()->findAll(), 'id', 'razon_social');
@@ -121,7 +121,8 @@
 				),
 		)));*/
 
-
+	echo CHtml::label('Seleccionar proveedor', 'Proveedor');
+	echo "<br>";
 	echo CHtml::textField('buscarProveedor', '', array('class' => 'span5'));
 
 	$this->widget('ext.ESelect2.ESelect2', array(
@@ -129,7 +130,7 @@
 	            'options'  => array(
 	                    'allowClear'=>true,
 	                    'placeholder'=>'Buscar proveedor',
-	                    'minimumInputLength' => 10,
+	                    'minimumInputLength' => 7,
 	                    'ajax' => array(
 	                            'url' => Yii::app()->createUrl('proveedores/ajaxObtenerProveedores'),
 	                            'dataType' => 'json',
