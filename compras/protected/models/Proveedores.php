@@ -58,6 +58,13 @@ class Proveedores extends ActiveRecord
 	}
 
 	/**
+	 * @return html nombre de partida compuesto con el nombre
+	 */
+	public function etiquetaProveedor(){
+		return CHtml::encode($this->rif.' - '. $this->razon_social);
+	}
+
+	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
 	public function attributeLabels()
@@ -68,6 +75,7 @@ class Proveedores extends ActiveRecord
 			'razon_social' => 'Razon Social',
 			'fecha' => 'Fecha',
 			'ente_organo_id' => 'Ente Organo',
+			'estatus_contratista_id' => 'Estatus Contratista'
 		);
 	}
 
@@ -77,6 +85,7 @@ class Proveedores extends ActiveRecord
 	public function beforeSave() {
 	    if ($this->isNewRecord)
 		{	       
+			$this->anho = Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];
 	    	$this->ente_organo_id = Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->ente_organo_id;
 	    }
 	    return parent::beforeSave();
@@ -105,6 +114,7 @@ class Proveedores extends ActiveRecord
 		$criteria->compare('razon_social',$this->razon_social,true);
 		$criteria->compare('fecha',$this->fecha,true);
 		$criteria->compare('ente_organo_id',$this->ente_organo_id);
+		$criteria->compare('estatus_contratista_id',$this->estatus_contratista_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

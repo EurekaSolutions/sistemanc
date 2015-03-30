@@ -55,7 +55,7 @@ class Facturas extends ActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'facturasProductoses' => array(self::HAS_MANY, 'FacturasProductos', 'factura_id'),
+			'productos' => array(self::HAS_MANY, 'FacturasProductos', 'factura_id'),
 			'procedimiento' => array(self::BELONGS_TO, 'Procedimientos', 'procedimiento_id'),
 			'proveedor' => array(self::BELONGS_TO, 'Proveedores', 'proveedor_id'),
 			'enteOrgano' => array(self::BELONGS_TO, 'EntesOrganos', 'ente_organo_id'),
@@ -90,6 +90,18 @@ class Facturas extends ActiveRecord
 	    }
 	    return parent::beforeSave();
 	}
+
+ 	/**
+ 	 * Retorna true si existe una partida registrada indicada para el organo con sesión iniciada actualmente.
+ 	 * 
+ 	 * @return bool $existe
+ 	 * */
+ 	public function partidaExiste($id){
+		
+		$presuPartida = $this->findByAttributes(array('ente_organo_id'=>Usuarios::model()->actual()->ente_organo_id, 'partida_id'=>$id));
+
+ 		return !isset($presuPartida)?true:false;
+ 	}
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.

@@ -27,17 +27,17 @@ class ProveedoresController extends Controller
 	{
 		return array(
 		array('allow',  // allow all users to perform 'index' and 'view' actions
-			'actions'=>array('index','view', 'subir', 'anadir'),
+			'actions'=>array('index','view', 'subir', 'anadir','ajaxObtenerProveedores'),
 			'users'=>array('*'),
-			'roles'=>array('admin'),
+			'roles'=>array('ente'),
 		),
 		array('allow', // allow authenticated user to perform 'create' and 'update' actions
-			'actions'=>array('create','update'),
+			'actions'=>array('create', 'admin', 'update'),
 			'users'=>array('@'),
-			'roles'=>array('admin'),
+			'roles'=>array('ente'),
 		),
 		array('allow', // allow admin user to perform 'admin' and 'delete' actions
-			'actions'=>array('admin','delete'),
+			'actions'=>array('delete', 'subir'),
 			//'users'=>array('admin'),
 			//'roles'=>array('ente'),
 			'roles'=>array('admin'),
@@ -47,6 +47,22 @@ class ProveedoresController extends Controller
 		),
 		);
 	}
+	
+
+	public function actionAjaxObtenerProveedores() {
+		if (isset($_GET['q'])) {
+			$proveedores = Proveedores::model()->findAll(array('order'=>'rif', 'condition'=>'rif LIKE :rif', 'params'=>array(':rif'=>strtoupper($_GET['q'].'%'))));
+			$data = array();
+			foreach ($proveedores as $value) {
+				$data[] = array(
+					'id' => $value->id,
+					'text' => $value->etiquetaProveedor(),
+				);
+			}
+				echo CJSON::encode($data);
+		}
+		Yii::app()->end();
+	} 
 
 	/**
 	* Displays a particular model.

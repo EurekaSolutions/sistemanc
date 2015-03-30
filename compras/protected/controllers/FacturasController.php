@@ -29,17 +29,17 @@ class FacturasController extends Controller
 		array('allow',  // allow all users to perform 'index' and 'view' actions
 			'actions'=>array('index','view'),
 			'users'=>array('*'),
-			'roles'=>array('admin'),
+			'roles'=>array('ente'),
 		),
 		array('allow', // allow authenticated user to perform 'create' and 'update' actions
 			'actions'=>array('create','update'),
 			'users'=>array('@'),
-			'roles'=>array('admin'),
+			'roles'=>array('ente'),
 		),
 		array('allow', // allow admin user to perform 'admin' and 'delete' actions
 			'actions'=>array('admin','delete'),
 			//'users'=>array('admin'),
-			'roles'=>array('admin'),
+			'roles'=>array('ente'),
 		),
 		array('deny',  // deny all users
 			'users'=>array('*'),
@@ -47,6 +47,8 @@ class FacturasController extends Controller
 		);
 	}
 
+
+	
 	/**
 	* Displays a particular model.
 	* @param integer $id the ID of the model to be displayed

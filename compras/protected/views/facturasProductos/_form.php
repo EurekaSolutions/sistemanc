@@ -18,7 +18,7 @@
 
 	<div class="form-group">
 	<?php 	
-		$list = CHtml::listData(Facturas::model()->findAll(), 'id', 'num_factura');
+		$list = CHtml::listData(Facturas::model()->findAllByAttributes(array('ente_organo_id'=>Usuarios::model()->actual()->ente_organo_id)), 'id', 'num_factura');
 
 		echo CHtml::label('Seleccionar factura', 'Factura');
 		echo "<br>";
@@ -56,8 +56,8 @@
 	<div class="form-group">
 	<?php 	
 	
-		$list = CHtml::listData(PresupuestoPartidas::model()->findAllByAttributes(array('ente_organo_id'=>Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->ente_organo_id)), 
-			'partida_id', function($presuPartida){ /*return $presuPartida->partida->etiquetaPartida();*/});
+		$list = CHtml::listData(PresupuestoPartidas::model()->findAllByAttributes(array('ente_organo_id'=>Usuarios::model()->actual()->ente_organo_id)), 
+			'presupuesto_partida_id', function($presuPartida){ return $presuPartida->partida->etiquetaPartida();});
 			
 		echo CHtml::label('Seleccionar partida', 'partida');
 		echo "<br>";

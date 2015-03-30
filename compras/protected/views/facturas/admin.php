@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
-	'Facturases'=>array('index'),
-	'Manage',
+	'Facturas'=>array('index'),
+	'Administrar',
 );
 
 $this->menu=array(
@@ -46,8 +46,8 @@ return false;
 		//'id',
 		'num_factura',
 		'anho',
-		'proveedor_id',
-		'procedimiento_id',
+		array('name'=>'proveedor_id', 'value'=>'$data->proveedor->rif." - ".$data->proveedor->razon_social'),
+		array('name'=>'proveedor_id', 'value'=>'$data->procedimiento->tipo." Número: ".$data->procedimiento->num_contrato'),
 		'fecha',
 		/*
 		'fecha_factura',

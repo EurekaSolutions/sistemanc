@@ -30,19 +30,19 @@ class ProcedimientosController extends Controller
 			'actions'=>array('index','view'),
 			//'users'=>array('*'),
 			//'roles'=>array('ente'),
-			'roles'=>array('admin'),
+			'roles'=>array('ente'),
 		),
 		array('allow', // allow authenticated user to perform 'create' and 'update' actions
 			'actions'=>array('create','update'),
 			'users'=>array('@'),
 			//'roles'=>array('ente'),
-			'roles'=>array('admin'),
+			'roles'=>array('ente'),
 		),
 		array('allow', // allow admin user to perform 'admin' and 'delete' actions
 			'actions'=>array('admin','delete'),
 			//'users'=>array('admin'),
 			//'roles'=>array('ente'),
-			'roles'=>array('admin'),
+			'roles'=>array('ente'),
 		),
 		array('deny',  // deny all users
 			'users'=>array('*'),

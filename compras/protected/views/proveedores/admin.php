@@ -47,6 +47,7 @@ return false;
 		//'id',
 		'rif',
 		'razon_social',
+		'estatus_contratista_id',
 		//'fecha',
 		//'ente_organo_id',
 array(

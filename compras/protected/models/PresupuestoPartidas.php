@@ -104,6 +104,35 @@ class PresupuestoPartidas extends ActiveRecord
  	}
 
  	/**
+ 	 * Retorna true si existe una partida registrada indicada para el organo con sesión iniciada actualmente.
+ 	 * 
+ 	 * @return bool $existe
+ 	 * */
+ 	public function partidaExiste($id){
+		
+		$presuPartida = $this->findByAttributes(array('ente_organo_id'=>Usuarios::model()->actual()->ente_organo_id, 'partida_id'=>$id));
+
+ 		return !isset($presuPartida)?true:false;
+ 	}
+
+ 	/**
+ 	 * Cálcula el total del IVA registrado en partidas para el ente actual con sesión iniciada.
+ 	 * 
+ 	 * @return bool $existe
+ 	 * */
+ 	public function calcularIvaRegistrado(){
+		
+		$partidaIva = Partidas::model()->findByAttributes(array('p1'=>403,'p2'=>18,'p3'=>01));
+		
+		$totalIvaRegistrado = 0;
+		foreach ($this->findAllByAttributes(array('ente_organo_id'=>Usuarios::model()->actual()->ente_organo_id, 'partida_id'=>$partidaIva->partida_id)) as $key => $value) {
+				$totalIvaRegistrado+=$value->monto_presupuestado;
+		}
+
+ 		return $totalIvaRegistrado;
+ 	}
+
+ 	/**
  	 * Función que calcula el monto disponible de una partida presupuestada.
  	 * 
  	 * @return float $disponible
