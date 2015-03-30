@@ -39,12 +39,12 @@ class ESelect2 extends CInputWidget
     public function init()
     {
         $this->defaultOptions = array(
-            'formatNoMatches' => 'js:function(){return "' . Yii::t('ESelect2.select2', 'No matches found') . '";}',
-            'formatInputTooShort' => 'js:function(input,min){return "' . Yii::t('ESelect2.select2', 'Please enter {chars} more characters', array('{chars}' => '"+(min-input.length)+"')) . '";}',
+            'formatNoMatches' => 'js:function(){return "' . Yii::t('ESelect2.select2', 'No se han encontrado resultados') . '";}',
+            'formatInputTooShort' => 'js:function(input,min){return "' . Yii::t('ESelect2.select2', 'Por favor, tipé {chars} caracteres más', array('{chars}' => '"+(min-input.length)+"')) . '";}',
 			'formatInputTooLong' => 'js:function(input,max){return "' . Yii::t('ESelect2.select2', 'Please enter {chars} less characters', array('{chars}' => '"+(input.length-max)+"')) . '";}',
-            'formatSelectionTooBig' => 'js:function(limit){return "' . Yii::t('ESelect2.select2', 'You can only select {count} items', array('{count}' => '"+limit+"')) . '";}',
-            'formatLoadMore' => 'js:function(pageNumber){return "' . Yii::t('ESelect2.select2', 'Loading more results...') . '";}',
-            'formatSearching' => 'js:function(){return "' . Yii::t('ESelect2.select2', 'Searching...') . '";}',
+            'formatSelectionTooBig' => 'js:function(limit){return "' . Yii::t('ESelect2.select2', 'Solo puede seleccionar {count} elementos', array('{count}' => '"+limit+"')) . '";}',
+            'formatLoadMore' => 'js:function(pageNumber){return "' . Yii::t('ESelect2.select2', 'Cargando más resultados...') . '";}',
+            'formatSearching' => 'js:function(){return "' . Yii::t('ESelect2.select2', 'Buscando...') . '";}',
         );
     }
 
@@ -86,7 +86,7 @@ class ESelect2 extends CInputWidget
 
         $bu = Yii::app()->assetManager->publish(dirname(__FILE__) . '/assets/');
         $cs = Yii::app()->clientScript;
-        $cs->registerCssFile($bu . '/select2.css');
+        //$cs->registerCssFile($bu . '/select2.css');
 
         if (YII_DEBUG)
             $cs->registerScriptFile($bu . '/select2.js');

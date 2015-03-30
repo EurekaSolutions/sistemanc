@@ -209,8 +209,8 @@ class ProveedoresController extends Controller
 	{
 		$model=new Proveedores('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Proveedores']))
-			$model->attributes=$_GET['Proveedores'];
+		/*if(isset($_GET['Proveedores']))
+			$model->attributes=$_GET['Proveedores'];*/
 
 		$this->render('admin',array(
 		'model'=>$model,
