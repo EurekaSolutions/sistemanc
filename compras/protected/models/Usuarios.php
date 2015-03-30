@@ -143,9 +143,18 @@ class Usuarios extends ActiveRecord
 	{
 
 		foreach ($this->enteOrgano->hijos as $key => $value) {
-			if($value->enteOrgano->usuarioPrincipal->usuario_id == $id)
-				return true;
+
+				$usuario_id = null;
+				if(is_a($value->enteOrgano->usuarioPrincipal, 'Usuarios'))
+					$usuario_id = $value->enteOrgano->usuarioPrincipal->usuario_id;
+				else
+					if($key == 'usuario_id')
+						$usuario_id = $value;
+				if ($usuario_id == $id)
+			 		return true;
+
 		}
+		
 
 		return false;
 	}
