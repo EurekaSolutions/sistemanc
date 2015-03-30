@@ -27,7 +27,7 @@ class ProveedoresController extends Controller
 	{
 		return array(
 		array('allow',  // allow all users to perform 'index' and 'view' actions
-			'actions'=>array('index','view', 'subir'),
+			'actions'=>array('index','view', 'subir', 'anadir'),
 			'users'=>array('*'),
 			'roles'=>array('admin'),
 		),
@@ -78,12 +78,16 @@ class ProveedoresController extends Controller
 			$model->ente_organo_id = $usuario->ente_organo_id;
 
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			{
+				//unset($model);
+				//$model=new Proveedores;
+				//echo "2" ;//$this->render('create',array('model'=>$model));
+			}
+				//$this->redirect(array('view','id'=>$model->id));
 		}
 
-		$this->render('create',array(
-		'model'=>$model,
-		));
+		Yii::app()->clientScript->scriptMap['jquery.js'] = false;
+        $this->renderPartial('_form',array('model'=>$model,),false,true);
 	}
 
 	/**
@@ -112,7 +116,7 @@ class ProveedoresController extends Controller
 
 	public function actionSubir()
 	{
-		if (($gestor = fopen(Yii::app()->basePath.'/../assets/rif_rnc.csv', "r")) !== FALSE)
+		/*if (($gestor = fopen(Yii::app()->basePath.'/../assets/rif_rnc.csv', "r")) !== FALSE)
 				{
 				    while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE)
 				    {
@@ -123,7 +127,7 @@ class ProveedoresController extends Controller
 								$datos[2].= $datos[$i];
 				       		$i++;
 				       	}
-				       	strtoupper(utf8_encode(trim($datos[2])));
+				       	//strtoupper(utf8_encode(trim($datos[2])));
 
 				       	$proveedores = new Proveedores();
 				       	$proveedores->estatus_contratista_id = trim($datos[0]);
@@ -134,8 +138,21 @@ class ProveedoresController extends Controller
 
 					}        
 				  fclose($gestor);  
-				}
+				}*/
+
+				$model = new Proveedores();
+
+		$this->render('subir',array(
+			'model'=>$model,
+		));
 	}
+
+
+	public function actionAnadir() {
+		$model = new Proveedores();
+      	
+      	$this->renderPartial('anadir',array('model'=>$model,),false,true);
+    }
 
 	/**
 	* Deletes a particular model.
