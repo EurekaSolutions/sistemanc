@@ -27,7 +27,7 @@ class ProveedoresController extends Controller
 	{
 		return array(
 		array('allow',  // allow all users to perform 'index' and 'view' actions
-			'actions'=>array('index','view', 'subir', 'anadir','ajaxObtenerProveedores'),
+			'actions'=>array('index','view', 'anadir','ajaxObtenerProveedores'),
 			'users'=>array('*'),
 			'roles'=>array('ente'),
 		),

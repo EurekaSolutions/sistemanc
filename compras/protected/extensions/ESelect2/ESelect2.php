@@ -38,6 +38,13 @@ class ESelect2 extends CInputWidget
 
     public function init()
     {
+        /*$aux = CHtml::ajaxLink('Añadir proveedor',$this->createUrl('proveedores/anadir'),array(
+            'onclick'=>'$("#jobDialog").dialog("open"); return false;',
+            'update'=>'#jobDialog'
+        ),array('id'=>'showJobDialog'));
+
+        $aux .= '<div id="jobDialog"></div>';*/
+
         $this->defaultOptions = array(
             'formatNoMatches' => 'js:function(){return "' . Yii::t('ESelect2.select2', 'No se han encontrado resultados') . '";}',
             'formatInputTooShort' => 'js:function(input,min){return "' . Yii::t('ESelect2.select2', 'Por favor, tipé {chars} caracteres más', array('{chars}' => '"+(min-input.length)+"')) . '";}',

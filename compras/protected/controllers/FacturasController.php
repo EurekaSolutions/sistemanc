@@ -80,7 +80,13 @@ class FacturasController extends Controller
 			$model->anho =  Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho']; //date("Y");
 
 			if($model->save())
+			{
+				$proveedores_eo = new ProveedoresEntesOrganos();
+				$proveedores_eo->proveedor_id = $model->proveedor_id;
+				$proveedores_eo->ente_organo_id = $model->ente_organo_id;
+				$proveedores_eo->save();
 				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$this->render('create',array(

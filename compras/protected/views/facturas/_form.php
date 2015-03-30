@@ -24,7 +24,7 @@
 			'wrapperHtmlOptions' => array(
 				'class' => 'col-sm-5',
 			),
-			'hint' => 'Click inside! This is a super cool date field.',
+			'hint' => 'Coloque la fecha de generación de la factura.',
 			'prepend' => '<i class="glyphicon glyphicon-calendar"></i>'
 		)
 	); ?>
@@ -129,7 +129,7 @@
 	            'selector' => '#buscarProveedor',
 	            'options'  => array(
 	                    'allowClear'=>true,
-	                    'placeholder'=>'Buscar proveedor',
+	                    'placeholder'=>'Buscar proveedor por rif',
 	                    'minimumInputLength' => 7,
 	                    'ajax' => array(
 	                            'url' => Yii::app()->createUrl('proveedores/ajaxObtenerProveedores'),
@@ -177,14 +177,20 @@
 	<?php //echo $form->textFieldGroup($model,'proveedor_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 	</div>
 		
-	
 
 	<?php //echo $form->textFieldGroup($model,'procedimiento_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
 	<?php //echo $form->textFieldGroup($model,'fecha',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
 
+<?php echo CHtml::ajaxLink('Añadir proveedor',$this->createUrl('proveedores/anadir'),array(
+        'onclick'=>'$("#jobDialog").dialog("open"); return false;',
+        'update'=>'#jobDialog'
+        ),array('id'=>'showJobDialog'));?>
 
+<div id="jobDialog"></div>
+
+<br/>
 <div class="form-actions">
 	<?php $this->widget('booster.widgets.TbButton', array(
 			'buttonType'=>'submit',
