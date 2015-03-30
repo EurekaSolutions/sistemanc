@@ -33,14 +33,14 @@ class Proveedores extends ActiveRecord
 		// will receive user inputs.
 		return array(
 			array('rif, razon_social', 'required'),
-			array('ente_organo_id, anho, estatus_contratista_id', 'numerical', 'integerOnly'=>true),
+			array('ente_organo_id, estatus_contratista_id, anho', 'numerical', 'integerOnly'=>true),
 			array('rif', 'length', 'max'=>12),
 			array('rif', 'unique', 'caseSensitive' => 'false',),
 			array('rif', 'match', 'pattern' => '/^(j|J|v|V|e|E|g|G)([0-9]{8,8})([0-9]{1})$/', 'allowEmpty'=>false,'message'=>'El formato del rif no es válido. Debe ser de la siguiente manera: J123456789'),
 			array('razon_social', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, rif, razon_social, fecha, ente_organo_id', 'safe', 'on'=>'search'),
+			array('id, rif, razon_social, fecha, ente_organo_id, anho', 'safe', 'on'=>'search'),
 		);
 	}
 

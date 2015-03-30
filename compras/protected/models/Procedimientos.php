@@ -51,7 +51,7 @@ class Procedimientos extends ActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'enteOrgano' => array(self::BELONGS_TO, 'EntesOrganos', 'ente_organo_id'),
-			'facturases' => array(self::HAS_MANY, 'Facturas', 'procedimiento_id'),
+			'facturas' => array(self::HAS_MANY, 'Facturas', 'procedimiento_id'),
 		);
 	}
 
@@ -80,6 +80,13 @@ class Procedimientos extends ActiveRecord
 	    	$this->ente_organo_id = Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->ente_organo_id;
 	    }
 	    return parent::beforeSave();
+	}
+
+	// Delete cascade / Borrado en cascada
+	public function beforeDelete(){
+	    foreach($this->facturas as $c)
+	        	$c->delete();
+	    return parent::beforeDelete();
 	}
 
 	/**

@@ -123,10 +123,10 @@
 
 	echo CHtml::label('Seleccionar proveedor', 'Proveedor');
 	echo "<br>";
-	echo CHtml::textField('buscarProveedor', '', array('class' => 'span5'));
+	echo CHtml::textField('proveedor_id', '', array('class' => 'span5'));
 
 	$this->widget('ext.ESelect2.ESelect2', array(
-	            'selector' => '#buscarProveedor',
+	            'selector' => '#proveedor_id',
 	            'options'  => array(
 	                    'allowClear'=>true,
 	                    'placeholder'=>'Buscar proveedor por rif',

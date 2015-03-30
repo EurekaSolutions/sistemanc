@@ -91,6 +91,13 @@ class Facturas extends ActiveRecord
 	    return parent::beforeSave();
 	}
 
+	// Delete cascade / Borrado en cascada
+	public function beforeDelete(){
+	    foreach($this->productos as $c)
+	        	$c->delete();
+	    return parent::beforeDelete();
+	}
+	
  	/**
  	 * Retorna true si existe una partida registrada indicada para el organo con sesión iniciada actualmente.
  	 * 

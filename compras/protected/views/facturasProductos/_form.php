@@ -51,11 +51,90 @@
 	?>
 
 	</div>
+	
+	<div class="form-group">
+			<?php 
+			$lista_acciones = CHtml::listData(Usuarios::model()->actual()->enteOrgano->acciones, function($accion) {
+																		return CHtml::encode('a'.$accion->accion->accion_id);
+																	}, function($accion) {
+																		return CHtml::encode($accion->codigo_accion.' - '.$accion->accion->nombre);
+																	});
+			$lista_proyectos = CHtml::listData(Usuarios::model()->actual()->enteOrgano->proyectos, 'proyecto_id', function($proyecto) {
+																		return CHtml::encode($proyecto->codigo.' - '.$proyecto->nombre);
+																	},'Proyectos');
+			 
+			$listas = array(!empty($lista_acciones)?'Acciones Centralizadas':null=>$lista_acciones,
+			 				!empty($lista_proyectos)?'Proyectos':null =>$lista_proyectos);
 
+
+			 echo $form->dropDownListGroup( $proyectoSel,	'proyecto_id',
+					array(
+						'wrapperHtmlOptions' => array(
+							'class' => 'col-sm-2',
+						),
+						'label'=>'Seleccione Acción Centralizada o Proyecto a cargar',
+						'widgetOptions' => array(
+							'data' => $listas,
+
+							//'options'=>array($model->proyecto_id => array('selected'=>true)),
+							'htmlOptions' => array(	/*'name'=>'Proyectos[0][proyecto_id]',*/ 'id'=>'proyecto', 'prompt' => 'Seleccionar proyecto', //'onChange'=>'submit','submit' => array('/planificacion/nacional','#'=>'proyecto')
+												  'ajax' => array(
+														'type'=>'POST', //request type
+														'url'=>CController::createUrl('presupuestoPartidas/buscarpartidasproyecto'), //url to call.
+														//Style: CController::createUrl('currentController/methodToCall')
+														'update'=>'#partidasSus', //selector to update
+														//'data'=>'js:javascript statement' 
+														//leave out the data key to pass all form values through
+												  )),
+						),
+						'hint' => 'Selecciona la Acción o Proyecto.'
+					)
+				); 
+
+
+			$list = array();
+			//
+			//print_r($proyectoSel->findByPk($proyectoSel->proyecto_id)->presupuestoPartidas);
+			//exit();
+			if(isset($proyectoSel->proyecto_id))
+				$list = CHtml::listData($proyectoSel->findByPk($proyectoSel->proyecto_id)->presupuestoPartidas,'presupuesto_partida_id',function($presuPartida){return $presuPartida->partida->etiquetaPartida();});
+
+				echo $form->select2Group(
+									$model,
+									'presupuesto_partida_id',
+									//'value'=>'',
+									array(
+										'wrapperHtmlOptions' => array(
+											'class' => 'col-sm-5',
+										),
+										'widgetOptions' => array(
+											'asDropDownList' => true,
+											'data' => $list,
+									        'htmlOptions'=>array('id'=>'partidasSus',
+														'ajax' => array(
+																'type'=>'POST', //request type
+																'url'=>CController::createUrl('facturasProductos/buscarProductosPresupuestoPartida'), //url to call.
+																//Style: CController::createUrl('currentController/methodToCall')
+																'update'=>'#producto', //selector to update
+																//'data'=>'js:javascript statement' 
+																//leave out the data key to pass all form values through
+														  )),
+											'options' => array(
+												//'tags' => array('clever', 'is', 'better', 'clevertech'),
+												'placeholder' => 'Seleccione partida.',
+												// 'width' => '40%', 
+												'tokenSeparators' => array(',', ' ')
+											)
+										)
+									)
+								);
+			
+		 ?>
+	</div>
 
 	<div class="form-group">
 	<?php 	
-	
+	/*
 		$list = CHtml::listData(PresupuestoPartidas::model()->findAllByAttributes(array('ente_organo_id'=>Usuarios::model()->actual()->ente_organo_id)), 
 			'presupuesto_partida_id', function($presuPartida){ return $presuPartida->partida->etiquetaPartida();});
 			
@@ -88,7 +167,7 @@
 		    )
 		);
 
-		/*			echo $form->select2Group(
+					echo $form->select2Group(
 						$model,
 						'presupuesto_partida_id',
 						array(
@@ -135,11 +214,10 @@
 		    array(
 		        'asDropDownList' => true,
 		        'model' => $model,
-		        
 		        'attribute' => 'producto_id',
-		        'value'=>$model->producto_id,
+		        //'value'=>$model->producto_id,
 		        //'name' => 'factura_id',
-		        'data' => $model->isNewRecord?array():CHtml::listData($model->presupuestoPartida->partida->productos, 'producto_id',function($producto){ return $producto->etiquetaProducto();} ),
+		        'data' => $model->isNewRecord?array():CHtml::listData($model->presupuestoPartida->listaProductos(), 'producto_id',function($producto){ return $producto->etiquetaProducto();} ),
 		        'htmlOptions'=>array('id'=>'producto',	            
 		        			'options' => array($model->producto_id=>array('selected'=>true)) // selected options by default
 								        ),
@@ -211,7 +289,8 @@
 				$this->widget('booster.widgets.TbGridView',array(
 									'id'=>'facturas-productos-grid',
 									'dataProvider'=>$model->buscarProductosFactura($model->factura_id),
-									'filter'=>$model,
+									//'filter'=>new FacturasProductos(),
+									'summaryText'=>'',
 									'columns'=>array(
 											//'id',
 											//'factura_id',

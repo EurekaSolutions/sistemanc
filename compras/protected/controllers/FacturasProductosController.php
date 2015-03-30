@@ -27,7 +27,7 @@ class FacturasProductosController extends Controller
 	{
 		return array(
 		array('allow',  // allow all users to perform 'index' and 'view' actions
-			'actions'=>array('index','view','buscarProductosPartida', 'filaProducto','buscarProductosFactura'),
+			'actions'=>array('index','view','buscarProductosPresupuestoPartida', 'filaProducto','buscarProductosFactura'),
 			'users'=>array('*'),
 			'roles'=>array('ente'),
 		),
@@ -47,6 +47,7 @@ class FacturasProductosController extends Controller
 		);
 	}
 
+
 	/**
 	* Busqueda de la lista de productos según la partida.
 	*/
@@ -58,7 +59,8 @@ class FacturasProductosController extends Controller
 			 $this->widget('booster.widgets.TbGridView',array(
 									'id'=>'facturas-productos-grid',
 									'dataProvider'=>$model->buscarProductosFactura($_POST['FacturasProductos']['factura_id']),
-									'filter'=>$model,
+									//'filter'=>$model,
+									'summaryText'=>'',
 									'columns'=>array(
 											//'id',
 											//'factura_id',
@@ -82,10 +84,30 @@ class FacturasProductosController extends Controller
 	/**
 	* Busqueda de la lista de productos según la partida.
 	*/
-	public function actionBuscarProductosPartida()
+	public function actionBuscarProductosPresupuestoPartida()
 	{
-		if(!empty($_POST['FacturasProductos']['presupuesto_partida_id']))
-			PresupuestoPartidas::model()->findByPk($_POST['FacturasProductos']['presupuesto_partida_id'])->partida->listaProductos();
+		if(!empty($_POST['FacturasProductos']['presupuesto_partida_id'])){
+
+			if(!PresupuestoPartidas::model()->pertenece($_POST['FacturasProductos']['presupuesto_partida_id']))
+				throw new CHtmlException(403,"No se puede procesar la solicitud");
+				
+
+			$listaProductos = PresupuestoPartidas::model()->findByPk($_POST['FacturasProductos']['presupuesto_partida_id'])->listaProductos();
+			
+			$name = "Seleccionar producto";
+
+
+			$productosPresuPartida = array();
+		   
+		    $productosPresuPartida = CHtml::listData($listaProductos, 'producto_id', 
+									function($producto){ return $producto->etiquetaProducto(); });
+		    
+		    foreach($productosPresuPartida as $value => $name)
+		    {
+		        echo CHtml::tag('option',
+		                   array('value'=>$value),CHtml::encode($name),true);
+		    }
+		}
 	}
 
 	/**
@@ -216,27 +238,38 @@ class FacturasProductosController extends Controller
 	{
 		$model=new FacturasProductos;
 
+		$proyectoSel = new Proyectos('search');
+
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['FacturasProductos']))
 		{
 			$model->attributes=$_POST['FacturasProductos'];
+			$model->isNewRecord = false;
+			$proyectoSel->attributes = $_POST['Proyectos'];
+
 			if($model->save()){
+				//print_r($model->getErrors());
+				//exit();	
 				$factura_id = $model->factura_id;
+				$presuPartida = $model->presupuesto_partida_id;
+				$producto_id = $model->producto_id;
 				$model=new FacturasProductos;
 				$model->factura_id = $factura_id;
+				$model->presupuesto_partida_id = $presuPartida ;
+				//$model->producto_id  = $producto_id;
 
 					Yii::app()->user->setFlash('success', "Producto asociado con éxito.");
 			}else{
 					Yii::app()->user->setFlash('error', "Producto no fue asociado a la factura.");
 			}
 				//$this->redirect(array('view','id'=>$model->id));
-				
+						
 		}
 
 		$this->render('create',array(
-		'model'=>$model,
+		'model'=>$model, 'proyectoSel'=>$proyectoSel
 		));
 	}
 

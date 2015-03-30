@@ -82,6 +82,52 @@ class PresupuestoPartidas extends ActiveRecord
 			'fuenteFinanciamientos' => array(self::HAS_MANY, 'FuentePresupuesto', 'presupuesto_partida_id'),
 		);
 	}
+
+ 	/**
+ 	 * Lista de productos cargados nacionales o importados.
+ 	 * @return float $total
+ 	 * */
+ 	public function listaProductos(){
+			// Validando la suma de los productos de la partida
+ 		$listaProductos= array();
+ 		//Nacionales
+			if($this->presupuestoProductos)
+				foreach ($this->presupuestoProductos as $key => $presupuestoProducto) {
+					//if($presupuestoProducto->producto)
+						$listaProductos[] = $presupuestoProducto->producto;	
+				}
+		//Importados
+			if($this->presupuestoImportacion)
+				foreach ($this->presupuestoImportacion as $key => $presupuestoImportacion) {
+					//if($presupuestoImportacion->producto)
+						$listaProductos[] = $presupuestoImportacion->producto;
+				}
+ 		return $listaProductos;
+ 	}
+
+ 	/**
+ 	 * Calcula el total de un producto cargado nacional o importado.
+ 	 * @param integer $id Id del producto
+ 	 * @return float $total
+ 	 * */
+ 	public function montoCargadoPartidaProducto($id){
+			// Validando la suma de los productos de la partida
+ 		$total = 0;
+ 		//Nacionales
+			if($this->presupuestoProductos)
+				foreach ($this->presupuestoProductos as $key => $presupuestoProducto) {
+					if($presupuestoProducto->producto_id == $id)
+						$total += $presupuestoProducto->monto_presupuesto;	
+				}
+		//Importados
+			if($this->presupuestoImportacion)
+				foreach ($this->presupuestoImportacion as $key => $presupuestoImportacion) {
+					if($presupuestoImportacion->producto_id == $id)
+						$total += ($presupuestoImportacion->cantidad*$presupuestoImportacion->monto_presupuesto*$presupuestoImportacion->divisa->tasa->tasa);
+				}
+ 		return $total;
+ 	}
+
  	/**
  	 * Función que suma el total de monto cargado de esta partida
  	 * 
@@ -148,6 +194,13 @@ class PresupuestoPartidas extends ActiveRecord
 			$this->addError($attribute, 'Debe seleccionar una partida para abonar.');
  	}
 
+	public function pertenece($id){
+			if(empty($this->findAllByAttributes(array('presupuesto_partida_id'=>$id,
+						'ente_organo_id'=>Usuarios::model()->actual()->ente_organo_id))))
+				return false;
+			else
+				return true;
+	}
  	/**
  	 * Función que valida la pertenencia del ide de presupuesto partida  el usuario logueado actualmente.
  	 * 
@@ -155,9 +208,8 @@ class PresupuestoPartidas extends ActiveRecord
  	 * */
  	public function validarPertenencia($attribute,$params)
 	{
-		$va = $this->findAllByAttributes(array('presupuesto_partida_id'=>$this->$attribute,
-			'ente_organo_id'=>Usuarios::model()->actual()->ente_organo_id));
-		if(empty($va) )
+
+		if(!$this->pertenece($this->$attribute))
 			$this->addError($attribute, 'No se pudo procesar la solicitud.');
 
  	}

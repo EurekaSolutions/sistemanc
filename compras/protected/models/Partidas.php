@@ -141,10 +141,10 @@ class Partidas extends ActiveRecord
 
 		$productosPartidas = array();
 	   
-	    $productosPartidass = CHtml::listData($this->productos, 'producto_id', 
+	    $productosPartidas = CHtml::listData($this->productos, 'producto_id', 
 								function($producto){ return $producto->etiquetaProducto(); });
 	    
-	    foreach($productosPartidass as $value => $name)
+	    foreach($productosPartidas as $value => $name)
 	    {
 	        echo CHtml::tag('option',
 	                   array('value'=>$value),CHtml::encode($name),true);

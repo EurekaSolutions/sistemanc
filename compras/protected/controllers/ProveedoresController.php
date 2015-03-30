@@ -51,7 +51,7 @@ class ProveedoresController extends Controller
 
 	public function actionAjaxObtenerProveedores() {
 		if (isset($_GET['q'])) {
-			$proveedores = Proveedores::model()->findAll(array('order'=>'rif', 'condition'=>'rif LIKE :rif', 'params'=>array(':rif'=>strtoupper($_GET['q'].'%'))));
+			$proveedores = Proveedores::model()->findAll(array('order'=>'rif', 'condition'=>'rif LIKE :rif', 'params'=>array(':rif'=>strtoupper('%'.$_GET['q'].'%'))));
 			$data = array();
 			foreach ($proveedores as $value) {
 				$data[] = array(

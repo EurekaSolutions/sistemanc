@@ -74,6 +74,7 @@ class FacturasController extends Controller
 		if(isset($_POST['Facturas']))
 		{
 			$model->attributes=$_POST['Facturas'];
+			$model->proveedor_id = $_POST['proveedor_id'];
 			$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 			
 			$model->ente_organo_id = $usuario->ente_organo_id;

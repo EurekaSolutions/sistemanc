@@ -92,6 +92,18 @@ class Proyectos extends ActiveRecord
 	            'application.behaviors.ActiveRecordLogableBehavior',
 	    );
 	}
+	
+	/**
+	*Valida si  el proyecto le pertenece al usuario autenticado actualmente.
+	*@return bool $mepertenece
+	**/
+	public function pertenece(){
+			
+			if($this->ente_organo_id == Usuarios::model()->actual()->ente_organo_id)
+				return true;
+			else
+				return false;
+	}
 
 	/**
 	*Busca la lista de partidas del proyecto

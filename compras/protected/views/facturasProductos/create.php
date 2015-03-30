@@ -10,6 +10,6 @@ array('label'=>'Administrar Productos en facturas','url'=>array('admin')),
 );
 ?>
 
-<h1>Asociar Productos a facturas</h1>
+<h1>Asociar Productos a Facturas</h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model, 'proyectoSel'=>$proyectoSel)); ?>

@@ -44,7 +44,7 @@
 						'wrapperHtmlOptions' => array(
 							'class' => 'col-sm-2',
 						),
-						'label'=>'Seleccione Proyecto o Acción Centralizada a cargar',
+						'label'=>'Seleccione Acción Centralizada o Proyecto a cargar',
 						'widgetOptions' => array(
 							'data' => $listas,
 
@@ -130,7 +130,7 @@
 							'class' => 'col-sm-2',
 						),
 
-						'label'=>'Seleccione Proyecto o Acción Centralizada a cargar',
+						'label'=>'Seleccione Acción Centralizada o Proyecto a cargar',
 						'widgetOptions' => array(
 							'data' => $listas,
 
