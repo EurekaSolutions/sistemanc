@@ -29,15 +29,15 @@ class ProveedoresController extends Controller
 		array('allow',  // allow all users to perform 'index' and 'view' actions
 			'actions'=>array('index','view', 'anadir','ajaxObtenerProveedores'),
 			'users'=>array('*'),
-			'roles'=>array('ente'),
+			'roles'=>array('admin'),
 		),
 		array('allow', // allow authenticated user to perform 'create' and 'update' actions
 			'actions'=>array('create', 'admin', 'update'),
 			'users'=>array('@'),
-			'roles'=>array('ente'),
+			'roles'=>array('admin'),
 		),
 		array('allow', // allow admin user to perform 'admin' and 'delete' actions
-			'actions'=>array('delete', 'subir'),
+			'actions'=>array(/*'delete',*/ 'subir'),
 			//'users'=>array('admin'),
 			//'roles'=>array('ente'),
 			'roles'=>array('admin'),
@@ -89,7 +89,7 @@ class ProveedoresController extends Controller
 		if(isset($_POST['Proveedores']))
 		{
 			$model->attributes=$_POST['Proveedores'];
-			$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+			$usuario = Usuarios::model()->actual();
 			
 			$model->ente_organo_id = $usuario->ente_organo_id;
 

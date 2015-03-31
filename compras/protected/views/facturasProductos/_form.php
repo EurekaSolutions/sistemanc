@@ -278,8 +278,13 @@
 			'context'=>'primary',
 			'label'=>$model->isNewRecord ? 'Asociar Producto a Factura' : 'Asociar Producto a Factura',
 		)); ?>
-</div>
 
+			<?php $this->widget('booster.widgets.TbButton', array(
+			'buttonType'=>'submit',
+			'context'=>'primary',
+			'label'=>$model->isNewRecord ? 'Finalizar carga' : 'Finalizar carga',
+		)); ?>
+</div>
 
 <?php $this->endWidget(); ?>
 

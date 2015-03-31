@@ -88,7 +88,7 @@ return array(
 		),
 		'session' => array (
 		    'sessionName' => 'SNCAccess',
-		    'cookieMode' => 'only',
+		    //'cookieMode' => 'only',
 		    //'savePath' => '/path/to/new/directory',
 		),
 		 'format'=>array(

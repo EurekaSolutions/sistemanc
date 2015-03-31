@@ -1,12 +1,12 @@
 <?php
 $this->breadcrumbs=array(
-	'Proveedores'=>array('index'),
-	'Gestionar',
+	'Proveedores Entes Organoses'=>array('index'),
+	'Manage',
 );
 
 $this->menu=array(
-//array('label'=>'List Proveedores','url'=>array('index')),
-array('label'=>'Registrar Proveedor','url'=>array('create')),
+array('label'=>'List ProveedoresEntesOrganos','url'=>array('index')),
+array('label'=>'Create ProveedoresEntesOrganos','url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -15,7 +15,7 @@ $('.search-form').toggle();
 return false;
 });
 $('.search-form form').submit(function(){
-$.fn.yiiGridView.update('proveedores-grid', {
+$.fn.yiiGridView.update('proveedores-entes-organos-grid', {
 data: $(this).serialize()
 });
 return false;
@@ -23,35 +23,32 @@ return false;
 ");
 ?>
 
-<h1>Proveedores</h1>
+<h1>Manage Proveedores Entes Organoses</h1>
 
-<!-- <p>
+<p>
 	You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>
 		&lt;&gt;</b>
 	or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p> 
+</p>
 
 <?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button btn')); ?>
 <div class="search-form" style="display:none">
 	<?php $this->renderPartial('_search',array(
 	'model'=>$model,
 )); ?>
-</div> --><!-- search-form -->
+</div><!-- search-form -->
 
 <?php $this->widget('booster.widgets.TbGridView',array(
-'id'=>'proveedores-grid',
+'id'=>'proveedores-entes-organos-grid',
 'dataProvider'=>$model->search(),
 'filter'=>$model,
-'summaryText'=>'',
 'columns'=>array(
-		//'id',
-		'rif',
-		'razon_social',
-		'estatus_contratista_id',
-		//'fecha',
-		//'ente_organo_id',
+		'id',
+		'proveedor_id',
+		'ente_organo_id',
+		'anho',
 array(
-'class'=>'booster.widgets.TbButtonColumn','template'=>''
+'class'=>'booster.widgets.TbButtonColumn',
 ),
 ),
 )); ?>

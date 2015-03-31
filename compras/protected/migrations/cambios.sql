@@ -277,14 +277,37 @@ Actualizar constraints
 
 --*** MODULO DE RENDICIÓN DE CUENTAS ***--
 
+ DROP TABLE trimestre1.proveedores CASCADE;
+ DROP TABLE trimestre2.proveedores CASCADE;
+ DROP TABLE trimestre3.proveedores CASCADE;
+ DROP TABLE trimestre4.proveedores CASCADE;
 
+ ALTER TABLE trimestre1.facturas
+  ADD CONSTRAINT facturas_proveedor_id_fkey FOREIGN KEY (proveedor_id)
+      REFERENCES proveedores (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ ALTER TABLE trimestre2.facturas
+  ADD CONSTRAINT facturas_proveedor_id_fkey FOREIGN KEY (proveedor_id)
+      REFERENCES proveedores (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ ALTER TABLE trimestre3.facturas
+  ADD CONSTRAINT facturas_proveedor_id_fkey FOREIGN KEY (proveedor_id)
+      REFERENCES proveedores (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ ALTER TABLE trimestre4.facturas
+  ADD CONSTRAINT facturas_proveedor_id_fkey FOREIGN KEY (proveedor_id)
+      REFERENCES proveedores (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
 
 CREATE TABLE proveedores_entes_organos
 (
  id serial NOT NULL, -- Clave primera
  proveedor_id integer NOT NULL, -- Clave foranea a la tabla proveedores
  ente_organo_id integer NOT NULL, -- Clave foranea a la tabla ente_organo
- anho date NOT NULL, -- Año en que se creo la relacion
+ anho integer NOT NULL, -- Año en que se creo la relacion
  CONSTRAINT proveedores_entes_organos_pkey PRIMARY KEY (id),
  CONSTRAINT proveedores_entes_organos_proveedor_id_ente_organo_id_key UNIQUE (proveedor_id, ente_organo_id)
 )
@@ -305,13 +328,25 @@ ALTER TABLE proveedores_entes_organos
  ADD CONSTRAINT proveedores_entes_organos_proveedor_id_fkey FOREIGN KEY (proveedor_id)
      REFERENCES proveedores (id) MATCH SIMPLE
      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
 ALTER TABLE proveedores_entes_organos
- ADD CONSTRAINT proveedores_entes_organos_proveedor_id_ente_organo_id_key UNIQUE(proveedor_id, ente_organo_id);
+  ADD CONSTRAINT proveedores_entes_organos_ente_organo_id_fkey FOREIGN KEY (ente_organo_id)
+      REFERENCES entes_organos (ente_organo_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
 
 
 
 
-ALTER TABLE proveedores ADD COLUMN ahno date;
+
+ALTER TABLE proveedores ADD COLUMN ahno integer;
 COMMENT ON COLUMN proveedores.ahno IS 'Año del registro';
 
 
+ALTER TABLE trimestre1.facturas DROP CONSTRAINT facturas_num_factura_key;
+ALTER TABLE trimestre2.facturas DROP CONSTRAINT facturas_num_factura_key;
+ALTER TABLE trimestre3.facturas DROP CONSTRAINT facturas_num_factura_key;
+ALTER TABLE trimestre4.facturas DROP CONSTRAINT facturas_num_factura_key;
+
+DROP TABLE facturas CASCADE;
+DROP TABLE facturas_productos CASCADE;
+DROP TABLE procedimientos CASCADE;
