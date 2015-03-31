@@ -96,9 +96,25 @@
 			//
 			//print_r($proyectoSel->findByPk($proyectoSel->proyecto_id)->presupuestoPartidas);
 			//exit();
-			if(isset($proyectoSel->proyecto_id))
-				$list = CHtml::listData($proyectoSel->findByPk($proyectoSel->proyecto_id)->presupuestoPartidas,'presupuesto_partida_id',function($presuPartida){return $presuPartida->partida->etiquetaPartida();});
+			if(isset($proyectoSel->proyecto_id)){
+				if(strstr($proyectoSel->proyecto_id, 'a'))
+				{//Es un id de accion
 
+					$accionId = Proyectos::model()->accionId($proyectoSel->proyecto_id);
+					
+					$presuPartidas = PresupuestoPartidaAcciones::model()->presuPartidas($accionId);
+
+				}else{//Es un id de proyecto
+
+					if(Usuarios::model()->actual()->ente_organo_id != $proyectoSel->ente_organo_id)
+						throw new CHttpException(403, "No se puede procesar la solicitud.");
+					
+					$presuPartidas = $proyectoSel->getPresuPartidas();
+				}	
+					$list = CHtml::listData($presuPartidas,'presupuesto_partida_id',function($presuPartida){return $presuPartida->partida->etiquetaPartida();});
+
+			}
+			
 				echo $form->select2Group(
 									$model,
 									'presupuesto_partida_id',
@@ -217,7 +233,7 @@
 		        'attribute' => 'producto_id',
 		        //'value'=>$model->producto_id,
 		        //'name' => 'factura_id',
-		        'data' => $model->isNewRecord?array():CHtml::listData($model->presupuestoPartida->listaProductos(), 'producto_id',function($producto){ return $producto->etiquetaProducto();} ),
+		        'data' => empty($model->getErrors())?array():CHtml::listData($model->presupuestoPartida->listaProductos(), 'producto_id',function($producto){ return $producto->etiquetaProducto();} ),
 		        'htmlOptions'=>array('id'=>'producto',	            
 		        			'options' => array($model->producto_id=>array('selected'=>true)) // selected options by default
 								        ),

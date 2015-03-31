@@ -246,7 +246,6 @@ class FacturasProductosController extends Controller
 		if(isset($_POST['FacturasProductos']))
 		{
 			$model->attributes=$_POST['FacturasProductos'];
-			$model->isNewRecord = false;
 			$proyectoSel->attributes = $_POST['Proyectos'];
 
 			if($model->save()){
@@ -258,6 +257,7 @@ class FacturasProductosController extends Controller
 				$model=new FacturasProductos;
 				$model->factura_id = $factura_id;
 				$model->presupuesto_partida_id = $presuPartida ;
+				
 				//$model->producto_id  = $producto_id;
 
 					Yii::app()->user->setFlash('success', "Producto asociado con éxito.");

@@ -73,6 +73,37 @@ class Proyectos extends ActiveRecord
 		);
 	}
 
+	/**
+	*Busca la lista de partidas del proyecto
+	*@param integer $id
+	*@return Partidas[] $partidas
+	**/
+	public function presuPartidas($id){
+			
+			$presuPartidas =array();
+			foreach ($this->findByPk($id)->presupuestoPartidas as $key => $prePar) { //echo '|'.($partida->partida_id);
+				// Esto debido a que pueden existir partidas deshabilitadas, las cuales el modelo retorna null.
+				if(!empty($prePar))
+					$presuPartidas[$key] = $prePar;
+			}
+
+			return $presuPartidas;
+	}
+
+	/**
+	*Busca la lista de partidas del proyecto
+	*@param integer $id
+	*@return Partidas[] $partidas
+	**/
+	public function getPresuPartidas(){
+			
+			return $this->presuPartidas($this->proyecto_id);
+	}
+
+	public function accionId($id){
+		return intval(substr( $id, 1));
+	}
+
 	// 
 	public function beforeSave(){
 	   	$this->anho = Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];
@@ -109,7 +140,7 @@ class Proyectos extends ActiveRecord
 	*Busca la lista de partidas del proyecto
 	*@return Partidas[] $partidas
 	**/
-	public function presuPartidas(){
+	/*public function presuPartidas(){
 			
 			$presuPartidas =array();
 			foreach ($this->presupuestoPartidas as $key => $prePar) { //echo '|'.($partida->partida_id);
@@ -119,7 +150,7 @@ class Proyectos extends ActiveRecord
 			}
 
 			return $presuPartidas;
-	}
+	}*/
 
 	public function partidaAsignada($attribute,$params)
 	{
