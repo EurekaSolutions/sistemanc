@@ -85,7 +85,7 @@ class PresupuestoPartidasController extends Controller
 				if(Usuarios::model()->actual()->ente_organo_id != $proyectoSel->ente_organo_id)
 					throw new CHttpException(403, "No se puede procesar la solicitud.");
 					
-				$presuPartidas = $proyectoSel->presuPartidas();
+				$presuPartidas = $proyectoSel->getPresuPartidas();
 			}	
 		    
 		    $listPresuPartidas = CHtml::listData($presuPartidas, function($presuPartida) {

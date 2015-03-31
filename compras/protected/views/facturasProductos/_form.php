@@ -106,6 +106,8 @@
 
 				}else{//Es un id de proyecto
 
+					$proyectoSel = Proyectos::model()->findByPk($proyectoSel->proyecto_id);
+
 					if(Usuarios::model()->actual()->ente_organo_id != $proyectoSel->ente_organo_id)
 						throw new CHttpException(403, "No se puede procesar la solicitud.");
 					
