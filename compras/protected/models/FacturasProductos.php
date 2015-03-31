@@ -83,7 +83,7 @@ class FacturasProductos extends ActiveRecord
 	function validarCargaProducto($attribute,$params){
 		
 		$productoActual = $this->costo_unitario*$this->cantidad_adquirida;
-		$productoCargado = $this->calcularMontosProducto($attribute);
+		$productoCargado = $this->calcularMontosProducto($this->$attribute);
 
 		if($this->presupuestoPartida->montoCargadoPartidaProducto($this->$attribute) < $productoActual+$productoCargado)
 			$this->addError($attribute,'El producto que esta registrando en la factura sobrepasa lo cargado en el Plan de Compras. Debe ajustar antes de proseguir.');
