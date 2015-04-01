@@ -128,7 +128,7 @@
 									array('label'=>  'Agregar productos a facturas', 'url'=>array('/facturasProductos/index'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 								),
 								//'visible'=>AQUI COLOCAR CONDICIÓN DE SI ESTA EN LA FECHA DE RENDICION DE CUENTA DEL TRIMESTRE PASADO),
-								'visible'=>Yii::app()->user->checkAccess('ente'),
+								'visible'=>Yii::app()->user->checkAccess('admin'),
 							),
 							array(
 								'label' => 'Gestion de usuarios',  //si el usuario es creado por este sistema

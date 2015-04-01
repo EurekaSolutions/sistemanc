@@ -26,7 +26,7 @@ class Facturas extends ActiveRecord
 	 */
 	public function tableName()
 	{
-		return $this->obtenerSchema(true).'.facturas';
+		return $this->obtenerSchema().'.facturas';
 	}
 
 	/**

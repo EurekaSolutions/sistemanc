@@ -204,11 +204,6 @@ return array(
 			'trimestre2'=>'trimestre2',
 			'trimestre3'=>'trimestre3',
 			'trimestre4'=>'trimestre4',),
-		'trimestresEsquemasRendicion'=>array(
-			'trimestre1'=>'trimestre4',
-			'trimestre2'=>'trimestre1',
-			'trimestre3'=>'trimestre2',
-			'trimestre4'=>'trimestre3',),
 		//Yii::app()->params['trimestreActual']
 	),
 );

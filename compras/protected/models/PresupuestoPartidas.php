@@ -195,8 +195,9 @@ class PresupuestoPartidas extends ActiveRecord
  	}
 
 	public function pertenece($id){
-			if(empty($this->findAllByAttributes(array('presupuesto_partida_id'=>$id,
-						'ente_organo_id'=>Usuarios::model()->actual()->ente_organo_id))))
+		$presuPartidas = $this->findAllByAttributes(array('presupuesto_partida_id'=>$id,
+						'ente_organo_id'=>Usuarios::model()->actual()->ente_organo_id));
+			if(empty($presuPartidas))
 				return false;
 			else
 				return true;
