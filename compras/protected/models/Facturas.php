@@ -133,6 +133,19 @@ class Facturas extends ActiveRecord
  		return !isset($presuPartida)?true:false;
  	}
 
+ 	public function miFactura($factura_id)
+ 	{
+ 		//$estado = true;
+ 		$estado = $this->findByAttributes(array('ente_organo_id'=>Usuarios::model()->actual()->ente_organo_id, 'id'=>$factura_id));
+ 		if(isset($estado))
+ 		{
+ 			$estado->cierre_carga=true;
+ 			$estado->save();
+ 			return true;
+ 		}else
+ 			return false;
+ 	}
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *

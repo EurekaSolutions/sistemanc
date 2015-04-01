@@ -27,7 +27,7 @@ class FacturasProductosController extends Controller
 	{
 		return array(
 		array('allow',  // allow all users to perform 'index' and 'view' actions
-			'actions'=>array('index','view','buscarProductosPresupuestoPartida', 'filaProducto','buscarProductosFactura'),
+			'actions'=>array('index','view','buscarProductosPresupuestoPartida', 'filaProducto','buscarProductosFactura', 'cerrar'),
 			'users'=>array('*'),
 			'roles'=>array('ente'),
 		),
@@ -47,6 +47,22 @@ class FacturasProductosController extends Controller
 		);
 	}
 
+	/**
+	* Cierra la factura enviada por POST.
+	*/
+	public function actionCerrar()
+	{
+		if($_POST['FacturasProductos']['factura_id'])
+		{
+			$factura_id = $_POST['FacturasProductos']['factura_id'];
+
+			Facturas::model()->miFactura($factura_id);
+
+		}
+
+		//$this->redirect('Facturas/index');
+
+	}
 
 	/**
 	* Busqueda de la lista de productos según la partida.

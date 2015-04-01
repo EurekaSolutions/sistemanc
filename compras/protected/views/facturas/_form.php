@@ -188,9 +188,9 @@
         'update'=>'#jobDialog'
         ),array('id'=>'showJobDialog'));?>
 
-<div id="jobDialog"></div>
+<div id="jobDialog" style="display:none"></div>
 
-<br/>
+<br/><br/>
 <div class="form-actions">
 	<?php $this->widget('booster.widgets.TbButton', array(
 			'buttonType'=>'submit',
