@@ -22,7 +22,7 @@ class Procedimientos extends ActiveRecord
 	 */
 	public function tableName()
 	{
-		return $this->obtenerSchema().'.procedimientos';
+		return $this->obtenerSchema(true).'.procedimientos';
 	}
 
 	/**

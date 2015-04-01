@@ -26,7 +26,7 @@ class Facturas extends ActiveRecord
 	 */
 	public function tableName()
 	{
-		return $this->obtenerSchema().'.facturas';
+		return $this->obtenerSchema(true).'.facturas';
 	}
 
 	/**
@@ -38,13 +38,14 @@ class Facturas extends ActiveRecord
 		// will receive user inputs.
 		return array(
 			array('num_factura, proveedor_id, procedimiento_id', 'required'),
+			array('cierre_carga','boolean'),
 			array('anho, , procedimiento_id, ente_organo_id', 'numerical', 'integerOnly'=>true),
 			array('num_factura', 'length', 'max'=>255),
 			array('fecha_factura', 'safe'),
 			array('num_factura', 'validarUnicidad'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, num_factura, anho, proveedor_id, procedimiento_id, fecha, fecha_factura, ente_organo_id', 'safe', 'on'=>'search'),
+			array('id, num_factura, anho, proveedor_id, procedimiento_id, fecha, fecha_factura, ente_organo_id, cierre_carga', 'safe', 'on'=>'search'),
 		);
 	}
 
