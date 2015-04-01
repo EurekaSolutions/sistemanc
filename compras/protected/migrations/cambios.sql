@@ -350,3 +350,17 @@ ALTER TABLE trimestre4.facturas DROP CONSTRAINT facturas_num_factura_key;
 DROP TABLE facturas CASCADE;
 DROP TABLE facturas_productos CASCADE;
 DROP TABLE procedimientos CASCADE;
+
+ALTER TABLE trimestre1.facturas
+  ADD CONSTRAINT facturas_proveedor_id_num_factura_key UNIQUE(proveedor_id, num_factura);
+ALTER TABLE trimestre2.facturas
+  ADD CONSTRAINT facturas_proveedor_id_num_factura_key UNIQUE(proveedor_id, num_factura);
+ALTER TABLE trimestre3.facturas
+  ADD CONSTRAINT facturas_proveedor_id_num_factura_key UNIQUE(proveedor_id, num_factura);
+ALTER TABLE trimestre4.facturas
+  ADD CONSTRAINT facturas_proveedor_id_num_factura_key UNIQUE(proveedor_id, num_factura);
+
+ALTER TABLE trimestre1.facturas ALTER COLUMN cierre_carga SET DEFAULT false;
+ALTER TABLE trimestre2.facturas ALTER COLUMN cierre_carga SET DEFAULT false;
+ALTER TABLE trimestre3.facturas ALTER COLUMN cierre_carga SET DEFAULT false;
+ALTER TABLE trimestre4.facturas ALTER COLUMN cierre_carga SET DEFAULT false;

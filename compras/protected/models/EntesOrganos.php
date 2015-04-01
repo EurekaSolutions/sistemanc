@@ -75,6 +75,8 @@ class EntesOrganos extends ActiveRecord
 			'acciones' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones', 'ente_organo_id'),
 			'accionesUni' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones', 'ente_organo_id', 'select'=>'DISTINCT(accion_id)'),
 			'facturas' => array(self::HAS_MANY, 'Facturas', 'ente_organo_id'),
+			'facturasCerradas' => array(self::HAS_MANY, 'Facturas', 'ente_organo_id', 'condition'=>'cierre_carga=true'),
+			'facturasNoCerradas' => array(self::HAS_MANY, 'Facturas', 'ente_organo_id', 'condition'=>'cierre_carga=false'),
 			'procedimientos' => array(self::HAS_MANY, 'Procedimientos', 'ente_organo_id'),
 		);
 	}

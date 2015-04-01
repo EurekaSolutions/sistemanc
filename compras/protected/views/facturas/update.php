@@ -6,13 +6,14 @@ $this->breadcrumbs=array(
 	);
 
 	$this->menu=array(
-		array('label'=>'List Facturas','url'=>array('index')),
-		array('label'=>'Create Facturas','url'=>array('create')),
-		array('label'=>'View Facturas','url'=>array('view','id'=>$model->id)),
-		array('label'=>'Manage Facturas','url'=>array('admin')),
+		//array('label'=>'List Facturas','url'=>array('index')),
+		array('label'=>'Registrar Factura','url'=>array('create')),
+		array('label'=>'Ver Factura','url'=>array('view','id'=>$model->id)),
+		array('label'=>'Eliminar Factura','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+		array('label'=>'Administrar Factura','url'=>array('admin')),
 		);
 	?>
 
-	<h1>Update Facturas <?php echo $model->id; ?></h1>
+	<h1>Actualizar Factura <?php echo $model->etiquetaFactura(); ?></h1>
 
 <?php echo $this->renderPartial('_form',array('model'=>$model)); ?>

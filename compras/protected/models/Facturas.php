@@ -38,9 +38,10 @@ class Facturas extends ActiveRecord
 		// will receive user inputs.
 		return array(
 			array('num_factura, proveedor_id, procedimiento_id', 'required'),
-			array('anho, proveedor_id, procedimiento_id, ente_organo_id', 'numerical', 'integerOnly'=>true),
+			array('anho, , procedimiento_id, ente_organo_id', 'numerical', 'integerOnly'=>true),
 			array('num_factura', 'length', 'max'=>255),
 			array('fecha_factura', 'safe'),
+			array('num_factura', 'validarUnicidad'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, num_factura, anho, proveedor_id, procedimiento_id, fecha, fecha_factura, ente_organo_id', 'safe', 'on'=>'search'),
@@ -70,10 +71,10 @@ class Facturas extends ActiveRecord
 		return array(
 			'id' => 'ID',
 			'num_factura' => 'Número de Factura',
-			'anho' => 'Año',
+			'anho' => 'Año de carga',
 			'proveedor_id' => 'Proveedor',
 			'procedimiento_id' => 'Procedimiento',
-			'fecha' => 'Fecha',
+			'fecha' => 'Fecha de Factura',
 			'fecha_factura' => 'Fecha Factura',
 			'ente_organo_id' => 'Ente Organo',
 		);
@@ -97,7 +98,28 @@ class Facturas extends ActiveRecord
 	        	$c->delete();
 	    return parent::beforeDelete();
 	}
-	
+	 	
+	 	/**
+ 	 * Etiqueta de la factura.
+ 	 * 
+ 	 * @return string $etiqueta
+ 	 * */
+ 	public function validarUnicidad($attribute,$params){
+ 		if(count($this->findByAttributes(array('num_factura'=>$this->num_factura,'proveedor_id'=>$this->proveedor_id))))
+ 			$this->addError($attribute,'El numero de Factura'.$this->$attribute.' ya esta registrada para el proveedor: '.$this->proveedor->etiquetaProveedor());
+ 	}
+
+ 	/**
+ 	 * Etiqueta de la factura.
+ 	 * 
+ 	 * @return string $etiqueta
+ 	 * */
+ 	public function etiquetaFactura(){
+
+ 		return  $this->num_factura.' - '.$this->proveedor->razon_social;
+ 	}
+
+
  	/**
  	 * Retorna true si existe una partida registrada indicada para el organo con sesión iniciada actualmente.
  	 * 

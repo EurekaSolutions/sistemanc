@@ -4,10 +4,10 @@ $this->breadcrumbs=array(
 	'Manage',
 );
 
-$this->menu=array(
+/*$this->menu=array(
 array('label'=>'List ProveedoresEntesOrganos','url'=>array('index')),
 array('label'=>'Create ProveedoresEntesOrganos','url'=>array('create')),
-);
+);*/
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -23,8 +23,8 @@ return false;
 ");
 ?>
 
-<h1>Manage Proveedores Entes Organoses</h1>
-
+<h1>Mis Proveedores</h1>
+<!-- 
 <p>
 	You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>
 		&lt;&gt;</b>
@@ -36,19 +36,20 @@ return false;
 	<?php $this->renderPartial('_search',array(
 	'model'=>$model,
 )); ?>
-</div><!-- search-form -->
+</div> --><!-- search-form -->
 
 <?php $this->widget('booster.widgets.TbGridView',array(
 'id'=>'proveedores-entes-organos-grid',
 'dataProvider'=>$model->search(),
 'filter'=>$model,
+'summaryText'=>'',
 'columns'=>array(
-		'id',
-		'proveedor_id',
-		'ente_organo_id',
+		//'id',
+		array('name'=>'proveedor_id', 'value'=>'$data->proveedor->razon_social'),
+		//array('name'=>'ente_organo_id', 'value'=>'$data->enteOrgano->nombre'),
 		'anho',
 array(
-'class'=>'booster.widgets.TbButtonColumn',
+'class'=>'booster.widgets.TbButtonColumn','template'=>'{delete}'
 ),
 ),
 )); ?>

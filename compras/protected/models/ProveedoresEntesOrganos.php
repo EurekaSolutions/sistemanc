@@ -82,7 +82,7 @@ class ProveedoresEntesOrganos extends CActiveRecord
 			'id' => 'ID',
 			'proveedor_id' => 'Proveedor',
 			'ente_organo_id' => 'Ente Organo',
-			'anho' => 'Anho',
+			'anho' => 'Año',
 		);
 	}
 

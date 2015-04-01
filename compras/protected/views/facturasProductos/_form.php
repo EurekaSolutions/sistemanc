@@ -18,7 +18,7 @@
 
 	<div class="form-group">
 	<?php 	
-		$list = CHtml::listData(Facturas::model()->findAllByAttributes(array('ente_organo_id'=>Usuarios::model()->actual()->ente_organo_id)), 'id', 'num_factura');
+		$list = CHtml::listData(Facturas::model()->findAllByAttributes(array('ente_organo_id'=>Usuarios::model()->actual()->ente_organo_id, 'cierre_carga'=>false)), 'id', function($factura){return $factura->etiquetaFactura();});
 
 		echo CHtml::label('Seleccionar factura', 'Factura');
 		echo "<br>";

@@ -5,11 +5,11 @@ $this->breadcrumbs=array(
 	);
 
 $this->menu=array(
-	array('label'=>'List Facturas','url'=>array('index')),
-	array('label'=>'Create Facturas','url'=>array('create')),
-	array('label'=>'Update Facturas','url'=>array('update','id'=>$model->id)),
-	array('label'=>'Delete Facturas','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Facturas','url'=>array('admin')),
+	//array('label'=>'List Facturas','url'=>array('index')),
+	array('label'=>'Registrar Factura','url'=>array('create')),
+	array('label'=>'Actualizar Factura','url'=>array('update','id'=>$model->id)),
+	array('label'=>'Eliminar Factura','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+	array('label'=>'Administrar Factura','url'=>array('admin')),
 	);
 ?>
 

@@ -53,7 +53,9 @@ class Proveedores extends ActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'enteOrgano' => array(self::BELONGS_TO, 'EntesOrganos', 'ente_organo_id'),
-			'facturases' => array(self::HAS_MANY, 'Facturas', 'proveedor_id'),
+			'facturas' => array(self::HAS_MANY, 'Facturas', 'proveedor_id'),
+			'facturasCerradas' => array(self::HAS_MANY, 'Facturas', 'proveedor_id', 'condition'=>'cierre_carga=true'),
+			'facturasNoCerradas' => array(self::HAS_MANY, 'Facturas', 'proveedor_id', 'condition'=>'cierre_carga=false'),
 		);
 	}
 

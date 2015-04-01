@@ -47,14 +47,15 @@ return false;
 		'num_factura',
 		'anho',
 		array('name'=>'proveedor_id', 'value'=>'$data->proveedor->rif." - ".$data->proveedor->razon_social'),
-		array('name'=>'proveedor_id', 'value'=>'$data->procedimiento->tipo." Número: ".$data->procedimiento->num_contrato'),
-		'fecha',
+		array('name'=>'procedimiento_id', 'value'=>'$data->procedimiento->tipo." Número: ".$data->procedimiento->num_contrato'),
+		array('name'=>'cierre_carga', 'value'=>'$data->cierre_carga?"Cerrada":"Abierta"'),
+		array('name'=>'fecha', 'value'=>'date("Y-m-d H:i:s",strtotime($data->fecha))'),
 		/*
 		'fecha_factura',
 		'ente_organo_id',
 		*/
 array(
-'class'=>'booster.widgets.TbButtonColumn',
+'class'=>'booster.widgets.TbButtonColumn','template'=>'{update} {delete}'
 ),
 ),
 )); ?>
