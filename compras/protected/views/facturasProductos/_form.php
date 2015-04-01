@@ -315,7 +315,7 @@ $( document ).ready(function() {
 
 			<?php
 				$this->widget('booster.widgets.TbButton', array(
-				'htmlOptions' => array('id'=> 'closeButton', 'disabled'=> "disabled"),
+				'htmlOptions' => array('id'=> 'closeButton', @$_POST['FacturasProductos']['factura_id'] ? '':'disabled'=> "disabled"),
 				'buttonType'=>'ajaxSubmit',
 				'context'=>'success',
 				'label'=>'Finalizar carga',
