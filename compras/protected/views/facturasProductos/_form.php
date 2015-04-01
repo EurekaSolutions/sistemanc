@@ -1,3 +1,15 @@
+<script type="text/javascript">
+$( document ).ready(function() {
+	$( "#Factura" ).click(function() {
+		//$( ".target" ).change();
+		if($( "#Factura" ).val())
+		{
+			$( "#closeButton").removeAttr('disabled');
+		}
+	});
+});
+</script>
+
 <?php $form=$this->beginWidget('booster.widgets.TbActiveForm',array(
 	'id'=>'facturas-productos-form',
 	'enableAjaxValidation'=>false,
@@ -98,7 +110,7 @@
 			//exit();
 			if(isset($proyectoSel->proyecto_id)){
 				if(strstr($proyectoSel->proyecto_id, 'a'))
-				{//Es un id de accion
+				{//Es un id de accion	
 
 					$accionId = Proyectos::model()->accionId($proyectoSel->proyecto_id);
 					
@@ -225,6 +237,7 @@
 		//$list = CHtml::listData(Facturas::model()->findAll(), 'id', 'num_factura');
 
 //print_r(CHtml::listData($model->presupuestoPartida->partida->productos, 'producto_id',function($producto){ return $producto->etiquetaProducto();} ));
+		$error = $model->getErrors();
 		echo CHtml::label('Seleccionar producto', 'producto');
 		echo "<br>";
 		$this->widget(
@@ -235,7 +248,7 @@
 		        'attribute' => 'producto_id',
 		        //'value'=>$model->producto_id,
 		        //'name' => 'factura_id',
-		        'data' => empty($model->getErrors())?array():CHtml::listData($model->presupuestoPartida->listaProductos(), 'producto_id',function($producto){ return $producto->etiquetaProducto();} ),
+		        'data' => empty($error)?array():CHtml::listData($model->presupuestoPartida->listaProductos(), 'producto_id',function($producto){ return $producto->etiquetaProducto();} ),
 		        'htmlOptions'=>array('id'=>'producto',	            
 		        			'options' => array($model->producto_id=>array('selected'=>true)) // selected options by default
 								        ),
@@ -292,16 +305,30 @@
 
 <div class="form-actions">
 	<?php $this->widget('booster.widgets.TbButton', array(
+			'htmlOptions' => array('id'=> 'removeButton'),
 			'buttonType'=>'submit',
 			'context'=>'primary',
 			'label'=>$model->isNewRecord ? 'Asociar Producto a Factura' : 'Asociar Producto a Factura',
 		)); ?>
 
-			<?php $this->widget('booster.widgets.TbButton', array(
-			'buttonType'=>'submit',
-			'context'=>'primary',
-			'label'=>$model->isNewRecord ? 'Finalizar carga' : 'Finalizar carga',
-		)); ?>
+
+
+			<?php
+				$this->widget('booster.widgets.TbButton', array(
+				'htmlOptions' => array('id'=> 'closeButton', 'disabled'=> "disabled"),
+				'buttonType'=>'ajaxSubmit',
+				'context'=>'success',
+				'label'=>'Finalizar carga',
+				'url' => Yii::app()->createUrl('FacturasProductos/cerrar'),
+	            'ajaxOptions' => array(
+	                'type' => 'POST',
+	                'success' => 'function(data){ 
+	                                $( "#removeButton" ).remove();
+	                                window.location.href ="'.CController::createUrl('facturas/admin').'";
+	                }',
+		            )
+				));
+		 ?>
 </div>
 
 <?php $this->endWidget(); ?>
