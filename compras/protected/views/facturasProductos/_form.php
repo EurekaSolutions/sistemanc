@@ -108,7 +108,7 @@ $( document ).ready(function() {
 			//
 			//print_r($proyectoSel->findByPk($proyectoSel->proyecto_id)->presupuestoPartidas);
 			//exit();
-			if(isset($proyectoSel->proyecto_id)){
+			if(!empty($proyectoSel->proyecto_id)){
 				if(strstr($proyectoSel->proyecto_id, 'a'))
 				{//Es un id de accion	
 
@@ -238,6 +238,7 @@ $( document ).ready(function() {
 
 //print_r(CHtml::listData($model->presupuestoPartida->partida->productos, 'producto_id',function($producto){ return $producto->etiquetaProducto();} ));
 		$error = $model->getErrors();
+		//$vacio = empty($error)
 		echo CHtml::label('Seleccionar producto', 'producto');
 		echo "<br>";
 		$this->widget(
@@ -248,7 +249,7 @@ $( document ).ready(function() {
 		        'attribute' => 'producto_id',
 		        //'value'=>$model->producto_id,
 		        //'name' => 'factura_id',
-		        'data' => empty($error)?array():CHtml::listData($model->presupuestoPartida->listaProductos(), 'producto_id',function($producto){ return $producto->etiquetaProducto();} ),
+		        'data' => ($model->presupuesto_partida_id=='')?array():CHtml::listData($model->presupuestoPartida->listaProductos(), 'producto_id',function($producto){ return $producto->etiquetaProducto();} ),
 		        'htmlOptions'=>array('id'=>'producto',	            
 		        			'options' => array($model->producto_id=>array('selected'=>true)) // selected options by default
 								        ),
