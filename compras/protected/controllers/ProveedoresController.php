@@ -90,20 +90,23 @@ class ProveedoresController extends Controller
 		{
 			$model->attributes=$_POST['Proveedores'];
 			$usuario = Usuarios::model()->actual();
-			
+			$model->rif = strtoupper($model->rif);
+			$model->razon_social = strtoupper($model->razon_social);
 			$model->ente_organo_id = $usuario->ente_organo_id;
 
 			if($model->save())
 			{
-				//unset($model);
-				//$model=new Proveedores;
-				//echo "2" ;//$this->render('create',array('model'=>$model));
+				$this->renderPartial('_exito',array(),false,true);
+				//echo '<script>$("#jobDialog").dialog("close");</script>';
+			}else
+			{
+				$this->renderPartial('_form',array('model'=>$model,),false,true);
 			}
-				//$this->redirect(array('view','id'=>$model->id));
+			
 		}
 
-		Yii::app()->clientScript->scriptMap['jquery.js'] = false;
-        $this->renderPartial('_form',array('model'=>$model,),false,true);
+		//Yii::app()->clientScript->scriptMap['jquery.js'] = false;
+        //$this->renderPartial('_form',array('model'=>$model,),false,true);
 	}
 
 	/**
