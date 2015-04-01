@@ -139,11 +139,13 @@ class Facturas extends ActiveRecord
  		$estado = $this->findByAttributes(array('ente_organo_id'=>Usuarios::model()->actual()->ente_organo_id, 'id'=>$factura_id));
  		if(isset($estado))
  		{
+ 			//$estado->isNewRecord=false;
  			$estado->cierre_carga=true;
- 			$estado->save();
+ 			$estado->save(false);
+ 			//print_r($estado->getErrors());
  			return true;
  		}else
- 			return false;
+ 			return false; 
  	}
 
 	/**
