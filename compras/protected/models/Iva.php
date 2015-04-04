@@ -35,7 +35,7 @@ class Iva extends CActiveRecord
 			array('porcentaje', 'length', 'max'=>38),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, tipo, porcentaje, fecha', 'safe', 'on'=>'search'),
+			array('id, sys_status, tipo, porcentaje, fecha', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -89,7 +89,8 @@ class Iva extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-
+		$activo = true;
+		$criteria->condition = "sys_status='$activo'";  
 		$criteria->compare('id',$this->id);
 		$criteria->compare('tipo',$this->tipo,true);
 		$criteria->compare('porcentaje',$this->porcentaje,true);

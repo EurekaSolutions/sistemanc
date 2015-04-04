@@ -73,7 +73,7 @@ class IvaController extends Controller
 		{
 			$model->attributes=$_POST['Iva'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('admin'));
 		}
 
 		$this->render('create',array(
@@ -88,6 +88,8 @@ class IvaController extends Controller
 	*/
 	public function actionUpdate($id)
 	{
+		$tipo = "";
+		$porcentaje = "";
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
@@ -96,8 +98,16 @@ class IvaController extends Controller
 		if(isset($_POST['Iva']))
 		{
 			$model->attributes=$_POST['Iva'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+
+			$iva = new Iva();
+			$iva->tipo = $model->tipo;
+			$iva->porcentaje = $model->porcentaje;
+
+			$model=$this->loadModel($id);
+			$model->sys_status = false;
+
+			if($iva->save() && $model->save())
+				$this->redirect(array('admin'));
 		}
 
 		$this->render('update',array(
@@ -115,8 +125,10 @@ class IvaController extends Controller
 		if(Yii::app()->request->isPostRequest)
 		{
 		// we only allow deletion via POST request
-		$this->loadModel($id)->delete();
-
+			//$this->loadModel($id)->delete();
+			$iva = $this->loadModel($id);
+			$iva->sys_status = false;
+			$iva->save();
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
@@ -148,7 +160,7 @@ class IvaController extends Controller
 			$model->attributes=$_GET['Iva'];
 
 		$this->render('admin',array(
-		'model'=>$model,
+			'model'=>$model,
 		));
 	}
 

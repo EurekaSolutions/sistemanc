@@ -284,7 +284,10 @@ $( document ).ready(function() {
 <td>
 	<?php //echo $form->textFieldGroup($model,'iva_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); 
 
-	$list = CHtml::listData(Iva::model()->findAll(), 'id', 'porcentaje');
+	$criteria = new CDbCriteria();
+	$activo = true;
+	$criteria->condition = "sys_status='$activo'";      
+	$list = CHtml::listData(Iva::model()->findAll($criteria), 'id', 'porcentaje');
 			echo $form->dropDownListGroup(
 					$model,
 					'iva_id',
