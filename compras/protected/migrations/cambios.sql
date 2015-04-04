@@ -364,3 +364,8 @@ ALTER TABLE trimestre1.facturas ALTER COLUMN cierre_carga SET DEFAULT false;
 ALTER TABLE trimestre2.facturas ALTER COLUMN cierre_carga SET DEFAULT false;
 ALTER TABLE trimestre3.facturas ALTER COLUMN cierre_carga SET DEFAULT false;
 ALTER TABLE trimestre4.facturas ALTER COLUMN cierre_carga SET DEFAULT false;
+
+
+ALTER TABLE iva ADD COLUMN sys_status boolean;
+ALTER TABLE iva ALTER COLUMN sys_status SET DEFAULT true;
+COMMENT ON COLUMN iva.sys_status IS 'Si el iva esta o no activo';
