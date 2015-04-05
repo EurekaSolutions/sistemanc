@@ -39,7 +39,7 @@ class FacturasProductosController extends Controller
 		array('allow', // allow admin user to perform 'admin' and 'delete' actions
 			'actions'=>array('admin','delete'),
 			//'users'=>array('admin'),
-			'roles'=>array('admin'),
+			'roles'=>array('ente'),
 		),
 		array('deny',  // deny all users
 			'users'=>array('*'),
