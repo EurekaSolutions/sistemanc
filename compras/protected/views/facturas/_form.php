@@ -175,7 +175,11 @@
 		);*/ ?>
 	<?php //echo $form->textFieldGroup($model,'proveedor_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 	</div>
-		
+	<div>
+		<?php
+			echo $model->isNewRecord ? '' : '<h4> Tú proveedor actual es: <strong>'.$model->proveedor->rif.'</strong></h4>' ; 
+		?>
+	</div>
 
 	<?php //echo $form->textFieldGroup($model,'procedimiento_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
