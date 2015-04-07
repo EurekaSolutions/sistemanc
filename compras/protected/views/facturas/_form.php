@@ -34,9 +34,8 @@
 
 <div class="form-group">
 	<?php 	
-		$list = CHtml::listData(Procedimientos::model()->findAll(), 'id', 'num_contrato');
+		$list = CHtml::listData(Procedimientos::model()->findAllByAttributes(array('ente_organo_id'=>Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->ente_organo_id)), 'id', 'num_contrato');
 	
-
 		echo CHtml::label('Seleccionar procedimiento', 'Procedimeinto');
 		echo "<br>";
 		$this->widget(

@@ -26,6 +26,7 @@
         <?php echo CHtml::ajaxSubmitButton('Crear proveedor',CHtml::normalizeUrl(array('proveedores/create','render'=>false)),array('success'=>'js: function(data) {
                         $("#jobDialogForm").html("");
                         $("#jobDialogForm").append(data);
+                        $("#jobDialog").dialog("close");
                     }'),array('id'=>'closeJobDialog')); ?>
 </div>
 
