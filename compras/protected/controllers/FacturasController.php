@@ -128,15 +128,29 @@ class FacturasController extends Controller
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
-		// we only allow deletion via POST request
-		$this->loadModel($id)->delete();
+			// we only allow deletion via POST request
+
+			//$this->loadModel($id)->delete();
+
+			$model = $this->loadModel($id);
+
+			if(!($model->ente_organo_id == Usuarios::model()->actual()->ente_organo_id))
+				throw new CHttpException(403, "No se puede procesar la solicitud.");
+				
+				$model->delete();
+
+				if(!isset($_GET['ajax'])){
+					$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+				}
+				else
+				{
+					throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+				}
+
+		}
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-		}
-		else
-			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+
 	}
 
 		/**

@@ -145,6 +145,9 @@ class FacturasProductos extends ActiveRecord
 
 		$criteria=new CDbCriteria;
 
+		$criteria->with = array('factura');
+		$criteria->together = true;
+
 		$criteria->compare('id',$this->id);
 		$criteria->compare('factura_id',$this->factura_id);
 		$criteria->compare('producto_id',$this->producto_id);
@@ -153,6 +156,7 @@ class FacturasProductos extends ActiveRecord
 		$criteria->compare('iva_id',$this->iva_id);
 		$criteria->compare('fecha',$this->fecha);
 		$criteria->compare('presupuesto_partida_id',$this->presupuesto_partida_id);
+		$criteria->compare('factura.ente_organo_id', Usuarios::model()->actual()->ente_organo_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

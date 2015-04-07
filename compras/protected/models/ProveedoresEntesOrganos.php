@@ -106,7 +106,7 @@ class ProveedoresEntesOrganos extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('proveedor_id',$this->proveedor_id);
-		$criteria->compare('ente_organo_id',$this->ente_organo_id);
+		$criteria->compare('ente_organo_id',Usuarios::model()->actual()->ente_organo_id);
 		$criteria->compare('anho',$this->anho);
 
 		return new CActiveDataProvider($this, array(

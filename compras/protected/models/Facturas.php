@@ -173,7 +173,7 @@ class Facturas extends ActiveRecord
 		$criteria->compare('procedimiento_id',$this->procedimiento_id);
 		$criteria->compare('fecha',$this->fecha,true);
 		$criteria->compare('fecha_factura',$this->fecha_factura,true);
-		$criteria->compare('ente_organo_id',$this->ente_organo_id);
+		$criteria->compare('ente_organo_id',Usuarios::model()->actual()->ente_organo_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

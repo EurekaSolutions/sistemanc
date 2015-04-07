@@ -71,7 +71,7 @@ class FacturasProductosController extends Controller
 	{
 		if(!empty($_POST['FacturasProductos']['factura_id'])){
 			$model=new FacturasProductos;
-			
+			print_r($model->buscarProductosFactura($_POST['FacturasProductos']['factura_id']));
 			 $this->widget('booster.widgets.TbGridView',array(
 									'id'=>'facturas-productos-grid',
 									'dataProvider'=>$model->buscarProductosFactura($_POST['FacturasProductos']['factura_id']),
@@ -90,7 +90,7 @@ class FacturasProductosController extends Controller
 											*/
 										array(
 										'class'=>'booster.widgets.TbButtonColumn',
-											//'template'=>'{view}{update}<br>{delete}',
+											'template'=>'{delete}',
 										),
 									),
 							));
@@ -297,6 +297,7 @@ class FacturasProductosController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
+		$proyectoSel = new Proyectos('search');
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -309,7 +310,7 @@ class FacturasProductosController extends Controller
 		}
 
 		$this->render('update',array(
-		'model'=>$model,
+		'model'=>$model, 'proyectoSel'=>$proyectoSel
 		));
 	}
 
@@ -322,15 +323,33 @@ class FacturasProductosController extends Controller
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
-		// we only allow deletion via POST request
-		$this->loadModel($id)->delete();
+			// we only allow deletion via POST request
+
+			//$this->loadModel($id)->delete();
+
+			$model = $this->loadModel($id);
+
+			$factura = Facturas::model()->findByPk($model->factura_id);
+
+			if(!($factura->ente_organo_id == Usuarios::model()->actual()->ente_organo_id))
+				throw new CHttpException(403, "No se puede procesar la solicitud.");
+			
+				$model->delete();
+
+				if(!isset($_GET['ajax'])){
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+				}
+				else
+				{
+					throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+				}
+
+				
+
+		}
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-		}
-		else
-			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+
 	}
 
 

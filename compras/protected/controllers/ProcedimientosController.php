@@ -72,8 +72,6 @@ class ProcedimientosController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		
-
 		if(isset($_POST['Procedimientos']))
 		{
 			$model->attributes=$_POST['Procedimientos'];
@@ -124,8 +122,13 @@ class ProcedimientosController extends Controller
 		if(Yii::app()->request->isPostRequest)
 		{
 		// we only allow deletion via POST request
-		$this->loadModel($id)->delete();
+		$model = $this->loadModel($id);
 
+		if($model->ente_organo_id == Usuarios::model()->actual()->ente_organo_id )
+			$model->delete();
+		else
+			throw new CHttpException(403, "No se puede procesar la solicitud.");
+		
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));

@@ -41,20 +41,21 @@ return false;
 <?php $this->widget('booster.widgets.TbGridView',array(
 'id'=>'facturas-productos-grid',
 'dataProvider'=>$model->search(),
-'filter'=>$model,
+//'filter'=>$model,
+'summaryText'=>'',
 'columns'=>array(
-		'id',
-		'factura_id',
-		'producto_id',
+		//'id',
+		array('name'=>'factura_id', 'value'=>'$data->factura->etiquetaFactura()'),
+		array('name'=>'producto_id', 'value'=>'$data->producto->etiquetaProducto()'),
 		'costo_unitario',
 		'cantidad_adquirida',
-		'iva_id',
+		array('name'=>'factura_id', 'value'=>'$data->iva->porcentaje'),
 		/*
 		'fecha',
 		'presupuesto_partida_id',
 		*/
 array(
-'class'=>'booster.widgets.TbButtonColumn',
+'class'=>'booster.widgets.TbButtonColumn','template'=>'{delete}'
 ),
 ),
 )); ?>

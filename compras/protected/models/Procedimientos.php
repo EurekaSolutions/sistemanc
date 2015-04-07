@@ -112,7 +112,7 @@ class Procedimientos extends ActiveRecord
 		$criteria->compare('anho',$this->anho);
 		$criteria->compare('fecha',$this->fecha,true);
 		$criteria->compare('tipo',$this->tipo,true);
-		$criteria->compare('ente_organo_id',$this->ente_organo_id);
+		$criteria->compare('ente_organo_id',Usuarios::model()->actual()->ente_organo_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
