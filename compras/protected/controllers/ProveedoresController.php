@@ -104,9 +104,6 @@ class ProveedoresController extends Controller
 			}
 			
 		}
-
-		//Yii::app()->clientScript->scriptMap['jquery.js'] = false;
-        //$this->renderPartial('_form',array('model'=>$model,),false,true);
 	}
 
 	/**

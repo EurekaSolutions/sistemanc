@@ -29,11 +29,9 @@
                         $("#jobDialog").dialog("close");
                     }'),array('id'=>'closeJobDialog')); ?>
 </div>
-
 <?php $this->endWidget();
 ?>
 </div>
-
 <?php
 	unset($form);
 ?>
