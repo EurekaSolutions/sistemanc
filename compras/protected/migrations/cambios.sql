@@ -369,3 +369,15 @@ ALTER TABLE trimestre4.facturas ALTER COLUMN cierre_carga SET DEFAULT false;
 ALTER TABLE iva ADD COLUMN sys_status boolean;
 ALTER TABLE iva ALTER COLUMN sys_status SET DEFAULT true;
 COMMENT ON COLUMN iva.sys_status IS 'Si el iva esta o no activo';
+
+
+ALTER TABLE facturas_productos ADD COLUMN unidad_id bigint;
+COMMENT ON COLUMN facturas_productos.unidad_id IS 'Clave foranea a la tabla Unidades';
+ALTER TABLE trimestre1.facturas_productos ADD COLUMN unidad_id bigint;
+COMMENT ON COLUMN trimestre1.facturas_productos.unidad_id IS 'Clave foranea a la tabla Unidades';
+ALTER TABLE trimestre2.facturas_productos ADD COLUMN unidad_id bigint;
+COMMENT ON COLUMN trimestre2.facturas_productos.unidad_id IS 'Clave foranea a la tabla Unidades';
+ALTER TABLE trimestre3.facturas_productos ADD COLUMN unidad_id bigint;
+COMMENT ON COLUMN trimestre3.facturas_productos.unidad_id IS 'Clave foranea a la tabla Unidades';
+ALTER TABLE trimestre4.facturas_productos ADD COLUMN unidad_id bigint;
+COMMENT ON COLUMN trimestre4.facturas_productos.unidad_id IS 'Clave foranea a la tabla Unidades';
