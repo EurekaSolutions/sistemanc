@@ -12,6 +12,7 @@
  * @property integer $iva_id
  * @property string $fecha
  * @property integer $presupuesto_partida_id
+ * @property integer $unidad_id
  *
  * The followings are the available model relations:
  * @property Facturas $factura
@@ -37,7 +38,7 @@ class FacturasProductos extends ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('factura_id, producto_id, costo_unitario, cantidad_adquirida, iva_id, presupuesto_partida_id', 'required'),
+			array('factura_id, producto_id, costo_unitario, cantidad_adquirida, iva_id, presupuesto_partida_id, unidad_id', 'required'),
 			array('factura_id, producto_id, cantidad_adquirida, iva_id, presupuesto_partida_id', 'numerical', 'integerOnly'=>true),
 			array('costo_unitario', 'length', 'max'=>38),
 			array('producto_id', 'validarCargaProducto' ),
@@ -60,6 +61,7 @@ class FacturasProductos extends ActiveRecord
 			'iva' => array(self::BELONGS_TO, 'Iva', 'iva_id'),
 			'producto' => array(self::BELONGS_TO, 'Productos', 'producto_id'),
 			'presupuestoPartida' => array(self::BELONGS_TO, 'PresupuestoPartidas', array('presupuesto_partida_id'=>'presupuesto_partida_id')),
+			'unidad' => array(self::BELONGS_TO, 'Unidades', 'unidad_id'),
 		);
 	}
 
@@ -77,6 +79,7 @@ class FacturasProductos extends ActiveRecord
 			'iva_id' => 'Iva',
 			'fecha' => 'Fecha',
 			'presupuesto_partida_id' => 'Presupuesto Partida',
+			'unidad_id' => 'Unidad',
 		);
 	}
 

@@ -282,6 +282,29 @@ $( document ).ready(function() {
 	<?php echo $form->textFieldGroup($model,'cantidad_adquirida',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 	</td>
 <td>
+	<?php
+		echo $form->select2Group($model, 'unidad_id',
+                        array(
+                            'wrapperHtmlOptions' => array(
+                                'class' => 'col-sm-5',
+                            ),
+                            'label'=>'Unidad',
+                            'widgetOptions' => array(
+                                'asDropDownList' => true,
+                                'data' => CHtml::listData(Unidades::model()->findAll(),'unidad_id', 'nombre'),
+                                'htmlOptions'=>array('id'=>'unidad',),
+                                'options' => array(
+                                    //'tags' => array('clever', 'is', 'better', 'clevertech'),
+                                    'placeholder' => 'Seleccionar unidad',
+                                    // 'width' => '40%', 
+                                    'tokenSeparators' => array(',', ' ')
+                                )
+                            )
+                        )
+                    );
+	?>
+</td>
+<td>
 	<?php //echo $form->textFieldGroup($model,'iva_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); 
 
 	$criteria = new CDbCriteria();
@@ -352,12 +375,13 @@ $( document ).ready(function() {
 											array('name' => 'costo_unitario', 'value'=>'number_format($data->costo_unitario,2)'),
 											'cantidad_adquirida',
 											array('name'=>'iva_id','value'=>'$data->iva->etiquetaPorcentaje()'),
+											array('name'=>'unidad_id','value'=>'$data->unidad->nombre'),
 											/*
 											'fecha',
 											'presupuesto_partida_id',
 											*/
 										array(
-										'class'=>'booster.widgets.TbButtonColumn',
+										'class'=>'booster.widgets.TbButtonColumn', 'template'=>'{delete}', 
 											//'template'=>'{view}{update}<br>{delete}',
 										),
 									),

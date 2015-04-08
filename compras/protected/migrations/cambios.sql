@@ -381,3 +381,29 @@ ALTER TABLE trimestre3.facturas_productos ADD COLUMN unidad_id bigint;
 COMMENT ON COLUMN trimestre3.facturas_productos.unidad_id IS 'Clave foranea a la tabla Unidades';
 ALTER TABLE trimestre4.facturas_productos ADD COLUMN unidad_id bigint;
 COMMENT ON COLUMN trimestre4.facturas_productos.unidad_id IS 'Clave foranea a la tabla Unidades';
+ALTER TABLE facturas_productos
+  ADD CONSTRAINT fk_unidades_productos FOREIGN KEY (unidad_id)
+      REFERENCES unidades (unidad_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE trimestre1.facturas_productos
+  ADD CONSTRAINT fk_unidades_productos FOREIGN KEY (unidad_id)
+      REFERENCES unidades (unidad_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE trimestre2.facturas_productos
+  ADD CONSTRAINT fk_unidades_productos FOREIGN KEY (unidad_id)
+      REFERENCES unidades (unidad_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE trimestre3.facturas_productos
+  ADD CONSTRAINT fk_unidades_productos FOREIGN KEY (unidad_id)
+      REFERENCES unidades (unidad_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;      
+
+ALTER TABLE trimestre4.facturas_productos
+  ADD CONSTRAINT fk_unidades_productos FOREIGN KEY (unidad_id)
+      REFERENCES unidades (unidad_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+update trimestre1.facturas_productos set unidad_id = 631;

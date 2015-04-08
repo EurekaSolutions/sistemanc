@@ -84,6 +84,7 @@ class FacturasProductosController extends Controller
 											array('name' => 'costo_unitario', 'value'=>'number_format($data->costo_unitario,2)'),
 											'cantidad_adquirida',
 											array('name'=>'iva_id','value'=>'$data->iva->etiquetaPorcentaje()'),
+											array('name'=>'unidad_id','value'=>'$data->unidad->nombre'),
 											/*
 											'fecha',
 											'presupuesto_partida_id',
