@@ -98,12 +98,10 @@ class ProveedoresController extends Controller
 			{
 				$this->renderPartial('_exito',array(),false,true);
 				//echo '<script>$("#jobDialog").dialog("close");</script>';
-			}else
-			{
-				$this->renderPartial('_form',array('model'=>$model,),false,true);
-			}
-			
+			}	
 		}
+
+		$this->renderPartial('_form',array('model'=>$model,),false,true);
 	}
 
 	/**

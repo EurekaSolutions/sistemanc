@@ -71,7 +71,7 @@ class FacturasProductosController extends Controller
 	{
 		if(!empty($_POST['FacturasProductos']['factura_id'])){
 			$model=new FacturasProductos;
-			print_r($model->buscarProductosFactura($_POST['FacturasProductos']['factura_id']));
+			//print_r($model->buscarProductosFactura($_POST['FacturasProductos']['factura_id']));
 			 $this->widget('booster.widgets.TbGridView',array(
 									'id'=>'facturas-productos-grid',
 									'dataProvider'=>$model->buscarProductosFactura($_POST['FacturasProductos']['factura_id']),
@@ -344,13 +344,8 @@ class FacturasProductosController extends Controller
 				{
 					throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 				}
-
-				
-
 		}
-
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-
 	}
 
 
