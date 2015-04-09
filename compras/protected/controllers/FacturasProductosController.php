@@ -338,7 +338,7 @@ class FacturasProductosController extends Controller
 				$model->delete();
 
 				if(!isset($_GET['ajax'])){
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+					$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 				}
 				else
 				{

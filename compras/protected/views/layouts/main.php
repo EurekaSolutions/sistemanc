@@ -175,6 +175,7 @@
 									array('label' => 'Crear organos', 'url'=>array('/planificacion/cargamasiva'), 'visible'=>(Yii::app()->user->checkAccess('admin'))),
 									array('label' => 'Fuentes financiamiento', 'url'=>array('/fuentesFinanciamiento'), 'visible'=>(Yii::app()->user->checkAccess('admin'))),  
 									array('label' => 'Proveedores', 'url' => array('/proveedores/index'), 'visible'=>(Yii::app()->user->checkAccess('admin'))),
+									array('label' => 'Usuarios web services', 'url' => array('/usuariosWs/create'), 'visible'=>(Yii::app()->user->checkAccess('admin'))),
 									/*array('label' => 'Mis entes', 'url'=>array('/planificacion/misentes'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 									array('label' => 'Crear usuarios', 'url'=>array('/planificacion/usuariosentes'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), // si el tipo es ORGANO Yii::app()->session['organo']==1*/
 									),

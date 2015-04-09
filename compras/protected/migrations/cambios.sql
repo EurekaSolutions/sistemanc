@@ -407,3 +407,21 @@ ALTER TABLE trimestre4.facturas_productos
       ON UPDATE NO ACTION ON DELETE NO ACTION;
 
 update trimestre1.facturas_productos set unidad_id = 631;
+
+
+CREATE TABLE usuarios_ws
+(
+  id serial NOT NULL,
+  institucion character varying(255) NOT NULL,
+  correo character varying(255) NOT NULL,
+  usuario character varying(255) NOT NULL,
+  clave character varying(255) NOT NULL,
+  session character varying(255) NOT NULL,
+  token character varying(255),
+  fecha_creacion date NOT NULL DEFAULT now(),
+  fecha_actualizacion date DEFAULT now(),
+  CONSTRAINT usuarios_ws_pkey PRIMARY KEY (id),
+  CONSTRAINT usuarios_ws_correo_key UNIQUE (correo),
+  CONSTRAINT usuarios_ws_institucion_key UNIQUE (institucion),
+  CONSTRAINT usuarios_ws_usuario_key UNIQUE (usuario)
+)

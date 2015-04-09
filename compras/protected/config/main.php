@@ -79,6 +79,11 @@ return array(
 			'allowAutoLogin'=>true,
 			'loginUrl' => array('usr/login'),
 		),
+		'cliente'=>array(
+                                'class'=>'application.components.MiCliente',
+                                'ws_url'=>'http://localhost/wssnc/wservices/ws',
+                ),
+		
 		'authManager'=>array(
             'class'=>'CPhpAuthManager',
 			//          'authFile' => 'path'                  // only if necessary
