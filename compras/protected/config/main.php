@@ -83,7 +83,7 @@ return array(
                                 'class'=>'application.components.MiCliente',
                                 'ws_url'=>'http://localhost/wssnc/wservices/ws',
                 ),
-		
+
 		'authManager'=>array(
             'class'=>'CPhpAuthManager',
 			//          'authFile' => 'path'                  // only if necessary
@@ -138,9 +138,9 @@ return array(
 				),
 				// uncomment the following to show log messages on web pages
 				
-				array(
+				/*array(
 					'class'=>'CWebLogRoute',
-				),
+				),*/
 				
 			),
 		),
