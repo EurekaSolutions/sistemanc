@@ -7,7 +7,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 //array('label'=>'List UsuariosWs','url'=>array('index')),
 array('label'=>'Crear UsuariosWs','url'=>array('create')),
-array('label'=>'Obtener WSDL','url'=>array('#'), 'linkOptions'=> array('target'=>'_blank')),
+array('label'=>'Obtener WSDL','url'=>array('http://localhost/sistemanc/compras/index.php?r=wservices/ws'), 'linkOptions'=> array('target'=>'_blank')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
