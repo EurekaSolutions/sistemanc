@@ -36,6 +36,7 @@ class Procedimientos extends ActiveRecord
 			array('num_contrato, tipo', 'required'),
 			array('anho, ente_organo_id', 'numerical', 'integerOnly'=>true),
 			array('num_contrato, tipo', 'length', 'max'=>255),
+			array('num_contrato', 'validarUnicidad'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, num_contrato, anho, fecha, tipo, ente_organo_id', 'safe', 'on'=>'search'),
@@ -69,6 +70,16 @@ class Procedimientos extends ActiveRecord
 			'ente_organo_id' => 'Ente Organo',
 		);
 	}
+
+	 /**
+ 	 * Etiqueta de la factura.
+ 	 * 
+ 	 * @return string $etiqueta
+ 	 * */
+ 	public function validarUnicidad($attribute,$params){
+ 		if(count($this->findByAttributes(array('num_contrato'=>$this->num_contrato,'ente_organo_id'=>$this->ente_organo_id))))
+ 			$this->addError($attribute,'El numero de Contrato: '.$this->$attribute.' ya fue registrado');
+ 	}
 
 	/**
 	 *  Asignando anho y id del ente organo al cual pertenece el usuario.

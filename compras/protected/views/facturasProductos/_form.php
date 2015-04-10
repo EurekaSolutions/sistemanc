@@ -299,7 +299,8 @@ $( document ).ready(function() {
 <div id="lista_productos">
 	<?php 		
 		if(isset($model->factura_id))	 
-				$this->widget('booster.widgets.TbGridView',array(
+			$this->renderPartial('_listaProductos', array('model'=>$model, 'dataProvider'=>$model->buscarProductosFactura($model->factura_id)));
+				/*$this->widget('booster.widgets.TbGridView',array(
 									'id'=>'facturas-productos-grid',
 									'dataProvider'=>$model->buscarProductosFactura($model->factura_id),
 									//'filter'=>new FacturasProductos(),
@@ -315,11 +316,13 @@ $( document ).ready(function() {
 											/*
 											'fecha',
 											'presupuesto_partida_id',
-											*/
+											
 										array(
 										'class'=>'booster.widgets.TbButtonColumn', 'template'=>'{delete}', 
 											//'template'=>'{view}{update}<br>{delete}',
 										),
 									),
-							));?>
+							));*/
+
+							?>
 </div>

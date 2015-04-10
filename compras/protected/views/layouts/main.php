@@ -122,18 +122,17 @@
 							array(
 								'label' => 'Rendición',  //si el usuario es creado por este sistema
 								'items' => array(
-									array('label' => 'Mis Proveedores', 'url' => array('/proveedoresEntesOrganos/index'), 'visible'=>(Yii::app()->user->checkAccess('ente'))),
-									array('label' => 'Procedimientos', 'url' => array('/procedimientos/index'), 'visible'=>(Yii::app()->user->checkAccess('ente'))),
+									array('label' => 'Procedimientos', 'url' => array('/procedimientos/index'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
 									array('label'=>  'Facturas', 'url'=>array('/facturas/index'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 									array('label'=>  'Agregar productos a facturas', 'url'=>array('/facturasProductos/index'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
+									array('label' => 'Mis Proveedores', 'url' => array('/proveedoresEntesOrganos/index'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
 								),
 								//'visible'=>AQUI COLOCAR CONDICIÓN DE SI ESTA EN LA FECHA DE RENDICION DE CUENTA DEL TRIMESTRE PASADO),
-								'visible'=>Yii::app()->user->checkAccess('ente'),
+								'visible'=>Yii::app()->user->checkAccess('producto'),
 							),
 							array(
 								'label' => 'Gestion de usuarios',  //si el usuario es creado por este sistema
 								'items' => array(
-				
 											array('label' => 'Crear entes', 'url'=>array('/planificacion/crearente'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 											array('label' => 'Mis entes', 'url'=>array('/planificacion/misentes'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 											array('label' => 'Crear usuarios', 'url'=>array('/planificacion/usuariosentes'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1

@@ -29,17 +29,17 @@ class FacturasProductosController extends Controller
 		array('allow',  // allow all users to perform 'index' and 'view' actions
 			'actions'=>array('index','view','buscarProductosPresupuestoPartida', 'filaProducto','buscarProductosFactura', 'cerrar'),
 			'users'=>array('*'),
-			'roles'=>array('ente'),
+			'roles'=>array('producto'),
 		),
 		array('allow', // allow authenticated user to perform 'create' and 'update' actions
 			'actions'=>array('create','update'),
 			'users'=>array('@'),
-			'roles'=>array('ente'),
+			'roles'=>array('producto'),
 		),
 		array('allow', // allow admin user to perform 'admin' and 'delete' actions
 			'actions'=>array('admin','delete'),
 			//'users'=>array('admin'),
-			'roles'=>array('ente'),
+			'roles'=>array('producto'),
 		),
 		array('deny',  // deny all users
 			'users'=>array('*'),
@@ -71,31 +71,9 @@ class FacturasProductosController extends Controller
 	{
 		if(!empty($_POST['FacturasProductos']['factura_id'])){
 			$model=new FacturasProductos;
-			//print_r($model->buscarProductosFactura($_POST['FacturasProductos']['factura_id']));
-			 $this->widget('booster.widgets.TbGridView',array(
-									'id'=>'facturas-productos-grid',
-									'dataProvider'=>$model->buscarProductosFactura($_POST['FacturasProductos']['factura_id']),
-									//'filter'=>$model,
-									'summaryText'=>'',
-									'columns'=>array(
-											//'id',
-											//'factura_id',
-											array('name'=>'producto_id', 'value'=>'$data->producto->etiquetaProducto()'),
-											array('name' => 'costo_unitario', 'value'=>'number_format($data->costo_unitario,2)'),
-											'cantidad_adquirida',
-											array('name'=>'iva_id','value'=>'$data->iva->etiquetaPorcentaje()'),
-											array('name'=>'unidad_id','value'=>'$data->unidad->nombre'),
-											/*
-											'fecha',
-											'presupuesto_partida_id',
-											*/
-										array(
-										'class'=>'booster.widgets.TbButtonColumn',
-											'template'=>'{delete}',
-										),
-									),
-							));
-				} 
+
+			echo $this->renderPartial('_listaProductos', array('model'=>$model, 'dataProvider'=>$model->buscarProductosFactura($_POST['FacturasProductos']['factura_id'])),true,true);
+		} 
 	}
 
 	/**
@@ -322,6 +300,7 @@ class FacturasProductosController extends Controller
 	*/
 	public function actionDelete($id)
 	{
+		//print_r($_POST);exit();
 		if(Yii::app()->request->isPostRequest)
 		{
 			// we only allow deletion via POST request
@@ -334,18 +313,23 @@ class FacturasProductosController extends Controller
 
 			if(!($factura->ente_organo_id == Usuarios::model()->actual()->ente_organo_id))
 				throw new CHttpException(403, "No se puede procesar la solicitud.");
+			//echo 'chao';
+			//print_r($_POST['returnUrl']);
+			//exit();
+			//$model->delete();
 			
-				$model->delete();
 
-				if(!isset($_GET['ajax'])){
-					$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-				}
-				else
-				{
-					throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
-				}
+							
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+					// to refresh current action
+			//$this->refresh();
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			
+	
 		}
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+		
 	}
 
 
