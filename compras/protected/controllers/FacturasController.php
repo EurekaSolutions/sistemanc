@@ -55,9 +55,10 @@ class FacturasController extends Controller
 	*/
 	public function actionView($id)
 	{
-		$this->render('view',array(
+/*		$this->render('view',array(
 		'model'=>$this->loadModel($id),
-		));
+		));*/
+ 		$this->redirect(array('facturas/admin'));
 	}
 
 	/**

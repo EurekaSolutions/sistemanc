@@ -179,7 +179,7 @@ public function actionSecundario(){
 
 	    	if($crea_usuario->save())
 	    	{
-	    		//if($this->enviarCorreoRecuperacion($crea_usuario->correo,$crea_usuario->cedula))
+	    		$crea_usuario->enviarCorreoRecuperacion(/*$crea_usuario->correo,$crea_usuario->cedula*/)
 	    			Yii::app()->user->setFlash('success','Usuario creado con éxito.');
 	    		
 	    		//Reiniciando el formulario

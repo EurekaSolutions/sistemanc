@@ -114,7 +114,16 @@ class Usuarios extends ActiveRecord
 	            'application.behaviors.ActiveRecordLogableBehavior',
 	    );
 	}
-	
+
+	public function enviarCorreoRecuperacion(){
+		
+		list($controlador) = Yii::app()->createController('usr/default');
+		if($controlador->Recuperar($this->correo, $this->cedula))
+			Yii::app()->user->setFlash('success','Se envio un correo de recuperación al ente registrado.');
+		else
+			Yii::app()->user->setFlash('warning','No se pudo enviar el correo de recuperación al ente registrado.');
+
+	}
 
 	public function esHijo($ente_organo_id)
 	{
