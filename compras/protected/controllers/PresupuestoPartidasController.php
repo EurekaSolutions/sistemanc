@@ -77,6 +77,7 @@ class PresupuestoPartidasController extends Controller
 				$accionId = PresupuestoPartidaAcciones::model()->accionId($id);
 				
 				$presuPartidas = PresupuestoPartidaAcciones::model()->presuPartidas($accionId);
+				
 
 			}else{//Es un id de proyecto
 

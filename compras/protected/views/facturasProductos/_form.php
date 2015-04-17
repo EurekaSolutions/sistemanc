@@ -7,6 +7,23 @@ $( document ).ready(function() {
 			$( "#closeButton").removeAttr('disabled');
 		}
 	});
+
+	$( "#proyecto" ).change(function() {
+			$( "#select2-chosen-2" ).val("");
+			$( "#select2-chosen-2" ).html('<span class="select2-chosen" id="select2-chosen-2">Seleccione partida.</span>');
+			$( "#producto" ).html("");
+			$( "#select2-chosen-3" ).val("");
+			$( "#select2-chosen-3" ).html('<span class="select2-chosen" id="select2-chosen-3">Producto</span>');	
+	});
+
+	
+
+	$( "#partidasSus" ).change(function() {
+			//$( "#producto" ).html("");
+			//$( "#select2-chosen-3" ).val("");
+			$( "#select2-chosen-3" ).html('<span class="select2-chosen" id="select2-chosen-3">Producto</span>');	
+	});
+
 });
 </script>
 

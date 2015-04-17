@@ -31,19 +31,19 @@ class PlanificacionController extends Controller
 			// Acciones relacionadas con el usuario secundario PRODUCTO
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view', 'buscarespecfica', 'buscarespecficap', 'nacional','importado','eliminarProducto',
-					 'eliminarProductoImportado', 'buscarpartidasproyecto',  'buscarproductospartida'),
+					 'eliminarProductoImportado', 'vistaparcial', 'buscarpartidasproyecto',  'buscarproductospartida'),
 				'users'=>array('@'),
 				'roles'=>array( 'producto'),
 			),
 			// Acciones realacionadas con el usuario secundario PRESUPUESTO
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('eliminaraccion', 'eliminarproyecto', 'asignarpartidasproyecto', 'eliminaAccion', 'eliminaPartida', 
+				'actions'=>array('eliminaraccion','vistaparcial' , 'eliminarproyecto', 'asignarpartidasproyecto', 'eliminaAccion', 'eliminaPartida', 
 					'agregarproyecto', 'eliminaProyecto', 'agregarcentralizada', 'eliminarpartidas', 'buscarsubespecficap', 'buscarsubespecfica'   ),
 				'users'=>array('@'),
 				'roles'=>array( 'presupuesto'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array( 'create','update','partidas','vistaparcial', 'buscarpartida', 
+				'actions'=>array( 'create','update','partidas', 'buscarpartida', 
 								'buscargeneral', 'buscargeneralproyecto', 'buscarNcm', 	'buscarproductospartida',
 								 'Rcargaporpartida', 'rproducto'),
 				'users'=>array('@'),

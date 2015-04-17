@@ -242,6 +242,7 @@ class FacturasProductosController extends Controller
 		{
 			$model->attributes=$_POST['FacturasProductos'];
 			$proyectoSel->attributes = $_POST['Proyectos'];
+			$model->costo_unitario = floatval($model->costo_unitario);
 
 			if($model->save()){
 				//print_r($model->getErrors());
