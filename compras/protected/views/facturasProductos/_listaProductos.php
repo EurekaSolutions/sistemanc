@@ -1,7 +1,7 @@
 <?php
 
 			 $this->widget('booster.widgets.TbExtendedGridView',array(
-									'id'=>'facturas-productos-grid',
+									'id'=>'facturas-productos-grid'.time(),
 									'dataProvider'=>$dataProvider,
 									//'filter'=>$model,
 									'summaryText'=>'',
