@@ -268,3 +268,10 @@ run "ALTER SCHEMA public RENAME TO public_copy"
 Restore your dump of your public schema from step 1 using pg_restore
 
 Actualizar constraints
+
+
+
+
+pg_dump --host 10.70.211.34 --port 5432 --username "eureka" --role "eureka"  --format custom --blobs --section pre-data --section data --section post-data --encoding UTF8 --verbose --file "C:\Apache24\htdocs\sistemanc\compras\protected\migrations\sistemanc_19-04-2015.sql" --schema "public" --schema "trimestre1" --schema "trimestre2" "sistemanc"
+
+pg_restore --host 10.70.211.34 --port 5432 --username "eureka" --dbname "sistemanc" --role "eureka" --section pre-data --section data --section post-data --verbose "C:\Apache24\htdocs\sistemanc\compras\protected\migrations\sistemanc_19-04-2015_t1.backup"

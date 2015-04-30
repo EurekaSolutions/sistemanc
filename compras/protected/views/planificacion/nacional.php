@@ -101,14 +101,14 @@ $this->breadcrumbs=array(
                             'widgetOptions' => array(
                                 'asDropDownList' => true,
                                 'data' => CHtml::listData($partidas,'partida_id', function($partida){ return CHtml::encode($this->numeroPartida($partida).' - '.$partida->nombre);}),
-                                'htmlOptions'=>array('id'=>'partida','ajax' => array(	
+                                'htmlOptions'=>array('id'=>'partida','onChange'=>'submit','submit' => array('/planificacion/nacional','#'=>'producto'),/*'ajax' => array(	
 												'type'=>'POST', //request type
 												'url'=>CController::createUrl('planificacion/buscarproductospartida',array('t'=>'n')), //url to call.
 												//Style: CController::createUrl('currentController/methodToCall')
 												'update'=>'#producto', //selector to update
 												//'data'=>'js:javascript statement' 
 												//leave out the data key to pass all form values through
-										  )),			
+										  )*/),			
                                 'options' => array(
                                     //'tags' => array('clever', 'is', 'better', 'clevertech'),
                                     'placeholder' => 'Seleccionar partida',
@@ -262,11 +262,6 @@ $this->breadcrumbs=array(
 			    array('buttonType' => 'submit',/*'url'=>array('/planificacion/nacional','#'=>'pestanas'),*/ 'label' => 'Cargar producto')
 			);
 
-		echo '<h3>Lista de productos nacionales por partida seleccionada: </h3>';
-		?> <div id='listaProductosNacionales'>
-				<?php
-		$this->renderPartial('_nacional',array('presuPros'=>$presuPros));
-		?></div><?php 
 
 		?></div><?php 
 	}
@@ -276,7 +271,14 @@ $this->breadcrumbs=array(
 		
 
 ?>
+<?php
+		echo '<h3>Lista de productos nacionales por partida seleccionada: </h3>';
+		?> 
 
+<div id='listaProductosNacionales'>
+				<?php
+		$this->renderPartial('_nacional',array('presuPros'=>$presuPros));
+		?></div>
 <?php 
 
 	//echo count($presuPros);

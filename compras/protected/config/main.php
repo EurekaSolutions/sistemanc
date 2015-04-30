@@ -202,7 +202,7 @@ return array(
 			'trimestre1'=>array('c'=>date('Y').'-01-16', 'f'=>date('Y').'-04-15', 'anho'=>date('Y')),
 			'trimestre2'=>array('c'=>date('Y').'-04-16', 'f'=>date('Y').'-07-15', 'anho'=>date('Y')),
 			'trimestre3'=>array('c'=>date('Y').'-07-16', 'f'=>date('Y').'-10-15', 'anho'=>date('Y')),
-			'trimestre4'=>array('c'=>date('Y').'-10-16', 'f'=>date('Y').'-01-15', 'anho'=>date('Y'))),
+			'trimestre4'=>array('c'=>date('Y').'-10-16', 'f'=>(date('Y')+1).'-01-15', 'anho'=>date('Y'))),
 		'trimestresEsquemas'=>array(
 			'trimestre0'=>'public',
 			'trimestre1'=>'trimestre1',

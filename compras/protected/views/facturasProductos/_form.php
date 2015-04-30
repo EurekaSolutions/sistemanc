@@ -10,10 +10,10 @@ $( document ).ready(function() {
 
 	$( "#proyecto" ).change(function() {
 			$( "#select2-chosen-2" ).val("");
-			$( "#select2-chosen-2" ).html('<span class="select2-chosen" id="select2-chosen-2">Seleccione partida.</span>');
+			$( "#select2-chosen-2" ).html('<span class="select2-chosen" id="select2-chosen-2">Seleccione partida</span>');
 			$( "#producto" ).html("");
 			$( "#select2-chosen-3" ).val("");
-			$( "#select2-chosen-3" ).html('<span class="select2-chosen" id="select2-chosen-3">Producto</span>');	
+			$( "#select2-chosen-3" ).html('<span class="select2-chosen" id="select2-chosen-3">Producto</span>');
 	});
 
 	
@@ -168,7 +168,7 @@ $( document ).ready(function() {
 														  )),
 											'options' => array(
 												//'tags' => array('clever', 'is', 'better', 'clevertech'),
-												'placeholder' => 'Seleccione partida.',
+												'placeholder' => 'Seleccione partida',
 												// 'width' => '40%', 
 												'tokenSeparators' => array(',', ' ')
 											)
@@ -186,13 +186,31 @@ $( document ).ready(function() {
 
 	<div class="form-group">
 	<?php 	
-		//$productos = CController::createUrl('planificacion/listaProductosPartida',array('partidaId'=>$partidaSel->partida_id,'proyectoActualId'=>$proyectoSel->proyecto_id, 'tipo'=>'n'));
-		//$list = CHtml::listData(Facturas::model()->findAll(), 'id', 'num_factura');
 
-//print_r(CHtml::listData($model->presupuestoPartida->partida->productos, 'producto_id',function($producto){ return $producto->etiquetaProducto();} ));
-		$error = $model->getErrors();
-		//$vacio = empty($error)
-		echo CHtml::label('Seleccionar producto', 'producto');
+		echo $form->select2Group(
+				$model,
+				'producto_id',
+				//'value'=>'',
+				array(
+					'wrapperHtmlOptions' => array(
+						'class' => 'col-sm-5',
+					),
+					'widgetOptions' => array(
+						'asDropDownList' => true,
+						'data' => ($model->presupuesto_partida_id=='')?array():CHtml::listData($model->presupuestoPartida->listaProductos(), 'producto_id',function($producto){ return $producto->etiquetaProducto();} ),
+				        'htmlOptions'=>array('id'=>'producto',	            
+		        			'options' => array($model->producto_id=>array('selected'=>true)) // selected options by default
+								        ),
+						'options' => array(
+							//'tags' => array('clever', 'is', 'better', 'clevertech'),
+							'placeholder' => 'Seleccione producto',
+							 'width' => '40%', 
+							'tokenSeparators' => array(',', ' ')
+						)
+					)
+				)
+			);
+		/*echo CHtml::label('Producto', 'producto');
 		echo "<br>";
 		$this->widget(
 		    'booster.widgets.TbSelect2',
@@ -208,12 +226,12 @@ $( document ).ready(function() {
 								        ),
 		        'options' => array(
 		            //'tags' => array('proveedores'),
-		            'placeholder' => 'Producto',
+		            'placeholder' => 'Seleccione producto',
 		            'width' => '40%',
 		            'tokenSeparators' => array(',', ' ')
 		        )
 		    )
-		);
+		);*/
 	?>
 
 	<?php //echo $form->textFieldGroup($model,'proveedor_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>

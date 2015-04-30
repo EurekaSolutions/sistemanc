@@ -33,7 +33,7 @@ class PlanificacionController extends Controller
 				'actions'=>array('index','view', 'buscarespecfica', 'buscarespecficap', 'nacional','importado','eliminarProducto',
 					 'eliminarProductoImportado', 'vistaparcial', 'buscarpartidasproyecto',  'buscarproductospartida'),
 				'users'=>array('@'),
-				'roles'=>array( 'producto'),
+				'roles'=>array( 'producto', 'presupuesto'),
 			),
 			// Acciones realacionadas con el usuario secundario PRESUPUESTO
 			array('allow',  // allow all users to perform 'index' and 'view' actions
@@ -541,15 +541,11 @@ class PlanificacionController extends Controller
 						
 					try{
 						foreach ($acciones as $key => $value) {
-							if(($value->delete()))
-							{
-								$transaction->commit();    // committing 
-								//return true;
-							}else {
-								$transaction->rollBack();
-								break;
-							}
+							if(!$value->delete())
+								throw new CHttpException(500, "Error Processing Request");
 						}
+						
+						$transaction->commit();    // committing 
 					}catch (Exception $e){
 					   $transaction->rollBack();
 					}

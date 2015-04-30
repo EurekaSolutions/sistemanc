@@ -188,7 +188,7 @@
 			    )
 		    )
 	  	  );
-		$list = Yii::app()->session['trimestresDisponibles']?Yii::app()->session['trimestresDisponibles']:array();
+		/*$list = Yii::app()->session['trimestresDisponibles']?Yii::app()->session['trimestresDisponibles']:array();
 
 		$this->widget(
 				    'booster.widgets.TbSelect2',
@@ -218,7 +218,7 @@
 				            'tokenSeparators' => array(',', ' ')
 				        )
 				    )
-				);
+				);*/
 
 	  	 $this->endWidget();
 		}

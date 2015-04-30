@@ -80,6 +80,7 @@ class PresupuestoPartidas extends ActiveRecord
 			'presupuestoPartidaAcciones' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones',  'presupuesto_partida_id'),
 			'presupuestoPartidaProyecto' => array(self::HAS_MANY, 'PresupuestoPartidaProyecto', 'presupuesto_partida_id'),
 			'fuenteFinanciamientos' => array(self::HAS_MANY, 'FuentePresupuesto', 'presupuesto_partida_id'),
+			'facturaProductos' => array(self::HAS_MANY, 'FacturasProductos', 'presupuesto_partida_id'),
 		);
 	}
 
@@ -276,6 +277,9 @@ class PresupuestoPartidas extends ActiveRecord
 		foreach ($this->fuenteFinanciamientos as $c) 
 			if(!$c->delete()) throw new Exception("No se pudo eliminar la fuente_presupuesto con ID: ".$c->id, 1);
 			
+		// Eliminando los productos y relacionadas a factura asociadas a la partida
+		foreach ($this->facturaProductos as $c) 
+			if(!$c->delete()) throw new Exception("No se pudo eliminar el facturas_productos con ID: ".$c->id, 1);
 
 		foreach ($this->presupuestoPartidaProyecto as $c) {
 			$c->setScenario('cascadaPartida');		// Esto para evitar que me intente eliminar despues de borrarse el mismo

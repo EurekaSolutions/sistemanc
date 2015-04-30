@@ -29,7 +29,7 @@ class ProveedoresController extends Controller
 		array('allow',  // allow all users to perform 'index' and 'view' actions
 			'actions'=>array('index','view', 'anadir', 'create', 'ajaxObtenerProveedores'),
 			'users'=>array('*'),
-			'roles'=>array('ente'),
+			'roles'=>array('producto'),
 		),
 		array('allow', // allow authenticated user to perform 'create' and 'update' actions
 			'actions'=>array('admin', 'update'),
