@@ -27,32 +27,37 @@ class PlanificacionController extends Controller
 				'users'=>array('@'),
 				'roles'=>array('organo'),
 			),*/
-		
-			// Acciones relacionadas con el usuario secundario PRODUCTO
+
+			// Acciones comunas a los usuarios secundario PRODUCTO y PRESUPUESTO y sus padres.
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'buscarespecfica', 'buscarespecficap', 'nacional','importado','eliminarProducto',
-					 'eliminarProductoImportado', 'vistaparcial', 'buscarpartidasproyecto',  'buscarproductospartida'),
+				'actions'=>array('index','view', 'vistaparcial' ),
 				'users'=>array('@'),
 				'roles'=>array( 'producto', 'presupuesto'),
 			),
+			// Acciones relacionadas con el usuario secundario PRODUCTO
+			array('deny',  // allow all users to perform 'index' and 'view' actions
+				'actions'=>array( 'buscarespecfica', 'buscarespecficap', 'nacional','importado','eliminarProducto',
+					 'eliminarProductoImportado', 'buscarpartidasproyecto',  'buscarproductospartida'),
+				'users'=>array('@'),
+				'roles'=>array( 'producto'),
+			),
 			// Acciones realacionadas con el usuario secundario PRESUPUESTO
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('eliminaraccion','vistaparcial' , 'eliminarproyecto', 'asignarpartidasproyecto', 'eliminaAccion', 'eliminaPartida', 
+			array('deny',  // allow all users to perform 'index' and 'view' actions
+				'actions'=>array('eliminaraccion' , 'eliminarproyecto', 'asignarpartidasproyecto', 'eliminaAccion', 'eliminaPartida', 
 					'agregarproyecto', 'eliminaProyecto', 'agregarcentralizada', 'eliminarpartidas', 'buscarsubespecficap', 'buscarsubespecfica'   ),
 				'users'=>array('@'),
 				'roles'=>array( 'presupuesto'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array( 'create','update','partidas', 'buscarpartida', 
-								'buscargeneral', 'buscargeneralproyecto', 'buscarNcm', 	'buscarproductospartida',
-								 'Rcargaporpartida', 'rproducto'),
+				'actions'=>array( 'Rcargaporpartida', 'rproducto'),
 				'users'=>array('@'),
 				'roles'=>array('ente'),
 			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','administracion','importacion', 'modificarcorreo', 'cargamasiva', 'descargar', 'correoactual'),
+			array('deny', // allow authenticated user to perform 'create' and 'update' actions
+				'actions'=>array( 'create','update','partidas', 'buscarpartida', 
+								'buscargeneral', 'buscargeneralproyecto', 'buscarNcm', 	'buscarproductospartida',),
 				'users'=>array('@'),
-				'roles'=>array('admin'),
+				'roles'=>array('ente'),
 			),
 
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -60,7 +65,11 @@ class PlanificacionController extends Controller
 				'users'=>array('@'),
 				'roles'=>array('organo'),
 			),
-
+			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+				'actions'=>array('admin','delete','administracion','importacion', 'modificarcorreo', 'cargamasiva', 'descargar', 'correoactual'),
+				'users'=>array('@'),
+				'roles'=>array('admin'),
+			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('importacion'),
 				'users'=>array('*'),

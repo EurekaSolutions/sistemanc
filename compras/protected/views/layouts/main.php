@@ -67,7 +67,7 @@
 											array('label'=>'Estado de carga', 'url'=>array('/planificacion/vistaparcial'), 'visible'=>!Yii::app()->user->isGuest),
 											
 											'---',
-											array('label' => '<b>Productos</b>', 'url' => ''),
+											/*array('label' => '<b>Productos</b>', 'url' => ''),
 											'---',
 											array('label' => 'Nacional', 'url' => array('/planificacion/nacional')),
 											array('label' => 'Importado', 'url' => array('/planificacion/importado')),
@@ -88,7 +88,7 @@
 											array('label' => 'Acción centralizada', 'url' => array('/planificacion/eliminaraccion'), 'visible'=>(Yii::app()->user->checkAccess('presupuesto'))),
 											array('label'=>  'Partidas', 'url'=>array('/planificacion/eliminarpartidas'), 'visible'=>(Yii::app()->user->checkAccess('presupuesto'))), // si el tipo es admin.
 									
-											'---',
+											'---',*/
 											array('label' => '<b>Reportes</b>', 'url' => ''),
 											'---',
 										
@@ -109,14 +109,14 @@
 						    
 						    //array('label'=>'Partidas', 'url'=>array('/planificacion/partidas'), 'visible'=>!Yii::app()->user->isGuest),
 						    
-						    array(
+						   /* array(
 								'label' => 'Modificación presupuestaria',  //si el usuario es creado por este sistema
 								'items' => array(
 									array('label'=>'Transferir montos', 'url'=>array('/presupuestoPartidas/modificarPartida'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')),
 									array('label'=>'Añadir montos', 'url'=>array('/presupuestoPartidas/anadirPartida'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')),
 								),
 								//'visible'=>AQUI COLOCAR CONDICIÓN DE SI ESTA EN LA FECHA DE RENDICION DE CUENTA DEL TRIMESTRE PASADO),
-							),
+							),*/
 						    
 							
 							array(
