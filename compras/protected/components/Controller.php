@@ -47,7 +47,7 @@ class Controller extends CController
 
 	public function M_compras()
 	{
-		//return "Hola";
+		
 		return Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->compra;
 	}
 

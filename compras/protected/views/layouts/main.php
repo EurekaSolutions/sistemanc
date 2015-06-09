@@ -59,7 +59,7 @@
 					    'type' => 'navbar',
 					    'items' => array(
 					    	//array('label'=>'Inicio', 'url'=>array('/planificacion/index'), 'visible'=>!Yii::app()->user->isGuest),
-					    	(Yii::app()->controller->M_compras())?
+
 					    	array(
 								'label' => 'Compras',  //si el usuario es creado por este sistema
 								'items' => array(
@@ -67,26 +67,26 @@
 											array('label'=>'Estado de carga', 'url'=>array('/planificacion/vistaparcial'), 'visible'=>!Yii::app()->user->isGuest),
 											
 											'---',
-											array('label' => '<b>Productos</b>', 'url' => ''),
+											array('label' => '<b>Productos</b>', 'url' => '', 'visible'=>Yii::app()->controller->M_compras()),
 											'---',
-											array('label' => 'Nacional', 'url' => array('/planificacion/nacional')),
-											array('label' => 'Importado', 'url' => array('/planificacion/importado')),
+											array('label' => 'Nacional', 'url' => array('/planificacion/nacional'), 'visible'=>Yii::app()->controller->M_compras()),
+											array('label' => 'Importado', 'url' => array('/planificacion/importado'), 'visible'=>Yii::app()->controller->M_compras()),
 											//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 										
 											'---',
-											array('label' => '<b>Agregar</b>', 'url' => ''),
+											array('label' => '<b>Agregar</b>', 'url' => '', 'visible'=>Yii::app()->controller->M_compras()),
 											'---',
-											array('label' => 'Proyecto', 'url' => array('/planificacion/agregarproyecto'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')),
-											array('label' => 'Acción centralizada', 'url' => array('/planificacion/agregarcentralizada'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')),
-											array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')), // si el tipo es admin.
+											array('label' => 'Proyecto', 'url' => array('/planificacion/agregarproyecto'), 'visible'=>(Yii::app()->user->checkAccess('presupuesto') and Yii::app()->controller->M_compras())),
+											array('label' => 'Acción centralizada', 'url' => array('/planificacion/agregarcentralizada'), 'visible'=>(Yii::app()->user->checkAccess('presupuesto') and Yii::app()->controller->M_compras())),
+											array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>(Yii::app()->user->checkAccess('presupuesto') and Yii::app()->controller->M_compras())), // si el tipo es admin.
 										
 											'---',
-											array('label' => '<b>Eliminar</b>', 'url' => ''),
+											array('label' => '<b>Eliminar</b>', 'url' => '', 'visible'=>Yii::app()->controller->M_compras()),
 											'---',
 									
-											array('label' => 'Proyecto', 'url' => array('/planificacion/eliminarproyecto'), 'visible'=>(Yii::app()->user->checkAccess('presupuesto'))),
-											array('label' => 'Acción centralizada', 'url' => array('/planificacion/eliminaraccion'), 'visible'=>(Yii::app()->user->checkAccess('presupuesto'))),
-											array('label'=>  'Partidas', 'url'=>array('/planificacion/eliminarpartidas'), 'visible'=>(Yii::app()->user->checkAccess('presupuesto'))), // si el tipo es admin.
+											array('label' => 'Proyecto', 'url' => array('/planificacion/eliminarproyecto'), 'visible'=>(Yii::app()->user->checkAccess('presupuesto') and Yii::app()->controller->M_compras())),
+											array('label' => 'Acción centralizada', 'url' => array('/planificacion/eliminaraccion'), 'visible'=>(Yii::app()->user->checkAccess('presupuesto') and Yii::app()->controller->M_compras())),
+											array('label'=>  'Partidas', 'url'=>array('/planificacion/eliminarpartidas'), 'visible'=>(Yii::app()->user->checkAccess('presupuesto') and Yii::app()->controller->M_compras())), // si el tipo es admin.
 									
 											'---',
 											array('label' => '<b>Reportes</b>', 'url' => ''),
@@ -104,7 +104,7 @@
 									//array('label' => 'Importado', 'url' => array('/planificacion/importado')),
 									//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 								)
-							) : '',
+							),
 						    //array('label' => 'Home', 'url' => '#', 'active' => true),
 						    
 						    //array('label'=>'Partidas', 'url'=>array('/planificacion/partidas'), 'visible'=>!Yii::app()->user->isGuest),

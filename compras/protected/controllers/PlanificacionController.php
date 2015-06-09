@@ -54,7 +54,7 @@ class PlanificacionController extends Controller
 				'actions'=>array( 'Rcargaporpartida', 'rproducto'),
 				'users'=>array('@'),
 				'roles'=>array('ente'),
-				'expression'=>'Yii::app()->controller->M_compras()',
+				//'expression'=>'Yii::app()->controller->M_compras()',
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array( 'create','update','partidas', 'buscarpartida', 
