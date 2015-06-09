@@ -35,7 +35,7 @@ class PlanificacionController extends Controller
 				'roles'=>array( 'producto', 'presupuesto'),
 			),
 			// Acciones relacionadas con el usuario secundario PRODUCTO
-			array('deny',  // allow all users to perform 'index' and 'view' actions
+			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array( 'buscarespecfica', 'buscarespecficap', 'nacional','importado','eliminarProducto',
 					 'eliminarProductoImportado', 'buscarpartidasproyecto',  'buscarproductospartida'),
 				'users'=>array('@'),
@@ -43,7 +43,7 @@ class PlanificacionController extends Controller
 				'expression'=>'Yii::app()->controller->M_compras()',
 			),
 			// Acciones realacionadas con el usuario secundario PRESUPUESTO
-			array('deny',  // allow all users to perform 'index' and 'view' actions
+			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('eliminaraccion' , 'eliminarproyecto', 'asignarpartidasproyecto', 'eliminaAccion', 'eliminaPartida', 
 					'agregarproyecto', 'eliminaProyecto', 'agregarcentralizada', 'eliminarpartidas', 'buscarsubespecficap', 'buscarsubespecfica'   ),
 				'users'=>array('@'),
@@ -56,7 +56,7 @@ class PlanificacionController extends Controller
 				'roles'=>array('ente'),
 				'expression'=>'Yii::app()->controller->M_compras()',
 			),
-			array('deny', // allow authenticated user to perform 'create' and 'update' actions
+			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array( 'create','update','partidas', 'buscarpartida', 
 								'buscargeneral', 'buscargeneralproyecto', 'buscarNcm', 	'buscarproductospartida',),
 				'users'=>array('@'),
