@@ -59,7 +59,7 @@
 					    'type' => 'navbar',
 					    'items' => array(
 					    	//array('label'=>'Inicio', 'url'=>array('/planificacion/index'), 'visible'=>!Yii::app()->user->isGuest),
-
+					    	(Yii::app()->controller->M_compras())?
 					    	array(
 								'label' => 'Compras',  //si el usuario es creado por este sistema
 								'items' => array(
@@ -67,7 +67,7 @@
 											array('label'=>'Estado de carga', 'url'=>array('/planificacion/vistaparcial'), 'visible'=>!Yii::app()->user->isGuest),
 											
 											'---',
-											/*array('label' => '<b>Productos</b>', 'url' => ''),
+											array('label' => '<b>Productos</b>', 'url' => ''),
 											'---',
 											array('label' => 'Nacional', 'url' => array('/planificacion/nacional')),
 											array('label' => 'Importado', 'url' => array('/planificacion/importado')),
@@ -88,7 +88,7 @@
 											array('label' => 'Acción centralizada', 'url' => array('/planificacion/eliminaraccion'), 'visible'=>(Yii::app()->user->checkAccess('presupuesto'))),
 											array('label'=>  'Partidas', 'url'=>array('/planificacion/eliminarpartidas'), 'visible'=>(Yii::app()->user->checkAccess('presupuesto'))), // si el tipo es admin.
 									
-											'---',*/
+											'---',
 											array('label' => '<b>Reportes</b>', 'url' => ''),
 											'---',
 										
@@ -104,21 +104,22 @@
 									//array('label' => 'Importado', 'url' => array('/planificacion/importado')),
 									//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 								)
-							),
+							) : '',
 						    //array('label' => 'Home', 'url' => '#', 'active' => true),
 						    
 						    //array('label'=>'Partidas', 'url'=>array('/planificacion/partidas'), 'visible'=>!Yii::app()->user->isGuest),
 						    
-						   /* array(
+						    (Yii::app()->controller->M_rendicion())?
+						    array(
 								'label' => 'Modificación presupuestaria',  //si el usuario es creado por este sistema
 								'items' => array(
 									array('label'=>'Transferir montos', 'url'=>array('/presupuestoPartidas/modificarPartida'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')),
 									array('label'=>'Añadir montos', 'url'=>array('/presupuestoPartidas/anadirPartida'), 'visible'=>Yii::app()->user->checkAccess('presupuesto')),
 								),
 								//'visible'=>AQUI COLOCAR CONDICIÓN DE SI ESTA EN LA FECHA DE RENDICION DE CUENTA DEL TRIMESTRE PASADO),
-							),*/
+							) : '',
 						    
-							
+							(Yii::app()->controller->M_rendicion())?
 							array(
 								'label' => 'Rendición',  //si el usuario es creado por este sistema
 								'items' => array(
@@ -129,7 +130,7 @@
 								),
 								//'visible'=>AQUI COLOCAR CONDICIÓN DE SI ESTA EN LA FECHA DE RENDICION DE CUENTA DEL TRIMESTRE PASADO),
 								'visible'=>Yii::app()->user->checkAccess('producto'),
-							),
+							) : '',
 							array(
 								'label' => 'Gestion de usuarios',  //si el usuario es creado por este sistema
 								'items' => array(
@@ -188,7 +189,7 @@
 			    )
 		    )
 	  	  );
-		/*$list = Yii::app()->session['trimestresDisponibles']?Yii::app()->session['trimestresDisponibles']:array();
+		$list = Yii::app()->session['trimestresDisponibles']?Yii::app()->session['trimestresDisponibles']:array();
 
 		$this->widget(
 				    'booster.widgets.TbSelect2',
@@ -218,7 +219,7 @@
 				            'tokenSeparators' => array(',', ' ')
 				        )
 				    )
-				);*/
+				);
 
 	  	 $this->endWidget();
 		}

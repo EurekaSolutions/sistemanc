@@ -44,4 +44,15 @@ class Controller extends CController
 
 		return parent::beforeAction($action);
 	}
+
+	public function M_compras()
+	{
+		//return "Hola";
+		return Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->compra;
+	}
+
+	public function M_rendicion()
+	{
+		return Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->rendicion;
+	}
 }

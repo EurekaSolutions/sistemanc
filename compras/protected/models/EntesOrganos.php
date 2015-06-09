@@ -10,6 +10,8 @@
  * @property string $tipo
  * @property string $rif
  * @property string $creado_por
+ * @property string $compras
+ * @property string $rendicion
  *
  * The followings are the available model relations:
  * @property Proyectos[] $proyectoses
@@ -54,6 +56,7 @@ class EntesOrganos extends ActiveRecord
 			array('creado_por', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
+			array('compra, rendicion', 'safe'),
 			array('ente_organo_id, codigo_onapre, nombre, tipo, rif, creado_por', 'safe', 'on'=>'search'),
 		);
 	}

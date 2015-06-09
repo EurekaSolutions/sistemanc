@@ -100,6 +100,8 @@ class PresupuestoPartidasController extends Controller
 																	return $presuPartida->partida->etiquetaPartida();
 																});
 		    
+		    echo CHtml::tag('option',
+		                   array('value'=>''),CHtml::encode(''),true);
 		    foreach($listPresuPartidas as $value => $name)
 		    {
 		        echo CHtml::tag('option',

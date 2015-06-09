@@ -40,6 +40,7 @@ class PlanificacionController extends Controller
 					 'eliminarProductoImportado', 'buscarpartidasproyecto',  'buscarproductospartida'),
 				'users'=>array('@'),
 				'roles'=>array( 'producto'),
+				'expression'=>'Yii::app()->controller->M_compras()',
 			),
 			// Acciones realacionadas con el usuario secundario PRESUPUESTO
 			array('deny',  // allow all users to perform 'index' and 'view' actions
@@ -47,23 +48,27 @@ class PlanificacionController extends Controller
 					'agregarproyecto', 'eliminaProyecto', 'agregarcentralizada', 'eliminarpartidas', 'buscarsubespecficap', 'buscarsubespecfica'   ),
 				'users'=>array('@'),
 				'roles'=>array( 'presupuesto'),
+				'expression'=>'Yii::app()->controller->M_compras()',
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array( 'Rcargaporpartida', 'rproducto'),
 				'users'=>array('@'),
 				'roles'=>array('ente'),
+				'expression'=>'Yii::app()->controller->M_compras()',
 			),
 			array('deny', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array( 'create','update','partidas', 'buscarpartida', 
 								'buscargeneral', 'buscargeneralproyecto', 'buscarNcm', 	'buscarproductospartida',),
 				'users'=>array('@'),
 				'roles'=>array('ente'),
+				'expression'=>'Yii::app()->controller->M_compras()',
 			),
 
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('crearente','misentes', 'usuariosentes', 'gesUsuEntes', 'rporusuario', 'ajaxreportes', 'actividad'),
 				'users'=>array('@'),
 				'roles'=>array('organo'),
+				'expression'=>'Yii::app()->controller->M_compras()',
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete','administracion','importacion', 'modificarcorreo', 'cargamasiva', 'descargar', 'correoactual'),
@@ -73,6 +78,7 @@ class PlanificacionController extends Controller
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('importacion'),
 				'users'=>array('*'),
+				'expression'=>'Yii::app()->controller->M_compras()',
 				
 			),
 			

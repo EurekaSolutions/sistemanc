@@ -30,17 +30,20 @@ class ProveedoresController extends Controller
 			'actions'=>array('index','view', 'anadir', 'create', 'ajaxObtenerProveedores'),
 			'users'=>array('*'),
 			'roles'=>array('producto'),
+			'expression'=>'Yii::app()->controller->M_rendicion()',
 		),
 		array('allow', // allow authenticated user to perform 'create' and 'update' actions
 			'actions'=>array('admin', 'update'),
 			'users'=>array('@'),
 			'roles'=>array('admin'),
+			'expression'=>'Yii::app()->controller->M_rendicion()',
 		),
 		array('allow', // allow admin user to perform 'admin' and 'delete' actions
 			'actions'=>array(/*'delete',*/ 'subir'),
 			//'users'=>array('admin'),
 			//'roles'=>array('ente'),
 			'roles'=>array('admin'),
+			'expression'=>'Yii::app()->controller->M_rendicion()',
 		),
 		array('deny',  // deny all users
 			'users'=>array('*'),
