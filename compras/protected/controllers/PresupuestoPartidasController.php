@@ -29,7 +29,7 @@ class PresupuestoPartidasController extends Controller
 		array('allow',  // allow all users to perform 'index' and 'view' actions
 			'actions'=>array('buscarpartidasproyecto','buscarpartidasproyecto2'),
 			'users'=>array('@'),
-			'roles'=>array('presupuesto')
+			'roles'=>array('presupuesto','producto')
 		),
 		array('deny',  // allow all users to perform 'index' and 'view' actions
 			'actions'=>array('modificarPartida', 'montoDisponible', 'montoDisponibleSustraendo', 'anadirPartida'),
