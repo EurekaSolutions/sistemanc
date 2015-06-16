@@ -21,7 +21,9 @@ tr.principaltr th {
     vertical-align:middle;
 }
 </style>
-<?php $mfinal = 0; ?>
+<?php $mfinal = 0;
+    $monto = 0;
+?>
 <!--<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>-->
 		
 		<h4 style="text-align: center;">ESTADO DE CARGA</h4><br>
@@ -45,14 +47,15 @@ tr.principaltr th {
 
 			 		$accionOrgano = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accion->accion_id, 'ente_organo_id'=>$this->usuario()->ente_organo_id));
 
-			 		//print_r($accionOrgano);
-			 		//echo count($accionOrgano);
-			 		//echo count($accionOrgano);
 					$valor = 0;
 
-					foreach ($accionOrgano as $key => $presupuestoPartidaAccion) 
-						foreach ($presupuestoPartidaAccion->presupuestoPartidas as $key => $presupuestoPartida) 
-							$valor += $this->montoCargadoPartida($presupuestoPartida);
+                foreach ($accionOrgano as $key => $presupuestoPartidaAccion)
+                { 
+                    foreach ($presupuestoPartidaAccion->presupuestoPartidas as $key => $presupuestoPartida)
+                    {
+                        $valor += $this->montoCargadoPartida($presupuestoPartida);
+                    }
+                }
 
 		 ?>
 		

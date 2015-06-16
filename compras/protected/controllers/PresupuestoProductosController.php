@@ -58,50 +58,38 @@ class PresupuestoProductosController extends Controller
 	public function actionModificarProducto($id)
 	{
 		
+		$id= intval($id);
 		$model=$this->loadModel($id);
-
-		//print_r($model->proyectoPartida->montoCargadoPartida());
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+        $usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 
 		if(isset($_POST['PresupuestoProductos']))
 		{
-			$modelNuevo = new PresupuestoProductos();
+            
 
-			$modelNuevo->attributes = $_POST['PresupuestoProductos'];
-			//print_r($_POST['PresupuestoProductos']);
-			//Yii::app()->end();
-			//$model = $this->loadModel($id);
+            if($model->proyectoPartida->ente_organo_id == $usuario->ente_organo_id)
+			{
+                        
+                $modelNuevo = new PresupuestoProductos();
 
-			//print_r($model);
+                $modelNuevo->attributes = $_POST['PresupuestoProductos'];
 
-			//if($modelNuevo->cantidad > $model->cantidad || $modelNuevo->costo_unidad > $model->costo_unidad)
-			//{
-				$cantDif = $modelNuevo->cantidad - $model->cantidad;
-				$costoUniDif = $modelNuevo->costo_unidad - $model->costo_unidad;
-				$montoPresuDif = $cantDif * $costoUniDif;
+				$monAct = $modelNuevo->costo_unidad * $modelNuevo->cantidad;
+				$monCar = $model->proyectoPartida->montoCargadoPartida();
+				$montoPresuDif = $monAct-$monCar;
 
-				if($modelNuevo->cantidad < $model->cantidad && $modelNuevo->costo_unidad < $model->costo_unidad){
-					$montoPresuDif = -$montoPresuDif;
-				}
+				if($monAct > $model->proyectoPartida->monto_presupuestado){
 
-
-				if($model->proyectoPartida->montoCargadoPartida()+$montoPresuDif > $model->proyectoPartida->monto_presupuestado){
 					Yii::app()->user->setFlash('error', "El cambio no puede realizarse, el monto sobrepasa la cantidad de presupuesto disponible para la partida asociada al producto.");
 				}else{
-					//if($modelNuevo->costo_unidad)
-					//$modelNuevo->monto_presupuesto = $modelNuevo->cantidad * $modelNuevo->costo_unidad;
-					//$model->scenario = 'update';
+
 					$model->costo_unidad = $modelNuevo->costo_unidad;
 					$model->cantidad = $modelNuevo->cantidad;
 					$model->monto_presupuesto=$model->costo_unidad * $model->cantidad;
 					if($model->save()){
 						Yii::app()->user->setFlash('success', "El cambio fue realizado con éxito.");
-							//$this->redirect(array('view','id'=>$model->presupuesto_id));
 					}
 				}
-			//}
+			}
 
 
 		}

@@ -184,7 +184,7 @@
 		    			if($contador !=0)
 		    			{?>
 		    		<tr>
-		    			<td colspan="8" align="right" style="text-align:right !important">Porcentaje total de carga proyecto: <strong><?php echo number_format((($porcentajePartida*100)/$monto),2,',','.').' %'; ?></strong></td>
+		    			<td colspan="8" align="right" style="text-align:right !important">Porcentaje total de carga proyecto: <strong><?php echo number_format((($porcentajePartida*100)/1),2,',','.').' %'; ?></strong></td>
 		    		</tr>
 		    		<?php
 		    			}

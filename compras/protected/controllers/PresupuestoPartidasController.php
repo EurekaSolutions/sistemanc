@@ -31,7 +31,7 @@ class PresupuestoPartidasController extends Controller
 			'users'=>array('@'),
 			'roles'=>array('presupuesto','producto')
 		),
-		array('deny',  // allow all users to perform 'index' and 'view' actions
+		array('allow',  // allow all users to perform 'index' and 'view' actions
 			'actions'=>array('modificarPartida', 'montoDisponible', 'montoDisponibleSustraendo', 'anadirPartida'),
 			'users'=>array('@'),
 			'roles'=>array('presupuesto')
@@ -74,9 +74,8 @@ class PresupuestoPartidasController extends Controller
 	}
 	public function buscarPartidasProyectoAccion($id)
 	{
-
-
-			if(strstr($id, 'a'))
+        
+            if(strstr($id, 'a'))
 			{//Es un id de accion
 
 				$accionId = PresupuestoPartidaAcciones::model()->accionId($id);
