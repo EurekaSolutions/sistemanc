@@ -21,6 +21,14 @@ return array (
     array (
       0 => 'organo',
     ),
+    'assignments' => 
+    array (
+      1339 => 
+      array (
+        'bizRule' => NULL,
+        'data' => NULL,
+      ),
+    ),
   ),
   'organo' => 
   array (
@@ -71,13 +79,5 @@ return array (
     'description' => 'Puede asociar productos al presupuesto cargado, eliminar productos.',
     'bizRule' => '',
     'data' => '',
-    'assignments' => 
-    array (
-      1339 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
-    ),
   ),
 );

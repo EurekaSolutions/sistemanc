@@ -102,7 +102,7 @@ class FacturasProductos extends ActiveRecord
 		foreach (Facturas::model()->findAllByAttributes(array('ente_organo_id'=>Usuarios::model()->actual()->ente_organo_id)) as $key => $value) {
 
 			foreach ($value->productos as $key => $value) {
-				if ($value->producto_id == $id) 
+				if ($value->producto_id == $id && $value->presupuesto_partida_id == $this->presupuesto_partida_id) 
 					$sumaProducto += $value->costo_unitario*$value->cantidad_adquirida;
 			}
 		}
