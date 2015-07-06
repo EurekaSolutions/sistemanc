@@ -1,21 +1,30 @@
 <?php
 
 /**
- * This is the model class for table "proveedores".
+ * This is the model class for table "public.proveedores".
  *
- * The followings are the available columns in table 'proveedores':
+ * The followings are the available columns in table 'public.proveedores':
  * @property integer $id
  * @property string $rif
  * @property string $razon_social
  * @property string $fecha
  * @property integer $ente_organo_id
+ * @property integer $estatus_contratista_id
+ * @property integer $anho
+ * @property boolean $nacional
  *
  * The followings are the available model relations:
  * @property EntesOrganos $enteOrgano
  * @property Facturas[] $facturases
+ * @property ProveedoresEntesOrganos[] $proveedoresEntesOrganoses
+ * @property integer $estatus_contratista_id
+ * @property integer $anho
+ * @property boolean $nacional
  */
 class Proveedores extends ActiveRecord
 {
+    
+    public $tiene_rif;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -35,12 +44,14 @@ class Proveedores extends ActiveRecord
 			array('rif, razon_social', 'required'),
 			array('ente_organo_id, estatus_contratista_id, anho', 'numerical', 'integerOnly'=>true),
 			array('rif', 'length', 'max'=>12),
+            array('tiene_rif', 'boolean'),
 			array('rif', 'unique', 'caseSensitive' => 'false',),
 			array('rif', 'match', 'pattern' => '/^(j|J|v|V|e|E|g|G)([0-9]{8,8})([0-9]{1})$/', 'allowEmpty'=>false,'message'=>'El formato del rif no es válido. Debe ser de la siguiente manera: J123456789'),
 			array('razon_social', 'length', 'max'=>255),
+            array('nacional', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, rif, razon_social, fecha, ente_organo_id, anho', 'safe', 'on'=>'search'),
+			array('id, rif, razon_social, fecha, ente_organo_id, estatus_contratista_id, anho, nacional, tiene_rif', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,6 +67,10 @@ class Proveedores extends ActiveRecord
 			'facturas' => array(self::HAS_MANY, 'Facturas', 'proveedor_id'),
 			'facturasCerradas' => array(self::HAS_MANY, 'Facturas', 'proveedor_id', 'condition'=>'cierre_carga=true'),
 			'facturasNoCerradas' => array(self::HAS_MANY, 'Facturas', 'proveedor_id', 'condition'=>'cierre_carga=false'),
+            'proveedoresObjetoses' => array(self::HAS_MANY, 'ProveedoresObjetos', 'proveedor_id'),
+            'proveedoresExtranjeroses' => array(self::HAS_MANY,'ProveedoresExtranjeros', 'proveedor_id'),
+            'proveedoresCuentases' => array(self::HAS_MANY, 'ProveedoresCuentas', 'proveedor_id'),
+			'personasContactos' => array(self::HAS_MANY, 'PersonasContacto', 'proveedor_id')
 		);
 	}
 
@@ -77,7 +92,9 @@ class Proveedores extends ActiveRecord
 			'razon_social' => 'Razon Social',
 			'fecha' => 'Fecha',
 			'ente_organo_id' => 'Ente Organo',
-			'estatus_contratista_id' => 'Estatus Contratista'
+			'estatus_contratista_id' => 'Estatus Contratista',
+            'anho' => 'Año',
+			'nacional' => 'Nacional',
 		);
 	}
 
@@ -117,6 +134,8 @@ class Proveedores extends ActiveRecord
 		$criteria->compare('fecha',$this->fecha,true);
 		$criteria->compare('ente_organo_id',$this->ente_organo_id);
 		$criteria->compare('estatus_contratista_id',$this->estatus_contratista_id);
+		$criteria->compare('anho',$this->anho);
+		$criteria->compare('nacional',$this->nacional);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
