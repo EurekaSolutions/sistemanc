@@ -109,6 +109,7 @@ class ProveedoresExtranjerosController extends Controller
                 if($flag){
 				    $transaction->commit();    // committing 
                     Yii::app()->user->setFlash('success', "Proveedor extranjero registrado con exito.");
+                    $this->redirect(array('view','id'=>$model->id));
                 }else
                    throw new Exception("Error Processing Request", 1);
 	
@@ -118,9 +119,7 @@ class ProveedoresExtranjerosController extends Controller
 	            Yii::app()->user->setFlash('error', "No se pudo registrar el proveedor extranjero.");
 	            //return false;
 	        } 
-            
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				
 		}
 
 		$this->render('create',array(
@@ -136,19 +135,66 @@ class ProveedoresExtranjerosController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+        
+        $modelProveedor= Proveedores::model()->findById($model->proveedor_id);
+        
+        $modelContacto= ProveedoresContacto::model()->findById($model->proveedor_id);
+        
+        $modelCuenta= ProveedoresCuentas::model()->findById($model->proveedor_id);
+        
+        $modelObjeto= ProveedoresObjetos::model()->findById($model->proveedor_id);
+        
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['ProveedoresExtranjeros']))
 		{
-			$model->attributes=$_POST['ProveedoresExtranjeros'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+            $model->attributes=$_POST['ProveedoresExtranjeros'];
+            $modelProveedor->attributes=$_POST['Proveedores'];
+            $modelContacto->attributes=$_POST['PersonasContacto'];
+            $modelCuenta->attributes=$_POST['ProveedoresCuentas'];
+            $modelObjeto->attributes=$_POST['ProveedoresObjetos'];
+            
+            $transaction = $model->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
+			try{
+                $flag = true;
+                if(($flag = $modelProveedor->save())){
+                
+                    $model->proveedor_id = $modelProveedor->id;
+                    $modelContacto->proveedor_id = $modelProveedor->id;
+                    $modelCuenta->proveedor_id = $modelProveedor->id;
+                    $modelObjeto->proveedor_id = $modelProveedor->id;
+                    //if(!$model->save()){
+                        $flag = $flag and $model->save();
+                    //}
+                    //if(!$modelContacto->save()){
+                        $flag = $flag and $modelContacto->save();
+                    //}
+                    //if(!$modelCuenta->save()){
+                        $flag = $flag and $modelCuenta->save();
+                    //}
+                    //if(!$modelObjeto->save()){
+                        $flag = $flag and $modelObjeto->save();
+                    //}
+                }
+                   
+                if($flag){
+				    $transaction->commit();    // committing 
+                    Yii::app()->user->setFlash('success', "Proveedor extranjero actualizado con exito.");
+                    $this->redirect(array('view','id'=>$model->id));
+                }else
+                   throw new Exception("Error Processing Request", 1);
+	
+			}
+	        catch (Exception $e){
+	            $transaction->rollBack();
+	            Yii::app()->user->setFlash('error', "No se pudo actualizar el proveedor extranjero.");
+	            //return false;
+	        } 
 		}
 
 		$this->render('update',array(
-		'model'=>$model,
+		'model'=>$model, 'modelProveedor'=>$modelProveedor, 'modelContacto'=>$modelContacto, 'modelCuenta'=>$modelCuenta, 'modelObjeto'=>$modelObjeto,
 		));
 	}
 
@@ -159,6 +205,8 @@ class ProveedoresExtranjerosController extends Controller
 	*/
 	public function actionDelete($id)
 	{
+        //No queremos borrar proveedores extranjeros por los momentos.
+        Yii::app()->end();
 		if(Yii::app()->request->isPostRequest)
 		{
 		// we only allow deletion via POST request
