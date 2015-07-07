@@ -190,7 +190,7 @@ CREATE TABLE proveedores_objetos
   objeto_principal_id integer NOT NULL, -- Clave foránea a la tabla Obejto Principal.
   CONSTRAINT extranjeros_objeto_pkey PRIMARY KEY (id),
   CONSTRAINT extranjeros_objeto_objeto_principal_id_fkey FOREIGN KEY (objeto_principal_id)
-      REFERENCES objeto_principal (id) MATCH SIMPLE
+      REFERENCES objetos_principales (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT extranjeros_objeto_proveedor_extranjero_id_fkey FOREIGN KEY (proveedor_id)
       REFERENCES proveedores (id) MATCH SIMPLE
