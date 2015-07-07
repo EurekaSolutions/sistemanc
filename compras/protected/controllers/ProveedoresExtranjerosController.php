@@ -86,26 +86,25 @@ class ProveedoresExtranjerosController extends Controller
             $transaction = $model->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 			try{
                 $flag = true;
-                if($modelProveedor->save()){
+                if(($flag = $modelProveedor->save())){
                 
                     $model->proveedor_id = $modelProveedor->id;
                     $modelContacto->proveedor_id = $modelProveedor->id;
                     $modelCuenta->proveedor_id = $modelProveedor->id;
                     $modelObjeto->proveedor_id = $modelProveedor->id;
-                    if(!$model->save()){
-                        $flag = $flag and false;
-                    }
-                    if(!$modelContacto->save()){
-                        $flag = $flag and false;
-                    }
-                    if(!$modelCuenta->save()){
-                        $flag = $flag and false;
-                    }
-                    if(!$modelObjeto->save()){
-                        $flag = $flag and false;
-                    }
-                }else
-                   $flag = false;
+                    //if(!$model->save()){
+                        $flag = $flag and $model->save();
+                    //}
+                    //if(!$modelContacto->save()){
+                        $flag = $flag and $modelContacto->save();
+                    //}
+                    //if(!$modelCuenta->save()){
+                        $flag = $flag and $modelCuenta->save();
+                    //}
+                    //if(!$modelObjeto->save()){
+                        $flag = $flag and $modelObjeto->save();
+                    //}
+                }
                    
                 if($flag){
 				    $transaction->commit();    // committing 
