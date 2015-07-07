@@ -23,7 +23,7 @@ COMMENT ON COLUMN proveedores.nacional IS 'Indica si es nacional o extranjera.';
 
 CREATE TABLE objetos_principales
 (
-  id integer NOT NULL DEFAULT nextval('objeto_principal_id_seq'::regclass), -- Clave primaria.
+  id serial NOT NULL, -- Clave primaria.
   nombre character varying(255) NOT NULL, -- Nombre del objeto princiapal.
   descripcion character varying(255), -- Descripción del tipo de obejto principal.
   CONSTRAINT objeto_principal_pkey PRIMARY KEY (id),
@@ -185,7 +185,7 @@ COMMENT ON COLUMN proveedores_extranjeros.pagina_web IS 'Página Web.';
 
 CREATE TABLE proveedores_objetos
 (
-  id integer NOT NULL DEFAULT nextval('extranjeros_objeto_id_seq'::regclass), -- Clave primaria.
+  id serial NOT NULL, -- Clave primaria.
   proveedor_id integer NOT NULL, -- Clave foránea a la tabla proveedores.
   objeto_principal_id integer NOT NULL, -- Clave foránea a la tabla Obejto Principal.
   CONSTRAINT extranjeros_objeto_pkey PRIMARY KEY (id),
