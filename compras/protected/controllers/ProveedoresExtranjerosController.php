@@ -85,7 +85,10 @@ class ProveedoresExtranjerosController extends Controller
             
             $transaction = $model->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 			try{
+                $modelProveedor->nacional = false;
+                //$modelProveedor->tiene_rif = $_POST['Proveedores']['tiene_rif'];
                 $flag = $modelProveedor->save();
+                
                 if($flag){
                 
                     $model->proveedor_id = $modelProveedor->id;

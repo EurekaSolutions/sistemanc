@@ -9,9 +9,9 @@
 
 	<?php //echo $form->textFieldGroup($model,'proveedor_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
-    <?php echo $form->checkBoxGroup($modelProveedor,'tiene_rif',array('widgetOptions'=>array('htmlOptions'=>array('id'=>'tieneRif','checked'=>'checked','class'=>'span5','maxlength'=>10)))); ?>
+    <?php echo $form->checkBoxGroup($modelProveedor,'tiene_rif',array('widgetOptions'=>array('htmlOptions'=>array('id'=>'tieneRif','checked'=>!empty($modelProveedor->tiene_rif)?'checked':'','class'=>'span5','maxlength'=>10)))); ?>
 
-	<?php echo $form->textFieldGroup($modelProveedor,'rif',array('widgetOptions'=>array('htmlOptions'=>array('id'=>'rif','class'=>'span5','maxlength'=>10)))); ?>
+	<?php echo $form->textFieldGroup($modelProveedor,'rif',array('widgetOptions'=>array('htmlOptions'=>array('id'=>'rif','hidden'=>!empty($modelProveedor->tiene_rif)?$modelProveedor->tiene_rif:false,'class'=>'span5','maxlength'=>10)))); ?>
 
 	<?php echo $form->textFieldGroup($modelProveedor,'razon_social',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
 

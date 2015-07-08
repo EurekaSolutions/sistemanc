@@ -42,7 +42,8 @@ class Proveedores extends ActiveRecord
 		// will receive user inputs.
 		return array(
 			array('rif, razon_social', 'required'),
-            array('razon_social', 'required', 'on'=>'extranjero'),
+            array('razon_social, tiene_rif', 'required', 'on'=>'extranjero'),
+            array('rif', 'verificacionRifExtranjero', 'on'=>'extranjero'),
 			array('ente_organo_id, estatus_contratista_id, anho', 'numerical', 'integerOnly'=>true),
 			array('rif', 'length', 'max'=>12),
             array('tiene_rif', 'boolean'),
@@ -55,7 +56,16 @@ class Proveedores extends ActiveRecord
 			array('id, rif, razon_social, fecha, ente_organo_id, estatus_contratista_id, anho, nacional, tiene_rif', 'safe', 'on'=>'search'),
 		);
 	}
+	/**
+	 * @return 
+	 */
+	public function verificacionRifExtranjero($attribute,$params)
+    {
 
+        if($this->tiene_rif && empty($this->rif))
+          $this->addError($attribute, 'Debe introuducir el RIF.');
+	}
+    
 	/**
 	 * @return array relational rules.
 	 */
