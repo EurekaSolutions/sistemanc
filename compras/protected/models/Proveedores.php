@@ -42,6 +42,7 @@ class Proveedores extends ActiveRecord
 		// will receive user inputs.
 		return array(
 			array('rif, razon_social', 'required'),
+            array('razon_social', 'required', 'on'=>'extranjero'),
 			array('ente_organo_id, estatus_contratista_id, anho', 'numerical', 'integerOnly'=>true),
 			array('rif', 'length', 'max'=>12),
             array('tiene_rif', 'boolean'),

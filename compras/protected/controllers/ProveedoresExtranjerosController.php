@@ -85,27 +85,27 @@ class ProveedoresExtranjerosController extends Controller
             
             $transaction = $model->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 			try{
-                $flag = true;
-                if(($flag = $modelProveedor->save())){
+                $flag = $modelProveedor->save();
+                if($flag){
                 
                     $model->proveedor_id = $modelProveedor->id;
                     $modelContacto->proveedor_id = $modelProveedor->id;
                     $modelCuenta->proveedor_id = $modelProveedor->id;
                     $modelObjeto->proveedor_id = $modelProveedor->id;
                     //if(!$model->save()){
-                        $flag = $flag and $model->save();
+                        $flag = $flag && $model->save();
                     //}
                     //if(!$modelContacto->save()){
-                        $flag = $flag and $modelContacto->save();
+                        $flag = $flag && $modelContacto->save();
                     //}
                     //if(!$modelCuenta->save()){
-                        $flag = $flag and $modelCuenta->save();
+                        $flag = $flag && $modelCuenta->save();
                     //}
                     //if(!$modelObjeto->save()){
-                        $flag = $flag and $modelObjeto->save();
+                        $flag = $flag && $modelObjeto->save();
                     //}
                 }
-                   
+                  
                 if($flag){
 				    $transaction->commit();    // committing 
                     Yii::app()->user->setFlash('success', "Proveedor extranjero registrado con exito.");
@@ -157,24 +157,24 @@ class ProveedoresExtranjerosController extends Controller
             
             $transaction = $model->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 			try{
-                $flag = true;
-                if(($flag = $modelProveedor->save())){
+                $flag = $modelProveedor->save();
+                if($flag){
                 
                     $model->proveedor_id = $modelProveedor->id;
                     $modelContacto->proveedor_id = $modelProveedor->id;
                     $modelCuenta->proveedor_id = $modelProveedor->id;
                     $modelObjeto->proveedor_id = $modelProveedor->id;
                     //if(!$model->save()){
-                        $flag = $flag and $model->save();
+                        $flag = $flag && $model->save();
                     //}
                     //if(!$modelContacto->save()){
-                        $flag = $flag and $modelContacto->save();
+                        $flag = $flag && $modelContacto->save();
                     //}
                     //if(!$modelCuenta->save()){
-                        $flag = $flag and $modelCuenta->save();
+                        $flag = $flag && $modelCuenta->save();
                     //}
                     //if(!$modelObjeto->save()){
-                        $flag = $flag and $modelObjeto->save();
+                        $flag = $flag && $modelObjeto->save();
                     //}
                 }
                    
