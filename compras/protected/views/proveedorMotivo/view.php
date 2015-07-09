@@ -3,7 +3,8 @@ $this->breadcrumbs=array(
 		'Proveedor Motivos'=>array('index'),
 		$model->id,
 	);
-
+if(Yii::app()->user->checkAccess('admin'))
+{
 $this->menu=array(
 	array('label'=>'List ProveedorMotivo','url'=>array('index')),
 	array('label'=>'Create ProveedorMotivo','url'=>array('create')),
@@ -11,6 +12,7 @@ $this->menu=array(
 	array('label'=>'Delete ProveedorMotivo','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage ProveedorMotivo','url'=>array('admin')),
 	);
+}
 ?>
 
 <h1>Ver Proveedor Motivo</h1>

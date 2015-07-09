@@ -3,7 +3,8 @@ $this->breadcrumbs=array(
 		'Proveedores Extranjeroses'=>array('index'),
 		$model->proveedor->razon_social,
 	);
-
+if(Yii::app()->user->checkAccess('admin'))
+{
 $this->menu=array(
 	array('label'=>'List ProveedoresExtranjeros','url'=>array('index')),
 	array('label'=>'Create ProveedoresExtranjeros','url'=>array('create')),
@@ -11,8 +12,8 @@ $this->menu=array(
 	array('label'=>'Delete ProveedoresExtranjeros','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage ProveedoresExtranjeros','url'=>array('admin')),
 	);
+}
 ?>
-
 <h3>Ver Proveedores Extranjeros <strong> <?php echo $model->proveedor->razon_social ?></strong></h3>
 <h3>INFORMACIÓN BASICA DE LA EMPRESA</h3>
 <?php 
@@ -87,9 +88,9 @@ $this->widget('booster.widgets.TbDetailView',array(
 	?>	
 		<tr class="even">
 			<th>Rama</th>
-			<td><?php echo $value->rama;?></td>
+			<td><?php echo $value->ramaProducto->rama->nombre;?></td>
 			<th>Producto</th>
-			<td><?php echo $value->rama_producto_id;?></td>
+			<td><?php echo $value->ramaProducto->nombre;?></td>
 			<th>Descripción</th>
 			<td><?php echo $value->descripcion;?></td>
 		</tr>

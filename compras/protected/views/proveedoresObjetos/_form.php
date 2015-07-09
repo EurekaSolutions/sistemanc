@@ -1,6 +1,7 @@
 <?php $form=$this->beginWidget('booster.widgets.TbActiveForm',array(
 	'id'=>'proveedores-objetos-form',
 	'enableAjaxValidation'=>false,
+	'htmlOptions'=>array('enctype'=>'multipart/form-data'),
 )); ?>
 
 <p class="help-block">Fields with <span class="required">*</span> are required.</p>
@@ -57,9 +58,9 @@
 -->
 
     <?php 	
-        $rama = RamaProductos::model()->findAll();
+        $ramas = Ramas::model()->findAll();
 
-        $list = CHtml::listData($rama, 'id', 'nombre',function($model){return $model->rama->nombre;});
+        $list = CHtml::listData($ramas, 'id', 'nombre');
 	
 		echo CHtml::label('Seleccionar objeto principal', 'Objeto principal');
 		echo "<br>";
@@ -68,10 +69,10 @@
 		    array(
 		        'asDropDownList' => true,
 		        'model' => $model,
-		        'attribute' => 'rama_producto_id',
+		        'attribute' => 'rama',
 		        //'name' => 'procedimiento_id',
 		        'data' => $list,
-		        'htmlOptions'=>array('id'=>'ObjetoPrincipal',),
+		        'htmlOptions'=>array('id'=>'ObjetoPrincipal'),
 		        'options' => array(
 		            //'tags' => array('procedimientos'),
 		            'placeholder' => 'Objeto principal',
@@ -81,7 +82,32 @@
 		    )
 		);
 	?>
+	<br>
+	<?php 	
+        $ramaproductos = RamaProductos::model()->findAll();
 
+        $list = CHtml::listData($ramaproductos, 'id', 'nombre');
+	
+		echo CHtml::label('Seleccionar productos', 'Productos');
+		echo "<br>";
+		$this->widget(
+		    'booster.widgets.TbSelect2',
+		    array(
+		        'asDropDownList' => true,
+		        'model' => $model,
+		        'attribute' => 'rama_producto_id',
+		        //'name' => 'procedimiento_id',
+		        'data' => $list,
+		        'htmlOptions'=>array('id'=>'Productos', 'multiple'=>'multiple'),
+		        'options' => array(
+		            //'tags' => array('procedimientos'),
+		            'placeholder' => 'Productos',
+		            'width' => '40%',
+		            'tokenSeparators' => array(',', ' ')
+		        )
+		    )
+		);
+	?>
 <!--
 	<?php //echo $form->textFieldGroup($model,'rama_producto_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>-->
 

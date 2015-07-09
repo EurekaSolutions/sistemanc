@@ -68,7 +68,7 @@ class ProveedoresExtranjeros extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
+			'id' => 'Proveedor',
 			'proveedor_id' => 'Proveedor',
 			'num_identificacion' => 'Código fiscal del país de origen',
 			'pais_id' => 'País',
