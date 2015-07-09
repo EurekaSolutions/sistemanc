@@ -188,6 +188,7 @@
 								'items' => array(
 									array('label' => 'Agregar proveedor', 'url' => array('/proveedoresExtranjeros/create'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
 									array('label' => 'Añadir información financiera', 'url' => array('/proveedoresCuentas/create'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
+									array('label' => 'Añadir información técnica', 'url' => array('/proveedoresCuentas/create'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
 									
 									),
 								'visible'=>(Yii::app()->user->checkAccess('producto'))
