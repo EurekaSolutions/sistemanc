@@ -26,14 +26,6 @@ class Proveedores extends ActiveRecord
     
     public $tiene_rif;
     
-    /**
-	 * @return string the associated database table name
-	 */
-	public function Extranjeros()
-	{
-		return Proveedores::model()->findByAttributes(array('nacional'=>false,'ente_organo_id'=>Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->ente_organo_id));
-	}
-    
 	/**
 	 * @return string the associated database table name
 	 */
@@ -113,7 +105,7 @@ class Proveedores extends ActiveRecord
 	 * @return html nombre de partida compuesto con el nombre
 	 */
 	public function etiquetaExtranjero(){
-		return CHtml::encode($this->rif.' - '. $this->razon_social.' - '.$this->);
+		return CHtml::encode($this->rif.' - '. $this->razon_social.' - '.$this->proveedoresExtranjeros->num_identificacion.' - '.$this->proveedoresExtranjeros->pais->nombre);
 	}
     
 	/**

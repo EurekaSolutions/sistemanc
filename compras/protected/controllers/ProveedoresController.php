@@ -52,9 +52,9 @@ class ProveedoresController extends Controller
 	}
 	
 
-	public function actionAjaxObtenerProveedores() {
+	public function actionAjaxObtenerProveedores($nacional = true) {
 		if (isset($_GET['q'])) {
-			$proveedores = Proveedores::model()->findAll(array('order'=>'rif', 'condition'=>'rif LIKE :rif', 'params'=>array(':rif'=>strtoupper('%'.$_GET['q'].'%'))));
+			$proveedores = Proveedores::model()->findAll(array('order'=>'rif', 'condition'=>'rif LIKE :rif, nacional=:nacional', 'params'=>array(':nacional'=>$nacional,':rif'=>strtoupper('%'.$_GET['q'].'%'))));
 			$data = array();
 			foreach ($proveedores as $value) {
 				$data[] = array(

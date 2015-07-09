@@ -70,7 +70,7 @@ class ProveedoresExtranjeros extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'proveedor_id' => 'Proveedor',
-			'num_identificacion' => 'Número de Identificacón',
+			'num_identificacion' => 'Código fiscal del país de origen',
 			'pais_id' => 'País',
 			'codigo_postal' => 'Código Postal',
 			'calle' => 'Calle',
