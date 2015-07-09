@@ -68,14 +68,14 @@ class ProveedoresExtranjeros extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'proveedor_id' => 'Proveedor',
-			'num_identificacion' => 'Num Identificacion',
-			'pais_id' => 'Pais',
-			'codigo_postal' => 'Codigo Postal',
+			'num_identificacion' => 'Número de Identificacón',
+			'pais_id' => 'País',
+			'codigo_postal' => 'Código Postal',
 			'calle' => 'Calle',
 			'distrito' => 'Distrito',
-			'poblacion' => 'Poblacion',
-			'tlf_fijo' => 'Tlf Fijo',
-			'pagina_web' => 'Pagina Web',
+			'poblacion' => 'Población',
+			'tlf_fijo' => 'Tlf. Fijo',
+			'pagina_web' => 'Página Web',
 		);
 	}
 

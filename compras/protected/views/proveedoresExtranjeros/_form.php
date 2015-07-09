@@ -11,7 +11,7 @@
 
     <?php echo $form->checkBoxGroup($modelProveedor,'tiene_rif',array('widgetOptions'=>array('htmlOptions'=>array('id'=>'tieneRif','checked'=>!empty($modelProveedor->tiene_rif)?'checked':'','class'=>'span5','maxlength'=>10)))); ?>
 
-	<?php echo $form->textFieldGroup($modelProveedor,'rif',array('widgetOptions'=>array('htmlOptions'=>array('id'=>'rif','hidden'=>!empty($modelProveedor->tiene_rif)?$modelProveedor->tiene_rif:false,'class'=>'span5','maxlength'=>10)))); ?>
+	<?php echo $form->textFieldGroup($modelProveedor,'rif',array('widgetOptions'=>array('htmlOptions'=>array('id'=>'rif','class'=>'span5','maxlength'=>10)))); ?>
 
 	<?php echo $form->textFieldGroup($modelProveedor,'razon_social',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
 
@@ -56,7 +56,7 @@
     <h3>INFORMACIÓN TECNICA DE LA EMPRESA</h3>
 
 	<?php 	
-		$list = CHtml::listData(ObjetosPrincipales::model()->findAll(), 'id', 'nombre');
+		/*$list = CHtml::listData(ObjetosPrincipales::model()->findAll(), 'id', 'nombre');
 	
 		echo CHtml::label('Seleccionar objeto principal', 'Objeto Principal');
 		echo "<br>";
@@ -76,14 +76,15 @@
 		            'tokenSeparators' => array(',', ' ')
 		        )
 		    )
-		);
+		);*/
 	?>
 
-    <h3>Información de Pagos</h3>
+  <!--  <h3>Información de Pagos</h3>
+-->
+	<?php /*echo $form->textFieldGroup($modelCuenta,'codigo_swift',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
 
-	<?php echo $form->textFieldGroup($modelCuenta,'codigo_swift',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
-
-	<?php echo $form->textFieldGroup($modelCuenta,'num_cuenta_bancaria',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
+	<?php echo $form->textFieldGroup($modelCuenta,'num_cuenta_bancaria',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255))));*/ ?>
+<!--
 
     <h3>Información de Contacto</h3>
 
@@ -93,6 +94,7 @@
 	<?php echo $form->textFieldGroup($modelContacto,'tlf_movil',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
 	<?php echo $form->textFieldGroup($modelContacto,'fax_telefax',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
 	<?php echo $form->textFieldGroup($modelContacto,'correo_electronico',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
+-->
 
 <div class="form-actions">
 	<?php $this->widget('booster.widgets.TbButton', array(
@@ -107,8 +109,9 @@
 
 <script >
     
-    $('#tieneRif').change(function(){ 
-        //if($('#tieneRif').val() == 0)
+    toogleRif();
+    
+    function toogleRif(){
         if($('#tieneRif').is(':checked'))
         {
             $('#rif').parent().show();
@@ -118,6 +121,11 @@
         {
             $('#rif').parent().hide();
         }
+    }
+    
+    $('#tieneRif').change(function(){ 
+        //if($('#tieneRif').val() == 0)
+       toogleRif();
     });
     
     

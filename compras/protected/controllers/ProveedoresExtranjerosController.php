@@ -67,9 +67,9 @@ class ProveedoresExtranjerosController extends Controller
         
         $modelContacto=new PersonasContacto;
         
-        $modelCuenta=new ProveedoresCuentas;
+        //$modelCuenta=new ProveedoresCuentas;
         
-        $modelObjeto=new ProveedoresObjetos;
+        //$modelObjeto=new ProveedoresObjetos;
             
 
 		// Uncomment the following line if AJAX validation is needed
@@ -80,12 +80,14 @@ class ProveedoresExtranjerosController extends Controller
 			$model->attributes=$_POST['ProveedoresExtranjeros'];
             $modelProveedor->attributes=$_POST['Proveedores'];
             $modelContacto->attributes=$_POST['PersonasContacto'];
-            $modelCuenta->attributes=$_POST['ProveedoresCuentas'];
-            $modelObjeto->attributes=$_POST['ProveedoresObjetos'];
+            //$modelCuenta->attributes=$_POST['ProveedoresCuentas'];
+            //$modelObjeto->attributes=$_POST['ProveedoresObjetos'];
             
             $transaction = $model->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 			try{
                 $modelProveedor->nacional = false;
+                if($modelProveedor->tiene_rif)
+                    $modelProveedor->rif = 'N/A';
                 //$modelProveedor->tiene_rif = $_POST['Proveedores']['tiene_rif'];
                 $flag = $modelProveedor->save();
                 
@@ -93,8 +95,8 @@ class ProveedoresExtranjerosController extends Controller
                 
                     $model->proveedor_id = $modelProveedor->id;
                     $modelContacto->proveedor_id = $modelProveedor->id;
-                    $modelCuenta->proveedor_id = $modelProveedor->id;
-                    $modelObjeto->proveedor_id = $modelProveedor->id;
+                    //$modelCuenta->proveedor_id = $modelProveedor->id;
+                    //$modelObjeto->proveedor_id = $modelProveedor->id;
                     //if(!$model->save()){
                         $flag = $flag && $model->save();
                     //}
@@ -102,10 +104,10 @@ class ProveedoresExtranjerosController extends Controller
                         $flag = $flag && $modelContacto->save();
                     //}
                     //if(!$modelCuenta->save()){
-                        $flag = $flag && $modelCuenta->save();
+                        //$flag = $flag && $modelCuenta->save();
                     //}
                     //if(!$modelObjeto->save()){
-                        $flag = $flag && $modelObjeto->save();
+                        //$flag = $flag && $modelObjeto->save();
                     //}
                 }
                   
