@@ -32,7 +32,7 @@ class ProveedoresExtranjerosController extends Controller
 			'roles'=>array('producto'),
 		),
 		array('allow', // allow admin user to perform 'admin' and 'delete' actions
-			'actions'=>array('admin','delete','update'),
+			'actions'=>array('admin','delete','update', 'index'),
 			'users'=>array('@'),
 			'roles'=>array('admin'),
 		),
@@ -48,9 +48,13 @@ class ProveedoresExtranjerosController extends Controller
 	*/
 	public function actionView($id)
 	{
+		$model = $this->loadModel($id);
+		$modelContacto= PersonasContacto::model()->findByAttributes(array('proveedor_id'=>$model->proveedor_id));
+		$modelCuentas = ProveedoresCuentas::model()->findAllByAttributes(array('proveedor_id'=>$model->proveedor_id));
+		$modelTecnica = ProveedoresObjetos::model()->findAllByAttributes(array('proveedor_id'=>$model->proveedor_id));
 		$this->render('view',array(
-		'model'=>$this->loadModel($id),
-		));
+			'model'=>$model, 'modelContacto' => $modelContacto, 'modelCuentas' => $modelCuentas, 'modelTecnica' => $modelTecnica,
+ 		));
 	}
 
 	/**
@@ -65,25 +69,13 @@ class ProveedoresExtranjerosController extends Controller
         
         $modelContacto= new PersonasContacto;
         
-        //$modelCuenta=new ProveedoresCuentas;
-        
-        //$modelObjeto=new ProveedoresObjetos;
-            
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['ProveedoresExtranjeros']))
 		{
 			$model->attributes=$_POST['ProveedoresExtranjeros'];
             $modelProveedor->attributes=$_POST['Proveedores'];
             $modelContacto->attributes=$_POST['PersonasContacto'];
-            //$modelProveedor->tiene_rif = true;
 
-           /* if(!$modelContacto->validate() and !$model->validate() and !$modelProveedor->validate())
-            {
-            	//echo "Hola";
-            }*/
             
             $transaction = $model->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 			try{
@@ -133,51 +125,45 @@ class ProveedoresExtranjerosController extends Controller
 	{
 		$model=$this->loadModel($id);
         
-        $modelProveedor= Proveedores::model()->findById($model->proveedor_id);
+        $modelProveedor= Proveedores::model()->findByPk($model->proveedor_id);
         
-        $modelContacto= ProveedoresContacto::model()->findById($model->proveedor_id);
+        $modelContacto= PersonasContacto::model()->findByAttributes(array('proveedor_id'=>$model->proveedor_id));
         
-        $modelCuenta= ProveedoresCuentas::model()->findById($model->proveedor_id);
+        //$modelCuenta= ProveedoresCuentas::model()->findById($model->proveedor_id);
         
-        $modelObjeto= ProveedoresObjetos::model()->findById($model->proveedor_id);
+        //$modelObjeto= ProveedoresObjetos::model()->findById($model->proveedor_id);
         
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['ProveedoresExtranjeros']))
 		{
-            $model->attributes=$_POST['ProveedoresExtranjeros'];
+			$model->attributes=$_POST['ProveedoresExtranjeros'];
             $modelProveedor->attributes=$_POST['Proveedores'];
             $modelContacto->attributes=$_POST['PersonasContacto'];
-            $modelCuenta->attributes=$_POST['ProveedoresCuentas'];
-            $modelObjeto->attributes=$_POST['ProveedoresObjetos'];
+
             
             $transaction = $model->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 			try{
+                $modelProveedor->nacional = false;
+                if(!$modelProveedor->tiene_rif)
+                    $modelProveedor->rif = 'N/A';
+                //$modelProveedor->tiene_rif = $_POST['Proveedores']['tiene_rif'];
                 $flag = $modelProveedor->save();
+                
                 if($flag){
                 
                     $model->proveedor_id = $modelProveedor->id;
                     $modelContacto->proveedor_id = $modelProveedor->id;
-                    $modelCuenta->proveedor_id = $modelProveedor->id;
-                    $modelObjeto->proveedor_id = $modelProveedor->id;
-                    //if(!$model->save()){
-                        $flag = $flag && $model->save();
-                    //}
-                    //if(!$modelContacto->save()){
-                        $flag = $flag && $modelContacto->save();
-                    //}
-                    //if(!$modelCuenta->save()){
-                        $flag = $flag && $modelCuenta->save();
-                    //}
-                    //if(!$modelObjeto->save()){
-                        $flag = $flag && $modelObjeto->save();
-                    //}
+
+                    $flag = $flag && $model->save();
+                    $flag = $flag && $modelContacto->save();
+
                 }
-                   
+                  
                 if($flag){
 				    $transaction->commit();    // committing 
-                    Yii::app()->user->setFlash('success', "Proveedor extranjero actualizado con exito.");
+                    Yii::app()->user->setFlash('success', "Proveedor extranjero registrado con exito.");
                     $this->redirect(array('view','id'=>$model->id));
                 }else
                    throw new Exception("Error Processing Request", 1);
@@ -185,13 +171,14 @@ class ProveedoresExtranjerosController extends Controller
 			}
 	        catch (Exception $e){
 	            $transaction->rollBack();
-	            Yii::app()->user->setFlash('error', "No se pudo actualizar el proveedor extranjero.");
+	            Yii::app()->user->setFlash('error', "No se pudo registrar el proveedor extranjero.");
 	            //return false;
-	        } 
+	        }
+				
 		}
 
 		$this->render('update',array(
-		'model'=>$model, 'modelProveedor'=>$modelProveedor, 'modelContacto'=>$modelContacto, 'modelCuenta'=>$modelCuenta, 'modelObjeto'=>$modelObjeto,
+		'model'=>$model, 'modelProveedor'=>$modelProveedor, 'modelContacto'=>$modelContacto, //'modelCuenta'=>$modelCuenta, 'modelObjeto'=>$modelObjeto,
 		));
 	}
 

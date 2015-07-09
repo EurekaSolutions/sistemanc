@@ -32,7 +32,7 @@ class ProveedoresObjetosController extends Controller
 			'roles'=>array('producto'),
 		),
 		array('allow', // allow admin user to perform 'admin' and 'delete' actions
-			'actions'=>array('admin','delete','update'),
+			'actions'=>array('admin','delete','update','index'),
 			'users'=>array('@'),
 			'roles'=>array('admin'),
 		),
