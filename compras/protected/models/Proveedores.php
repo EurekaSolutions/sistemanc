@@ -48,7 +48,7 @@ class Proveedores extends ActiveRecord
 			array('ente_organo_id, estatus_contratista_id, anho', 'numerical', 'integerOnly'=>true),
 			array('rif', 'length', 'max'=>12),
             array('tiene_rif', 'boolean'),
-			array('rif', 'unique', 'caseSensitive' => 'false',),
+			array('rif', 'unique', 'caseSensitive' => 'false', 'except' => 'extranjero'),
 			array('rif', 'match', 'pattern' => '/^(j|J|v|V|e|E|g|G)([0-9]{8,8})([0-9]{1})$/', 'allowEmpty'=>false,'message'=>'El formato del rif no es válido. Debe ser de la siguiente manera: J123456789', 'except' => 'extranjero'),
 			array('razon_social', 'length', 'max'=>255),
             array('nacional', 'safe'),

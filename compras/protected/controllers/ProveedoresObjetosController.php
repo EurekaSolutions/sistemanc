@@ -27,7 +27,7 @@ class ProveedoresObjetosController extends Controller
 	{
 		return array(
 		array('allow',  // allow all users to perform 'index' and 'view' actions
-			'actions'=>array('create','view'),
+			'actions'=>array('create','view', 'buscarproducto'),
 			'users'=>array('@'),
 			'roles'=>array('producto'),
 		),
@@ -60,7 +60,7 @@ class ProveedoresObjetosController extends Controller
 	public function actionCreate()
 	{
 		$model=new ProveedoresObjetos;
-
+		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -71,13 +71,47 @@ class ProveedoresObjetosController extends Controller
 			$usuario = Usuarios::model()->actual();
 			$model->ente_organo_id = $usuario->ente_organo_id;
 
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			if($model->validate())
+			{
+				$objPrin = new ProveedorDominio;
+				$objPrin->objeto = $model->objeto_principal;
+				$objPrin->proveedor_id = $model->proveedor_id;
+				$objPrin->ente_organo_id = $model->ente_organo_id;
+				$objPrin->save();
+
+				$productos = $model->rama_producto_id;
+				foreach ($productos as $key) {	
+					$aux = new ProveedoresObjetos;
+						$aux->attributes = $_POST['ProveedoresObjetos'];
+						$aux->ente_organo_id = $model->ente_organo_id;
+						$aux->rama_producto_id = $key;
+						$aux->save();
+				}
+				Yii::app()->user->setFlash('success', "Guardado con éxito!");
+				$model=new ProveedoresObjetos;
+			}
+				
 		}
 
 		$this->render('create',array(
 		'model'=>$model,
 		));
+	}
+
+	public function actionBuscarproducto()
+	{
+		if($_POST['ProveedoresObjetos']['rama'])
+		{
+			$rama_producto = RamaProductos::model()->findAllByAttributes(array('rama_id'=>$_POST['ProveedoresObjetos']['rama']));
+			//print_r($rama_producto);
+			$aux =  CHtml::listData($rama_producto, 'id', 'nombre');
+
+			foreach($aux as $value => $name)
+		    {
+		        echo CHtml::tag('option',
+		                   array('value'=>$value),CHtml::encode($name),true);
+		    }
+		}
 	}
 
 	/**

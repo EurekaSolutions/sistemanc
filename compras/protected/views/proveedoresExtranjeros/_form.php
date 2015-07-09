@@ -130,4 +130,21 @@
        toogleRif();
     });
     
+    $( document ).ready(function() {
+    	
+        $( "form" ).submit(function( event ) {
+		  
+		  if(!$('#tieneRif').is(':checked'))
+        	{
+            	if($('#ProveedoresExtranjeros_num_identificacion').val()=="")
+            	{
+            		alert( "Debe introducir el código fiscal " );
+            		 event.preventDefault();
+            	}
+        	}
+		  
+		 
+
+		});
+	});
 </script>

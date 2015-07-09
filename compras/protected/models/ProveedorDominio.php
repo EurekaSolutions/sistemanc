@@ -1,32 +1,26 @@
 <?php
 
 /**
- * This is the model class for table "public.proveedores_objetos".
+ * This is the model class for table "public.proveedor_dominio".
  *
- * The followings are the available columns in table 'public.proveedores_objetos':
+ * The followings are the available columns in table 'public.proveedor_dominio':
  * @property integer $id
  * @property integer $proveedor_id
  * @property integer $ente_organo_id
- * @property integer $rama_producto_id
- * @property string $descripcion
+ * @property string $objeto
  *
  * The followings are the available model relations:
  * @property Proveedores $proveedor
  * @property EntesOrganos $enteOrgano
- * @property RamaProductos $ramaProducto
  */
-class ProveedoresObjetos extends CActiveRecord
+class ProveedorDominio extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
-
-	public $objeto_principal;
-	public $rama;
-
 	public function tableName()
 	{
-		return 'public.proveedores_objetos';
+		return 'public.proveedor_dominio';
 	}
 
 	/**
@@ -37,11 +31,12 @@ class ProveedoresObjetos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('proveedor_id, ente_organo_id, rama_producto_id, descripcion, rama, objeto_principal', 'required'),
+			array('proveedor_id, ente_organo_id', 'required'),
 			array('proveedor_id, ente_organo_id', 'numerical', 'integerOnly'=>true),
+			array('objeto', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, proveedor_id, ente_organo_id, rama_producto_id, descripcion', 'safe', 'on'=>'search'),
+			array('id, proveedor_id, ente_organo_id, objeto', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,7 +50,6 @@ class ProveedoresObjetos extends CActiveRecord
 		return array(
 			'proveedor' => array(self::BELONGS_TO, 'Proveedores', 'proveedor_id'),
 			'enteOrgano' => array(self::BELONGS_TO, 'EntesOrganos', 'ente_organo_id'),
-			'ramaProducto' => array(self::BELONGS_TO, 'RamaProductos', 'rama_producto_id'),
 		);
 	}
 
@@ -68,8 +62,7 @@ class ProveedoresObjetos extends CActiveRecord
 			'id' => 'ID',
 			'proveedor_id' => 'Proveedor',
 			'ente_organo_id' => 'Ente Organo',
-			'rama_producto_id' => 'Rama Producto',
-			'descripcion' => 'Descripcion',
+			'objeto' => 'Objeto',
 		);
 	}
 
@@ -94,8 +87,7 @@ class ProveedoresObjetos extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('proveedor_id',$this->proveedor_id);
 		$criteria->compare('ente_organo_id',$this->ente_organo_id);
-		$criteria->compare('rama_producto_id',$this->rama_producto_id);
-		$criteria->compare('descripcion',$this->descripcion,true);
+		$criteria->compare('objeto',$this->objeto,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -106,7 +98,7 @@ class ProveedoresObjetos extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ProveedoresObjetos the static model class
+	 * @return ProveedorDominio the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

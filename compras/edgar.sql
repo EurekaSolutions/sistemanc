@@ -169,3 +169,37 @@ COMMENT ON COLUMN proveedor_motivo.id IS 'Clave primaria';
 COMMENT ON COLUMN proveedor_motivo.proveedor_id IS 'Clave foranea a la tabla proveedores';
 COMMENT ON COLUMN proveedor_motivo.ente_organo_id IS 'Clave foranea a la tabla ente_organos';
 COMMENT ON COLUMN proveedor_motivo.motivo IS 'Motivo de contratacion';
+
+
+
+
+-- Table: proveedor_dominio
+
+-- DROP TABLE proveedor_dominio;
+
+CREATE TABLE proveedor_dominio
+(
+  id serial NOT NULL, -- Clave foranea
+  proveedor_id integer NOT NULL, -- Clave foranea a la tabla proveedor
+  ente_organo_id integer NOT NULL, -- Clave foranea a la tabla ente_organos
+  objeto text, -- Objeto principal
+  CONSTRAINT proveedor_dominio_pkey PRIMARY KEY (id),
+  CONSTRAINT proveedor_dominio_ente_organo_id_fkey FOREIGN KEY (ente_organo_id)
+      REFERENCES entes_organos (ente_organo_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT proveedor_dominio_proveedor_id_fkey FOREIGN KEY (proveedor_id)
+      REFERENCES proveedores (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE proveedor_dominio
+  OWNER TO eureka;
+COMMENT ON TABLE proveedor_dominio
+  IS 'Tabla que almacena los dominios principales de los proveedores extranejeros';
+COMMENT ON COLUMN proveedor_dominio.id IS 'Clave foranea';
+COMMENT ON COLUMN proveedor_dominio.proveedor_id IS 'Clave foranea a la tabla proveedor';
+COMMENT ON COLUMN proveedor_dominio.ente_organo_id IS 'Clave foranea a la tabla ente_organos';
+COMMENT ON COLUMN proveedor_dominio.objeto IS 'Objeto principal';
+

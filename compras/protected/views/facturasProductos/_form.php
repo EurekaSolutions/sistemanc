@@ -9,7 +9,7 @@ $( document ).ready(function() {
 	});
 
 	$( "#proyecto" ).change(function() {
-			$( "#select2-chosen-2" ).val("");
+			$( "#Productos" ).val("");
 			$( "#select2-chosen-2" ).html('<span class="select2-chosen" id="select2-chosen-2">Seleccione partida</span>');
 			$( "#producto" ).html("");
 			$( "#select2-chosen-3" ).val("");

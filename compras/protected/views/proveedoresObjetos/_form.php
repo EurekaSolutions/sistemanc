@@ -6,7 +6,11 @@
 
 <p class="help-block">Fields with <span class="required">*</span> are required.</p>
 
-<?php echo $form->errorSummary($model); ?>
+<?php echo $form->errorSummary($model); 
+ foreach(Yii::app()->user->getFlashes() as $key => $message) {
+        echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+    }
+?>
 
 <!--	<?php //echo $form->textFieldGroup($model,'proveedor_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>-->
 
@@ -56,13 +60,39 @@
 
 	<?php //echo $form->textFieldGroup($model,'rama',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 -->
+	<?php 	
+        $objetoPrincipal = array('Fabricante' => 'Fabricante', 'Distribuidor'=> 'Distribuidor', 'Distribuidor Autorizado' => 'Distribuidor Autorizado', 'Obras' => 'Obras', 'Servicio' => 'Servicio', 'Servicio Autorizado' => 'Servicio Autorizado');
 
+        $list = $objetoPrincipal;
+	
+		echo CHtml::label('Seleccionar objeto principal', 'objeto_principal');
+		echo "<br>";
+		$this->widget(
+		    'booster.widgets.TbSelect2',
+		    array(
+		        'asDropDownList' => true,
+		        'model' => $model,
+		        'attribute' => 'objeto_principal',
+		        //'name' => 'procedimiento_id',
+		        'data' => $list,
+		        'htmlOptions'=>array('id'=>'objeto_principal'),
+		        'options' => array(
+		            //'tags' => array('procedimientos'),
+		            'placeholder' => 'Objeto principal',
+		            'width' => '40%',
+		            'tokenSeparators' => array(',', ' ')
+		        )
+		    )
+		);
+	?>
+
+	<br>
     <?php 	
         $ramas = Ramas::model()->findAll();
 
         $list = CHtml::listData($ramas, 'id', 'nombre');
 	
-		echo CHtml::label('Seleccionar objeto principal', 'Objeto principal');
+		echo CHtml::label('Seleccionar rama', 'Rama');
 		echo "<br>";
 		$this->widget(
 		    'booster.widgets.TbSelect2',
@@ -72,10 +102,19 @@
 		        'attribute' => 'rama',
 		        //'name' => 'procedimiento_id',
 		        'data' => $list,
-		        'htmlOptions'=>array('id'=>'ObjetoPrincipal'),
+		        'htmlOptions'=>array('id'=>'ObjetoPrincipal',
+		        	'ajax' => array(
+														'type'=>'POST', //request type
+														'url'=>CController::createUrl('proveedoresObjetos/buscarproducto'), //url to call.
+														//Style: CController::createUrl('currentController/methodToCall')
+														'update'=>'#Productos', //selector to update
+														//'data'=>'js:javascript statement' 
+														//leave out the data key to pass all form values through
+												  )
+		        ),
 		        'options' => array(
 		            //'tags' => array('procedimientos'),
-		            'placeholder' => 'Objeto principal',
+		            'placeholder' => 'Rama',
 		            'width' => '40%',
 		            'tokenSeparators' => array(',', ' ')
 		        )
@@ -86,7 +125,7 @@
 	<?php 	
         $ramaproductos = RamaProductos::model()->findAll();
 
-        $list = CHtml::listData($ramaproductos, 'id', 'nombre');
+        $list = array();
 	
 		echo CHtml::label('Seleccionar productos', 'Productos');
 		echo "<br>";
@@ -122,3 +161,14 @@
 </div>
 
 <?php $this->endWidget(); ?>
+
+<script type="text/javascript">
+$( document ).ready(function() {
+	$( "#ObjetoPrincipal" ).change(function() {
+			//$( "#Productos" ).val("");
+			$( "ul.select2-choices li.select2-search-choice" ).remove();	
+			
+	});
+
+});
+</script>
