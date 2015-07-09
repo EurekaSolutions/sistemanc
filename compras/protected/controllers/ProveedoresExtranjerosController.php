@@ -27,7 +27,7 @@ class ProveedoresExtranjerosController extends Controller
 	{
 		return array(
 		array('allow',  // allow all users to perform 'index' and 'view' actions
-			'actions'=>array('create','view'),
+			'actions'=>array('create','view', 'ver'),
 			'users'=>array('@'),
 			'roles'=>array('producto'),
 		),
@@ -55,6 +55,22 @@ class ProveedoresExtranjerosController extends Controller
 		$this->render('view',array(
 			'model'=>$model, 'modelContacto' => $modelContacto, 'modelCuentas' => $modelCuentas, 'modelTecnica' => $modelTecnica,
  		));
+	}
+
+	public function actionVer()
+	{
+		
+
+		$model=new ProveedoresExtranjeros;
+
+		if(isset($_POST['ProveedoresExtranjeros']))
+		{
+			
+			$model->proveedor_id=$_POST['ProveedoresExtranjeros']['id'];
+			$model = ProveedoresExtranjeros::model()->findByAttributes(array('proveedor_id'=>$model->proveedor_id));
+			$this->redirect(array('view','id'=>$model->id));
+		}
+		$this->render('ver', array('model' => $model));
 	}
 
 	/**

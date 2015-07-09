@@ -186,10 +186,11 @@
 							array(
 								'label' => 'Proveedores extranjeros',
 								'items' => array(
+									array('label' => 'Ver proveedor', 'url' => array('/proveedoresExtranjeros/ver'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
 									array('label' => 'Agregar proveedor', 'url' => array('/proveedoresExtranjeros/create'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
 									array('label' => 'Añadir información financiera', 'url' => array('/proveedoresCuentas/create'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
 									array('label' => 'Añadir información técnica', 'url' => array('/proveedoresObjetos/create'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
-									
+									array('label' => 'Motivo de contratación', 'url' => array('/proveedoresObjetos/create'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
 									),
 								'visible'=>(Yii::app()->user->checkAccess('producto'))
 							),
