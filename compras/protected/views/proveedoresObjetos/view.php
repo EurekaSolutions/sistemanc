@@ -3,7 +3,8 @@ $this->breadcrumbs=array(
 		'Proveedores Objetoses'=>array('index'),
 		$model->id,
 	);
-
+if(Yii::app()->user->checkAccess('admin'))
+{
 $this->menu=array(
 	array('label'=>'List ProveedoresObjetos','url'=>array('index')),
 	array('label'=>'Create ProveedoresObjetos','url'=>array('create')),
@@ -11,6 +12,7 @@ $this->menu=array(
 	array('label'=>'Delete ProveedoresObjetos','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage ProveedoresObjetos','url'=>array('admin')),
 	);
+}
 ?>
 
 <h1>View ProveedoresObjetos #<?php echo $model->id; ?></h1>

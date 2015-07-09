@@ -5,8 +5,9 @@
 
 <p class="help-block">Fields with <span class="required">*</span> are required.</p>
 
-<?php echo $form->errorSummary($model); ?>
+	<?php echo $form->errorSummary($model); ?>
 
+	<h3>INFORMACIÓN BASICA DE LA EMPRESA</h3>
 	<?php //echo $form->textFieldGroup($model,'proveedor_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
     <?php echo $form->checkBoxGroup($modelProveedor,'tiene_rif',array('widgetOptions'=>array('htmlOptions'=>array('id'=>'tieneRif','checked'=>!empty($modelProveedor->tiene_rif)?'checked':'','class'=>'span5','maxlength'=>10)))); ?>
@@ -53,7 +54,7 @@
 
 	<?php echo $form->textFieldGroup($model,'pagina_web',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
 
-    <h3>INFORMACIÓN TECNICA DE LA EMPRESA</h3>
+    
 
 	<?php 	
 		/*$list = CHtml::listData(ObjetosPrincipales::model()->findAll(), 'id', 'nombre');
@@ -86,7 +87,7 @@
 	<?php echo $form->textFieldGroup($modelCuenta,'num_cuenta_bancaria',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255))));*/ ?>
 
 
-    <h3>Información de Contacto</h3>
+    <h3>PERSONA CONTACTO DE LA EMPRESA</h3>
 
 	<?php echo $form->textFieldGroup($modelContacto,'nombre',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
 	<?php echo $form->textFieldGroup($modelContacto,'documento_identidad',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>

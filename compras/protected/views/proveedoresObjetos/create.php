@@ -3,11 +3,13 @@ $this->breadcrumbs=array(
 	'Proveedores Objetoses'=>array('index'),
 	'Create',
 );
-
+if(Yii::app()->user->checkAccess('admin'))
+{
 $this->menu=array(
 array('label'=>'List ProveedoresObjetos','url'=>array('index')),
 array('label'=>'Manage ProveedoresObjetos','url'=>array('admin')),
 );
+}
 ?>
 
 <h1>Create ProveedoresObjetos</h1>
