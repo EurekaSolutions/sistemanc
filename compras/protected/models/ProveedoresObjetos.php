@@ -20,6 +20,9 @@ class ProveedoresObjetos extends CActiveRecord
 	/**
 	 * @return string the associated database table name
 	 */
+
+	public $rama;
+
 	public function tableName()
 	{
 		return 'public.proveedores_objetos';
@@ -33,7 +36,7 @@ class ProveedoresObjetos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('proveedor_id, ente_organo_id, rama_producto_id, descripcion', 'required'),
+			array('proveedor_id, ente_organo_id, rama_producto_id, descripcion, rama', 'required'),
 			array('proveedor_id, ente_organo_id, rama_producto_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.

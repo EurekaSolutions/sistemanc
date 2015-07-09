@@ -59,13 +59,11 @@ class ProveedoresExtranjerosController extends Controller
 	*/
 	public function actionCreate()
 	{
-		$model=new ProveedoresExtranjeros;
+		$model= new ProveedoresExtranjeros;
         
-        $modelProveedor=new Proveedores('extranjero');
+        $modelProveedor= new Proveedores('extranjero');
         
-        $modelProveedor->tiene_rif = true;
-        
-        $modelContacto=new PersonasContacto;
+        $modelContacto= new PersonasContacto;
         
         //$modelCuenta=new ProveedoresCuentas;
         
