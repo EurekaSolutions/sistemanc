@@ -227,5 +227,7 @@ ALTER TABLE paises
 ALTER TABLE paises
   ADD UNIQUE (nombre, codigo_tlf);
 
+ALTER TABLE proveedores_extranjeros
+  ADD UNIQUE (proveedor_id);
 
 

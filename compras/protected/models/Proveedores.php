@@ -88,7 +88,7 @@ class Proveedores extends ActiveRecord
 			'facturasCerradas' => array(self::HAS_MANY, 'Facturas', 'proveedor_id', 'condition'=>'cierre_carga=true'),
 			'facturasNoCerradas' => array(self::HAS_MANY, 'Facturas', 'proveedor_id', 'condition'=>'cierre_carga=false'),
             'proveedoresObjetoses' => array(self::HAS_MANY, 'ProveedoresObjetos', 'proveedor_id'),
-            'proveedoresExtranjeros' => array(self::HAS_ONE,'ProveedoresExtranjeros', 'proveedor_id'),
+            'proveedorExtranjero' => array(self::HAS_ONE,'ProveedoresExtranjeros', 'id'),
             'proveedoresCuentases' => array(self::HAS_MANY, 'ProveedoresCuentas', 'proveedor_id'),
 			'personasContactos' => array(self::HAS_MANY, 'PersonasContacto', 'proveedor_id')
 		);
@@ -105,7 +105,12 @@ class Proveedores extends ActiveRecord
 	 * @return html nombre de partida compuesto con el nombre
 	 */
 	public function etiquetaExtranjero(){
-		return CHtml::encode($this->rif.' - '. $this->razon_social.' - '.$this->proveedoresExtranjeros->num_identificacion.' - '.$this->proveedoresExtranjeros->pais->nombre);
+        //echo count($this->id);
+        //die;
+        
+        $extranjero = ProveedoresExtranjeros::model()->findByAttributes(array('proveedor_id'=>$this->id));
+        
+		return CHtml::encode($this->rif.' - '. $this->razon_social.' - '.$extranjero->num_identificacion.' - '.$extranjero->pais->nombre);
 	}
     
 	/**

@@ -53,13 +53,30 @@ class ProveedoresController extends Controller
 	
 
 	public function actionAjaxObtenerProveedores($nacional = true) {
+        
 		if (isset($_GET['q'])) {
-			$proveedores = Proveedores::model()->findAll(array('order'=>'rif', 'condition'=>'rif LIKE :rif, nacional=:nacional', 'params'=>array(':nacional'=>$nacional,':rif'=>strtoupper('%'.$_GET['q'].'%'))));
+            
+            if($nacional){
+                $proveedores = Proveedores::model()->findAll(array('order'=>'rif', 'condition'=>'(rif LIKE :rif) and nacional=:nacional', 'params'=>array(':nacional'=>$nacional,':rif'=>strtoupper('%'.$_GET['q'].'%')))); //echo 'Hola'; die;
+            }
+            else{
+
+                $proveedores = Proveedores::model()->findAll(array('order'=>'razon_social', 'condition'=>'(rif LIKE :q or razon_social LIKE :q) and nacional=:nacional', 'params'=>array(':nacional'=>$nacional,':q'=>strtoupper('%'.$_GET['q'].'%'))));            
+
+                if(count($proveedores)==0){
+                    $proveedoresExtranjeros = ProveedoresExtranjeros::model()->findAll(array('order'=>'num_identificacion', 'condition'=>'num_identificacion LIKE :num_identificacion ', 'params'=>array(':num_identificacion'=>strtoupper('%'.$_GET['q'].'%'))));
+
+                    foreach ($proveedoresExtranjeros as $key => $value) {
+                        $proveedores[$key]=$value->proveedor;
+                    }
+                }
+
+            }
 			$data = array();
 			foreach ($proveedores as $value) {
 				$data[] = array(
 					'id' => $value->id,
-					'text' => $value->etiquetaProveedor(),
+					'text' => $nacional?$value->etiquetaProveedor():$value->etiquetaExtranjero(),
 				);
 			}
 				echo CJSON::encode($data);
