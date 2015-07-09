@@ -217,6 +217,9 @@ COMMENT ON COLUMN proveedores_objetos.objeto_principal_id IS 'Clave foránea a l
 ALTER TABLE paises RENAME pais  TO nombre;
 COMMENT ON COLUMN paises.nombre IS 'Nombre del país.';
 
+
+/****** 09/07/2015 ******/
+
 ALTER TABLE paises
   DROP CONSTRAINT paises_codigo_tlf_key;
 ALTER TABLE paises

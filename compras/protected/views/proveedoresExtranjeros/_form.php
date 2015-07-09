@@ -10,7 +10,7 @@
 	<h3>INFORMACIÓN BASICA DE LA EMPRESA</h3>
 	<?php //echo $form->textFieldGroup($model,'proveedor_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
-    <?php echo $form->checkBoxGroup($modelProveedor,'tiene_rif',array('widgetOptions'=>array('htmlOptions'=>array('id'=>'tieneRif','checked'=>!empty($modelProveedor->tiene_rif)?'checked':'','class'=>'span5','maxlength'=>10)))); ?>
+    <?php echo $form->checkBoxGroup($modelProveedor,'tiene_rif',array('widgetOptions'=>array('htmlOptions'=>array('id'=>'tieneRif','checked'=>$modelProveedor->tiene_rif/*!empty($modelProveedor->tiene_rif)?$modelProveedor->tiene_rif:'checked'*/,'class'=>'span5','maxlength'=>10)))); /*print_r($modelProveedor->tiene_rif); die;*/?>
 
 	<?php echo $form->textFieldGroup($modelProveedor,'rif',array('widgetOptions'=>array('htmlOptions'=>array('id'=>'rif','class'=>'span5','maxlength'=>10)))); ?>
 

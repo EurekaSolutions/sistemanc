@@ -63,6 +63,8 @@ class ProveedoresExtranjerosController extends Controller
         
         $modelProveedor=new Proveedores('extranjero');
         
+        $modelProveedor->tiene_rif = true;
+        
         $modelContacto=new PersonasContacto;
         
         //$modelCuenta=new ProveedoresCuentas;
