@@ -59,8 +59,6 @@ class ProveedoresExtranjerosController extends Controller
 
 	public function actionVer()
 	{
-		
-
 		$model=new ProveedoresExtranjeros;
 
 		if(isset($_POST['ProveedoresExtranjeros']))
