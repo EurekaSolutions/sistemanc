@@ -47,6 +47,7 @@ return false;
 		'proveedor_id',
 		'ente_organo_id',
 		'rama_producto_id',
+		'descripcion',
 array(
 'class'=>'booster.widgets.TbButtonColumn',
 ),

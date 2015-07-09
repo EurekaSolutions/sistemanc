@@ -23,5 +23,6 @@ $this->menu=array(
 		'proveedor_id',
 		'ente_organo_id',
 		'rama_producto_id',
+		'descripcion',
 ),
 )); ?>

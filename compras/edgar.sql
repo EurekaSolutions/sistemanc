@@ -133,3 +133,9 @@ CREATE INDEX fki_ente_organo_cuentas_proveedores
   ON proveedores_cuentas
   USING btree
   (ente_organo_id);
+  
+  
+ ALTER TABLE proveedores_objetos
+   ADD COLUMN descripcion text NOT NULL;
+COMMENT ON COLUMN proveedores_objetos.descripcion
+  IS 'Informacion de complemento para el producto';

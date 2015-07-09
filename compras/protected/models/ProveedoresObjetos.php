@@ -8,6 +8,7 @@
  * @property integer $proveedor_id
  * @property integer $ente_organo_id
  * @property integer $rama_producto_id
+ * @property string $descripcion
  *
  * The followings are the available model relations:
  * @property Proveedores $proveedor
@@ -32,11 +33,11 @@ class ProveedoresObjetos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('proveedor_id, ente_organo_id, rama_producto_id', 'required'),
+			array('proveedor_id, ente_organo_id, rama_producto_id, descripcion', 'required'),
 			array('proveedor_id, ente_organo_id, rama_producto_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, proveedor_id, ente_organo_id, rama_producto_id', 'safe', 'on'=>'search'),
+			array('id, proveedor_id, ente_organo_id, rama_producto_id, descripcion', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -64,6 +65,7 @@ class ProveedoresObjetos extends CActiveRecord
 			'proveedor_id' => 'Proveedor',
 			'ente_organo_id' => 'Ente Organo',
 			'rama_producto_id' => 'Rama Producto',
+			'descripcion' => 'Descripcion',
 		);
 	}
 
@@ -89,6 +91,7 @@ class ProveedoresObjetos extends CActiveRecord
 		$criteria->compare('proveedor_id',$this->proveedor_id);
 		$criteria->compare('ente_organo_id',$this->ente_organo_id);
 		$criteria->compare('rama_producto_id',$this->rama_producto_id);
+		$criteria->compare('descripcion',$this->descripcion,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -38,7 +38,9 @@ class ProveedoresExtranjeros extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('pais_id, calle, poblacion, tlf_fijo, pagina_web', 'required'),
-			array('pagina_web', 'match', 'pattern' => '/^(http:\/\/|https:\/\/)?(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?$/', 'allowEmpty'=>false,'message'=>'Debe introducir un formato de página web valido'),
+			//array('pagina_web', 'match', 'pattern' => '/^(http:\/\/|https:\/\/)?(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?$/', 'allowEmpty'=>false,'message'=>'Debe introducir un formato de página web valido'),
+
+			array('pagina_web', 'url', 'defaultScheme' => 'http'),
 			array('proveedor_id, pais_id', 'numerical', 'integerOnly'=>true),
 			array('num_identificacion, calle, distrito, poblacion, tlf_fijo, pagina_web', 'length', 'max'=>255),
 			// The following rule is used by search().
