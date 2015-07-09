@@ -50,28 +50,30 @@
 <?php echo CHtml::Link('Añadir proveedor extranjero',$this->createUrl('proveedoresExtranjeros/create'),array(
         'onclick'=>'',
         ),array('id'=>'añadirProveedorExtranjeroTecnica'));?>
+<!--
 
 	<?php echo $form->textFieldGroup($model,'rama',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
+-->
 
     <?php 	
-        $proveedores = Ramas::model()->findAllByAttributes(array('nacional'=>false,'ente_organo_id'=>Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->ente_organo_id));
+        $rama = RamaProductos::model()->findAll();
 
-        $list = CHtml::listData($proveedores, 'id', function($model){return $model->etiquetaExtranjero();});
+        $list = CHtml::listData($rama, 'id', 'nombre',function($model){return $model->rama->nombre;});
 	
-		echo CHtml::label('Seleccionar proveedor', 'Provedor');
+		echo CHtml::label('Seleccionar objeto principal', 'Objeto principal');
 		echo "<br>";
 		$this->widget(
 		    'booster.widgets.TbSelect2',
 		    array(
 		        'asDropDownList' => true,
 		        'model' => $model,
-		        'attribute' => 'proveedor_id',
+		        'attribute' => 'rama_producto_id',
 		        //'name' => 'procedimiento_id',
 		        'data' => $list,
-		        'htmlOptions'=>array('id'=>'Proveedores',),
+		        'htmlOptions'=>array('id'=>'ObjetoPrincipal',),
 		        'options' => array(
 		            //'tags' => array('procedimientos'),
-		            'placeholder' => 'Proveedor Extranjero',
+		            'placeholder' => 'Objeto principal',
 		            'width' => '40%',
 		            'tokenSeparators' => array(',', ' ')
 		        )
@@ -79,8 +81,8 @@
 		);
 	?>
 
-
-	<?php echo $form->textFieldGroup($model,'rama_producto_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
+<!--
+	<?php echo $form->textFieldGroup($model,'rama_producto_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>-->
 
 	<?php echo $form->textAreaGroup($model,'descripcion', array('widgetOptions'=>array('htmlOptions'=>array('rows'=>6, 'cols'=>50, 'class'=>'span8')))); ?>
 
