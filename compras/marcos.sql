@@ -207,3 +207,22 @@ COMMENT ON COLUMN proveedores_objetos.id IS 'Clave primaria.';
 COMMENT ON COLUMN proveedores_objetos.proveedor_id IS 'Clave foránea a la tabla proveedores.';
 COMMENT ON COLUMN proveedores_objetos.objeto_principal_id IS 'Clave foránea a la tabla Obejto Principal.';
 
+
+
+
+
+
+/****** 08/07/2015 ******/
+
+ALTER TABLE paises RENAME pais  TO nombre;
+COMMENT ON COLUMN paises.nombre IS 'Nombre del país.';
+
+ALTER TABLE paises
+  DROP CONSTRAINT paises_codigo_tlf_key;
+ALTER TABLE paises
+  DROP CONSTRAINT paises_pais_key;
+ALTER TABLE paises
+  ADD UNIQUE (nombre, codigo_tlf);
+
+
+
