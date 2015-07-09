@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 		'Proveedores Extranjeroses'=>array('index'),
-		$model->id,
+		$model->proveedor->razon_social,
 	);
 
 $this->menu=array(
