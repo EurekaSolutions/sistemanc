@@ -32,7 +32,7 @@ class ProveedoresCuentasController extends Controller
 			'roles'=>array('producto'),
 		),
 		array('allow', // allow admin user to perform 'admin' and 'delete' actions
-			'actions'=>array('admin','delete','update'),
+			'actions'=>array('admin','delete','update','index'),
 			'users'=>array('@'),
 			'roles'=>array('admin'),
 		),
@@ -69,7 +69,7 @@ class ProveedoresCuentasController extends Controller
 			$model->attributes=$_POST['ProveedoresCuentas'];
 			$usuario = Usuarios::model()->actual();
 			$model->ente_organo_id = $usuario->ente_organo_id;
-			
+
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}

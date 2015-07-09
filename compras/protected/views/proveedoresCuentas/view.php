@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 		'Proveedores Cuentases'=>array('index'),
-		$model->id,
+		//$model->id,
 	);
 
 if(Yii::app()->user->checkAccess('admin'))
@@ -16,16 +16,16 @@ $this->menu=array(
 }
 ?>
 
-<h1>View ProveedoresCuentas #<?php echo $model->id; ?></h1>
+<h1>Ver Proveedores Cuentas</h1>
 
 <?php 
 	$this->widget('booster.widgets.TbDetailView',array(
 	'data'=>$model,
 	'attributes'=>array(
-		'id',
+		//'id',
 		'codigo_swift',
 		'num_cuenta_bancaria',
-		'proveedor_id',
-		'ente_organo_id',
+		//'proveedor_id',
+		//'ente_organo_id',
 ),
 )); ?>

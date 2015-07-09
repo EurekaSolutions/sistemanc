@@ -35,6 +35,8 @@ class ProveedoresCuentas extends CActiveRecord
 			array('codigo_swift, num_cuenta_bancaria, proveedor_id, ente_organo_id', 'required'),
 			array('proveedor_id, ente_organo_id', 'numerical', 'integerOnly'=>true),
 			array('codigo_swift, num_cuenta_bancaria', 'length', 'max'=>255),
+			//array('codigo_swift','unique'),
+			array('num_cuenta_bancaria','unique'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, codigo_swift, num_cuenta_bancaria, proveedor_id, ente_organo_id', 'safe', 'on'=>'search'),

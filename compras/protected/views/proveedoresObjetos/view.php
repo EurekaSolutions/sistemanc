@@ -15,15 +15,15 @@ $this->menu=array(
 }
 ?>
 
-<h1>View ProveedoresObjetos #<?php echo $model->id; ?></h1>
+<h1>Ver Proveedores Objetos</h1>
 
 <?php 
 	$this->widget('booster.widgets.TbDetailView',array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
-		'proveedor_id',
-		'ente_organo_id',
+		//'proveedor_id',
+		//'ente_organo_id',
 		'rama_producto_id',
 		'descripcion',
 ),
