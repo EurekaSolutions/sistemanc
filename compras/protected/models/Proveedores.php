@@ -41,14 +41,14 @@ class Proveedores extends ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('rif, razon_social', 'required'),
+			array('rif, razon_social', 'required', 'except' => 'extranjero'),
             array('razon_social, tiene_rif', 'required', 'on'=>'extranjero'),
             array('rif', 'verificacionRifExtranjero', 'on'=>'extranjero'),
 			array('ente_organo_id, estatus_contratista_id, anho', 'numerical', 'integerOnly'=>true),
 			array('rif', 'length', 'max'=>12),
             array('tiene_rif', 'boolean'),
 			array('rif', 'unique', 'caseSensitive' => 'false',),
-			//array('rif', 'match', 'pattern' => '/^(j|J|v|V|e|E|g|G)([0-9]{8,8})([0-9]{1})$/', 'allowEmpty'=>false,'message'=>'El formato del rif no es válido. Debe ser de la siguiente manera: J123456789'),
+			array('rif', 'match', 'pattern' => '/^(j|J|v|V|e|E|g|G)([0-9]{8,8})([0-9]{1})$/', 'allowEmpty'=>false,'message'=>'El formato del rif no es válido. Debe ser de la siguiente manera: J123456789', 'except' => 'extranjero'),
 			array('razon_social', 'length', 'max'=>255),
             array('nacional', 'safe'),
 			// The following rule is used by search().
@@ -61,9 +61,17 @@ class Proveedores extends ActiveRecord
 	 */
 	public function verificacionRifExtranjero($attribute,$params)
     {
+    	$pattern = "/^(j|J|v|V|e|E|g|G)([0-9]{8,8})([0-9]{1})$/";
 
-        if($this->tiene_rif && empty($this->rif))
-          $this->addError($attribute, 'Debe introuducir el RIF.');
+        if($this->tiene_rif)
+        {
+			if(empty($this->rif))
+        		$this->addError($attribute, 'Debe introuducir un RIF.');
+
+        	if(!preg_match($pattern, $this->rif))
+        		$this->addError($attribute, 'Debe introuducir un RIF valido.');
+        }
+          
 	}
     
 	/**

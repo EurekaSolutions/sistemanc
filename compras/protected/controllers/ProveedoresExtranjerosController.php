@@ -27,16 +27,14 @@ class ProveedoresExtranjerosController extends Controller
 	{
 		return array(
 		array('allow',  // allow all users to perform 'index' and 'view' actions
-			'actions'=>array('index','view'),
-			'users'=>array('*'),
-		),
-		array('allow', // allow authenticated user to perform 'create' and 'update' actions
-			'actions'=>array('create','update'),
+			'actions'=>array('create','view'),
 			'users'=>array('@'),
+			'roles'=>array('producto'),
 		),
 		array('allow', // allow admin user to perform 'admin' and 'delete' actions
-			'actions'=>array('admin','delete'),
-			'users'=>array('admin'),
+			'actions'=>array('admin','delete','update'),
+			'users'=>array('@'),
+			'roles'=>array('admin'),
 		),
 		array('deny',  // deny all users
 			'users'=>array('*'),
@@ -80,10 +78,17 @@ class ProveedoresExtranjerosController extends Controller
 			$model->attributes=$_POST['ProveedoresExtranjeros'];
             $modelProveedor->attributes=$_POST['Proveedores'];
             $modelContacto->attributes=$_POST['PersonasContacto'];
+            
+            if(!$modelContacto->validate() and !$model->validate() and !$modelProveedor->validate())
+            {
+            	//echo "Hola";
+            }
+
+
             //$modelCuenta->attributes=$_POST['ProveedoresCuentas'];
             //$modelObjeto->attributes=$_POST['ProveedoresObjetos'];
             
-            $transaction = $model->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
+            /*$transaction = $model->dbConnection->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 			try{
                 $modelProveedor->nacional = false;
                 if($modelProveedor->tiene_rif)
@@ -123,12 +128,12 @@ class ProveedoresExtranjerosController extends Controller
 	            $transaction->rollBack();
 	            Yii::app()->user->setFlash('error', "No se pudo registrar el proveedor extranjero.");
 	            //return false;
-	        } 
+	        } */
 				
 		}
 
 		$this->render('create',array(
-		'model'=>$model, 'modelProveedor'=>$modelProveedor, 'modelContacto'=>$modelContacto, //'modelCuenta'=>$modelCuenta, 'modelObjeto'=>$modelObjeto,
+			'model'=>$model, 'modelProveedor'=>$modelProveedor, 'modelContacto'=>$modelContacto, //'modelCuenta'=>$modelCuenta, 'modelObjeto'=>$modelObjeto,
 		));
 	}
 

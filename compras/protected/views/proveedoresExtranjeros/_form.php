@@ -121,6 +121,7 @@
         if(!$('#tieneRif').is(':checked'))
         {
             $('#rif').parent().hide();
+            $('#rif').val("");
         }
     }
     
@@ -128,7 +129,5 @@
         //if($('#tieneRif').val() == 0)
        toogleRif();
     });
-    
-    
     
 </script>
