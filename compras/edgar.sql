@@ -139,3 +139,33 @@ CREATE INDEX fki_ente_organo_cuentas_proveedores
    ADD COLUMN descripcion text NOT NULL;
 COMMENT ON COLUMN proveedores_objetos.descripcion
   IS 'Informacion de complemento para el producto';
+  
+  
+  /*09/07/2015*/
+  
+ 
+CREATE TABLE proveedor_motivo
+(
+  id serial NOT NULL, -- Clave primaria
+  proveedor_id integer NOT NULL, -- Clave foranea a la tabla proveedores
+  ente_organo_id integer NOT NULL, -- Clave foranea a la tabla ente_organos
+  motivo text NOT NULL, -- Motivo de contratacion
+  CONSTRAINT proveedor_motivo_pkey PRIMARY KEY (id),
+  CONSTRAINT proveedor_motivo_ente_organo_id_fkey FOREIGN KEY (ente_organo_id)
+      REFERENCES entes_organos (ente_organo_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT proveedor_motivo_proveedor_id_fkey FOREIGN KEY (proveedor_id)
+      REFERENCES proveedores (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE proveedor_motivo
+  OWNER TO eureka;
+COMMENT ON TABLE proveedor_motivo
+  IS 'Tabla que almacena el motivo de contratacion de los provveedores extranjeros';
+COMMENT ON COLUMN proveedor_motivo.id IS 'Clave primaria';
+COMMENT ON COLUMN proveedor_motivo.proveedor_id IS 'Clave foranea a la tabla proveedores';
+COMMENT ON COLUMN proveedor_motivo.ente_organo_id IS 'Clave foranea a la tabla ente_organos';
+COMMENT ON COLUMN proveedor_motivo.motivo IS 'Motivo de contratacion';
