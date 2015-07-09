@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-			'Proveedores Cuentases',
+			'Proveedores Cuentas',
 		);
 
 $this->menu=array(
@@ -9,7 +9,7 @@ $this->menu=array(
 	);
 ?>
 
-<h1>Proveedores Cuentases</h1>
+<h1>Proveedores Cuentas</h1>
 
 <?php $this->widget('booster.widgets.TbListView',array(
 'dataProvider'=>$dataProvider,

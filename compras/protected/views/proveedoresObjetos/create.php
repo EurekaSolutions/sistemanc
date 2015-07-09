@@ -12,6 +12,6 @@ array('label'=>'Manage ProveedoresObjetos','url'=>array('admin')),
 }
 ?>
 
-<h1>Create ProveedoresObjetos</h1>
+<h1>Crear Proveedores Objetos</h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
