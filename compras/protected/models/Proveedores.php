@@ -25,6 +25,15 @@ class Proveedores extends ActiveRecord
 {
     
     public $tiene_rif;
+    
+    /**
+	 * @return string the associated database table name
+	 */
+	public function Extranjeros()
+	{
+		return Proveedores::model()->findByAttributes(array('nacional'=>false,'ente_organo_id'=>Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->ente_organo_id));
+	}
+    
 	/**
 	 * @return string the associated database table name
 	 */
@@ -87,7 +96,7 @@ class Proveedores extends ActiveRecord
 			'facturasCerradas' => array(self::HAS_MANY, 'Facturas', 'proveedor_id', 'condition'=>'cierre_carga=true'),
 			'facturasNoCerradas' => array(self::HAS_MANY, 'Facturas', 'proveedor_id', 'condition'=>'cierre_carga=false'),
             'proveedoresObjetoses' => array(self::HAS_MANY, 'ProveedoresObjetos', 'proveedor_id'),
-            'proveedoresExtranjeroses' => array(self::HAS_MANY,'ProveedoresExtranjeros', 'proveedor_id'),
+            'proveedoresExtranjeros' => array(self::HAS_ONE,'ProveedoresExtranjeros', 'proveedor_id'),
             'proveedoresCuentases' => array(self::HAS_MANY, 'ProveedoresCuentas', 'proveedor_id'),
 			'personasContactos' => array(self::HAS_MANY, 'PersonasContacto', 'proveedor_id')
 		);
@@ -100,6 +109,13 @@ class Proveedores extends ActiveRecord
 		return CHtml::encode($this->rif.' - '. $this->razon_social);
 	}
 
+    /**
+	 * @return html nombre de partida compuesto con el nombre
+	 */
+	public function etiquetaExtranjero(){
+		return CHtml::encode($this->rif.' - '. $this->razon_social.' - '.$this->);
+	}
+    
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */

@@ -6,7 +6,7 @@
  * The followings are the available columns in table 'public.paises':
  * @property integer $id
  * @property string $codigo_iso
- * @property string $pais
+ * @property string $nombre
  * @property string $codigo_tlf
  *
  * The followings are the available model relations:
@@ -30,12 +30,12 @@ class Paises extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('codigo_iso, pais, codigo_tlf', 'required'),
+			array('codigo_iso, nombre, codigo_tlf', 'required'),
 			array('codigo_iso, codigo_tlf', 'length', 'max'=>20),
-			array('pais', 'length', 'max'=>255),
+			array('nombre', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, codigo_iso, pais, codigo_tlf', 'safe', 'on'=>'search'),
+			array('id, codigo_iso, nombre, codigo_tlf', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,7 +59,7 @@ class Paises extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'codigo_iso' => 'Codigo Iso',
-			'pais' => 'Pais',
+			'nombre' => 'Pais',
 			'codigo_tlf' => 'Codigo Tlf',
 		);
 	}
@@ -84,7 +84,7 @@ class Paises extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('codigo_iso',$this->codigo_iso,true);
-		$criteria->compare('pais',$this->pais,true);
+		$criteria->compare('nombre',$this->pais,true);
 		$criteria->compare('codigo_tlf',$this->codigo_tlf,true);
 
 		return new CActiveDataProvider($this, array(
