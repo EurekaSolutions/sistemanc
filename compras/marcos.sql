@@ -231,3 +231,6 @@ ALTER TABLE proveedores_extranjeros
   ADD UNIQUE (proveedor_id);
 
 
+
+ALTER TABLE proveedores_entes_organos ADD COLUMN motivo_contratacion character varying(255);
+COMMENT ON COLUMN proveedores_entes_organos.motivo_contratacion IS 'Motivo de contratación.';
