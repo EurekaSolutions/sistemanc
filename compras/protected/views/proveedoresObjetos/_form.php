@@ -5,17 +5,18 @@
 
 <p class="help-block">Fields with <span class="required">*</span> are required.</p>
 
-<?php //echo $form->errorSummary($model); ?>
+<?php echo $form->errorSummary($model); ?>
 
-<!--	<?php echo $form->textFieldGroup($model,'proveedor_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>-->
+<!--	<?php //echo $form->textFieldGroup($model,'proveedor_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>-->
 
 <?php 
 	echo CHtml::label('Seleccionar proveedor extranjero', 'Proveedor Extranjero');
 	echo "<br>";
-	echo CHtml::textField('proveedor_id', '', array('class' => 'span5'));
+	
+	echo $form->textFieldGroup($model,'proveedor_id',array('widgetOptions'=>array('htmlOptions'=>array('class' => 'span5'))));
 
 	$this->widget('ext.ESelect2.ESelect2', array(
-	            'selector' => '#proveedor_id',
+	            'selector' => '#ProveedoresObjetos_proveedor_id',
 	            'options'  => array(
 	                    'allowClear'=>true,
 	                    'placeholder'=>'Buscar proveedor por RIF, Razon Social o Codigo Fiscal',
@@ -47,12 +48,12 @@
 
           ?>
 
-<?php echo CHtml::Link('Añadir proveedor extranjero',$this->createUrl('proveedoresExtranjeros/create'),array(
+<?php echo CHtml::Link('O añadalo aquí',$this->createUrl('proveedoresExtranjeros/create'),array(
         'onclick'=>'',
-        ),array('id'=>'añadirProveedorExtranjeroTecnica'));?>
+        ),array('id'=>'añadirProveedorExtranjeroTecnica'));?> <br>
 <!--
 
-	<?php echo $form->textFieldGroup($model,'rama',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
+	<?php //echo $form->textFieldGroup($model,'rama',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 -->
 
     <?php 	
@@ -82,7 +83,7 @@
 	?>
 
 <!--
-	<?php echo $form->textFieldGroup($model,'rama_producto_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>-->
+	<?php //echo $form->textFieldGroup($model,'rama_producto_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>-->
 
 	<?php echo $form->textAreaGroup($model,'descripcion', array('widgetOptions'=>array('htmlOptions'=>array('rows'=>6, 'cols'=>50, 'class'=>'span8')))); ?>
 

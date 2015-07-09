@@ -9,7 +9,7 @@ $this->menu=array(
 	);
 ?>
 
-<h1>Proveedores Extranjeroses</h1>
+<h1>Proveedores Extranjeros</h1>
 
 <?php $this->widget('booster.widgets.TbListView',array(
 'dataProvider'=>$dataProvider,

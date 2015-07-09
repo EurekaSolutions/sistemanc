@@ -69,7 +69,7 @@ class ProveedoresCuentasController extends Controller
 			$model->attributes=$_POST['ProveedoresCuentas'];
 			$usuario = Usuarios::model()->actual();
 			$model->ente_organo_id = $usuario->ente_organo_id;
-
+			
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}

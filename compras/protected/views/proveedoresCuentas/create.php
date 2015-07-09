@@ -12,6 +12,6 @@ array('label'=>'Manage ProveedoresCuentas','url'=>array('admin')),
 }
 ?>
 
-<h1>Create ProveedoresCuentas</h1>
+<h1>Crear Información financiera</h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
