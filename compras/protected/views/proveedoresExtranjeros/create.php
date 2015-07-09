@@ -12,4 +12,6 @@ array('label'=>'Manage ProveedoresExtranjeros','url'=>array('admin')),
 
 <h1>Create ProveedoresExtranjeros</h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model,'modelProveedor'=>$modelProveedor, 'modelContacto'=>$modelContacto, 'modelCuenta'=>$modelCuenta, 'modelObjeto'=>$modelObjeto,)); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model,'modelProveedor'=>$modelProveedor, 'modelContacto'=>$modelContacto, //'modelCuenta'=>$modelCuenta, 'modelObjeto'=>$modelObjeto,
+                                              ));
+?>

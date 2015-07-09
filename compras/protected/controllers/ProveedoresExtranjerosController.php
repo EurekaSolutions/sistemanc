@@ -128,7 +128,7 @@ class ProveedoresExtranjerosController extends Controller
 		}
 
 		$this->render('create',array(
-		'model'=>$model, 'modelProveedor'=>$modelProveedor, 'modelContacto'=>$modelContacto, 'modelCuenta'=>$modelCuenta, 'modelObjeto'=>$modelObjeto,
+		'model'=>$model, 'modelProveedor'=>$modelProveedor, 'modelContacto'=>$modelContacto, //'modelCuenta'=>$modelCuenta, 'modelObjeto'=>$modelObjeto,
 		));
 	}
 

@@ -15,4 +15,6 @@ $this->breadcrumbs=array(
 
 	<h1>Update ProveedoresExtranjeros <?php echo $model->id; ?></h1>
 
-<?php echo $this->renderPartial('_form',array('model'=>$model, 'modelProveedor'=>$modelProveedor, 'modelContacto'=>$modelContacto, 'modelCuenta'=>$modelCuenta, 'modelObjeto'=>$modelObjeto,)); ?>
+<?php echo $this->renderPartial('_form',array('model'=>$model, 'modelProveedor'=>$modelProveedor, 'modelContacto'=>$modelContacto, //'modelCuenta'=>$modelCuenta, 'modelObjeto'=>$modelObjeto,
+                                             )); 
+?>
