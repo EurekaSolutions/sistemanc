@@ -127,7 +127,7 @@
 									array('label'=>  'Facturas', 'url'=>array('/facturas/index'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 									array('label'=>  'Agregar productos a facturas', 'url'=>array('/facturasProductos/index'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 									array('label' => 'Mis Proveedores', 'url' => array('/proveedoresEntesOrganos/index'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
-                                    array('label' => 'Proveedores Extranjeros', 'url' => array('/proveedoresExtranjeros/index'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
+                                    
 								),
 								//'visible'=>AQUI COLOCAR CONDICIÓN DE SI ESTA EN LA FECHA DE RENDICION DE CUENTA DEL TRIMESTRE PASADO),
 								'visible'=>Yii::app()->user->checkAccess('producto'),
@@ -181,6 +181,16 @@
 									array('label' => 'Crear usuarios', 'url'=>array('/planificacion/usuariosentes'), 'visible'=>(Yii::app()->user->checkAccess('admin'))), // si el tipo es ORGANO Yii::app()->session['organo']==1*/
 									),
 								'visible'=>(Yii::app()->user->checkAccess('admin'))
+							),
+
+							array(
+								'label' => 'Proveedores extranjeros',
+								'items' => array(
+									array('label' => 'Agregar proveedor', 'url' => array('/proveedoresExtranjeros/create'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
+									array('label' => 'Añadir información financiera', 'url' => array('/proveedoresCuentas/create'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
+									
+									),
+								'visible'=>(Yii::app()->user->checkAccess('producto'))
 							),
 						   // array('label'=>'Perfil usuario', 'url'=>array('/usr/profile'), 'visible'=>!Yii::app()->user->isGuest),
 						    

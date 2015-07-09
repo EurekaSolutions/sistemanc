@@ -8,9 +8,11 @@
  * @property string $codigo_swift
  * @property string $num_cuenta_bancaria
  * @property integer $proveedor_id
+ * @property integer $ente_organo_id
  *
  * The followings are the available model relations:
  * @property Proveedores $proveedor
+ * @property EntesOrganos $enteOrgano
  */
 class ProveedoresCuentas extends CActiveRecord
 {
@@ -30,12 +32,12 @@ class ProveedoresCuentas extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('codigo_swift, num_cuenta_bancaria, proveedor_id', 'required'),
-			array('proveedor_id', 'numerical', 'integerOnly'=>true),
+			array('codigo_swift, num_cuenta_bancaria, proveedor_id, ente_organo_id', 'required'),
+			array('proveedor_id, ente_organo_id', 'numerical', 'integerOnly'=>true),
 			array('codigo_swift, num_cuenta_bancaria', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, codigo_swift, num_cuenta_bancaria, proveedor_id', 'safe', 'on'=>'search'),
+			array('id, codigo_swift, num_cuenta_bancaria, proveedor_id, ente_organo_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,6 +50,7 @@ class ProveedoresCuentas extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'proveedor' => array(self::BELONGS_TO, 'Proveedores', 'proveedor_id'),
+			'enteOrgano' => array(self::BELONGS_TO, 'EntesOrganos', 'ente_organo_id'),
 		);
 	}
 
@@ -61,6 +64,7 @@ class ProveedoresCuentas extends CActiveRecord
 			'codigo_swift' => 'Codigo Swift',
 			'num_cuenta_bancaria' => 'Num Cuenta Bancaria',
 			'proveedor_id' => 'Proveedor',
+			'ente_organo_id' => 'Ente Organo',
 		);
 	}
 
@@ -86,6 +90,7 @@ class ProveedoresCuentas extends CActiveRecord
 		$criteria->compare('codigo_swift',$this->codigo_swift,true);
 		$criteria->compare('num_cuenta_bancaria',$this->num_cuenta_bancaria,true);
 		$criteria->compare('proveedor_id',$this->proveedor_id);
+		$criteria->compare('ente_organo_id',$this->ente_organo_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
