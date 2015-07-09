@@ -84,7 +84,7 @@
 	<?php /*echo $form->textFieldGroup($modelCuenta,'codigo_swift',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
 
 	<?php echo $form->textFieldGroup($modelCuenta,'num_cuenta_bancaria',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255))));*/ ?>
-<!--
+
 
     <h3>Información de Contacto</h3>
 
@@ -94,7 +94,7 @@
 	<?php echo $form->textFieldGroup($modelContacto,'tlf_movil',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
 	<?php echo $form->textFieldGroup($modelContacto,'fax_telefax',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
 	<?php echo $form->textFieldGroup($modelContacto,'correo_electronico',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5','maxlength'=>255)))); ?>
--->
+
 
 <div class="form-actions">
 	<?php $this->widget('booster.widgets.TbButton', array(
