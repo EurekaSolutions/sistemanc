@@ -23,7 +23,7 @@ return false;
 ");
 ?>
 
-<h1>Manage Proveedores Extranjeroses</h1>
+<h1>Proveedores Extranjeros</h1>
 
 <p>
 	You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>
