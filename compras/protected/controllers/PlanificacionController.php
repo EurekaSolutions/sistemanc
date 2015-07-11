@@ -68,7 +68,7 @@ class PlanificacionController extends Controller
 				'actions'=>array('crearente','misentes', 'usuariosentes', 'gesUsuEntes', 'rporusuario', 'ajaxreportes', 'actividad'),
 				'users'=>array('@'),
 				'roles'=>array('organo'),
-				'expression'=>'Yii::app()->controller->M_compras()',
+				//'expression'=>'Yii::app()->controller->M_compras()',
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete','administracion','importacion', 'modificarcorreo', 'cargamasiva', 'descargar', 'correoactual'),

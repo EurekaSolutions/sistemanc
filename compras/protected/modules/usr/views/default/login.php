@@ -78,7 +78,9 @@ $this->pageTitle = Yii::app()->name.' - '.$title;
 
 <div style=" text-align: justify">
 	<br/><br/><br/>
-	El Servicio Nacional de Contrataciones informa a todos los usuarios del Modulo de Plan de Compras del Estado 2015, que estaremos trabajando los días Sábado 20/12/2014 y Domingo 21/12/2014 de 9:00 am hasta las 3:00 pm. Los invitamos a consultar cualquier inquietud o duda a través del 0800SNCINFO (0800-7624636) y por la dirección de correo electrónico rnce@snc.gob.ve
-<br><br><strong>Asimismo, le informamos que la fecha tope de carga ha sido extendida, de forma definitiva, hasta el dia 23/12/2014 <strong style="color: red;">(SIN PRORROGA)</strong>.</strong>
+<a href="http://www.snc.gob.ve/avisos/comunicacion-importante-para-los-organos-y-entes-del-estado"
+target="_blank"><strong><strong style="color: red;">Comunicación Importante para los Órganos y Entes del Estado.</strong></strong></a>
+        <br/><br/><br/>
+Los invitamos a consultar cualquier inquietud o duda a través del 0800SNCINFO (0800-7624636) y por la dirección de correo electrónico rnce@snc.gob.ve
 </div>
 </div>

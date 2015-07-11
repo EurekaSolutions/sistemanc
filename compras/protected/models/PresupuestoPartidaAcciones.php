@@ -69,12 +69,10 @@ class PresupuestoPartidaAcciones extends ActiveRecord
 	public function presuPartidas($id){
 
 		$presuPartidas =array();
-
 		foreach (PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$id, 'ente_organo_id'=>Usuarios::model()->actual()->ente_organo_id) ) as $key => $prePar) {
-			if(!empty($prePar) and (!empty($prePar->presupuestoPartida->presupuestoProductos) or !empty($prePar->presupuestoPartida->presupuestoImportacion)))
+			if(!empty($prePar))
 				$presuPartidas[$key] = $prePar->presupuestoPartida;
 		}
-
 		return $presuPartidas;
 	}
 

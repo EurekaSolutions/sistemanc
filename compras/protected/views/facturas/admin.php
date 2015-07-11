@@ -43,17 +43,17 @@ return false;
 'dataProvider'=>$model->search(),
 'filter'=>$model,
 'columns'=>array(
-                //'id',
-                'num_factura',
-                'anho',
-                array('name'=>'proveedor_id', 'value'=>'$data->proveedor->rif." - ".$data->proveedor->razon_social'),
-                array('name'=>'procedimiento_id', 'value'=>'$data->procedimiento->tipo." Número: ".$data->procedimiento->num_contrato'),
-                array('name'=>'cierre_carga', 'value'=>'$data->cierre_carga?"Cerrada":"Abierta"'),
-                array('name'=>'fecha', 'value'=>'date("Y-m-d H:i:s",strtotime($data->fecha))'),
-                /*
-                'fecha_factura',
-                'ente_organo_id',
-                */
+		//'id',
+		'num_factura',
+		'anho',
+		array('name'=>'proveedor_id', 'value'=>'$data->proveedor->rif." - ".$data->proveedor->razon_social'),
+		array('name'=>'procedimiento_id', 'value'=>'$data->procedimiento->tipo." Número: ".$data->procedimiento->num_contrato'),
+		array('name'=>'cierre_carga', 'value'=>'$data->cierre_carga?"Cerrada":"Abierta"'),
+		array('name'=>'fecha', 'value'=>'date("Y-m-d H:i:s",strtotime($data->fecha))'),
+		/*
+		'fecha_factura',
+		'ente_organo_id',
+		*/
 array(
 'class'=>'booster.widgets.TbButtonColumn','template'=>'{update} {delete}'
 ),

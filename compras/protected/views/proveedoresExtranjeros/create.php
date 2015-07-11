@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'Proveedores Extranjeroses'=>array('index'),
+	'Proveedores Extranjeros'=>array('index'),
 	'Create',
 );
 if(Yii::app()->user->checkAccess('admin'))

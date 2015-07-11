@@ -74,8 +74,9 @@ class PresupuestoPartidasController extends Controller
 	}
 	public function buscarPartidasProyectoAccion($id)
 	{
-        
-            if(strstr($id, 'a'))
+
+
+			if(strstr($id, 'a'))
 			{//Es un id de accion
 
 				$accionId = PresupuestoPartidaAcciones::model()->accionId($id);

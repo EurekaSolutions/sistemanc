@@ -2,7 +2,7 @@
 <script type="text/javascript">
 $( document ).ready(function() {
     $("#jobDialog").html("");
-    $("#jobDialog").html("<br><br><div class='flash-success'>Proveedor agregado con éxito, por favor escójalo en su lista</div>");
+    $("#jobDialog").html("<br><br><div class='flash-success'>Proveedor agregado con éxito, por favor escójalo de la lista</div>");
     /*setTimeout(function(){
 	    $( "#jobDialogForm").remove();
 	}, 10000);   */

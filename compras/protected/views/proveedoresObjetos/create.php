@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
-	'Proveedores Objetoses'=>array('index'),
-	'Create',
+	'Proveedores Objetos'=>array('index'),
+	'Crear',
 );
 if(Yii::app()->user->checkAccess('admin'))
 {

@@ -11,7 +11,7 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog',array(
                     'left' =>'auto',
 
                 ),
-));
-
+                ));
 echo $this->renderPartial('_form', array('model'=>$model)); ?>
-<?php $this->endWidget('zii.widgets.jui.CJuiDialog');?>
+<?php $this->endWidget('zii.widgets.jui.CJuiDialog');
+?>

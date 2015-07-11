@@ -37,7 +37,7 @@ class ProveedoresExtranjeros extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('pais_id, calle, poblacion, tlf_fijo, pagina_web', 'required'),
+			array('pais_id, calle, codigo_postal, poblacion, tlf_fijo, pagina_web', 'required'),
 			//array('pagina_web', 'match', 'pattern' => '/^(http:\/\/|https:\/\/)?(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?$/', 'allowEmpty'=>false,'message'=>'Debe introducir un formato de página web valido'),
 
 			array('pagina_web', 'url', 'defaultScheme' => 'http'),

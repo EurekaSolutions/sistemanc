@@ -4,7 +4,7 @@
 	'htmlOptions'=>array('enctype'=>'multipart/form-data'),
 )); ?>
 
-<p class="help-block">Fields with <span class="required">*</span> are required.</p>
+<p class="help-block">Campos con <span class="required">*</span> son requeridos.</p>
 
 <?php echo $form->errorSummary($model); 
  foreach(Yii::app()->user->getFlashes() as $key => $message) {

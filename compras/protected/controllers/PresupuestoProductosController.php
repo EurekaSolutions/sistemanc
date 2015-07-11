@@ -78,7 +78,7 @@ class PresupuestoProductosController extends Controller
 				$montoPresuDif = $monAct-$monCar;
 
 				if($monAct > $model->proyectoPartida->monto_presupuestado){
-
+					
 					Yii::app()->user->setFlash('error', "El cambio no puede realizarse, el monto sobrepasa la cantidad de presupuesto disponible para la partida asociada al producto.");
 				}else{
 

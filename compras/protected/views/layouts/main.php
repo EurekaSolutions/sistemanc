@@ -192,7 +192,7 @@
 									array('label' => 'Añadir información técnica', 'url' => array('/proveedoresObjetos/create'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
 									array('label' => 'Motivo de contratación', 'url' => array('/ProveedorMotivo/create'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
 									),
-								'visible'=>(Yii::app()->user->checkAccess('producto'))
+								'visible'=>(Yii::app()->user->checkAccess('admin'))
 							),
 						   // array('label'=>'Perfil usuario', 'url'=>array('/usr/profile'), 'visible'=>!Yii::app()->user->isGuest),
 						    

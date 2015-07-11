@@ -179,7 +179,7 @@
 		<?php
 			echo $model->isNewRecord ? '' : '<h4> Tú proveedor actual es: <strong>'.$model->proveedor->rif.'</strong></h4>' ; 
 		?>
-	</div>
+	</div>	
 
 	<?php //echo $form->textFieldGroup($model,'procedimiento_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 

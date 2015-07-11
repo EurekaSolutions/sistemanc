@@ -5,10 +5,10 @@ $this->breadcrumbs=array(
 	);
 
 $this->menu=array(
-	//array('label'=>'Listar Procedimientos','url'=>array('index')),
-	array('label'=>'Registrar Procedimiento','url'=>array('create')),
-	array('label'=>'Actualizar Procedimiento','url'=>array('update','id'=>$model->id)),
-	array('label'=>'Eliminar Procedimiento','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+	array('label'=>'Listar Procedimientos','url'=>array('index')),
+	array('label'=>'Crear Procedimientos','url'=>array('create')),
+	array('label'=>'Actualizar Procedimientos','url'=>array('update','id'=>$model->id)),
+	array('label'=>'Eliminar Procedimientos','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Administrar Procedimientos','url'=>array('admin')),
 	);
 ?>

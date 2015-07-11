@@ -10,7 +10,7 @@ $this->breadcrumbs=array(
 		array('label'=>'Registrar Factura','url'=>array('create')),
 		//array('label'=>'Ver Factura','url'=>array('view','id'=>$model->id)),
 		array('label'=>'Eliminar Factura','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-		array('label'=>'Administrar Factura','url'=>array('admin')),
+		//array('label'=>'Administrar Factura','url'=>array('admin')),
 		);
 	?>
 

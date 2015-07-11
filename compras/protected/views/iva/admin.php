@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Ivas'=>array('index'),
-	'Gestionar',
+	'Manage',
 );
 
 $this->menu=array(
@@ -23,7 +23,7 @@ return false;
 ");
 ?>
 
-<h1>Gestionar IVA</h1>
+<h1>Gestionar IVAs</h1>
 <!-- 
 <p>
 	You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>
@@ -47,8 +47,8 @@ return false;
 		'tipo',
 		'porcentaje',
 		'fecha',
-	array(
-	'class'=>'booster.widgets.TbButtonColumn','template'=>'{update} {delete}'
-	),
+array(
+'class'=>'booster.widgets.TbButtonColumn',
+),
 ),
 )); ?>

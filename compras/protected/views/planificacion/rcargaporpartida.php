@@ -81,8 +81,21 @@
 							</div>
 			    			</tr>
 			    			<tr>
-			    			
-		    					<td colspan="8" align="right" style="text-align:right !important">Porcentaje total de carga acción: <strong><?php echo number_format((($porcentajePartida*100)/$monto),2,',','.').' %'; ?></strong></td>
+			    				<?php
+			    					if($monto == 0)
+			    					{
+			    				?>
+			    				<td colspan="8" align="right" style="text-align:right !important">Porcentaje total de carga acción: <strong><?php echo ' 0 %'; ?></strong></td>
+			    				<?php
+
+			    					}else
+			    					{
+			    						?>
+			    				<td colspan="8" align="right" style="text-align:right !important">Porcentaje total de carga acción: <strong><?php echo number_format((($porcentajePartida*100)/$monto),2,',','.').' %'; ?></strong></td>
+			    				<?php
+			    					}
+ 			    				?>
+		    					
 		    				
 		    				</tr>
 				    	
@@ -184,7 +197,19 @@
 		    			if($contador !=0)
 		    			{?>
 		    		<tr>
-		    			<td colspan="8" align="right" style="text-align:right !important">Porcentaje total de carga proyecto: <strong><?php echo number_format((($porcentajePartida*100)/1),2,',','.').' %'; ?></strong></td>
+		    			<?php
+		    				if($monto==0)
+		    				{
+		    				?>
+		    				<td colspan="8" align="right" style="text-align:right !important">Porcentaje total de carga proyecto: <strong><?php echo '0 %'; ?></strong></td>
+		    				<?php
+		    				}else
+		    				{
+		    			?>
+		    			<td colspan="8" align="right" style="text-align:right !important">Porcentaje total de carga proyecto: <strong><?php echo number_format((($porcentajePartida*100)/$monto),2,',','.').' %'; ?></strong></td>
+		    			<?php
+		    			}
+		    			?>
 		    		</tr>
 		    		<?php
 		    			}
