@@ -1,0 +1,139 @@
+<HTML>
+<Header>
+<Title>facturas - Table</Title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<Link href="../css/doc.css" rel="stylesheet" type="text/css">
+</Header>
+<Body>
+<table class="logo">
+<tr>
+<td class="logo">sistemanc</td>
+</tr>
+</table>
+<table class="horzMenu">
+<tr>
+<td class="horzMenu"><a class="horzMenu" href="../index.html"> Home</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../tables/index.html">Tables</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../schemas/index.html">Schemas</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../diagrams/index.html">Diagrams</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../foreignKeys/index.html">Foreign Keys</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../indexes/index.html">Indexes</a></td><td class="horzMenuFiller"></td>
+</tr>
+</table>
+<hr>
+<table class="pageTitle">
+<tr>
+<td class="title_nm">facturas</td><td class="watermark_right">Factura del modulo de rendici&oacute;n de cuentas</td>
+</tr>
+</table>
+<br>
+<table class="flat">
+<tr>
+<td class="banner" colspan="8">Columns</td>
+</tr>
+<tr>
+<td class="Header">PK</td><td class="Header">Name</td><td class="Header">Data Type</td><td class="Header">NULLs</td><td class="Header">A/N</td><td class="Header">Default</td><td class="Header">Comment</td><td class="Header">FK</td>
+</tr>
+<tr>
+<td class="PkCol">
+<p class="boolImg">
+<img src="../images/pkb16.gif"></p>
+</td><td class="PkCol"><a href="../columns/trimestre1_facturas_id.html">id</a></td><td class="PkCol">Integer</td><td class="PkCol"> </td><td class="PkCol">
+<p class="boolImg">
+<img src="../images/ok12d.gif"></p>
+</td><td class="PkCol">nextval('facturas_id_seq'::regclass)</td><td class="PkCol"> </td><td class="PkCol"> </td>
+</tr>
+<tr class="altRow">
+<td> </td><td><a href="../columns/trimestre1_facturas_num_factura.html">num_factura</a></td><td>VarChar(255)</td><td> </td><td> </td><td> </td><td>N&uacute;mero de factura.</td><td> </td>
+</tr>
+<tr>
+<td> </td><td><a href="../columns/trimestre1_facturas_anho.html">anho</a></td><td>Integer</td><td>
+<p class="boolImg">
+<img src="../images/ok12d.gif"></p>
+</td><td> </td><td> </td><td>A&ntilde;o en que se cargo la factura</td><td> </td>
+</tr>
+<tr class="altRow">
+<td class="FkCol"> </td><td class="FkCol"><a href="../columns/trimestre1_facturas_proveedor_id.html">proveedor_id</a></td><td class="FkCol">Integer</td><td class="FkCol"> </td><td class="FkCol"> </td><td class="FkCol"> </td><td class="FkCol">Clave for&aacute;nea a la tabla Proveedores</td><td class="FkCol">
+<p class="boolImg">
+<img src="../images/ok12d.gif"></p>
+</td>
+</tr>
+<tr>
+<td class="FkCol"> </td><td class="FkCol"><a href="../columns/trimestre1_facturas_procedimiento_id.html">procedimiento_id</a></td><td class="FkCol">Integer</td><td class="FkCol"> </td><td class="FkCol"> </td><td class="FkCol"> </td><td class="FkCol">Clave for&aacute;nea a la tabla Procedimientos</td><td class="FkCol">
+<p class="boolImg">
+<img src="../images/ok12d.gif"></p>
+</td>
+</tr>
+<tr class="altRow">
+<td> </td><td><a href="../columns/trimestre1_facturas_fecha.html">fecha</a></td><td>TimeStampWithTimeZone</td><td> </td><td> </td><td>now()</td><td>Fecha de creaci&oacute;n del registro</td><td> </td>
+</tr>
+<tr>
+<td> </td><td><a href="../columns/trimestre1_facturas_fecha_factura.html">fecha_factura</a></td><td>Date</td><td>
+<p class="boolImg">
+<img src="../images/ok12d.gif"></p>
+</td><td> </td><td> </td><td>Fecha de emisi&oacute;in de la factura</td><td> </td>
+</tr>
+<tr class="altRow">
+<td class="FkCol"> </td><td class="FkCol"><a href="../columns/trimestre1_facturas_ente_organo_id.html">ente_organo_id</a></td><td class="FkCol">Integer</td><td class="FkCol"> </td><td class="FkCol"> </td><td class="FkCol"> </td><td class="FkCol">Clave foranea a la tabla entes_organos</td><td class="FkCol">
+<p class="boolImg">
+<img src="../images/ok12d.gif"></p>
+</td>
+</tr>
+<tr>
+<td> </td><td><a href="../columns/trimestre1_facturas_cierre_carga.html">cierre_carga</a></td><td>Boolean</td><td>
+<p class="boolImg">
+<img src="../images/ok12d.gif"></p>
+</td><td> </td><td>false</td><td>Indica si se finaliz&oacute; la carga de la  Factura.</td><td> </td>
+</tr>
+</table>
+<br>
+<table class="flat">
+<tr>
+<td class="banner" colspan="1">Indexes<span class="plain"> (none)</span></td>
+</tr>
+</table>
+<br>
+<table class="flat">
+<tr>
+<td class="banner" colspan="5">Foreign Keys</td>
+</tr>
+<tr>
+<td class="header">Name</td><td class="header">Parent Table</td><td class="header">Child Table</td><td class="header">Parent Columns</td><td class="header">Child Columns</td>
+</tr>
+<tr>
+<td><a href="../foreignKeys/trimestre1_facturas_facturas_ente_organo_id_fkey.html">facturas_ente_organo_id_fkey</a></td><td><a href="../tables/public_entes_organos.html">public.entes_organos</a></td><td><a href="../tables/trimestre1_facturas.html">trimestre1.facturas</a></td><td>ente_organo_id</td><td>ente_organo_id</td>
+</tr>
+<tr>
+<td><a href="../foreignKeys/trimestre1_facturas_facturas_procedimiento_id_fkey.html">facturas_procedimiento_id_fkey</a></td><td><a href="../tables/trimestre1_procedimientos.html">trimestre1.procedimientos</a></td><td><a href="../tables/trimestre1_facturas.html">trimestre1.facturas</a></td><td>id</td><td>procedimiento_id</td>
+</tr>
+<tr>
+<td><a href="../foreignKeys/trimestre1_facturas_facturas_proveedor_id_fkey.html">facturas_proveedor_id_fkey</a></td><td><a href="../tables/public_proveedores.html">public.proveedores</a></td><td><a href="../tables/trimestre1_facturas.html">trimestre1.facturas</a></td><td>id</td><td>proveedor_id</td>
+</tr>
+</table>
+<br>
+<table class="flat">
+<tr>
+<td class="banner" colspan="5">Parent Relations</td>
+</tr>
+<tr>
+<td class="header">Name</td><td class="header">Parent Table</td><td class="header">Child Table</td><td class="header">Parent Columns</td><td class="header">Child Columns</td>
+</tr>
+<tr>
+<td><a href="../foreignKeys/trimestre1_facturas_productos_facturas_productos_factura_id_fkey.html">facturas_productos_factura_id_fkey</a></td><td><a href="../tables/trimestre1_facturas.html">trimestre1.facturas</a></td><td><a href="../tables/trimestre1_facturas_productos.html">trimestre1.facturas_productos</a></td><td>id</td><td>factura_id</td>
+</tr>
+</table>
+<br>
+<table class="flat">
+<tr>
+<td class="banner" colspan="1">Triggers<span class="plain"> (none)</span></td>
+</tr>
+</table>
+<br>
+<table class="flat">
+<tr>
+<td class="banner" colspan="1">Used in Diagrams</td>
+</tr>
+<tr>
+<td class="Header">Diagram Name</td>
+</tr>
+<tr>
+<td><a href="../diagrams/trimestre1.html">trimestre1</a></td>
+</tr>
+</table>
+</Body>
+</HTML>

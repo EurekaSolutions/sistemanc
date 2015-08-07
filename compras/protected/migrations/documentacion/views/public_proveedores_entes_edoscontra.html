@@ -1,0 +1,51 @@
+<HTML>
+<Header>
+<Title>proveedores_entes_edoscontra - View</Title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<Link href="../css/doc.css" rel="stylesheet" type="text/css">
+</Header>
+<Body>
+<table class="logo">
+<tr>
+<td class="logo">sistemanc</td>
+</tr>
+</table>
+<table class="horzMenu">
+<tr>
+<td class="horzMenu"><a class="horzMenu" href="../index.html"> Home</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../tables/index.html">Tables</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../schemas/index.html">Schemas</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../diagrams/index.html">Diagrams</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../foreignKeys/index.html">Foreign Keys</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../indexes/index.html">Indexes</a></td><td class="horzMenuFiller"></td>
+</tr>
+</table>
+<hr>
+<table class="flat">
+<tr class="banner">
+<td class="title_nm">public.proveedores_entes_edoscontra</td><td class="watermark_right">(View)</td>
+</tr>
+<tr>
+<td class="key">Name</td><td class="value">proveedores_entes_edoscontra</td>
+</tr>
+<tr>
+<td class="key">SQL</td><td class="value">
+<pre>SELECT
+    a.rif,
+    a.razon_social,
+    a.estatus_contratista_id,
+    CASE WHEN a.estatus_contratista_id = 1 THEN 'NO REGISTRADA EN EL RNC( NO Inscrita en el Registro Nacional de Contratistas,
+    Proceso de registro sin finalizar)'::text WHEN a.estatus_contratista_id = 2 THEN 'CALIFICADA( HABILITADA para contratar con el Estado de conformidad con el Art&iacute;culo 48 de LCP)'::text WHEN a.estatus_contratista_id = 3 THEN 'INHABILITADA PROVISIONALMENTE POR MEDIDA ADMINISTRATIVA (El Registro Nacional de Contratistas INHABILITA provisionalmente para la contrataci&oacute;n con el Estado,
+    por haberse iniciado un procedimiento administrativo.)'::text WHEN a.estatus_contratista_id = 4 THEN 'REGISTRADA NO ACTUALIZADA( INHABILITADA para contratar con el Estado de conformidad con el Articulo 50 LCP)'::text WHEN a.estatus_contratista_id = 5 THEN 'EN PROCESO DE DESCAPITALIZACION( INHABILITADA para contratar con el Estado por encontrarse en proceso de DESCAPITALIZACION seg&uacute;n el Art&iacute;culo 264 del C&oacute;digo de Comercio Venezolano.)'::text WHEN a.estatus_contratista_id = 6 THEN 'PERSONA JURIDICA CON MANEJO DE FONDOS PUBLICOS ( excluida de las modalidades de selecci&oacute;n de conformidad con el Articulo 5,
+    numerales 8,
+    9 y 10 de la LCP)'::text WHEN a.estatus_contratista_id = 8 THEN 'SANCIONADA ( INHABILITADA para contratar con el Estado de conformidad con lo establecido en los Art&iacute;culos 167 y 168 de LCP)'::text WHEN a.estatus_contratista_id = 10 THEN 'EXTRANJERA,
+    SIN DOMICILIO NI FILIAL EN VENEZUELA ( exceptuada de la CALIFICACI&Oacute;N por el Registro Nacional de Contratistas de conformidad con el Articulo 49,
+    numerales 6 y 7.)'::text WHEN a.estatus_contratista_id = 12 THEN 'INSCRITA Y ACTUALIZADA( HABILITADA para contratar con el Estado hasta 4.000 UT en Bienes y Servicios / 5.000 UT en Obras de conformidad con los Articulos 47 y 49 numeral 1,
+    o por estar enmarcada en alguno de los numerales de Exclusi&oacute;n de Modalidad previstos en el Articulos 5 de la LCP)'::text WHEN a.estatus_contratista_id = 13 THEN 'Inscrita,
+    Actualizada,
+    No Calificada (No alcanz&oacute; la Calificaci&oacute;n prevista en el Art&iacute;culo 48 LCP HABILITADA para contratar con el Estado hasta 4.000 UT en Bienes y Servicios / 5.000 UT en Obras de conformidad con los Articulos 47 y 49 numeral 1 LCP)'::text WHEN a.estatus_contratista_id IS NULL THEN NULL::text ELSE NULL::text END AS estatus_contratista_descrip,
+    b.proveedor_id,
+    b.ente_organo_id
+FROM proveedores a
+    JOIN proveedores_entes_organos b ON a.id = b.proveedor_id
+ORDER BY a.estatus_contratista_id</pre>
+</td>
+</tr>
+</table>
+</Body>
+</HTML>

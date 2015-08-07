@@ -1,0 +1,42 @@
+<HTML>
+<Header>
+<Title>presupuesto_aprobado_entes_organos - View</Title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<Link href="../css/doc.css" rel="stylesheet" type="text/css">
+</Header>
+<Body>
+<table class="logo">
+<tr>
+<td class="logo">sistemanc</td>
+</tr>
+</table>
+<table class="horzMenu">
+<tr>
+<td class="horzMenu"><a class="horzMenu" href="../index.html"> Home</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../tables/index.html">Tables</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../schemas/index.html">Schemas</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../diagrams/index.html">Diagrams</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../foreignKeys/index.html">Foreign Keys</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../indexes/index.html">Indexes</a></td><td class="horzMenuFiller"></td>
+</tr>
+</table>
+<hr>
+<table class="flat">
+<tr class="banner">
+<td class="title_nm">trimestre1.presupuesto_aprobado_entes_organos</td><td class="watermark_right">(View)</td>
+</tr>
+<tr>
+<td class="key">Name</td><td class="value">presupuesto_aprobado_entes_organos</td>
+</tr>
+<tr>
+<td class="key">SQL</td><td class="value">
+<pre>SELECT
+    sum(b.monto_presupuestado) AS presupuesto_aprobado_rnce,
+    b.ente_organo_id,
+    c.nombre AS nombre_ente_organo
+FROM rnce_partidas a
+    JOIN trimestre1.presupuesto_partidas b USING (partida_id)
+    JOIN entes_organos c USING (ente_organo_id)
+GROUP BY b.ente_organo_id,
+    c.nombre
+ORDER BY sum(b.monto_presupuestado) DESC</pre>
+</td>
+</tr>
+</table>
+</Body>
+</HTML>

@@ -1,0 +1,136 @@
+<HTML>
+<Header>
+<Title>presupuesto_importacion - Table</Title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<Link href="../css/doc.css" rel="stylesheet" type="text/css">
+</Header>
+<Body>
+<table class="logo">
+<tr>
+<td class="logo">sistemanc</td>
+</tr>
+</table>
+<table class="horzMenu">
+<tr>
+<td class="horzMenu"><a class="horzMenu" href="../index.html"> Home</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../tables/index.html">Tables</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../schemas/index.html">Schemas</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../diagrams/index.html">Diagrams</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../foreignKeys/index.html">Foreign Keys</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../indexes/index.html">Indexes</a></td><td class="horzMenuFiller"></td>
+</tr>
+</table>
+<hr>
+<table class="pageTitle">
+<tr class="altRow">
+<td class="title_nm">presupuesto_importacion</td><td class="watermark_right">Tabla que contiene la informacion de los productos presuepuestados que...</td>
+</tr>
+</table>
+<br>
+<table class="flat">
+<tr>
+<td class="banner" colspan="8">Columns</td>
+</tr>
+<tr>
+<td class="Header">PK</td><td class="Header">Name</td><td class="Header">Data Type</td><td class="Header">NULLs</td><td class="Header">A/N</td><td class="Header">Default</td><td class="Header">Comment</td><td class="Header">FK</td>
+</tr>
+<tr>
+<td class="PkCol">
+<p class="boolImg">
+<img src="../images/pkIcons/pkb1_16.gif"></p>
+</td><td class="PkCol"><a href="../columns/trimestre1_presupuesto_importacion_codigo_ncm_id.html">codigo_ncm_id</a></td><td class="PkCol">BigInt</td><td class="PkCol"> </td><td class="PkCol"> </td><td class="PkCol"> </td><td class="PkCol">clave foranea que referencia el codigo arancelario </td><td class="PkCol">
+<p class="boolImg">
+<img src="../images/ok12d.gif"></p>
+</td>
+</tr>
+<tr class="altRow">
+<td class="PkCol">
+<p class="boolImg">
+<img src="../images/pkIcons/pkb2_16.gif"></p>
+</td><td class="PkCol"><a href="../columns/trimestre1_presupuesto_importacion_producto_id.html">producto_id</a></td><td class="PkCol">BigInt</td><td class="PkCol"> </td><td class="PkCol"> </td><td class="PkCol"> </td><td class="PkCol">clave foranea que referencia a un presupuesto de un producto determinado</td><td class="PkCol">
+<p class="boolImg">
+<img src="../images/ok12d.gif"></p>
+</td>
+</tr>
+<tr>
+<td> </td><td><a href="../columns/trimestre1_presupuesto_importacion_cantidad.html">cantidad</a></td><td>BigInt</td><td> </td><td> </td><td> </td><td>cantidad del producto que se importara</td><td> </td>
+</tr>
+<tr class="altRow">
+<td> </td><td><a href="../columns/trimestre1_presupuesto_importacion_fecha_llegada.html">fecha_llegada</a></td><td>Date</td><td> </td><td> </td><td> </td><td> </td><td> </td>
+</tr>
+<tr>
+<td> </td><td><a href="../columns/trimestre1_presupuesto_importacion_monto_presupuesto.html">monto_presupuesto</a></td><td>Numeric(38, 6)</td><td> </td><td> </td><td> </td><td>monto expresado en dolares del producto que se importara</td><td> </td>
+</tr>
+<tr class="altRow">
+<td> </td><td><a href="../columns/trimestre1_presupuesto_importacion_tipo.html">tipo</a></td><td>VarChar(100)</td><td> </td><td> </td><td> </td><td>copovex o licitacion internacional</td><td> </td>
+</tr>
+<tr>
+<td> </td><td><a href="../columns/trimestre1_presupuesto_importacion_monto_ejecutado.html">monto_ejecutado</a></td><td>Numeric(38, 6)</td><td> </td><td> </td><td> </td><td> </td><td> </td>
+</tr>
+<tr class="altRow">
+<td class="FkCol"> </td><td class="FkCol"><a href="../columns/trimestre1_presupuesto_importacion_divisa_id.html">divisa_id</a></td><td class="FkCol">BigInt</td><td class="FkCol"> </td><td class="FkCol"> </td><td class="FkCol"> </td><td class="FkCol"> </td><td class="FkCol">
+<p class="boolImg">
+<img src="../images/ok12d.gif"></p>
+</td>
+</tr>
+<tr>
+<td> </td><td><a href="../columns/trimestre1_presupuesto_importacion_descripcion.html">descripcion</a></td><td>Text</td><td> </td><td> </td><td> </td><td> </td><td> </td>
+</tr>
+<tr class="altRow">
+<td class="PkCol">
+<p class="boolImg">
+<img src="../images/pkIcons/pkb3_16.gif"></p>
+</td><td class="PkCol"><a href="../columns/trimestre1_presupuesto_importacion_presupuesto_partida_id.html">presupuesto_partida_id</a></td><td class="PkCol">BigInt</td><td class="PkCol"> </td><td class="PkCol"> </td><td class="PkCol"> </td><td class="PkCol"> </td><td class="PkCol">
+<p class="boolImg">
+<img src="../images/ok12d.gif"></p>
+</td>
+</tr>
+</table>
+<br>
+<table class="flat">
+<tr>
+<td class="banner" colspan="1">Indexes<span class="plain"> (none)</span></td>
+</tr>
+</table>
+<br>
+<table class="flat">
+<tr>
+<td class="banner" colspan="5">Foreign Keys</td>
+</tr>
+<tr>
+<td class="header">Name</td><td class="header">Parent Table</td><td class="header">Child Table</td><td class="header">Parent Columns</td><td class="header">Child Columns</td>
+</tr>
+<tr>
+<td><a href="../foreignKeys/trimestre1_presupuesto_importacion_fk_presupuesto_importacion_presupuesto_partidas.html">fk_presupuesto_importacion_presupuesto_partidas</a></td><td><a href="../tables/trimestre1_presupuesto_partidas.html">trimestre1.presupuesto_partidas</a></td><td><a href="../tables/trimestre1_presupuesto_importacion.html">trimestre1.presupuesto_importacion</a></td><td>presupuesto_partida_id</td><td>presupuesto_partida_id</td>
+</tr>
+<tr>
+<td><a href="../foreignKeys/trimestre1_presupuesto_importacion_presupuesto_importacion_codigo_ncm_id_fkey.html">presupuesto_importacion_codigo_ncm_id_fkey</a></td><td><a href="../tables/public_codigos_ncm.html">public.codigos_ncm</a></td><td><a href="../tables/trimestre1_presupuesto_importacion.html">trimestre1.presupuesto_importacion</a></td><td>codigo_ncm_id</td><td>codigo_ncm_id</td>
+</tr>
+<tr>
+<td><a href="../foreignKeys/trimestre1_presupuesto_importacion_presupuesto_importacion_divisa_id_fkey.html">presupuesto_importacion_divisa_id_fkey</a></td><td><a href="../tables/public_divisas.html">public.divisas</a></td><td><a href="../tables/trimestre1_presupuesto_importacion.html">trimestre1.presupuesto_importacion</a></td><td>divisa_id</td><td>divisa_id</td>
+</tr>
+<tr>
+<td><a href="../foreignKeys/trimestre1_presupuesto_importacion_presupuesto_importacion_producto_id_fkey.html">presupuesto_importacion_producto_id_fkey</a></td><td><a href="../tables/public_productos.html">public.productos</a></td><td><a href="../tables/trimestre1_presupuesto_importacion.html">trimestre1.presupuesto_importacion</a></td><td>producto_id</td><td>producto_id</td>
+</tr>
+</table>
+<br>
+<table class="flat">
+<tr>
+<td class="banner" colspan="1">Parent Relations<span class="plain"> (none)</span></td>
+</tr>
+</table>
+<br>
+<table class="flat">
+<tr>
+<td class="banner" colspan="1">Triggers<span class="plain"> (none)</span></td>
+</tr>
+</table>
+<br>
+<table class="flat">
+<tr>
+<td class="banner" colspan="1">Used in Diagrams</td>
+</tr>
+<tr>
+<td class="Header">Diagram Name</td>
+</tr>
+<tr>
+<td><a href="../diagrams/trimestre1.html">trimestre1</a></td>
+</tr>
+</table>
+</Body>
+</HTML>

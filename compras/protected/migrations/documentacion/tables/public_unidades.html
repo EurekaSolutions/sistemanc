@@ -1,0 +1,112 @@
+<HTML>
+<Header>
+<Title>unidades - Table</Title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<Link href="../css/doc.css" rel="stylesheet" type="text/css">
+</Header>
+<Body>
+<table class="logo">
+<tr>
+<td class="logo">sistemanc</td>
+</tr>
+</table>
+<table class="horzMenu">
+<tr>
+<td class="horzMenu"><a class="horzMenu" href="../index.html"> Home</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../tables/index.html">Tables</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../schemas/index.html">Schemas</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../diagrams/index.html">Diagrams</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../foreignKeys/index.html">Foreign Keys</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../indexes/index.html">Indexes</a></td><td class="horzMenuFiller"></td>
+</tr>
+</table>
+<hr>
+<table class="pageTitle">
+<tr>
+<td class="title_nm">unidades</td><td class="watermark_right">(Table)</td>
+</tr>
+</table>
+<br>
+<table class="flat">
+<tr>
+<td class="banner" colspan="8">Columns</td>
+</tr>
+<tr>
+<td class="Header">PK</td><td class="Header">Name</td><td class="Header">Data Type</td><td class="Header">NULLs</td><td class="Header">A/N</td><td class="Header">Default</td><td class="Header">Comment</td><td class="Header">FK</td>
+</tr>
+<tr>
+<td class="PkCol">
+<p class="boolImg">
+<img src="../images/pkb16.gif"></p>
+</td><td class="PkCol"><a href="../columns/public_unidades_unidad_id.html">unidad_id</a></td><td class="PkCol">BigInt</td><td class="PkCol"> </td><td class="PkCol">
+<p class="boolImg">
+<img src="../images/ok12d.gif"></p>
+</td><td class="PkCol">nextval('unidad_id_seq'::regclass)</td><td class="PkCol">identificador unico de la tabla</td><td class="PkCol"> </td>
+</tr>
+<tr>
+<td> </td><td><a href="../columns/public_unidades_nombre.html">nombre</a></td><td>VarChar(100)</td><td> </td><td> </td><td> </td><td>descripcion de la unidad</td><td> </td>
+</tr>
+</table>
+<br>
+<table class="flat">
+<tr>
+<td class="banner" colspan="1">Indexes<span class="plain"> (none)</span></td>
+</tr>
+</table>
+<br>
+<table class="flat">
+<tr>
+<td class="banner" colspan="1">Foreign Keys<span class="plain"> (none)</span></td>
+</tr>
+</table>
+<br>
+<table class="flat">
+<tr>
+<td class="banner" colspan="5">Parent Relations</td>
+</tr>
+<tr>
+<td class="header">Name</td><td class="header">Parent Table</td><td class="header">Child Table</td><td class="header">Parent Columns</td><td class="header">Child Columns</td>
+</tr>
+<tr>
+<td><a href="../foreignKeys/public_presupuesto_productos_fk_presupuesto_unidades.html">fk_presupuesto_unidades</a></td><td><a href="../tables/public_unidades.html">public.unidades</a></td><td><a href="../tables/public_presupuesto_productos.html">public.presupuesto_productos</a></td><td>unidad_id</td><td>unidad_id</td>
+</tr>
+<tr class="altRow">
+<td><a href="../foreignKeys/trimestre1_facturas_productos_fk_unidades_productos.html">fk_unidades_productos</a></td><td><a href="../tables/public_unidades.html">public.unidades</a></td><td><a href="../tables/trimestre1_facturas_productos.html">trimestre1.facturas_productos</a></td><td>unidad_id</td><td>unidad_id</td>
+</tr>
+<tr>
+<td><a href="../foreignKeys/trimestre1_presupuesto_productos_presupuesto_productos_unidad_id_fkey.html">presupuesto_productos_unidad_id_fkey</a></td><td><a href="../tables/public_unidades.html">public.unidades</a></td><td><a href="../tables/trimestre1_presupuesto_productos.html">trimestre1.presupuesto_productos</a></td><td>unidad_id</td><td>unidad_id</td>
+</tr>
+<tr class="altRow">
+<td><a href="../foreignKeys/trimestre2_facturas_productos_fk_unidades_productos.html">fk_unidades_productos</a></td><td><a href="../tables/public_unidades.html">public.unidades</a></td><td><a href="../tables/trimestre2_facturas_productos.html">trimestre2.facturas_productos</a></td><td>unidad_id</td><td>unidad_id</td>
+</tr>
+<tr>
+<td><a href="../foreignKeys/trimestre2_presupuesto_productos_presupuesto_productos_unidad_id_fkey.html">presupuesto_productos_unidad_id_fkey</a></td><td><a href="../tables/public_unidades.html">public.unidades</a></td><td><a href="../tables/trimestre2_presupuesto_productos.html">trimestre2.presupuesto_productos</a></td><td>unidad_id</td><td>unidad_id</td>
+</tr>
+<tr class="altRow">
+<td><a href="../foreignKeys/trimestre3_facturas_productos_fk_unidades_productos.html">fk_unidades_productos</a></td><td><a href="../tables/public_unidades.html">public.unidades</a></td><td><a href="../tables/trimestre3_facturas_productos.html">trimestre3.facturas_productos</a></td><td>unidad_id</td><td>unidad_id</td>
+</tr>
+<tr>
+<td><a href="../foreignKeys/trimestre3_presupuesto_productos_presupuesto_productos_unidad_id_fkey.html">presupuesto_productos_unidad_id_fkey</a></td><td><a href="../tables/public_unidades.html">public.unidades</a></td><td><a href="../tables/trimestre3_presupuesto_productos.html">trimestre3.presupuesto_productos</a></td><td>unidad_id</td><td>unidad_id</td>
+</tr>
+<tr class="altRow">
+<td><a href="../foreignKeys/trimestre4_facturas_productos_fk_unidades_productos.html">fk_unidades_productos</a></td><td><a href="../tables/public_unidades.html">public.unidades</a></td><td><a href="../tables/trimestre4_facturas_productos.html">trimestre4.facturas_productos</a></td><td>unidad_id</td><td>unidad_id</td>
+</tr>
+<tr>
+<td><a href="../foreignKeys/trimestre4_presupuesto_productos_presupuesto_productos_unidad_id_fkey.html">presupuesto_productos_unidad_id_fkey</a></td><td><a href="../tables/public_unidades.html">public.unidades</a></td><td><a href="../tables/trimestre4_presupuesto_productos.html">trimestre4.presupuesto_productos</a></td><td>unidad_id</td><td>unidad_id</td>
+</tr>
+</table>
+<br>
+<table class="flat">
+<tr>
+<td class="banner" colspan="1">Triggers<span class="plain"> (none)</span></td>
+</tr>
+</table>
+<br>
+<table class="flat">
+<tr>
+<td class="banner" colspan="1">Used in Diagrams</td>
+</tr>
+<tr>
+<td class="Header">Diagram Name</td>
+</tr>
+<tr>
+<td><a href="../diagrams/public.html">public</a></td>
+</tr>
+</table>
+</Body>
+</HTML>

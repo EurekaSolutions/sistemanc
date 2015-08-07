@@ -1,0 +1,56 @@
+<HTML>
+<Header>
+<Title>organo_ente_partidas_productos_full_partida_proy_accion_ministe - View</Title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<Link href="../css/doc.css" rel="stylesheet" type="text/css">
+</Header>
+<Body>
+<table class="logo">
+<tr>
+<td class="logo">sistemanc</td>
+</tr>
+</table>
+<table class="horzMenu">
+<tr>
+<td class="horzMenu"><a class="horzMenu" href="../index.html"> Home</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../tables/index.html">Tables</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../schemas/index.html">Schemas</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../diagrams/index.html">Diagrams</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../foreignKeys/index.html">Foreign Keys</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../indexes/index.html">Indexes</a></td><td class="horzMenuFiller"></td>
+</tr>
+</table>
+<hr>
+<table class="flat">
+<tr class="banner">
+<td class="title_nm">public.organo_ente_partidas_productos_full_partida_proy_accion_ministe</td><td class="watermark_right">(View)</td>
+</tr>
+<tr>
+<td class="key">Name</td><td class="value">organo_ente_partidas_productos_full_partida_proy_accion_ministe</td>
+</tr>
+<tr>
+<td class="key">SQL</td><td class="value">
+<pre>SELECT
+    organo_ente_partidas_productos_full_partida_proy_accion.ente_rector,
+    organo_ente_partidas_productos_full_partida_proy_accion.ente_organo,
+    organo_ente_partidas_productos_full_partida_proy_accion.descipcion_partida,
+    organo_ente_partidas_productos_full_partida_proy_accion.cod_partida,
+    organo_ente_partidas_productos_full_partida_proy_accion.monto_presupuesto,
+    organo_ente_partidas_productos_full_partida_proy_accion.codigo_producto,
+    organo_ente_partidas_productos_full_partida_proy_accion.producto,
+    organo_ente_partidas_productos_full_partida_proy_accion.unidad,
+    organo_ente_partidas_productos_full_partida_proy_accion.cantidad,
+    organo_ente_partidas_productos_full_partida_proy_accion.costo_unitario,
+    organo_ente_partidas_productos_full_partida_proy_accion.monto_total,
+    organo_ente_partidas_productos_full_partida_proy_accion.ente_organo_id,
+    organo_ente_partidas_productos_full_partida_proy_accion.proyectonom,
+    organo_ente_partidas_productos_full_partida_proy_accion.accion_nom,
+    organo_ente_partidas_productos_full_partida_proy_accion.codigo_accion
+FROM organo_ente_partidas_productos_full_partida_proy_accion
+WHERE (organo_ente_partidas_productos_full_partida_proy_accion.ente_rector::text IN ( SELECT entes_organos.nombre
+FROM entes_organos
+WHERE entes_organos.nombre::text ~~ 'Ministerio%'::text
+        OR entes_organos.nombre::text ~~ 'MINISTERIO%'::text
+        OR entes_organos.nombre::text ~~ 'Ministerio%'::text
+        OR entes_organos.nombre::text ~~ 'Vicepresidencia%'::text))
+ORDER BY organo_ente_partidas_productos_full_partida_proy_accion.ente_organo_id</pre>
+</td>
+</tr>
+</table>
+</Body>
+</HTML>

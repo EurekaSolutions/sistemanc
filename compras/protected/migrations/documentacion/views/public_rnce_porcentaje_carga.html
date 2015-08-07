@@ -1,0 +1,96 @@
+<HTML>
+<Header>
+<Title>rnce_porcentaje_carga - View</Title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<Link href="../css/doc.css" rel="stylesheet" type="text/css">
+</Header>
+<Body>
+<table class="logo">
+<tr>
+<td class="logo">sistemanc</td>
+</tr>
+</table>
+<table class="horzMenu">
+<tr>
+<td class="horzMenu"><a class="horzMenu" href="../index.html"> Home</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../tables/index.html">Tables</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../schemas/index.html">Schemas</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../diagrams/index.html">Diagrams</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../foreignKeys/index.html">Foreign Keys</a></td><td class="horzMenu">|</td><td class="horzMenu"><a class="horzMenu" href="../indexes/index.html">Indexes</a></td><td class="horzMenuFiller"></td>
+</tr>
+</table>
+<hr>
+<table class="flat">
+<tr class="banner">
+<td class="title_nm">public.rnce_porcentaje_carga</td><td class="watermark_right">(View)</td>
+</tr>
+<tr>
+<td class="key">Name</td><td class="value">rnce_porcentaje_carga</td>
+</tr>
+<tr>
+<td class="key">SQL</td><td class="value">
+<pre>SELECT
+    DISTINCT COALESCE(d.nombre,
+    'N/A'::character varying) AS ente_rector,
+    a.nombre_ente_organo,
+    replace(round(COALESCE(a.presupuesto_aprobado_rnce,
+    0::numeric),
+    2)::text,
+    '.'::text,
+    ',
+    '::text) AS presupuesto_aprobado,
+    replace(round(COALESCE(b.presupuesto_productos_rnce,
+    0::numeric),
+    2)::text,
+    '.'::text,
+    ',
+    '::text) AS presupuesto_productos,
+    replace(round(COALESCE(e.presupuesto_importacion_rnce,
+    0::numeric),
+    2)::text,
+    '.'::text,
+    ',
+    '::text) AS presupuesto_importacion,
+    replace(round(COALESCE(a.presupuesto_aprobado_rnce,
+    0::numeric) - COALESCE(b.presupuesto_productos_rnce,
+    0::numeric) - COALESCE(e.presupuesto_importacion_rnce,
+    0::numeric),
+    2)::text,
+    '.'::text,
+    ',
+    '::text) AS presupuesto_resta,
+    round((COALESCE(b.presupuesto_productos_rnce,
+    0::numeric) + COALESCE(e.presupuesto_importacion_rnce,
+    0::numeric)) / COALESCE(a.presupuesto_aprobado_rnce,
+    0::numeric) * 100::numeric,
+    0) AS porcentaje_cargado
+FROM presupuesto_aprobado_entes_organos a FULL
+    JOIN presupuesto_productos_entes_organos b USING (ente_organo_id) FULL
+    JOIN entes_adscritos c(padre_id,
+    ente_organo_id_1,
+    fecha_desde,
+    fecha_hasta,
+    ente_adscrito_id) ON c.padre_id = b.ente_organo_id
+        OR c.ente_organo_id_1 = b.ente_organo_id FULL
+    JOIN entes_organos d(ente_organo_id_1,
+    codigo_onapre,
+    nombre,
+    tipo,
+    rif,
+    creado_por,
+    compra,
+    rendicion) ON d.ente_organo_id_1 = c.padre_id FULL
+    JOIN presupuesto_importados_entes_organos e(presupuesto_importacion_rnce,
+    ente_organo_id_1,
+    nombre_ente_organo) ON e.ente_organo_id_1 = a.ente_organo_id
+WHERE a.ente_organo_id &lt;&gt; ALL (ARRAY[12615::bigint,
+    12616::bigint,
+    12617::bigint,
+    12618::bigint,
+    12619::bigint])
+ORDER BY round((COALESCE(b.presupuesto_productos_rnce,
+    0::numeric) + COALESCE(e.presupuesto_importacion_rnce,
+    0::numeric)) / COALESCE(a.presupuesto_aprobado_rnce,
+    0::numeric) * 100::numeric,
+    0)</pre>
+</td>
+</tr>
+</table>
+</Body>
+</HTML>
