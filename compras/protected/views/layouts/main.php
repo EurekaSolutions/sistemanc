@@ -127,6 +127,9 @@
 									array('label'=>  'Facturas', 'url'=>array('/facturas/index'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 									array('label'=>  'Agregar productos a facturas', 'url'=>array('/facturasProductos/index'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 									array('label' => 'Mis Proveedores', 'url' => array('/proveedoresEntesOrganos/index'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
+									'---',
+									array('label' => 'Reporte', 'url' => array('/reportesRendicion/index'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
+
                                     
 								),
 								//'visible'=>AQUI COLOCAR CONDICIÓN DE SI ESTA EN LA FECHA DE RENDICION DE CUENTA DEL TRIMESTRE PASADO),

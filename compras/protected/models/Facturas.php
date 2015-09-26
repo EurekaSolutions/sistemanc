@@ -148,6 +148,8 @@ class Facturas extends ActiveRecord
  			return false; 
  	}
 
+
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
