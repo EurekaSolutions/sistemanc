@@ -89,6 +89,7 @@ class EntesOrganosController extends Controller
 		
 		//PresupuestoPartidaAcciones::model()->findByAttributes(array('ente_organo_id' => $this->usuario()->ente_organo_id));
 		$model= EntesOrganos::model()->findByPk($id);
+		$model->scenario = 'crearuel';
 
 		if(Usuarios::model()->findByPk(Yii::app()->user->id)->enteOrgano->ente_organo_id != $model->padre->padre->ente_organo_id)
 			throw new CHttpException(403,'Error en los datos suministrados.');

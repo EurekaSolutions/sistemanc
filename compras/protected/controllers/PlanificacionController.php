@@ -334,7 +334,7 @@ class PlanificacionController extends Controller
 	public function actionGesUsuUELs()
 	{
 		
-		$usuaios =array();
+		$usuarios = array();
 		foreach ($this->usuario()->enteOrgano->hijos as $key => $value) {
 			if($value->enteOrgano->usuarioPrincipal  && $value->enteOrgano->tipo == 'U')
 				$usuarios[] = $value->enteOrgano->usuarioPrincipal;
