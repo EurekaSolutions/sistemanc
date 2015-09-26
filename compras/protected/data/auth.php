@@ -40,24 +40,22 @@ return array (
     array (
       0 => 'ente',
     ),
-    'assignments' => 
-    array (
-      4491 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
-      1266 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
-    ),
   ),
   'ente' => 
   array (
     'type' => 2,
     'description' => 'Acceso básico al sistema.',
+    'bizRule' => '',
+    'data' => '',
+    'children' => 
+    array (
+      0 => 'uel',
+    ),
+  ),
+  'uel' => 
+  array (
+    'type' => 2,
+    'description' => 'Unidad Ejecutora Local. Acceso básico al sistema.',
     'bizRule' => '',
     'data' => '',
     'children' => 
