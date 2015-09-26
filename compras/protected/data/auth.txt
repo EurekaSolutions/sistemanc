@@ -36,6 +36,15 @@ return array(
         'type'=>CAuthItem::TYPE_ROLE,
         'description'=>'Acceso básico al sistema.',
         'children'=>array(
+                'uel'
+            ),
+        'bizRule'=>'',
+        'data'=>''
+   ),
+    'uel' => array (
+        'type'=>CAuthItem::TYPE_ROLE,
+        'description'=>'Unidad Ejecutora Local. Acceso básico al sistema.',
+        'children'=>array(
                 'presupuesto', 'producto'
             ),
         'bizRule'=>'',

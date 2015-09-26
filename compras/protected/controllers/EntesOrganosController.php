@@ -27,6 +27,12 @@ class EntesOrganosController extends Controller
 	{
 		return array(
 		array('allow',  // allow all users to perform 'index' and 'view' actions
+			'actions'=>array('actualizarMiUEL'),
+			//'users'=>array('admin'),
+			'users'=>array('@'),
+			'roles'=>array('ente'),
+		),
+		array('allow',  // allow all users to perform 'index' and 'view' actions
 			'actions'=>array('index','view', 'actualizarMiEnte'),
 			//'users'=>array('admin'),
 			'users'=>array('@'),
@@ -71,6 +77,34 @@ class EntesOrganosController extends Controller
 		}
 
 		$this->render('actualizarMiEnte',array(
+		'model'=>$model,
+		));
+
+		//$this->render('eliminaraccion', array('model' => $acciones, 'usuario' => $usuario));
+
+	}
+
+		public function actionActualizarMiUEL($id)
+	{
+		
+		//PresupuestoPartidaAcciones::model()->findByAttributes(array('ente_organo_id' => $this->usuario()->ente_organo_id));
+		$model= EntesOrganos::model()->findByPk($id);
+
+		if(Usuarios::model()->findByPk(Yii::app()->user->id)->enteOrgano->ente_organo_id != $model->padre->padre->ente_organo_id)
+			throw new CHttpException(403,'Error en los datos suministrados.');
+			
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['EntesOrganos']))
+		{
+			$model->attributes=$_POST['EntesOrganos'];
+			if($model->save())
+				$this->redirect(array('planificacion/misUELs'));
+		}
+
+		$this->render('actualizarMiUEL',array(
 		'model'=>$model,
 		));
 

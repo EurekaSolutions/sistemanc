@@ -117,6 +117,9 @@ class UserIdentity extends CUserIdentity
             		break;
             }
             switch ($record->rol) {
+            	case 'uel':
+            		$role = 'uel';
+            		break;
             	case 'presupuesto':
             		$role = 'presupuesto';
             		break;

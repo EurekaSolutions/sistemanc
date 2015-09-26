@@ -120,6 +120,38 @@ public function actionModificarUsuarioEnte($id)
 * If update is successful, the browser will be redirected to the 'view' page.
 * @param integer $id the ID of the model to be updated
 */
+public function actionModificarUsuarioUEL($id)
+{
+	if(!Usuarios::model()->actual()->perteneceSecundarios($id) and !Usuarios::model()->actual()->perteneceEntes($id))
+		throw new CHttpException(403,'No se puede procesar la solicitud.');
+
+	$model=$this->loadModel($id);
+
+	// Uncomment the following line if AJAX validation is needed
+	// $this->performAjaxValidation($model);
+
+	if(isset($_POST['Usuarios']))
+	{
+		$model->attributes=$_POST['Usuarios'];
+		$model->scenario = 'actualizarPerfil';
+		if($model->validate())
+		{
+			$model->usuario = $model->correo;
+			if($model->save())
+				$this->redirect(array('planificacion/gesUsuUELs',));
+		}
+	}
+
+	$this->render('modificarUsuario',array(
+		'model'=>$model,
+	));
+}
+
+/**
+* Updates a particular model.
+* If update is successful, the browser will be redirected to the 'view' page.
+* @param integer $id the ID of the model to be updated
+*/
 public function actionModificarUsuario($id)
 {
 	if(!Usuarios::model()->actual()->perteneceSecundarios($id) and !Usuarios::model()->actual()->perteneceEntes($id) )

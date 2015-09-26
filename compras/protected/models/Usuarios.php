@@ -137,6 +137,7 @@ class Usuarios extends ActiveRecord
 		return count($entes_adscritos);
 	}
 
+	// Comprueba si el usuario pertenece como secundario.
 	public function perteneceSecundarios($id)
 	{
 
@@ -148,6 +149,7 @@ class Usuarios extends ActiveRecord
 		return false;
 	}
 
+	// Comprueba si el usuario pertenece como ente.
 	public function perteneceEntes($id)
 	{
 

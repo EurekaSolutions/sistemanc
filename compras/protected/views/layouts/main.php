@@ -137,10 +137,18 @@
 								'items' => array(
 											array('label' => 'Crear entes', 'url'=>array('/planificacion/crearente'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 											array('label' => 'Mis entes', 'url'=>array('/planificacion/misentes'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
-											array('label' => 'Crear usuarios', 'url'=>array('/planificacion/usuariosentes'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
+											array('label' => 'Crear usuarios Entes', 'url'=>array('/planificacion/usuariosentes'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 											array('label' => 'Gestionar usuarios', 'url'=>array('/planificacion/gesUsuEntes'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
-											array('label' => 'Reportes por usuario', 'url'=>array('/planificacion/rporusuario'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
+											//array('label' => 'Reportes por usuario', 'url'=>array('/planificacion/rporusuario'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 											//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
+											'---',
+											array('label' => 'Crear Unidad Ejecutora Local', 'url'=>array('/planificacion/crearUel'), 'visible'=>(Yii::app()->user->checkAccess('ente'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
+											array('label' => 'Crear usuarios UEL', 'url'=>array('/planificacion/usuariosUel'), 'visible'=>(Yii::app()->user->checkAccess('ente'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
+											array('label' => 'Mis Unidades Ejecutoras Locales', 'url'=>array('/planificacion/misUELs'), 'visible'=>(Yii::app()->user->checkAccess('ente'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
+											array('label' => 'Gestionar usuarios', 'url'=>array('/planificacion/gesUsuUELs'), 'visible'=>(Yii::app()->user->checkAccess('ente'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
+											//array('label' => 'Reportes por usuario', 'url'=>array('/planificacion/rporusuario'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
+											'---',
+											array('label' => 'Reportes por usuario', 'url'=>array('/planificacion/rporusuario'), 'visible'=>(Yii::app()->user->checkAccess('ente'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 											'---',
 									array('label' => 'Usuarios secundarios', 'url'=>array('/usuarios/gestionarsecundarios'), 'visible'=>(Yii::app()->user->checkAccess('ente'))),
 									//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.

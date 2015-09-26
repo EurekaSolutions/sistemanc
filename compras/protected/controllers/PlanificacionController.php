@@ -51,14 +51,14 @@ class PlanificacionController extends Controller
 				'expression'=>'Yii::app()->controller->M_compras()',
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array( 'Rcargaporpartida', 'rproducto'),
+				'actions'=>array( 'Rcargaporpartida', 'rproducto', 'crearUel', 'usuariosUel', 'misUELs', 'gesUsuUELs',),
 				'users'=>array('@'),
 				'roles'=>array('ente'),
 				//'expression'=>'Yii::app()->controller->M_compras()',
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array( 'create','update','partidas', 'buscarpartida', 
-								'buscargeneral', 'buscargeneralproyecto', 'buscarNcm', 	'buscarproductospartida',),
+								'buscargeneral', 'buscargeneralproyecto', 'buscarNcm', 	'buscarproductospartida'),
 				'users'=>array('@'),
 				'roles'=>array('ente'),
 				'expression'=>'Yii::app()->controller->M_compras()',
@@ -323,7 +323,7 @@ class PlanificacionController extends Controller
 		
 		$usuaios =array();
 		foreach ($this->usuario()->enteOrgano->hijos as $key => $value) {
-			if($value->enteOrgano->usuarioPrincipal)
+			if($value->enteOrgano->usuarioPrincipal && $value->enteOrgano->tipo == 'E')
 				$usuarios[] = $value->enteOrgano->usuarioPrincipal;
 		}
 
@@ -331,6 +331,18 @@ class PlanificacionController extends Controller
 		$this->render('gesUsuEntes', array('model' => $usuarios));
 	}
 
+	public function actionGesUsuUELs()
+	{
+		
+		$usuaios =array();
+		foreach ($this->usuario()->enteOrgano->hijos as $key => $value) {
+			if($value->enteOrgano->usuarioPrincipal  && $value->enteOrgano->tipo == 'U')
+				$usuarios[] = $value->enteOrgano->usuarioPrincipal;
+		}
+
+//		$usuarios = 
+		$this->render('gesUsuUELs', array('model' => $usuarios));
+	}
 
 	public function actionEliminaraccion()
 	{
@@ -951,7 +963,19 @@ class PlanificacionController extends Controller
 	{
 		$misEntesSinUsuario = array();
 		foreach ($this->usuario()->enteOrgano->hijos as $key => $enteAdscrito) {
-		 	if(!$this->tieneusuario($enteAdscrito->ente_organo_id))
+		 	if(!$this->tieneusuario($enteAdscrito->ente_organo_id) && $enteAdscrito->enteOrgano->tipo == 'E')
+		 	{
+		 		$misEntesSinUsuario[] = $enteAdscrito->enteOrgano;
+		 	}
+		 } 
+		 return $misEntesSinUsuario;
+	}
+
+	public function listaUELs()
+	{
+		$misEntesSinUsuario = array();
+		foreach ($this->usuario()->enteOrgano->hijos as $key => $enteAdscrito) {
+		 	if(!$this->tieneusuario($enteAdscrito->ente_organo_id) && $enteAdscrito->enteOrgano->tipo == 'U')
 		 	{
 		 		$misEntesSinUsuario[] = $enteAdscrito->enteOrgano;
 		 	}
@@ -966,7 +990,8 @@ class PlanificacionController extends Controller
 		$entesadscritos = $usuario->enteOrgano->hijos;
 
 		foreach ($entesadscritos as $key => $value) {
-			$entes[] = $value->enteOrgano;
+			if($value->enteOrgano->tipo == 'E')
+				$entes[] = $value->enteOrgano;
 		}
 
 		//print_r($entes);
@@ -974,6 +999,25 @@ class PlanificacionController extends Controller
 						'model'=>$entes,
 		));
 	}
+
+		public function actionMisUELs() 
+	{
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+
+		$entesadscritos = $usuario->enteOrgano->hijos;
+
+		$uels = array();
+		foreach ($entesadscritos as $key => $value) {
+			if($value->enteOrgano->tipo == 'U')
+				$uels[] = $value->enteOrgano;
+		}
+
+		//print_r($entes);
+		$this->render('misUELs',array(
+						'model'=>$uels,
+		));
+	}
+
 
 	public function actionUsuariosentes()
 	{
@@ -1003,6 +1047,37 @@ class PlanificacionController extends Controller
 	    }
 
 		$this->render('usuariosentes',array( 'model' => $crea_usuario
+		));
+	}
+
+	public function actionUsuariosUel()
+	{
+		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+		
+		$crea_usuario = New Usuarios('crearente');
+
+		if(isset($_POST['Usuarios']))
+	    {
+	    	$crea_usuario->attributes = $_POST['Usuarios'];	   
+			
+			   $crea_usuario->contrasena = md5(rand(0,100));
+			   $crea_usuario->usuario = $crea_usuario->correo;
+			   $crea_usuario->creado_el = date("Y-m-d");
+			   $crea_usuario->llave_activacion = md5(rand(0,100));
+			   $crea_usuario->actualizado_el = date("Y-m-d");
+			   $crea_usuario->rol = 'uel';
+
+	    	if($crea_usuario->save())
+	    	{
+	    		if($this->enviarCorreoRecuperacion($crea_usuario->correo,$crea_usuario->cedula))
+	    			Yii::app()->user->setFlash('success','Usuario creado con éxito.');
+	    		
+	    		//Reiniciando el formulario
+	    		$crea_usuario = new Usuarios('crearente');
+	    	}
+	    }
+
+		$this->render('usuariosuel',array( 'model' => $crea_usuario
 		));
 	}
 
@@ -1065,6 +1140,70 @@ class PlanificacionController extends Controller
 	    }
 
 	    $this->render('crearente',array('model'=>$model));
+
+	}
+
+		public function actionCrearUel()
+	{
+		$model = new EntesOrganos('crearuel');
+
+	    // uncomment the following code to enable ajax-based validation
+	    /*
+	    if(isset($_POST['ajax']) && $_POST['ajax']==='entes-organos-crearente-form')
+	    {
+	        echo CActiveForm::validate($model);
+	        Yii::app()->end();
+	    }
+	    */
+
+	    if(isset($_POST['EntesOrganos']))
+	    {
+
+	        $model->attributes=$_POST['EntesOrganos'];
+	        $model->creado_por= 'snc';
+	        $model->tipo = 'U';
+	        if($model->save())
+	        {
+	           $entesAscritos = new EntesAdscritos;
+	           $usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
+			   
+	           $entesAscritos->padre_id = $usuario->ente_organo_id;
+	           
+	           $entesAscritos->ente_organo_id = $model->ente_organo_id;
+	           $entesAscritos->fecha_desde =  date("Y-m-d");
+	           $entesAscritos->fecha_hasta = "2199-12-31";
+			   $entesAscritos->save();
+
+			   /*$crea_usuario = new Usuarios('crearente');
+
+
+			   $crea_usuario->correo = $model->correo;
+			   $crea_usuario->contrasena = md5("1236aA");
+			   $crea_usuario->usuario = $model->correo;
+			   $crea_usuario->creado_el = date("Y-m-d");
+			   $crea_usuario->actualizado_el = date("Y-m-d");
+			   $crea_usuario->rol = 'normal';
+			   $crea_usuario->ente_organo_id = $usuario->ente_organo_id;
+			   $crea_usuario->save();*/
+
+			   Yii::app()->user->setFlash('success', "Unidad Ejecutora Local creada con éxito!");
+			   Yii::app()->user->setFlash('notice', "Recordando que debe crear usuario a dicha Unidad Ejecutora Local.");
+
+			   
+			  // $this->redirect(array('view','id'=>$model->producto_id));
+			   $model = new EntesOrganos('crearuel');
+
+			   $this->render('crearuel',array(
+						'model'=>$model,
+			   ));
+	            // form inputs are valid, do something here
+	            return;
+	        }
+	        var_dump($model->getErrors());
+	        die;
+	    }
+
+	    $this->render('crearuel',array('model'=>$model));
 
 
 	}
