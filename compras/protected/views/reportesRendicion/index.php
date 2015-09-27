@@ -84,13 +84,9 @@ $this->breadcrumbs=array(
 													$totalRendicion = 0;
 													if(isset($facturasRendicion))
 														foreach ($facturasRendicion as $key => $value) {
-															# code...
-															$totalRendicion += $value['costo_unitario']*$value['cantidad_adquirida'];
-
+															$totalRendicion += $value['costo_unitario']*$value['cantidad_adquirida']*(($value->iva->porcentaje/100)+1);
 														}
-
 													echo '<td>'.$totalRendicion.'</td>';
-
 
 													$porcentajePartida += $valor;
 													//$porcentajePartida = $porcentajePartida/100;
@@ -208,11 +204,12 @@ $this->breadcrumbs=array(
 
 									$facturasRendicion = FacturasProductos::model()->findAllByAttributes(array('presupuesto_partida_id'=>$proyectomonto->presupuesto_partida_id));
 									
+
 									$totalRendicion = 0;
 									if(isset($facturasRendicion))
 										foreach ($facturasRendicion as $key => $value) {
 											# code...
-											$totalRendicion += $value['costo_unitario']*$value['cantidad_adquirida'];
+											$totalRendicion += $value['costo_unitario']*$value['cantidad_adquirida']*(($value->iva->porcentaje/100)+1);
 										}
 									echo '<td>'.$totalRendicion.'</td>';
 
