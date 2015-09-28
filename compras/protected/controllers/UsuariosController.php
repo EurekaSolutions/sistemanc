@@ -27,9 +27,19 @@ public function accessRules()
 {
 	return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-		'actions'=>array('secundario', 'gestionarsecundarios','deshabilitar', 'modificarUsuario', 'modificarUsuarioEnte'),
+		'actions'=>array( 'modificarUsuarioEnte'),
+		'users'=>array('@'),
+		'roles'=>array('organo'),
+		),
+						array('allow',  // allow all users to perform 'index' and 'view' actions
+		'actions'=>array( 'modificarUsuarioUEL'),
 		'users'=>array('@'),
 		'roles'=>array('ente'),
+		),
+						array('allow',  // allow all users to perform 'index' and 'view' actions
+		'actions'=>array('secundario', 'gestionarsecundarios','deshabilitar', 'modificarUsuario'),
+		'users'=>array('@'),
+		'roles'=>array('uel'),
 		),
 		array('allow',  // allow all users to perform 'index' and 'view' actions
 		'actions'=>array('create','index','view'),
