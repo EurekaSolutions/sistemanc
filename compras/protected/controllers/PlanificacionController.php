@@ -51,17 +51,18 @@ class PlanificacionController extends Controller
 				'expression'=>'Yii::app()->controller->M_compras()',
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
+				'actions'=>array( 'create','update','partidas', 'buscarpartida', 
+								'buscargeneral', 'buscargeneralproyecto', 'buscarNcm', 	'buscarproductospartida'),
+				'users'=>array('@'),
+				'roles'=>array('uel'),
+				'expression'=>'Yii::app()->controller->M_compras()',
+			),
+
+			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array( 'Rcargaporpartida', 'rproducto', 'crearUel', 'usuariosUel', 'misUELs', 'gesUsuUELs',),
 				'users'=>array('@'),
 				'roles'=>array('ente'),
 				//'expression'=>'Yii::app()->controller->M_compras()',
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array( 'create','update','partidas', 'buscarpartida', 
-								'buscargeneral', 'buscargeneralproyecto', 'buscarNcm', 	'buscarproductospartida'),
-				'users'=>array('@'),
-				'roles'=>array('ente'),
-				'expression'=>'Yii::app()->controller->M_compras()',
 			),
 
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -334,7 +335,7 @@ class PlanificacionController extends Controller
 	public function actionGesUsuUELs()
 	{
 		
-		$usuaios =array();
+		$usuarios = array();
 		foreach ($this->usuario()->enteOrgano->hijos as $key => $value) {
 			if($value->enteOrgano->usuarioPrincipal  && $value->enteOrgano->tipo == 'U')
 				$usuarios[] = $value->enteOrgano->usuarioPrincipal;

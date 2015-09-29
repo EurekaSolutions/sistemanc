@@ -12,7 +12,7 @@ tr.principaltr th {
 }
 </style>
 
-<h4 style="text-align: center;">REPORTES DE MIS ENTES</h4><br>
+<h4 style="text-align: center;">REPORTES DE MIS ENTES Y UNIDADES EJECUTORAS LOCALES</h4><br>
 
 <h4 style="text-align: center;"></h4><br>
 
