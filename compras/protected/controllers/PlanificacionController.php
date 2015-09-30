@@ -273,7 +273,8 @@ class PlanificacionController extends Controller
 
 		$criteria = new CDbCriteria();
 		$criteria->distinct=true;
-		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
+		//$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
+		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id."and anho=".Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];      
 		$criteria->select = 'codigo_accion, accion_id, ente_organo_id ';
 		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
 
@@ -301,7 +302,8 @@ class PlanificacionController extends Controller
 		$proyectos = $usuario->enteOrgano->proyectos;
 
 		$criteria = new CDbCriteria();
-		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
+		//$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
+		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id."and anho=".Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];      
 		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
 
 
@@ -353,7 +355,8 @@ class PlanificacionController extends Controller
 
 		$criteria = new CDbCriteria();
 		$criteria->distinct=true;
-		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
+		//$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
+		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id."and anho=".Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];      
 		$criteria->select = 'accion_id, codigo_accion, ente_organo_id';
 		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
 
@@ -723,7 +726,7 @@ class PlanificacionController extends Controller
 
 	public function actionEliminarproyecto()
 	{
-		$proyectos = Proyectos::model()->findAllByAttributes(array('ente_organo_id'=>$this->usuario()->ente_organo_id));
+		$proyectos = Proyectos::model()->findAllByAttributes(array('ente_organo_id'=>$this->usuario()->ente_organo_id, 'anho'=>Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho']));
 
 
 		$this->render('eliminarproyecto',array('proyectos'=>$proyectos));
