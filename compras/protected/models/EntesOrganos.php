@@ -77,7 +77,7 @@ class EntesOrganos extends ActiveRecord
 			'hijos' => array(self::HAS_MANY, 'EntesAdscritos', 'padre_id'),	
 			'proyectos' => array(self::HAS_MANY, 'Proyectos', 'ente_organo_id', 'condition'=>'anho='.Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'].''),
 			'acciones' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones', 'ente_organo_id', 'condition'=>'anho='.Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'].''),
-			'accionesUni' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones', 'ente_organo_id', 'select'=>'DISTINCT(accion_id)'),
+			'accionesUni' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones', 'ente_organo_id', 'select'=>'DISTINCT(accion_id)', 'condition'=>'anho='.Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'].''),
 			'facturas' => array(self::HAS_MANY, 'Facturas', 'ente_organo_id'),
 			'facturasCerradas' => array(self::HAS_MANY, 'Facturas', 'ente_organo_id', 'condition'=>'cierre_carga=true'),
 			'facturasNoCerradas' => array(self::HAS_MANY, 'Facturas', 'ente_organo_id', 'condition'=>'cierre_carga=false'),
