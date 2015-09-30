@@ -1841,7 +1841,7 @@ class PlanificacionController extends Controller
 
 		$proyectos = $usuario->enteOrgano->proyectos;
 		
-		$acciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('ente_organo_id'=>$usuario->ente_organo_id),array('distinct'=>true,'select'=>'codigo_accion, accion_id, ente_organo_id'));
+		$acciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('ente_organo_id'=>$usuario->ente_organo_id, 'anho'=>Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho']),array('distinct'=>true,'select'=>'codigo_accion, accion_id, ente_organo_id'));
 
 		//print_r($acciones);
 		$this->render('index',array(
@@ -2536,12 +2536,11 @@ class PlanificacionController extends Controller
 	{
 
 		$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
-
 		$proyectos = $usuario->enteOrgano->proyectos;
 		
 		$criteria = new CDbCriteria();
 		$criteria->distinct=true;
-		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
+		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id."and anho=".Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];      
 		$criteria->select = 'codigo_accion, accion_id, ente_organo_id';
 		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
 		
@@ -2549,9 +2548,7 @@ class PlanificacionController extends Controller
 
 		$this->render('vistaparcial',array(
 			'proyectos' => $proyectos,  'acciones' => $acciones
-		));
-
-		
+		));		
 	}
 
 	public function actionVistaresumen()  /*Aquí mostramos la vista del usuario cuando ya guardo TODOS los datos*/
