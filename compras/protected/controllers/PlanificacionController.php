@@ -1163,6 +1163,7 @@ class PlanificacionController extends Controller
 	        $model->attributes=$_POST['EntesOrganos'];
 	        $model->creado_por= 'snc';
 	        $model->tipo = 'U';
+	        $model->compra = true;
 	        if($model->save())
 	        {
 	           $entesAscritos = new EntesAdscritos;
