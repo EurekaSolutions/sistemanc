@@ -277,6 +277,7 @@ class PresupuestoPartidas extends ActiveRecord
 		foreach ($this->fuenteFinanciamientos as $c) 
 			if(!$c->delete()) throw new Exception("No se pudo eliminar la fuente_presupuesto con ID: ".$c->id, 1);
 			
+		if(Yii::app()->params['trimestresEsquemas'][Yii::app()->session['trimestreSeleccionado']] != 'public')
 		// Eliminando los productos y relacionadas a factura asociadas a la partida
 		foreach ($this->facturaProductos as $c) 
 			if(!$c->delete()) throw new Exception("No se pudo eliminar el facturas_productos con ID: ".$c->id, 1);

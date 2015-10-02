@@ -30,13 +30,14 @@ class PlanificacionController extends Controller
 
 			// Acciones comunas a los usuarios secundario PRODUCTO y PRESUPUESTO y sus padres.
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'vistaparcial' ),
+				'actions'=>array('index','view', 'vistaparcial', 'buscarespecficap', 
+		 				'partidas', 'buscarpartida', 'buscargeneral', 'buscarNcm' ),
 				'users'=>array('@'),
 				'roles'=>array( 'producto', 'presupuesto'),
 			),
 			// Acciones relacionadas con el usuario secundario PRODUCTO
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array( 'buscarespecfica', 'buscarespecficap', 'nacional','importado','eliminarProducto',
+				'actions'=>array( 'buscarespecfica', 'nacional','importado','eliminarProducto',
 					 'eliminarProductoImportado', 'buscarpartidasproyecto',  'buscarproductospartida'),
 				'users'=>array('@'),
 				'roles'=>array( 'producto'),
@@ -45,14 +46,14 @@ class PlanificacionController extends Controller
 			// Acciones realacionadas con el usuario secundario PRESUPUESTO
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('eliminaraccion' , 'eliminarproyecto', 'asignarpartidasproyecto', 'eliminaAccion', 'eliminaPartida', 
-					'agregarproyecto', 'eliminaProyecto', 'agregarcentralizada', 'eliminarpartidas', 'buscarsubespecficap', 'buscarsubespecfica'   ),
+					'agregarproyecto', 'eliminaProyecto', 'agregarcentralizada', 'eliminarpartidas', 'buscarsubespecficap', 'buscarsubespecfica', 'buscargeneralproyecto'   ),
 				'users'=>array('@'),
 				'roles'=>array( 'presupuesto'),
 				'expression'=>'Yii::app()->controller->M_compras()',
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array( 'create','update','partidas', 'buscarpartida', 
-								'buscargeneral', 'buscargeneralproyecto', 'buscarNcm', 	'buscarproductospartida'),
+								'buscargeneral', 'buscarNcm'),
 				'users'=>array('@'),
 				'roles'=>array('uel'),
 				'expression'=>'Yii::app()->controller->M_compras()',

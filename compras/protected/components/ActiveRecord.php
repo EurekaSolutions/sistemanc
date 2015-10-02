@@ -11,10 +11,9 @@ class ActiveRecord extends CActiveRecord{
 			else
 				$scheme =   'public';
 			
-            if(!$rendicion)
-                return $scheme;
-            elseif($scheme == 'public')
-                throw new CHttpException(404,'No se encuentra en un periodo para la realización de rendición.');
+            if($rendicion)
+       			if($scheme == 'public')
+                	throw new CHttpException(404,'No se encuentra en un periodo para la realización de rendición.');
             
             return $scheme;
 	}
