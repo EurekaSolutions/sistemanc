@@ -238,7 +238,7 @@ $this->breadcrumbs=array(
 						'format' => 'yyyy-m-d',
 						'language' => 'es',
 						'startDate'=>$ahno.'-01-01',
-						'endDate'=>$ahno.'-12-31'
+						'endDate'=>($ahno+2).'-12-31'
 					),
 				),
 
