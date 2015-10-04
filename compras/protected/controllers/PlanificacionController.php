@@ -275,7 +275,7 @@ class PlanificacionController extends Controller
 		$criteria = new CDbCriteria();
 		$criteria->distinct=true;
 		//$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
-		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id."and anho=".Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];      
+		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id." and anho=".Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];      
 		$criteria->select = 'codigo_accion, accion_id, ente_organo_id ';
 		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
 

@@ -167,11 +167,7 @@
 									//array('label'=>  'Partidas a proyectos', 'url'=>array('/planificacion/asignarpartidasproyecto'), 'visible'=>!Yii::app()->user->isGuest), // si el tipo es admin.
 								), 'visible'=>(Yii::app()->user->checkAccess('ente')),
 							),*/
-							
-							
 
-
-			
 							array(
 								'label' => 'Administrador',
 								'items' => array(
@@ -197,13 +193,13 @@
 							array(
 								'label' => 'Proveedores extranjeros',
 								'items' => array(
-									array('label' => 'Ver proveedor', 'url' => array('/proveedoresExtranjeros/ver'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
-									array('label' => 'Agregar proveedor', 'url' => array('/proveedoresExtranjeros/create'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
-									array('label' => 'Añadir información financiera', 'url' => array('/proveedoresCuentas/create'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
-									array('label' => 'Añadir información técnica', 'url' => array('/proveedoresObjetos/create'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
-									array('label' => 'Motivo de contratación', 'url' => array('/ProveedorMotivo/create'), 'visible'=>(Yii::app()->user->checkAccess('producto'))),
+									array('label' => 'Ver proveedor', 'url' => array('/proveedoresExtranjeros/ver'), 'visible'=>(Yii::app()->user->checkAccess('producto') || Yii::app()->user->checkAccess('presupuesto'))),
+									array('label' => 'Agregar proveedor', 'url' => array('/proveedoresExtranjeros/create'), 'visible'=>(Yii::app()->user->checkAccess('producto') || Yii::app()->user->checkAccess('presupuesto'))),
+									array('label' => 'Añadir información financiera', 'url' => array('/proveedoresCuentas/create'), 'visible'=>(Yii::app()->user->checkAccess('producto') || Yii::app()->user->checkAccess('presupuesto'))),
+									array('label' => 'Añadir información técnica', 'url' => array('/proveedoresObjetos/create'), 'visible'=>(Yii::app()->user->checkAccess('producto') || Yii::app()->user->checkAccess('presupuesto'))),
+									array('label' => 'Motivo de contratación', 'url' => array('/ProveedorMotivo/create'), 'visible'=>(Yii::app()->user->checkAccess('producto') || Yii::app()->user->checkAccess('presupuesto'))),
 									),
-								'visible'=>(Yii::app()->user->checkAccess('admin'))
+								'visible'=>(Yii::app()->user->checkAccess('producto') || Yii::app()->user->checkAccess('presupuesto'))
 							),
 						   // array('label'=>'Perfil usuario', 'url'=>array('/usr/profile'), 'visible'=>!Yii::app()->user->isGuest),
 						    
