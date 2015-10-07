@@ -43,7 +43,7 @@ tr.principaltr th {
 		<?php foreach ($acciones as $key => $accion) { 
 			 		$monto = $this->montoAccion($accion);
 
-			 		$accionOrgano = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accion->accion_id, 'ente_organo_id'=>$this->usuario()->ente_organo_id));
+			 		$accionOrgano = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accion->accion_id, 'ente_organo_id'=>$this->usuario()->ente_organo_id, 'anho'=>Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho']));
 
 			 		//print_r($accionOrgano);
 			 		//echo count($accionOrgano);

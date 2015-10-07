@@ -26,7 +26,7 @@
 					    		<td colspan="2"><?php echo $accion->codigo_accion; ?></td>
 				    			<td colspan="2"><?php echo $accion->accion->nombre; ?></td>
 				    			<?php
-				    				$accionOrgano = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accion->accion_id, 'ente_organo_id'=>$this->usuario()->ente_organo_id));
+				    				$accionOrgano = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accion->accion_id, 'ente_organo_id'=>$this->usuario()->ente_organo_id, 'anho'=>Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho']));
 									$valor = 0;
 				    			?>
 				    			<td colspan="2"><?php echo number_format($monto,2,',','.') ?></td>
