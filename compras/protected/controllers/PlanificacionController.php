@@ -564,7 +564,7 @@ class PlanificacionController extends Controller
 		$usuario = $this->usuario();
 		$id = Yii::app()->getRequest()->getQuery('id');
 
-		$acciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$id, 'ente_organo_id'=>$usuario->ente_organo_id, 'anho=' => Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho']));
+		$acciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$id, 'ente_organo_id'=>$usuario->ente_organo_id, 'anho' => Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho']));
 		
 		if(!empty($acciones))
 		{		
