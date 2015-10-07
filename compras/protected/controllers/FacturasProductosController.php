@@ -145,7 +145,7 @@ class FacturasProductosController extends Controller
 				echo '<td>';
 
 					echo '<div class="form-group">';
-					$list = CHtml::listData(PresupuestoPartidas::model()->findAllByAttributes(array('ente_organo_id'=>Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->ente_organo_id)), 
+					$list = CHtml::listData(PresupuestoPartidas::model()->findAllByAttributes(array('ente_organo_id'=>Usuarios::model()->findByPk(Yii::app()->user->getId())->enteOrgano->ente_organo_id, 'anho' => Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'])), 
 						'partida_id', function($presuPartida){ return $presuPartida->partida->etiquetaPartida();});
 
 					echo CHtml::label('Seleccionar partida', 'partida');

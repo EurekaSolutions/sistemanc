@@ -243,11 +243,11 @@ class PresupuestoImportacionController extends Controller
 		}
 	}
 
-
+	/*Esta funcion aqui esta rara*/
 	protected function actionPresupuesto()
 	{
 		$model = new PresupuestoImportacion();
-		$
+		//$ 
 
 
 		$this->render('partidas',array(

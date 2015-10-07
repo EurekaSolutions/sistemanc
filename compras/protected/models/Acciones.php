@@ -75,13 +75,13 @@ class Acciones extends CActiveRecord
 			$accion = Acciones::model()->find('codigo=:codigo', array(':codigo' => $this->nombre));
 
 
-			$presupuestopartidaproyecto = PresupuestoPartidaAcciones::model()->findAll('accion_id=:accion_id and ente_organo_id=:ente_organo_id', array(':accion_id'=>$accion->accion_id, ':ente_organo_id'=>$usuario->ente_organo_id));
+			$presupuestopartidaproyecto = PresupuestoPartidaAcciones::model()->findAll('accion_id=:accion_id and ente_organo_id=:ente_organo_id and anho=:anho', array(':accion_id'=>$accion->accion_id, ':ente_organo_id'=>$usuario->ente_organo_id, ':anho' => Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho']));
 
 			foreach ($presupuestopartidaproyecto as $key => $value) {
 				
 				$value->presupuesto_partida_id;
 
-				$partida = PresupuestoPartidas::model()->find('presupuesto_partida_id=:presupuesto_partida_id and ente_organo_id=:ente_organo_id and tipo=:tipo', array(':ente_organo_id' => $usuario->ente_organo_id, ':presupuesto_partida_id' => $value->presupuesto_partida_id, ':tipo' => 'A'));	
+				$partida = PresupuestoPartidas::model()->find('presupuesto_partida_id=:presupuesto_partida_id and ente_organo_id=:ente_organo_id and tipo=:tipo and anho=:anho', array(':ente_organo_id' => $usuario->ente_organo_id, ':presupuesto_partida_id' => $value->presupuesto_partida_id, ':tipo' => 'A', ':anho' => Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho']));	
 				
 				if($partida->partida_id == $this->$attribute)
 				{

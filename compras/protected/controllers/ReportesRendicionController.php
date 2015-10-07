@@ -46,7 +46,7 @@ class ReportesRendicionController extends Controller
 
 		$criteria = new CDbCriteria();
 		$criteria->distinct=true;
-		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
+		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id." and anho=".Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];      
 		$criteria->select = 'codigo_accion, accion_id, ente_organo_id ';
 		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
 
@@ -83,7 +83,7 @@ class ReportesRendicionController extends Controller
 			
 			$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 
-			$partidasAcciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accion->accion_id,'ente_organo_id'=>$usuario->enteOrgano->ente_organo_id));
+			$partidasAcciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accion->accion_id,'ente_organo_id'=>$usuario->enteOrgano->ente_organo_id, 'anho' => Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho']));
 			foreach ($partidasAcciones as $key => $partidaAcciones) {
 
 					$monto += $partidaAcciones->presupuestoPartida->monto_presupuestado;

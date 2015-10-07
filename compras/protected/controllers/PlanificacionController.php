@@ -122,8 +122,8 @@ class PlanificacionController extends Controller
 					$proyectos = $enteOrgano->proyectos;
 					$criteria = new CDbCriteria();
 					$criteria->distinct=true;
-					$criteria->condition = "ente_organo_id=".$_GET['param'];      
-					$criteria->select = 'codigo_accion, accion_id, ente_organo_id ';
+					$criteria->condition = "ente_organo_id=".$_GET['param']." and anho=".Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];      //Marcos de este cambio no estoy muy seguro, o sea debo preguntarte algo 
+					$criteria->select = 'codigo_accion, accion_id, ente_organo_id';
 					$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
 
 				    /*$mPDF1 = Yii::app()->ePdf->mpdf();
@@ -156,7 +156,7 @@ class PlanificacionController extends Controller
 					$proyectos = $enteOrgano->proyectos;
 
 					$criteria = new CDbCriteria();
-					$criteria->condition = "ente_organo_id=".$_GET['param'];      
+					$criteria->condition = "ente_organo_id=".$_GET['param']." and anho=".Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];    
 					$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
 
 
@@ -1664,7 +1664,7 @@ class PlanificacionController extends Controller
 				$verificar = $fuentep->validate() && $verificar;
 			}
 	       
-	        $nombre_proyecto = Proyectos::model()->find('codigo=:codigo and ente_organo_id=:ente_organo_id', array(':codigo' => $model->codigo, ':ente_organo_id' => $usuario->ente_organo_id));
+	        $nombre_proyecto = Proyectos::model()->find('codigo=:codigo and ente_organo_id=:ente_organo_id and anho=:anho', array(':codigo' => $model->codigo, ':ente_organo_id' => $usuario->ente_organo_id, ':anho' => Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho']));
 
 	        $model->nombre = $nombre_proyecto->nombre;
 	        
@@ -1780,7 +1780,7 @@ class PlanificacionController extends Controller
 			
 			$usuario = Usuarios::model()->findByPk(Yii::app()->user->getId());
 
-			$partidasAcciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accion->accion_id,'ente_organo_id'=>$usuario->enteOrgano->ente_organo_id));
+			$partidasAcciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accion->accion_id,'ente_organo_id'=>$usuario->enteOrgano->ente_organo_id, 'anho' => Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho']));
 			foreach ($partidasAcciones as $key => $partidaAcciones) {
 
 					$monto += $partidaAcciones->presupuestoPartida->monto_presupuestado;
@@ -1865,7 +1865,7 @@ class PlanificacionController extends Controller
 	**/
 	public function partidasAccion($id){
 
-		$presupuestoPartidaAcciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$id, 'ente_organo_id'=>$this->usuario()->ente_organo_id) );
+		$presupuestoPartidaAcciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$id, 'ente_organo_id'=>$this->usuario()->ente_organo_id, 'anho' => Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho']) );
 
 		$partidas =array();
 		foreach ($presupuestoPartidaAcciones as $key => $prePar) {
@@ -2154,7 +2154,7 @@ class PlanificacionController extends Controller
 
 			//$productos = $this->partidasAccion($accionId);
 
-			foreach( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionId,'ente_organo_id'=>$this->usuario()->ente_organo_id)) as $key => $value) {
+			foreach( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionId,'ente_organo_id'=>$this->usuario()->ente_organo_id, 'anho' => Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'])) as $key => $value) {
 			 	//if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
 			 	//Todos los presupuestos partidas de la Acción seleccionada
 			 	$presupuestoPartidas[] = $value->presupuestoPartida;
@@ -2221,6 +2221,7 @@ class PlanificacionController extends Controller
  		return $total;
  	}
 
+ 	/*Verificar con MARCOS*/
 	public function actionNacional() /*Aqui van la logica de negocio asociada a cada partida 401, 402, 403, 404 */
 	{
 		$usuario = $this->usuario();
@@ -2265,7 +2266,7 @@ class PlanificacionController extends Controller
 						
 						$partidas = $this->partidasAccion($accionSel->accion_id);
 
-						foreach( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
+						foreach( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id, 'anho' => Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'])) as $key => $value) {
 						 	//if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
 						 	//Todos los presupuestos partidas de la Acción seleccionada
 						 		$presupuestoPartidas[] = $value->presupuestoPartida;
@@ -2290,7 +2291,7 @@ class PlanificacionController extends Controller
 	
 							$presuPartida = new PresupuestoPartidas();
 							if(!empty($accionSel->accion_id)){
-								foreach ( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
+								foreach ( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id, 'anho' => Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'])) as $key => $value) {
 								 	if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
 								 		$presuPartida = $value->presupuestoPartida;
 								 }
@@ -2416,7 +2417,7 @@ class PlanificacionController extends Controller
 						
 						$partidas = $this->partidasAccion($accionSel->accion_id);
 
-						foreach ( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
+						foreach ( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id, 'anho' => Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'])) as $key => $value) {
 						 	//if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
 						 	//Todos los presupuestos partidas de la Acción seleccionada
 						 		$presupuestoPartidas[] = $value->presupuestoPartida;
@@ -2442,7 +2443,7 @@ class PlanificacionController extends Controller
 						
 						$presuPartida = new PresupuestoPartidas();
 						if(!empty($accionSel->accion_id)){
-							foreach ( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id)) as $key => $value) {
+							foreach ( PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$accionSel->accion_id,'ente_organo_id'=>$usuario->ente_organo_id, 'anho' => Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'])) as $key => $value) {
 							 	if($value->presupuestoPartida->partida_id == $partidaSel->partida_id)
 							 		$presuPartida = $value->presupuestoPartida;
 							 }

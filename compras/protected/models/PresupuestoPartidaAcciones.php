@@ -69,7 +69,7 @@ class PresupuestoPartidaAcciones extends ActiveRecord
 	public function presuPartidas($id){
 
 		$presuPartidas =array();
-		foreach (PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$id, 'ente_organo_id'=>Usuarios::model()->actual()->ente_organo_id) ) as $key => $prePar) {
+		foreach (PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$id, 'ente_organo_id'=>Usuarios::model()->actual()->ente_organo_id, 'anho' => Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho']) ) as $key => $prePar) {
 			if(!empty($prePar))
 				$presuPartidas[$key] = $prePar->presupuestoPartida;
 		}
