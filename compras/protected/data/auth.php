@@ -21,14 +21,6 @@ return array (
     array (
       0 => 'organo',
     ),
-    'assignments' => 
-    array (
-      1339 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
-    ),
   ),
   'organo' => 
   array (

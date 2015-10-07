@@ -71,7 +71,8 @@ class EntesOrganos extends ActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'usuarios' => array(self::HAS_MANY, 'Usuarios', 'ente_organo_id'),
-			'usuarioPrincipal' => array(self::HAS_ONE, 'Usuarios', 'ente_organo_id', 'condition'=>"rol='organo' OR rol ='ente'"),
+			'usuarioPrincipal' => array(self::HAS_ONE, 'Usuarios', 'ente_organo_id', 'condition'=>"rol='organo' OR rol ='ente' OR rol='uel'"),
+			'usuarioPrincipalUel' => array(self::HAS_ONE, 'Usuarios', 'ente_organo_id', 'condition'=>"rol='uel'"),
 			'usuariosSecundarios' => array(self::HAS_MANY, 'Usuarios', 'ente_organo_id', 'condition'=>'rol=\'presupuesto\' OR rol=\'producto\''),	
 			'padre' => array(self::HAS_ONE, 'EntesAdscritos', 'ente_organo_id'),
 			'hijos' => array(self::HAS_MANY, 'EntesAdscritos', 'padre_id'),	

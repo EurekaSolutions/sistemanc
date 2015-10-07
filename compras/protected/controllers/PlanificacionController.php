@@ -122,7 +122,7 @@ class PlanificacionController extends Controller
 					$proyectos = $enteOrgano->proyectos;
 					$criteria = new CDbCriteria();
 					$criteria->distinct=true;
-					$criteria->condition = "ente_organo_id=".$_GET['param']." and anho=".Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];      //Marcos de este cambio no estoy muy seguro, o sea debo preguntarte algo 
+					$criteria->condition = "ente_organo_id=".$_GET['param']." and anho=".Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];  
 					$criteria->select = 'codigo_accion, accion_id, ente_organo_id';
 					$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
 
@@ -340,7 +340,7 @@ class PlanificacionController extends Controller
 		
 		$usuarios = array();
 		foreach ($this->usuario()->enteOrgano->hijos as $key => $value) {
-			if($value->enteOrgano->usuarioPrincipal  && $value->enteOrgano->tipo == 'U')
+			if($value->enteOrgano->usuarioPrincipalUel  && $value->enteOrgano->tipo == 'U')
 				$usuarios[] = $value->enteOrgano->usuarioPrincipal;
 		}
 
@@ -357,7 +357,7 @@ class PlanificacionController extends Controller
 		$criteria = new CDbCriteria();
 		$criteria->distinct=true;
 		//$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id ;      
-		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id."and anho=".Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];      
+		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id." and anho=".Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];      
 		$criteria->select = 'accion_id, codigo_accion, ente_organo_id';
 		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
 
@@ -561,14 +561,15 @@ class PlanificacionController extends Controller
 
 	public function actionEliminaAccion()
 	{
+
 		$usuario = $this->usuario();
 		$id = Yii::app()->getRequest()->getQuery('id');
 
-		$acciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$id, 'ente_organo_id'=>$usuario->ente_organo_id, 'anho=' => Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho']));
+		$acciones = PresupuestoPartidaAcciones::model()->findAllByAttributes(array('accion_id'=>$id, 'ente_organo_id'=>$usuario->ente_organo_id, 'anho' => Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho']));
 		
 		if(!empty($acciones))
 		{		
-
+			
 				$transaction = Yii::app()->db->beginTransaction(); // Transaction begin //Yii::app()->db->beginTransaction
 						
 					try{
@@ -718,7 +719,7 @@ class PlanificacionController extends Controller
 		            $transaction->rollBack();
 		        }
  	
-		    	$proyectos = Proyectos::model()->findAllByAttributes(array('ente_organo_id'=>$usuario->ente_organo_id));
+		    	$proyectos = Proyectos::model()->findAllByAttributes(array('ente_organo_id'=>$usuario->ente_organo_id, 'anho'=>Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho']));
 	    	}   
 	   
 
@@ -764,7 +765,7 @@ class PlanificacionController extends Controller
 			$criteria->condition = 'p1=:p1 and p2=:p2 and p3=:p3 and p4 <> 0';
 			$criteria->params = array(':p1'=>$general->p1, ':p2' => $general->p2, ':p3' => $general->p3);
 				
-				//$criteria->addSearchCondition('t.nombre', $busqueda);
+				//$criteriaia->addSearchCondition('t.nombre', $busqueda);
 			$subespecificas = Partidas::model()->findAll($criteria);
 
 			$especificas_lista = CHtml::listData($subespecificas, function($subespecificas) {
@@ -2545,7 +2546,7 @@ class PlanificacionController extends Controller
 		
 		$criteria = new CDbCriteria();
 		$criteria->distinct=true;
-		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id."and anho=".Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];      
+		$criteria->condition = "ente_organo_id=".$usuario->ente_organo_id." and anho=".Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'];      
 		$criteria->select = 'codigo_accion, accion_id, ente_organo_id';
 		$acciones=PresupuestoPartidaAcciones::model()->findAll($criteria);
 		

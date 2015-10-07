@@ -82,9 +82,9 @@ class PresupuestoPartidaAcciones extends ActiveRecord
 	    return parent::beforeSave();
 	}
 
-	// Eliminar la acción de un ente, dado el id de la acción y el id del ente u organo
+	// Eliminar la acción de un ente, dado el id de la acción, el id del ente u organo y el anho.
 	public function eliminarAccion($accionId, $enteOrganoId){
-		if($this->deleteAllByAttributes(array('accion_id'=>$accionId, 'ente_organo_id'=>$enteOrgano)))
+		if($this->deleteAllByAttributes(array('accion_id'=>$accionId, 'ente_organo_id'=>$enteOrgano, 'anho'=>Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'])))
 			return true;
 		else 
 			return false;
