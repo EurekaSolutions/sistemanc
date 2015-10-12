@@ -30,14 +30,14 @@ class PlanificacionController extends Controller
 
 			// Acciones comunas a los usuarios secundario PRODUCTO y PRESUPUESTO y sus padres.
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'vistaparcial', 'buscarespecficap', 
+				'actions'=>array('index','view', 'vistaparcial', 'buscarespecfica', 'buscarespecficap', 
 		 				'partidas', 'buscarpartida', 'buscargeneral', 'buscarNcm' ),
 				'users'=>array('@'),
 				'roles'=>array( 'producto', 'presupuesto'),
 			),
 			// Acciones relacionadas con el usuario secundario PRODUCTO
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array( 'buscarespecfica', 'nacional','importado','eliminarProducto',
+				'actions'=>array(  'nacional','importado','eliminarProducto',
 					 'eliminarProductoImportado', 'buscarpartidasproyecto',  'buscarproductospartida'),
 				'users'=>array('@'),
 				'roles'=>array( 'producto'),

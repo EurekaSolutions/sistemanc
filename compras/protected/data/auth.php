@@ -55,6 +55,13 @@ return array (
       0 => 'presupuesto',
       1 => 'producto',
     ),
+  ),
+  'presupuesto' => 
+  array (
+    'type' => 2,
+    'description' => 'Puede cargar el presupuesto a las partidas. Es el unico con permisos para agregar y quitar partidas y asignar dinero a las mismas.',
+    'bizRule' => '',
+    'data' => '',
     'assignments' => 
     array (
       1339 => 
@@ -63,13 +70,6 @@ return array (
         'data' => NULL,
       ),
     ),
-  ),
-  'presupuesto' => 
-  array (
-    'type' => 2,
-    'description' => 'Puede cargar el presupuesto a las partidas. Es el unico con permisos para agregar y quitar partidas y asignar dinero a las mismas.',
-    'bizRule' => '',
-    'data' => '',
   ),
   'producto' => 
   array (
