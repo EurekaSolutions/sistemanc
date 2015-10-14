@@ -3,6 +3,55 @@
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 
+     function systemYear($periodA = '06-01',$periodB = '12-31'){
+
+
+        $periodA = '-'.$periodA;
+        $periodB = '-'.$periodB;
+        $partialStart = (new DateTime)->format('Y').$periodA;
+        $partialEnd = (new DateTime)->format('Y').$periodB;
+
+        $start = new DateTime($partialStart);
+        $end = new DateTime($partialEnd);
+        $now = new DateTime();
+
+        if($start == $end)
+            return false;
+        if($start > $end)
+            if($now < $start){
+                $partialStart = ((new DateTime)->format('Y')-1).$periodA;
+                $partialEnd = (new DateTime)->format('Y').$periodB;
+            }else{
+                $partialStart = (new DateTime)->format('Y').$periodA;
+                $partialEnd = ((new DateTime)->format('Y')+1).$periodB;
+            }
+        else
+            if($now < $start){
+                $partialStart = ((new DateTime)->format('Y')-1).$periodA;
+                $partialEnd = ((new DateTime)->format('Y')-1).$periodB;
+            }
+        $start = new DateTime($partialStart);
+        $end = new DateTime($partialEnd);
+        $result['start'] = $start->format('Y-m-d');
+        $result['end'] = $end->format('Y-m-d');
+        $result['year'] = $start->format('Y');
+
+        return $result;
+
+	}
+		
+
+	$trimestre0 = systemYear('07-01','12-31');		
+	$trimestre1 = systemYear('01-16','04-15');
+	$trimestre2 = systemYear('04-16','07-15');
+	$trimestre3 = systemYear('07-16','10-15');
+	$trimestre4 = systemYear('10-16','01-15');
+	
+
+/*	print_r($trimestre4);
+
+	die;*/
+
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
 return array(
@@ -198,11 +247,16 @@ return array(
 			'trimestre3'=>'Trimestre 3',
 			'trimestre4'=>'Trimestre 4',),
 		'trimestresFechas'=>array(
-			'trimestre0'=>array('c'=>date('Y').'-07-01', 'f'=>date('Y').'-12-31', 'anho'=>date('Y')+1),
+/*			'trimestre0'=>array('c'=>date('Y').'-07-01', 'f'=>date('Y').'-12-31', 'anho'=>date('Y')+1),
 			'trimestre1'=>array('c'=>date('Y').'-01-16', 'f'=>date('Y').'-04-15', 'anho'=>date('Y')),
 			'trimestre2'=>array('c'=>date('Y').'-04-16', 'f'=>date('Y').'-07-15', 'anho'=>date('Y')),
-			'trimestre3'=>array('c'=>date('Y').'-07-16', 'f'=>date('Y').'-10-15', 'anho'=>date('Y')),
-			'trimestre4'=>array('c'=>date('Y').'-10-16', 'f'=>(date('Y')+1).'-01-15', 'anho'=>date('Y'))),
+			'trimestre3'=>array('c'=>date('Y').'-07-16', 'f'=>date('Y').'-10-15', 'anho'=>date('Y')),*/
+			//'trimestre4'=>array('c'=>date('Y').'-10-16', 'f'=>(date('Y')+1).'-01-15', 'anho'=>date('Y'))),
+			'trimestre0'=>array('c'=>$trimestre0['start'], 'f'=>$trimestre0['end'], 'anho'=>$trimestre0['year']+1),
+			'trimestre1'=>array('c'=>$trimestre1['start'], 'f'=>$trimestre1['end'], 'anho'=>$trimestre1['year']),
+			'trimestre2'=>array('c'=>$trimestre2['start'], 'f'=>$trimestre2['end'], 'anho'=>$trimestre2['year']),
+			'trimestre3'=>array('c'=>$trimestre3['start'], 'f'=>$trimestre3['end'], 'anho'=>$trimestre3['year']),
+			'trimestre4'=>array('c'=>$trimestre4['start'], 'f'=>$trimestre4['end'], 'anho'=>$trimestre4['year'])),
 		'trimestresEsquemas'=>array(
 			'trimestre0'=>'public',
 			'trimestre1'=>'trimestre1',

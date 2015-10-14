@@ -21,6 +21,14 @@ return array (
     array (
       0 => 'organo',
     ),
+    'assignments' => 
+    array (
+      1339 => 
+      array (
+        'bizRule' => NULL,
+        'data' => NULL,
+      ),
+    ),
   ),
   'organo' => 
   array (
@@ -62,14 +70,6 @@ return array (
     'description' => 'Puede cargar el presupuesto a las partidas. Es el unico con permisos para agregar y quitar partidas y asignar dinero a las mismas.',
     'bizRule' => '',
     'data' => '',
-    'assignments' => 
-    array (
-      1339 => 
-      array (
-        'bizRule' => NULL,
-        'data' => NULL,
-      ),
-    ),
   ),
   'producto' => 
   array (

@@ -76,7 +76,7 @@ class EntesOrganos extends ActiveRecord
 			'usuariosSecundarios' => array(self::HAS_MANY, 'Usuarios', 'ente_organo_id', 'condition'=>'rol=\'presupuesto\' OR rol=\'producto\''),	
 			'padre' => array(self::HAS_ONE, 'EntesAdscritos', 'ente_organo_id'),
 			'hijos' => array(self::HAS_MANY, 'EntesAdscritos', 'padre_id'),	
-			'proyectos' => array(self::HAS_MANY, 'Proyectos', 'ente_organo_id', 'condition'=>'anho='.Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'].''),
+			'proyectos' => array(self::HAS_MANY, 'Proyectos', 'ente_organo_id', 'condition'=>'anho='.Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho']),
 			'acciones' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones', 'ente_organo_id', 'condition'=>'anho='.Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'].''),
 			'accionesUni' => array(self::HAS_MANY, 'PresupuestoPartidaAcciones', 'ente_organo_id', 'select'=>'DISTINCT(accion_id)', 'condition'=>'anho='.Yii::app()->params['trimestresFechas'][Yii::app()->session['trimestreSeleccionado']]['anho'].''),
 			'facturas' => array(self::HAS_MANY, 'Facturas', 'ente_organo_id'),
