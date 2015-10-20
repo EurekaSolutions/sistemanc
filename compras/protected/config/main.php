@@ -107,13 +107,13 @@ return array(
 				'IsMail' => array(),
 				// SMTP options
 				'IsSMTP' => array(),
-				'Host' => 'correo.snc.gob.ve',
-				'Port' => 465,
-				'SMTPSecure' => 'ssl',
+				'Host' => 'localhost', //correo.snc.gob.ve
+				'Port' => 25, //465
+				'SMTPSecure' => '', //ssl
 				//'SMTPDebug' => 2,
 				'SMTPAuth' => true,
-				'Username' => 'admin_rnce',
-				'Password' => 'GikforewnEd3',
+				//'Username' => 'admin_rnce',
+				//'Password' => 'GikforewnEd3',
 				'FromName' => 'RNCE Sistema Automatizado',
 				'CharSet' => 'UTF-8',
 				
