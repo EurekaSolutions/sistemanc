@@ -143,7 +143,7 @@ return array(
 		'session' => array (
 		    'sessionName' => 'SNCAccess',
 		    //'cookieMode' => 'only',
-		    //'savePath' => '/path/to/new/directory',
+		    'savePath' => __DIR__.'/../sesiones',
 		),
 		 'format'=>array(
 		        'class'=>'application.components.Formatter',
