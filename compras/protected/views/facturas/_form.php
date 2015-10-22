@@ -121,7 +121,7 @@
 		)));*/
 	?>
 
-	Nacional <input name="nacional" type="radio" value="TRUE" checked>  Extranjero <input name="nacional" type="radio" value="FALSE">  <br> 
+	Nacional <input name="nacional" type="radio" value="si" checked>  Extranjero <input name="nacional" type="radio" value="no">  <br> 
 	<?php
 	echo CHtml::label('Seleccionar proveedor', 'Proveedor');
 	echo "<br>";
@@ -191,10 +191,12 @@
 	<?php //echo $form->textFieldGroup($model,'fecha',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
 
-<?php echo CHtml::ajaxLink('Añadir proveedor',$this->createUrl('proveedores/anadir'),array(
+<?php echo CHtml::ajaxLink('Añadir proveedor nacional',$this->createUrl('proveedores/anadir'),array(
         'onclick'=>'$("#jobDialog").dialog("open"); return false;',
         'update'=>'#jobDialog'
         ),array('id'=>'showJobDialog'));?>
+
+<?php echo CHtml::link('Añadir proveedor extranjero',array('proveedoresExtranjeros/create')); ?>
 
 <div id="jobDialog" style="display:none"></div>
 
