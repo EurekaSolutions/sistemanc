@@ -52,10 +52,12 @@ class ProveedoresController extends Controller
 	}
 	
 
-	public function actionAjaxObtenerProveedores($nacional = true) {
+	public function actionAjaxObtenerProveedores() {
         
 		if (isset($_GET['q'])) {
-            
+            $nacional = @$_GET['r'];
+            echo $nacional;
+            /*
             if($nacional){
                 $proveedores = Proveedores::model()->findAll(array('order'=>'rif', 'condition'=>'(rif LIKE :rif) and nacional=:nacional', 'params'=>array(':nacional'=>$nacional,':rif'=>strtoupper('%'.$_GET['q'].'%')))); //echo 'Hola'; die;
             }
@@ -79,7 +81,7 @@ class ProveedoresController extends Controller
 					'text' => $nacional?$value->etiquetaProveedor():$value->etiquetaExtranjero(),
 				);
 			}
-				echo CJSON::encode($data);
+				echo CJSON::encode($data);*/
 		}
 		Yii::app()->end();
 	} 

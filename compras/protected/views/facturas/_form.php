@@ -119,17 +119,21 @@
 					'results' => 'js:function(data,page) { return {results: data}; }',
 				),
 		)));*/
+	?>
 
+	Nacional <input name="nacional" type="radio" value="true" checked>  Extranjero <input name="nacional" type="radio" value="false">  <br> 
+	<?php
 	echo CHtml::label('Seleccionar proveedor', 'Proveedor');
 	echo "<br>";
 	echo CHtml::textField('proveedor_id', '', array('class' => 'span5'));
-
+	
+	
 	$this->widget('ext.ESelect2.ESelect2', array(
 	            'selector' => '#proveedor_id',
 	            'options'  => array(
 	                    'allowClear'=>true,
 	                    'placeholder'=>'Buscar proveedor por rif',
-	                    'minimumInputLength' => 7,
+	                    'minimumInputLength' => 6,
 	                    'ajax' => array(
 	                            'url' => Yii::app()->createUrl('proveedores/ajaxObtenerProveedores'),
 	                            'dataType' => 'json',
@@ -137,6 +141,7 @@
 	                            'data' => 'js: function(text,page) {
 	                                            return {
 	                                                q: text,
+	                                           
 	                                                page_limit: 10,
 	                                                page: page,
 	                                            };
