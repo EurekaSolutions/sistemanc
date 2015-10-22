@@ -121,7 +121,7 @@
 		)));*/
 	?>
 
-	Nacional <input name="nacional" type="radio" value="true" checked>  Extranjero <input name="nacional" type="radio" value="false">  <br> 
+	Nacional <input name="nacional" type="radio" value="TRUE" checked>  Extranjero <input name="nacional" type="radio" value="FALSE">  <br> 
 	<?php
 	echo CHtml::label('Seleccionar proveedor', 'Proveedor');
 	echo "<br>";
@@ -139,9 +139,9 @@
 	                            'dataType' => 'json',
 	                            'quietMillis'=> 100,
 	                            'data' => 'js: function(text,page) {
+
 	                                            return {
-	                                                q: text,
-	                                           
+	                                                q: text + 99999999999910 + $("input:radio[name=nacional]:checked").val(),
 	                                                page_limit: 10,
 	                                                page: page,
 	                                            };
