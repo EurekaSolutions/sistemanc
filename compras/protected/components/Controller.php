@@ -26,7 +26,9 @@ class Controller extends CController
 		$fechaActual = new DateTime();
 
 		$fechaActFor = $fechaActual->format("Y-m-d");
-	
+
+
+
 		foreach (Yii::app()->params['trimestresFechas'] as $key => $value) {
 		 	if($fechaActFor >= $value['c'] && $fechaActFor <= $value['f']) 
 		 	{
@@ -41,6 +43,7 @@ class Controller extends CController
 			Yii::app()->session['trimestreSeleccionado'] = current(array_keys($trimestres));
 
 		 Yii::app()->session['trimestresDisponibles'] = $trimestres;	
+
 
 		return parent::beforeAction($action);
 	}

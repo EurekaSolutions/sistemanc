@@ -92,8 +92,8 @@
 											array('label' => '<b>Reportes</b>', 'url' => ''),
 											'---',
 										
-											array('label' => 'Carga por partidas', 'url'=>array('/planificacion/rcargaporpartida'), 'visible'=>(Yii::app()->user->checkAccess('ente'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
-											array('label' => 'Productos', 'url'=>array('/planificacion/rproducto'), 'visible'=>(Yii::app()->user->checkAccess('ente'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
+											array('label' => 'Carga por partidas', 'url'=>array('/planificacion/rcargaporpartida'), 'visible'=>(Yii::app()->user->checkAccess('uel'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
+											array('label' => 'Productos', 'url'=>array('/planificacion/rproducto'), 'visible'=>(Yii::app()->user->checkAccess('uel'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 											/*array('label' => 'Mis entes', 'url'=>array('/planificacion/misentes'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 											array('label' => 'Crear usuarios', 'url'=>array('/planificacion/usuariosentes'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1
 											array('label' => 'Gestionar usuarios', 'url'=>array('/planificacion/gesUsuEntes'), 'visible'=>(Yii::app()->user->checkAccess('organo'))), // si el tipo es ORGANO Yii::app()->session['organo']==1*/

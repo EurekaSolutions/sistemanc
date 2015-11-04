@@ -52,7 +52,7 @@ class PlanificacionController extends Controller
 				'expression'=>'Yii::app()->controller->M_compras()',
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array( 'create','update','partidas', 'buscarpartida', 
+				'actions'=>array( 'Rcargaporpartida', 'rproducto', 'create','update','partidas', 'buscarpartida', 
 								'buscargeneral', 'buscarNcm'),
 				'users'=>array('@'),
 				'roles'=>array('uel'),
@@ -60,7 +60,7 @@ class PlanificacionController extends Controller
 			),
 
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array( 'Rcargaporpartida', 'rproducto', 'crearUel', 'usuariosUel', 'misUELs', 'gesUsuUELs', 'rporusuario',),
+				'actions'=>array(  'crearUel', 'usuariosUel', 'misUELs', 'gesUsuUELs', 'rporusuario',),
 				'users'=>array('@'),
 				'roles'=>array('ente'),
 				//'expression'=>'Yii::app()->controller->M_compras()',

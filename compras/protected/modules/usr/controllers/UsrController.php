@@ -1,6 +1,6 @@
 <?php
 
-abstract class UsrController extends CController
+abstract class UsrController extends Controller
 {
 	public $layout='//layouts/main';
 	/**
