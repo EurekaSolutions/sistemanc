@@ -367,9 +367,14 @@ class UserIdentity extends CUserIdentity
 	public function verifyActivationKey($activationKey)
 	{
 		if (($record=$this->getActiveRecord())===null) {
+			Yii::log("FALLO UBICANDO EL ACTIVERECORD DEL USUARIO con la llave de activación: ".$activationKey, "warning", "system.*");
 			return self::ERROR_AKEY_INVALID;
 		}
-		return $record->llave_activacion === $activationKey ? self::ERROR_AKEY_NONE : self::ERROR_AKEY_INVALID;
+		$result = $record->llave_activacion === $activationKey ? self::ERROR_AKEY_NONE : self::ERROR_AKEY_INVALID;
+
+		Yii::log("Resultados para el usuario: ".$record->usuario." y correo: ".$record->correo." con la llave de activación: ".$record->llave_activacion." y la llave de activación proporcionada: ".$activationKey." con el resultado: ".$result, "warning", "system.*");
+
+		return $result;
 	}
 
 	/**

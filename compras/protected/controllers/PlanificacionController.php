@@ -60,14 +60,14 @@ class PlanificacionController extends Controller
 			),
 
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array(  'crearUel', 'usuariosUel', 'misUELs', 'gesUsuUELs', 'rporusuario',),
+				'actions'=>array(  'crearUel', 'usuariosUel', 'misUELs', 'gesUsuUELs', 'rporusuario', 'ajaxreportes'),
 				'users'=>array('@'),
 				'roles'=>array('ente'),
 				//'expression'=>'Yii::app()->controller->M_compras()',
 			),
 
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('crearente','misentes', 'usuariosentes', 'gesUsuEntes', 'ajaxreportes', 'actividad'),
+				'actions'=>array('crearente','misentes', 'usuariosentes', 'gesUsuEntes', 'actividad'),
 				'users'=>array('@'),
 				'roles'=>array('organo'),
 				//'expression'=>'Yii::app()->controller->M_compras()',

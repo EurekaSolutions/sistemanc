@@ -61,7 +61,6 @@ class EntesOrganos extends ActiveRecord
 			array('ente_organo_id, codigo_onapre, nombre, tipo, rif, creado_por', 'safe', 'on'=>'search'),
 		);
 	}
-
 	/**
 	 * @return array relational rules.
 	 */
