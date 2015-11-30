@@ -58,16 +58,20 @@ class ProveedoresController extends Controller
             
             $partes = explode("99999999999910", $_GET['q']);
             $_GET['q'] = $partes[0];
-            $nacional =  (string) $partes[1];
-            $nacional = str_replace(' ', '', $nacional);
 
-            if($partes[1] == 'no')
+            if (@$partes[1])
+            {
+            	$nacional  =  (string) $partes[1];
+            	$nacional = str_replace(' ', '', $nacional);
+            }
+
+            if(@$partes[1] == 'no')
             {
             	$nacional = false;
             }else
             	$nacional = true;
 
-            if($nacional){
+            if(@$nacional){
                 $proveedores = Proveedores::model()->findAll(array('order'=>'rif', 'condition'=>'(rif LIKE :rif) and nacional=:nacional', 'params'=>array(':nacional'=>$nacional,':rif'=>strtoupper('%'.$_GET['q'].'%')))); //echo 'Hola'; die;
             }else{
 
