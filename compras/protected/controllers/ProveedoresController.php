@@ -65,11 +65,19 @@ class ProveedoresController extends Controller
             	$nacional = str_replace(' ', '', $nacional);
             }
 
-            if(@$partes[1] == 'no')
+            if(count($partes) >= 2)
             {
-            	$nacional = false;
+            	if(@$partes[1] == 'no')
+	            {
+	            	$nacional = false;
+
+	            }else
+	            	$nacional = true;
             }else
-            	$nacional = true;
+            	$nacional = false;
+
+            
+
 
             if(@$nacional){
                 $proveedores = Proveedores::model()->findAll(array('order'=>'rif', 'condition'=>'(rif LIKE :rif) and nacional=:nacional', 'params'=>array(':nacional'=>$nacional,':rif'=>strtoupper('%'.$_GET['q'].'%')))); //echo 'Hola'; die;
